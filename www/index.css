@@ -1,0 +1,26 @@
+/* */
+
+body {
+  font-family: 'Press Start 2P', Arial;
+  background-color: #454545;
+  color: #fff;
+  font-size: 1em;
+  margin: 2em auto;
+  max-width: 800px;
+  padding: 1em;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url(./_public/fonts/PressStart2P-Regular.ttf);
+}
+
+header {
+  float: right;
+}
+
+header a img {
+  width: 32px;
+}
