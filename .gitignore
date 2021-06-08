@@ -3,6 +3,7 @@ _aux/
 logs/
 node_modules/
 _tmp/
+tmp/
 _data/
 
 #Ignore these files
