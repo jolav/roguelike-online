@@ -24,3 +24,18 @@ header {
 header a img {
   width: 32px;
 }
+
+button {
+  display: inline-block;
+  background-color: #e7e7e7;
+  border-radius: 1em;
+  text-decoration: none;
+  color: #454545;
+  padding: 10px 15px;
+  font-size: 1em;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: white;
+}

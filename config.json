@@ -1,0 +1,7 @@
+{
+  "mode": "dev",
+  "host": "localhost",
+  "port": 3000,
+  "errorsLogFile": "logs/errors.log",
+  "infoLogFile": "logs/info.log"
+}

@@ -1,10 +1,23 @@
-/* global xxx */
+/* */
 'use strict';
 
-{
-  const init = () => {
-    console.log('## Init ##');
-  };
+import { makeAsyncRequest } from "./lib.js";
+import { conf } from "./_config.js";
 
-  window.addEventListener('load', init);
+async function init() {
+  console.log('## Init ##');
+  const newBtn = document.getElementById("newGame");
+  newBtn.addEventListener("click", newGame);
 }
+
+async function newGame() {
+  let data;
+  try {
+    data = await makeAsyncRequest(conf.apiUrlBase + "/new", 'GET', null);
+  } catch (err) {
+    console.error("ERROR FETCHING NEW GAME => ", err);
+  }
+  console.log('New Game => ', data);
+}
+
+window.addEventListener('load', init);

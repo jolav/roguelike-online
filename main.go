@@ -10,28 +10,33 @@ GOOS=windows GOARCH=amd64 CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc go build -ldfl
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"time"
-
-	u "github.com/jolav/roguelike-online/utils"
 )
 
-var version = "0.0.0"
-var releaseDate = "undefined"
+const (
+	tokenLength    int    = 100
+	configJSONfile string = "./config.json"
+)
 
-var iLog *log.Logger
+var (
+	version     = "0.0.0"
+	releaseDate = "undefined"
+	iLog        *log.Logger
+)
+
+type Config struct {
+	Mode          string `json:"mode"`
+	Host          string `json:"host"`
+	Port          int    `json:"port"`
+	ErrorsLogFile string `json:"errorsLogFile"`
+	InfoLogFile   string `json:"infoLogFile"`
+}
 
 type app struct {
-	Conf struct {
-		Mode          string `json:"mode"`
-		Host          string `json:"host"`
-		Port          int    `json:"port"`
-		ErrorsLogFile string `json:"errorsLogFile"`
-		InfoLogFile   string `json:"infoLogFile"`
-	} `json:"config"`
+	Conf Config
 }
 
 func main() {
@@ -39,9 +44,8 @@ func main() {
 
 	// Load Conf
 	var a app
-	loadConfigJSON(&a)
-	a.Conf.Mode = u.CheckAppMode()
-	u.PrettyPrintStruct(a)
+	loadJSONfromFile(configJSONfile, &a.Conf)
+	prettyPrintStruct(a)
 
 	// Custom Error Log File + Custom Info Log File
 	createCustomInfoLogFile(a.Conf.InfoLogFile)
@@ -51,38 +55,35 @@ func main() {
 	}
 	defer mylog.Close()
 
-	// Server
-	http.DefaultClient.Timeout = 5 * time.Second
-	mux := http.NewServeMux()
+	go httpServer(a)
+	gameLoop(a)
 
-	mux.HandleFunc("/new", newGame)
-	mux.HandleFunc("/load", loadGame)
-	mux.HandleFunc("/action", action)
-	mux.HandleFunc("/",
-		func(w http.ResponseWriter, r *http.Request) {
-			u.ErrorResponse(w, "Bad Request !")
-		})
+}
 
-	server := http.Server{
-		Addr:           fmt.Sprintf("localhost:%d", a.Conf.Port),
-		Handler:        mux,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   30 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+func checkFlags() {
+	versionFlag := flag.Bool("v", false, "Show current version and exit")
+	flag.Parse()
+	switch {
+	case *versionFlag:
+		fmt.Printf("Version:\t: %s\n", version)
+		fmt.Printf("Date   :\t: %s\n", releaseDate)
+		os.Exit(0)
 	}
-
-	log.Printf("Server up listening %s in mode %s", server.Addr, a.Conf.Mode)
-	server.ListenAndServe()
 }
 
-func newGame(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("NEW GAME")
+func createCustomInfoLogFile(f string) {
+	infoLog, err := os.OpenFile(f, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		log.Fatalf("ERROR opening Info log file %s\n", err)
+	}
+	iLog = log.New(infoLog, "INFO :\t", log.Ldate|log.Ltime)
 }
 
-func loadGame(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("LOAD GAME")
-}
-
-func action(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("ACTION")
+func createCustomErrorLogFile(f string) *os.File {
+	mylog, err := os.OpenFile(f, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		log.Fatalf("ERROR opening Error log file %s\n", err)
+	}
+	log.SetOutput(mylog)
+	return mylog
 }
