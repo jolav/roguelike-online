@@ -15,7 +15,7 @@ func httpServer(a app) {
 	http.DefaultClient.Timeout = 5 * time.Second
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/new", newGame)
+	mux.HandleFunc("/new", newGame(a.Ch))
 	mux.HandleFunc("/load", loadGame)
 	mux.HandleFunc("/action", action)
 	mux.HandleFunc("/",
@@ -35,10 +35,14 @@ func httpServer(a app) {
 	server.ListenAndServe()
 }
 
-func newGame(w http.ResponseWriter, r *http.Request) {
-	token := getRandomString(tokenLength)
-	sendJSONToClient(w, token, 200)
-	fmt.Println("NEW GAME")
+func newGame(ch channels) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		getToken := make(chan run)
+		defer close(getToken)
+		ch.askNewGame <- getToken
+		runData := <-getToken
+		sendJSONToClient(w, runData, 200)
+	}
 }
 
 func loadGame(w http.ResponseWriter, r *http.Request) {
@@ -72,5 +76,6 @@ func sendJSONToClient(w http.ResponseWriter, d interface{}, status int) {
 		log.Printf("ERROR Marshaling %s\n", err)
 		w.Write([]byte(`{}`))
 	}
+	fmt.Println(string(dataJSON))
 	w.Write(dataJSON)
 }

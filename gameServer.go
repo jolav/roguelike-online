@@ -8,9 +8,18 @@ import (
 
 func gameLoop(a app) {
 
-	fmt.Println("GAME LOOP")
-	select {}
+	for {
+		select {
+
+		case sendToken := <-a.Ch.askNewGame:
+			fullToken := a.Runs.add()
+			sendToken <- fullToken
+		}
+		prettyPrintStruct(len(a.Runs))
+
+	}
 
 	// UNREACHABLE CODE
+	fmt.Println("UNREACHABLE CODE")
 
 }

@@ -18,7 +18,11 @@ import (
 
 const (
 	tokenLength    int    = 100
+	lenChars       int    = 4
+	lenIntegers    int    = 2
 	configJSONfile string = "./config.json"
+	width          int    = 11
+	height         int    = 21
 )
 
 var (
@@ -27,7 +31,7 @@ var (
 	iLog        *log.Logger
 )
 
-type Config struct {
+type config struct {
 	Mode          string `json:"mode"`
 	Host          string `json:"host"`
 	Port          int    `json:"port"`
@@ -35,8 +39,15 @@ type Config struct {
 	InfoLogFile   string `json:"infoLogFile"`
 }
 
+type channels struct {
+	//askNewGame chan chan string
+	askNewGame chan chan run
+}
+
 type app struct {
-	Conf Config
+	Conf config
+	Ch   channels
+	Runs runs
 }
 
 func main() {
@@ -45,6 +56,12 @@ func main() {
 	// Load Conf
 	var a app
 	loadJSONfromFile(configJSONfile, &a.Conf)
+	a.Ch = channels{
+		//askNewGame: make(chan chan string),
+		askNewGame: make(chan chan run),
+	}
+	defer close(a.Ch.askNewGame)
+	a.Runs = newRuns()
 	prettyPrintStruct(a)
 
 	// Custom Error Log File + Custom Info Log File

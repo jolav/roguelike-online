@@ -44,3 +44,23 @@ func getRandomString(length int) string {
 	return string(b)
 
 }
+
+func getRandomNick(lenChars, lenIntegers int) string {
+	const chars = "abcdefghijklmnopqrstuvwxyz"
+	const nums = "0123456789"
+	var seed = rand.New(rand.NewSource(time.Now().UnixNano()))
+	var nick = ""
+	b := make([]byte, lenChars)
+	for i := range b {
+		b[i] = chars[seed.Intn(len(chars))]
+	}
+	nick += string(b)
+	c := make([]byte, lenIntegers)
+	for i := range c {
+		c[i] = nums[seed.Intn(len(nums))]
+	}
+	nick += string(c)
+	fmt.Println("NICK =>", nick)
+	return nick
+
+}

@@ -39,3 +39,7 @@ button {
 button:hover {
   background-color: white;
 }
+
+section#play {
+  line-height: 1em;
+}
