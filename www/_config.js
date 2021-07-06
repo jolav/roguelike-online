@@ -2,12 +2,18 @@
 'use strict';
 
 export {
-  conf
+  conf,
+  game
 };
 
 const conf = {
   mode: "dev",
   apiUrlBase: "",
+};
+
+const game = {
+  nick: "",
+  token: "",
 };
 
 conf.apiUrlBase = getapiUrlBase();

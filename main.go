@@ -26,7 +26,7 @@ const (
 )
 
 var (
-	version     = "0.0.0"
+	version     = "0.0.3"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
@@ -39,9 +39,15 @@ type config struct {
 	InfoLogFile   string `json:"infoLogFile"`
 }
 
+type turn struct {
+	comm   chan run
+	token  string
+	action string
+}
+
 type channels struct {
-	//askNewGame chan chan string
 	askNewGame chan chan run
+	askNewTurn chan turn
 }
 
 type app struct {
@@ -57,12 +63,13 @@ func main() {
 	var a app
 	loadJSONfromFile(configJSONfile, &a.Conf)
 	a.Ch = channels{
-		//askNewGame: make(chan chan string),
 		askNewGame: make(chan chan run),
+		askNewTurn: make(chan turn),
 	}
 	defer close(a.Ch.askNewGame)
+	defer close(a.Ch.askNewTurn)
 	a.Runs = newRuns()
-	prettyPrintStruct(a)
+	//prettyPrintStruct(a)
 
 	// Custom Error Log File + Custom Info Log File
 	createCustomInfoLogFile(a.Conf.InfoLogFile)
@@ -73,7 +80,7 @@ func main() {
 	defer mylog.Close()
 
 	go httpServer(a)
-	gameLoop(a)
+	gameLoop(&a)
 
 }
 

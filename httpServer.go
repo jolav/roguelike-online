@@ -17,7 +17,13 @@ func httpServer(a app) {
 
 	mux.HandleFunc("/new", newGame(a.Ch))
 	mux.HandleFunc("/load", loadGame)
-	mux.HandleFunc("/action", action)
+	//mux.HandleFunc("/action", action)
+
+	mux.HandleFunc("/action", checkValid(
+		func(w http.ResponseWriter, r *http.Request) {
+			action(w, r, &a)
+		}, a.Runs))
+
 	mux.HandleFunc("/",
 		func(w http.ResponseWriter, r *http.Request) {
 			errorResponse(w, "Bad Request !")
@@ -49,8 +55,33 @@ func loadGame(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("LOAD GAME")
 }
 
-func action(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("ACTION")
+func action(w http.ResponseWriter, r *http.Request, a *app) {
+	r.ParseForm()
+
+	t := &turn{
+		token:  r.Form.Get("token"),
+		action: r.Form.Get("action"),
+		comm:   make(chan run),
+	}
+	//fmt.Println(t)
+	//getRunTurn := make(chan run)
+	defer close(t.comm)
+	a.Ch.askNewTurn <- *t
+	runData := <-t.comm
+
+	sendJSONToClient(w, runData, 200)
+}
+
+func checkValid(next http.HandlerFunc, rs runs) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		r.ParseForm()
+		token := r.Form.Get("token")
+		if !rs.exists(token) {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+		next.ServeHTTP(w, r)
+	}
 }
 
 type requestError struct {
@@ -76,6 +107,6 @@ func sendJSONToClient(w http.ResponseWriter, d interface{}, status int) {
 		log.Printf("ERROR Marshaling %s\n", err)
 		w.Write([]byte(`{}`))
 	}
-	fmt.Println(string(dataJSON))
+	//fmt.Println(string(dataJSON))
 	w.Write(dataJSON)
 }

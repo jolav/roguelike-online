@@ -1,8 +1,10 @@
 /* */
 "use strict";
 
-import { conf } from "./_config.js";
+import { conf, game } from "./_config.js";
 import { makeAsyncRequest } from "./lib.js";
+import * as render from "./render.js";
+import { actionKey } from "./controls.js";
 
 function landingPage() {
   document.getElementById("intro").style.display = "block";
@@ -21,41 +23,9 @@ function playGame(data) {
   document.getElementById("intro").style.display = "none";
   document.getElementById("confirm").style.display = "none";
   document.getElementById("play").style.display = "block";
-  drawUI(data);
-  drawGrid(data);
-}
-
-function drawUI(data) {
-  const player = document.createElement("nick");
-  const nickText = document.createTextNode(data.nick);
-  player.appendChild(nickText);
-  document.getElementById("play").appendChild(player);
-  document.getElementById("play").appendChild(document.createElement("br"));
-
-}
-
-const gridValue = [".", "@"];
-
-function drawGrid(data) {
-  // manually set player pos
-  data.grid[data.x][data.y] = 1;
-  const cols = data.cols;
-  const rows = data.rows;
-  const board = document.createElement("board");
-
-  for (var row = 0; row < rows; row++) {
-    var column = document.createElement("tr");
-
-    for (var col = 0; col < cols; col++) {
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode(gridValue[data.grid[col][row]]);
-      cell.appendChild(cellText);
-      column.appendChild(cell);
-    }
-
-    board.appendChild(column);
-  }
-  document.getElementById('play').appendChild(board);
+  render.drawUI(data);
+  render.drawGrid(data);
+  window.addEventListener('keydown', actionKey);
 }
 
 async function newGame() {
@@ -70,10 +40,12 @@ async function newGame() {
 
   };
   try {
-    data = await makeAsyncRequest(conf.apiUrlBase + "/new", 'GET', null);
+    data = await makeAsyncRequest(conf.apiUrlBase + "/new", 'GEt', null);
   } catch (err) {
     console.error("ERROR FETCHING NEW GAME => ", err);
   }
+  game.nick = data.nick;
+  game.token = data.token;
   console.log(data);
   playGame(data);
 }

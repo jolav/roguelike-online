@@ -60,7 +60,6 @@ func getRandomNick(lenChars, lenIntegers int) string {
 		c[i] = nums[seed.Intn(len(nums))]
 	}
 	nick += string(c)
-	fmt.Println("NICK =>", nick)
 	return nick
 
 }
