@@ -17,13 +17,10 @@ func httpServer(a app) {
 
 	mux.HandleFunc("/new", newGame(a.Ch))
 	mux.HandleFunc("/load", loadGame)
-	//mux.HandleFunc("/action", action)
-
 	mux.HandleFunc("/action", checkValid(
 		func(w http.ResponseWriter, r *http.Request) {
 			action(w, r, &a)
 		}, a.Runs))
-
 	mux.HandleFunc("/",
 		func(w http.ResponseWriter, r *http.Request) {
 			errorResponse(w, "Bad Request !")
@@ -43,7 +40,7 @@ func httpServer(a app) {
 
 func newGame(ch channels) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		getToken := make(chan run)
+		getToken := make(chan *run)
 		defer close(getToken)
 		ch.askNewGame <- getToken
 		runData := <-getToken
@@ -57,18 +54,14 @@ func loadGame(w http.ResponseWriter, r *http.Request) {
 
 func action(w http.ResponseWriter, r *http.Request, a *app) {
 	r.ParseForm()
-
 	t := &turn{
 		token:  r.Form.Get("token"),
 		action: r.Form.Get("action"),
-		comm:   make(chan run),
+		comm:   make(chan *run),
 	}
-	//fmt.Println(t)
-	//getRunTurn := make(chan run)
 	defer close(t.comm)
-	a.Ch.askNewTurn <- *t
+	a.Ch.askNewTurn <- t
 	runData := <-t.comm
-
 	sendJSONToClient(w, runData, 200)
 }
 

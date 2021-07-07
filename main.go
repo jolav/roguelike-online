@@ -40,14 +40,14 @@ type config struct {
 }
 
 type turn struct {
-	comm   chan run
+	comm   chan *run
 	token  string
 	action string
 }
 
 type channels struct {
-	askNewGame chan chan run
-	askNewTurn chan turn
+	askNewGame chan chan *run
+	askNewTurn chan *turn
 }
 
 type app struct {
@@ -63,8 +63,8 @@ func main() {
 	var a app
 	loadJSONfromFile(configJSONfile, &a.Conf)
 	a.Ch = channels{
-		askNewGame: make(chan chan run),
-		askNewTurn: make(chan turn),
+		askNewGame: make(chan chan *run),
+		askNewTurn: make(chan *turn),
 	}
 	defer close(a.Ch.askNewGame)
 	defer close(a.Ch.askNewTurn)

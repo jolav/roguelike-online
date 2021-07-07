@@ -2,14 +2,14 @@
 
 package main
 
-type runs map[string]run
+type runs map[string]*run
 
 func newRuns() runs {
-	return make(map[string]run)
+	return make(map[string]*run)
 }
 
-func (rs *runs) add() run {
-	aux := *newRun()
+func (rs *runs) add() *run {
+	aux := newRun()
 	(*rs)[aux.Token] = aux
 	return aux
 }
