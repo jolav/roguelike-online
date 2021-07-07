@@ -20,15 +20,14 @@ function drawGrid(data) {
       cell.appendChild(cellText);
       column.appendChild(cell);
     }
-
     board.appendChild(column);
   }
+
   document.getElementById('play').appendChild(board);
 }
 
-function redrawGrid(data) {
+function eraseGrid() {
   document.getElementById("gameZone").remove();
-  drawGrid(data);
 }
 
 function drawUI(data) {
@@ -37,11 +36,10 @@ function drawUI(data) {
   player.appendChild(nickText);
   document.getElementById("play").appendChild(player);
   document.getElementById("play").appendChild(document.createElement("br"));
-
 }
 
 export {
   drawGrid,
   drawUI,
-  redrawGrid
+  eraseGrid
 };

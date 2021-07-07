@@ -1,16 +1,19 @@
 /* */
 "use strict";
 
-import { conf, game } from "./_config.js";
-import { makeAsyncRequest } from "./lib.js";
+import { conf, a } from "./_config.js";
+import * as http from "./http.js";
 import * as render from "./render.js";
+import * as router from "./router.js";
 import { actionKey } from "./controls.js";
 
 function landingPage() {
   document.getElementById("intro").style.display = "block";
   document.getElementById("confirm").style.display = "none";
-  document.getElementById("play").style.display = "none"; document.getElementById("newGame").addEventListener("click", newGame);
-  newGame();
+  document.getElementById("play").style.display = "none"; document.getElementById("newGame").addEventListener("click", startNewGame);
+  if (conf.mode === "dev") {
+    startNewGame();
+  }
 }
 
 function confirmForm() {
@@ -25,32 +28,27 @@ function playGame(data) {
   document.getElementById("play").style.display = "block";
   render.drawUI(data);
   render.drawGrid(data);
-  window.addEventListener('keydown', actionKey);
+  window.addEventListener('keydown', function (e) {
+    const action = actionKey(e);
+    startNewTurn(action);
+  });
 }
 
-async function newGame() {
-  let data = {
-    nick: "",
-    token: "",
-    cols: 0,
-    rows: 0,
-    grid: [],
-    x: 0,
-    y: 0
+async function startNewGame() {
+  let data = await http.fetchNewGame();
+  a.updateGameData(data);
+  router.playGame(a);
+}
 
-  };
-  try {
-    data = await makeAsyncRequest(conf.apiUrlBase + "/new", 'GEt', null);
-  } catch (err) {
-    console.error("ERROR FETCHING NEW GAME => ", err);
-  }
-  game.nick = data.nick;
-  game.token = data.token;
-  console.log(data);
-  playGame(data);
+async function startNewTurn(action) {
+  let data = await http.fetchNewTurn(action);
+  render.eraseGrid();
+  render.drawGrid(data);
 }
 
 export {
   landingPage,
+  playGame,
+  startNewTurn,
 };
 

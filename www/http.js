@@ -1,8 +1,32 @@
 /* */
 'use strict';
 
+import { a, conf } from "./_config.js";
+
+async function fetchNewGame() {
+  let data = {};
+  try {
+    data = await makeAsyncRequest(conf.apiUrlBase + "/new", 'GEt', null);
+  } catch (err) {
+    console.error("ERROR FETCHING NEW GAME => ", err);
+  }
+  return data;
+}
+
+async function fetchNewTurn(action) {
+  let data = {};
+  try {
+    const param = "&action=" + action + "&token=" + a.token;
+    data = await makeAsyncRequest(conf.apiUrlBase + "/action", 'POST', param);
+  } catch (err) {
+    console.error("ERROR FETCHING NEW TURN => ", err);
+  }
+  return data;
+}
+
 export {
-  makeAsyncRequest
+  fetchNewGame,
+  fetchNewTurn,
 };
 
 function makeAsyncRequest(url, method, param) {

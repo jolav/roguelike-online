@@ -1,9 +1,17 @@
 /* */
 'use strict';
 
-export {
-  conf,
-  game
+let a = {
+  nick: "",
+  token: "",
+  cols: 0,
+  rows: 0,
+  grid: [],
+  x: 0,
+  y: 0,
+  updateGameData: function (data) {
+    a = data;
+  }
 };
 
 const conf = {
@@ -11,20 +19,18 @@ const conf = {
   apiUrlBase: "",
 };
 
-const game = {
-  nick: "",
-  token: "",
-};
-
-conf.apiUrlBase = getapiUrlBase();
-
-function getapiUrlBase() {
+conf.apiUrlBase = function () {
   if (conf.mode === "dev") {
     return "http://localhost:3000";
   } else {
     return "https://roguelike.online/api/v0";
   }
-}
+}();
+
+export {
+  conf,
+  a,
+};
 
 /*
 use localhost
