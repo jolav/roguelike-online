@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func httpServer(a app) {
+func httpServer(a *app) {
 
 	http.DefaultClient.Timeout = 5 * time.Second
 	mux := http.NewServeMux()
@@ -19,7 +19,7 @@ func httpServer(a app) {
 	mux.HandleFunc("/load", loadGame)
 	mux.HandleFunc("/action", checkValid(
 		func(w http.ResponseWriter, r *http.Request) {
-			action(w, r, &a)
+			action(w, r, a)
 		}, a.Runs))
 	mux.HandleFunc("/",
 		func(w http.ResponseWriter, r *http.Request) {

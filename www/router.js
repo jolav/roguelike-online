@@ -22,12 +22,16 @@ function confirmForm() {
   document.getElementById("play").style.display = "none";
 }
 
-function playGame(data) {
+function playGame(a) {
   document.getElementById("intro").style.display = "none";
   document.getElementById("confirm").style.display = "none";
   document.getElementById("play").style.display = "block";
-  render.drawUI(data);
-  render.drawGrid(data);
+  render.drawUI(a);
+  render.drawGrid(a);
+  render.eraseUI();
+  render.drawUI(a);
+  render.eraseGrid();
+  render.drawGrid(a);
   window.addEventListener('keydown', function (e) {
     const action = actionKey(e);
     startNewTurn(action);
@@ -35,15 +39,19 @@ function playGame(data) {
 }
 
 async function startNewGame() {
-  let data = await http.fetchNewGame();
-  a.updateGameData(data);
+  let aux = await http.fetchNewGame();
+  a.updateGameData(aux);
   router.playGame(a);
+  console.log(a);
 }
 
 async function startNewTurn(action) {
   let data = await http.fetchNewTurn(action);
+  render.eraseUI();
+  render.drawUI(data);
   render.eraseGrid();
   render.drawGrid(data);
+  //console.log(a.view);
 }
 
 export {

@@ -16,17 +16,8 @@ import (
 	"os"
 )
 
-const (
-	tokenLength    int    = 100
-	lenChars       int    = 4
-	lenIntegers    int    = 2
-	configJSONfile string = "./config.json"
-	width          int    = 11
-	height         int    = 21
-)
-
 var (
-	version     = "0.0.4"
+	version     = "0.0.5"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
@@ -60,18 +51,23 @@ func main() {
 	checkFlags()
 
 	// Load Conf
-	var a app
-	loadJSONfromFile(configJSONfile, &a.Conf)
-	a.Ch = channels{
-		askNewGame: make(chan chan *run),
-		askNewTurn: make(chan *turn),
+	var a *app
+	var c config
+	loadConfigJSON(&c)
+
+	a = &app{
+		Conf: c,
+		Ch: channels{
+			askNewGame: make(chan chan *run),
+			askNewTurn: make(chan *turn),
+		},
+		Runs: newRuns(),
 	}
 	defer close(a.Ch.askNewGame)
 	defer close(a.Ch.askNewTurn)
-	a.Runs = newRuns()
-	//prettyPrintStruct(a)
+	prettyPrintStruct(a.Conf)
 
-	// Custom Error Log File + Custom Info Log File
+	//Custom Error Log File + Custom Info Log File
 	createCustomInfoLogFile(a.Conf.InfoLogFile)
 	var mylog *os.File
 	if a.Conf.Mode == "production" {
@@ -80,7 +76,7 @@ func main() {
 	defer mylog.Close()
 
 	go httpServer(a)
-	gameLoop(&a)
+	gameLoop(a)
 
 }
 

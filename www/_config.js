@@ -4,11 +4,8 @@
 let a = {
   nick: "",
   token: "",
-  cols: 0,
-  rows: 0,
-  grid: [],
-  x: 0,
-  y: 0,
+  view: [],
+  entities: [],
   updateGameData: function (data) {
     a = data;
   }

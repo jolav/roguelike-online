@@ -5,32 +5,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"math/rand"
-	"os"
 	"time"
 )
 
 func prettyPrintStruct(s interface{}) {
 	result, _ := json.MarshalIndent(s, "", "    ") //"\t")
 	fmt.Print(string(result), "\n")
-}
-
-func loadJSONfromFile(filePath string, data interface{}) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Fatalln("Cannot open config file", err)
-	}
-	defer file.Close()
-	body, err := ioutil.ReadAll(file)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	err = json.Unmarshal(body, &data)
-	if err != nil {
-		log.Fatalln(err)
-	}
 }
 
 func getRandomString(length int) string {
