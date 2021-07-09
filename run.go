@@ -15,8 +15,8 @@ type run struct {
 func (rs *runs) add() *run {
 	r := newRun()
 	(*rs)[r.Token] = r
-	r.Map.initializeMap()
-	r.Entities["player"] = newEntity(viewWidth/2, viewHeight/2, "@")
+	r.Map.initializeRandomMap()
+	r.Entities["player"] = newEntity(mapWidth/2, mapHeight/2, "@")
 
 	return r
 }

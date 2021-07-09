@@ -5,8 +5,8 @@ const gridValue = [".", "#", "@"];
 
 function drawGrid(a) {
   //manually set player pos
-  const pj = a.entities["player"];
-  a.view[pj.x][pj.y] = 2;
+  //const pj = a.entities["player"];
+  //a.view[11/*pj.x*/][11/*pj.y*/] = 2;
   const dimensions = [a.view.length, a.view[0].length];
   const cols = dimensions[0];
   const rows = dimensions[1];

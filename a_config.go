@@ -11,10 +11,10 @@ const (
 	tokenLength int = 100
 	lenChars    int = 4
 	lenIntegers int = 2
-	mapWidth    int = 15
-	mapHeight   int = 15
-	viewWidth   int = 15
-	viewHeight  int = 15
+	mapWidth    int = 100
+	mapHeight   int = 100
+	viewWidth   int = 31
+	viewHeight  int = 31
 )
 
 func getConfigJSON() (configjson []byte) {

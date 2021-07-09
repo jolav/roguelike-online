@@ -23,7 +23,6 @@ func getRandomString(length int) string {
 		b[i] = chars[seed.Intn(len(chars))]
 	}
 	return string(b)
-
 }
 
 func getRandomNick(lenChars, lenIntegers int) string {
@@ -42,5 +41,9 @@ func getRandomNick(lenChars, lenIntegers int) string {
 	}
 	nick += string(c)
 	return nick
+}
 
+func randomInt(min, max int) int {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	return r.Intn(max-min+1) + min
 }
