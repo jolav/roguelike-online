@@ -12,14 +12,14 @@ func gameLoop(a *app) {
 		select {
 
 		case sendToken := <-a.Ch.askNewGame:
-			fullToken := a.Runs.add()
-			fullToken.Map.convertMapToView(fullToken)
+			fullToken := a.Runs.add(&a.Conf)
+			fullToken.Map.convertMapToView(fullToken, a.Conf)
 			sendToken <- fullToken
 
 		case askTurn := <-a.Ch.askNewTurn:
 			r := a.Runs[askTurn.token]
 			movement(askTurn.action, r)
-			r.Map.convertMapToView(r)
+			r.Map.convertMapToView(r, a.Conf)
 			a.Runs[askTurn.token] = r
 			askTurn.comm <- r
 		}

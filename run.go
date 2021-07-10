@@ -5,19 +5,18 @@ package main
 type runs map[string]*run
 
 type run struct {
-	Nick     string                     `json:"nick"`
-	Token    string                     `json:"token"`
-	View     [viewWidth][viewHeight]int `json:"view"`
-	Entities map[string]*entity         `json:"entities"`
-	Map      *gameMap                   `json:"-"`
+	Nick     string             `json:"nick"`
+	Token    string             `json:"token"`
+	View     [][]int            `json:"view"`
+	Entities map[string]*entity `json:"entities"`
+	Map      *gameMap           `json:"-"`
 }
 
-func (rs *runs) add() *run {
-	r := newRun()
+func (rs *runs) add(c *config) *run {
+	r := newRun(c)
 	(*rs)[r.Token] = r
 	r.Map.initializeRandomMap()
-	r.Entities["player"] = newEntity(mapWidth/2, mapHeight/2, "@")
-
+	r.Entities["player"] = newEntity(r.Map.Width/2, r.Map.Height/2, "@")
 	return r
 }
 
@@ -35,15 +34,15 @@ func (rs *runs) exists(token string) bool {
 	return false
 }
 
-func newRun() *run {
+func newRun(c *config) *run {
 	return &run{
-		Nick:     getRandomNick(lenChars, lenIntegers),
-		Token:    getRandomString(tokenLength),
-		View:     [viewWidth][viewHeight]int{},
+		Nick:     getRandomNick(c.LenChars, c.LenIntegers),
+		Token:    getRandomString(c.TokenLength),
+		View:     get2dArray(c.ViewWidth, c.ViewHeight),
 		Entities: newEntities(),
 		Map: &gameMap{
-			Width:  mapWidth,
-			Height: mapHeight,
+			Width:  c.MapWidth,
+			Height: c.MapHeight,
 		},
 	}
 }

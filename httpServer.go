@@ -27,14 +27,14 @@ func httpServer(a *app) {
 		})
 
 	server := &http.Server{
-		Addr:           fmt.Sprintf("localhost:%d", a.Conf.Port),
+		Addr:           fmt.Sprintf("localhost:%d", a.Syst.Port),
 		Handler:        mux,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Printf("Server up listening %s in mode %s", server.Addr, a.Conf.Mode)
+	log.Printf("Server up listening %s in mode %s", server.Addr, a.Syst.Mode)
 	server.ListenAndServe()
 }
 

@@ -25,17 +25,17 @@ func getRandomString(length int) string {
 	return string(b)
 }
 
-func getRandomNick(lenChars, lenIntegers int) string {
+func getRandomNick(nameLength, numbersLength int) string {
 	const chars = "abcdefghijklmnopqrstuvwxyz"
 	const nums = "0123456789"
 	var seed = rand.New(rand.NewSource(time.Now().UnixNano()))
 	var nick = ""
-	b := make([]byte, lenChars)
+	b := make([]byte, nameLength)
 	for i := range b {
 		b[i] = chars[seed.Intn(len(chars))]
 	}
 	nick += string(b)
-	c := make([]byte, lenIntegers)
+	c := make([]byte, numbersLength)
 	for i := range c {
 		c[i] = nums[seed.Intn(len(nums))]
 	}
@@ -46,4 +46,12 @@ func getRandomNick(lenChars, lenIntegers int) string {
 func randomInt(min, max int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(max-min+1) + min
+}
+
+func get2dArray(rows, cols int) [][]int {
+	a := make([][]int, rows)
+	for i := range a {
+		a[i] = make([]int, cols)
+	}
+	return a
 }

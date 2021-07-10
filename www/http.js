@@ -24,9 +24,24 @@ async function fetchNewTurn(action) {
   return data;
 }
 
+/*   const pingTime = await pingServer();*/
+function pingServer() {
+  return new Promise((resolve) => {
+    const startTime = new Date();
+    const img = new Image();
+    img.onload = function () {
+      const endTime = new Date();
+      const pingTime = endTime.getTime() - startTime.getTime();
+      resolve(pingTime);
+    };
+    img.src = "https://roguelike.online/_public/sprites/github48x48.png";
+  });
+}
+
 export {
   fetchNewGame,
   fetchNewTurn,
+  pingServer,
 };
 
 function makeAsyncRequest(url, method, param) {

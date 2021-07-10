@@ -33,36 +33,36 @@ func (m *gameMap) IsBlockingLOS(x, y int) bool {
 	}
 }
 
-func (m *gameMap) convertMapToView(r *run) {
+func (m *gameMap) convertMapToView(r *run, c config) {
 	// clean old view
-	r.View = *new([viewWidth][viewHeight]int)
+	r.View = get2dArray(c.ViewWidth, c.ViewHeight)
 
 	pj := r.Entities["player"]
-	camX := pj.X - viewWidth/2
-	camY := pj.Y - viewHeight/2
-	pjX := viewWidth / 2
-	pjY := viewHeight / 2
+	camX := pj.X - c.ViewWidth/2
+	camY := pj.Y - c.ViewHeight/2
+	pjX := c.ViewWidth / 2
+	pjY := c.ViewHeight / 2
 	if camX < 0 {
 		camX = 0
 		pjX = pj.X
 	}
-	if (camX + viewWidth) > mapWidth {
-		camX = mapWidth - viewWidth
+	if (camX + c.ViewWidth) > m.Width {
+		camX = m.Width - c.ViewWidth
 		pjX = pj.X - camX
 	}
 	if camY < 0 {
 		camY = 0
 		pjY = pj.Y
 	}
-	if (camY + viewHeight) > mapHeight {
-		camY = mapHeight - viewHeight
+	if (camY + c.ViewHeight) > m.Height {
+		camY = m.Height - c.ViewHeight
 		pjY = pj.Y - camY
 	}
 	// set player
 	r.View[pjX][pjY] = 2
 
-	for x := 0; x < viewWidth; x++ {
-		for y := 0; y < viewHeight; y++ {
+	for x := 0; x < c.ViewWidth; x++ {
+		for y := 0; y < c.ViewHeight; y++ {
 			if m.IsBlocked(camX+x, camY+y) && m.IsBlockingLOS(camX+x, camY+y) {
 				r.View[x][y] = 1
 			}

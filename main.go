@@ -17,17 +17,27 @@ import (
 )
 
 var (
-	version     = "0.0.6"
+	version     = "0.0.7"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
 
-type config struct {
+type system struct {
 	Mode          string `json:"mode"`
 	Host          string `json:"host"`
 	Port          int    `json:"port"`
 	ErrorsLogFile string `json:"errorsLogFile"`
 	InfoLogFile   string `json:"infoLogFile"`
+}
+
+type config struct {
+	TokenLength int `json:"tokenLength"`
+	LenChars    int `json:"lenChars"`
+	LenIntegers int `json:"lenIntegers"`
+	MapWidth    int `json:"mapWidth"`
+	MapHeight   int `json:"mapHeight"`
+	ViewWidth   int `json:"viewWidth"`
+	ViewHeight  int `json:"viewHeight"`
 }
 
 type turn struct {
@@ -42,7 +52,8 @@ type channels struct {
 }
 
 type app struct {
-	Conf config
+	Syst system `json:"system"`
+	Conf config `json:"config"`
 	Ch   channels
 	Runs runs
 }
@@ -51,12 +62,12 @@ func main() {
 	checkFlags()
 
 	// Load Conf
-	var a *app
-	var c config
-	loadConfigJSON(&c)
+	var a = new(app)
+	loadConfigJSON(a)
 
 	a = &app{
-		Conf: c,
+		Syst: a.Syst,
+		Conf: a.Conf,
 		Ch: channels{
 			askNewGame: make(chan chan *run),
 			askNewTurn: make(chan *turn),
@@ -65,19 +76,19 @@ func main() {
 	}
 	defer close(a.Ch.askNewGame)
 	defer close(a.Ch.askNewTurn)
-	prettyPrintStruct(a.Conf)
 
 	//Custom Error Log File + Custom Info Log File
-	createCustomInfoLogFile(a.Conf.InfoLogFile)
+	createCustomInfoLogFile(a.Syst.InfoLogFile)
 	var mylog *os.File
-	if a.Conf.Mode == "production" {
-		mylog = createCustomErrorLogFile(a.Conf.ErrorsLogFile)
+	if a.Syst.Mode == "production" {
+		mylog = createCustomErrorLogFile(a.Syst.ErrorsLogFile)
 	}
 	defer mylog.Close()
 
+	prettyPrintStruct(a)
+
 	go httpServer(a)
 	gameLoop(a)
-
 }
 
 func checkFlags() {

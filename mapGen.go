@@ -22,20 +22,20 @@ type room struct {
 }
 
 const (
-	ROOM_TRIES          = 5000
-	ROOMS               = 200
-	MIN_SIZE_ROOM       = 4
-	MAX_SIZE_ROOM       = 25
-	MIN_LENGTH_CORRIDOR = 2
-	MAX_LENGTH_CORRIDOR = 25
-	CORRIDOR_PERCENT    = 15
+	roomTries         = 5000
+	rooms             = 200
+	minSizeRoom       = 4
+	maxSizeRoom       = 25
+	minLengthCorridor = 2
+	maxLengthCorridor = 25
+	corridorPercent   = 15
 )
 
 func (m *gameMap) initializeRandomMap() {
 	m.fillMapBlockedTiles()
 	m.createSingleRoomInCenter()
 	success := 0
-	for tries := 1; tries < ROOM_TRIES; tries++ {
+	for tries := 1; tries < roomTries; tries++ {
 		w := m.pickRandomWallFromAnyRoom()
 		//prettyPrintStruct(w)
 		f := m.pickRandomFeature()
@@ -46,7 +46,7 @@ func (m *gameMap) initializeRandomMap() {
 			m.fillRectRoom(r)
 			m.fillWall(w)
 			success++
-			if success >= ROOMS {
+			if success >= rooms {
 				return
 			}
 		}
@@ -107,12 +107,12 @@ func (m *gameMap) pickRandomFeature() (f *feature) {
 	f = new(feature)
 	random := randomInt(1, 100)
 	switch {
-	case random < CORRIDOR_PERCENT:
+	case random < corridorPercent:
 		f.Width = 1
-		f.Height = randomInt(MIN_LENGTH_CORRIDOR, MAX_LENGTH_CORRIDOR)
-	case random >= CORRIDOR_PERCENT:
-		f.Width = randomInt(MIN_SIZE_ROOM, MAX_SIZE_ROOM)
-		f.Height = randomInt(MIN_SIZE_ROOM, MAX_SIZE_ROOM)
+		f.Height = randomInt(minLengthCorridor, maxLengthCorridor)
+	case random >= corridorPercent:
+		f.Width = randomInt(minSizeRoom, maxSizeRoom)
+		f.Height = randomInt(minSizeRoom, maxSizeRoom)
 	}
 	return
 }
@@ -165,8 +165,8 @@ func (m *gameMap) checkIsRoomForFeature(r *room) bool {
 }
 
 func (m *gameMap) createSingleRoomInCenter() {
-	width := randomInt(MIN_SIZE_ROOM, MAX_SIZE_ROOM) + 5
-	height := randomInt(MIN_SIZE_ROOM, MAX_SIZE_ROOM) + 5
+	width := randomInt(minSizeRoom, maxSizeRoom) + 5
+	height := randomInt(minSizeRoom, maxSizeRoom) + 5
 	r := &room{
 		X:      (m.Width - width) / 2,
 		Y:      (m.Height - height) / 2,

@@ -3,7 +3,7 @@
 
 import { conf, a } from "./_config.js";
 import * as http from "./http.js";
-import * as render from "./render.js";
+import * as render from "./renderDom.js";
 import * as router from "./router.js";
 import { actionKey } from "./controls.js";
 

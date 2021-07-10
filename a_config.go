@@ -7,33 +7,34 @@ import (
 	"log"
 )
 
-const (
-	tokenLength int = 100
-	lenChars    int = 4
-	lenIntegers int = 2
-	mapWidth    int = 100
-	mapHeight   int = 100
-	viewWidth   int = 31
-	viewHeight  int = 31
-)
-
 func getConfigJSON() (configjson []byte) {
 
 	configjson = []byte(`
 	{
-		"mode": "dev",
-		"host": "localhost",
-		"port": 3000,
-		"errorsLogFile": "logs/errors.log",
-		"infoLogFile": "logs/info.log"
+		"system": {
+			"mode": "dev",
+			"host": "localhost",
+			"port": 3000,
+			"errorsLogFile": "logs/errors.log",
+			"infoLogFile": "logs/info.log"
+		},
+		"config": {
+			"tokenLength" : 100,
+			"lenChars"    : 4,
+			"lenIntegers" : 2,
+			"mapWidth"    : 100,
+			"mapHeight"   : 100,
+			"viewWidth"   : 31,
+			"viewHeight"  : 21
+		}
 	}
 	`)
 
 	return
 }
 
-func loadConfigJSON(c *config) {
-	err := json.Unmarshal(getConfigJSON(), c)
+func loadConfigJSON(a *app) {
+	err := json.Unmarshal(getConfigJSON(), a)
 	if err != nil {
 		log.Fatal("Error parsing JSON config => \n", err)
 	}
