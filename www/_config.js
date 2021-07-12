@@ -4,8 +4,9 @@
 let a = {
   nick: "",
   token: "",
-  view: [],
-  entities: [],
+  view: {},
+  entities: {},
+  legend: [],
   updateGameData: function (data) {
     a = data;
   }

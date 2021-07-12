@@ -8,6 +8,7 @@ type run struct {
 	Nick     string             `json:"nick"`
 	Token    string             `json:"token"`
 	View     [][]int            `json:"view"`
+	Legend   []string           `json:"legend"`
 	Entities map[string]*entity `json:"entities"`
 	Map      *gameMap           `json:"-"`
 }
@@ -39,6 +40,7 @@ func newRun(c *config) *run {
 		Nick:     getRandomNick(c.LenChars, c.LenIntegers),
 		Token:    getRandomString(c.TokenLength),
 		View:     get2dArray(c.ViewWidth, c.ViewHeight),
+		Legend:   getLegend(),
 		Entities: newEntities(),
 		Map: &gameMap{
 			Width:  c.MapWidth,
@@ -49,4 +51,12 @@ func newRun(c *config) *run {
 
 func newRuns() runs {
 	return make(map[string]*run)
+}
+
+func getLegend() []string {
+	var legend = make([]string, 0)
+	legend = append(legend, ".")
+	legend = append(legend, "#")
+	legend = append(legend, "@")
+	return legend
 }

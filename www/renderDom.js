@@ -1,24 +1,20 @@
 /* */
 'use strict';
 
-const gridValue = [".", "#", "@"];
-
 function drawGrid(a) {
-  //manually set player pos
-  //const pj = a.entities["player"];
-  //a.view[11/*pj.x*/][11/*pj.y*/] = 2;
   const dimensions = [a.view.length, a.view[0].length];
   const cols = dimensions[0];
   const rows = dimensions[1];
   const board = document.createElement("board");
-  board.id = "gameZone";
+  board.id = "boardZone";
 
   for (var row = 0; row < rows; row++) {
-    var column = document.createElement("tr");
+    const column = document.createElement("tr");
 
     for (var col = 0; col < cols; col++) {
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode(gridValue[a.view[col][row]]);
+      const cell = document.createElement("td");
+      cell.id = col + "-" + row;
+      const cellText = document.createTextNode(a.legend[a.view[col][row]]);
       cell.appendChild(cellText);
       column.appendChild(cell);
     }
@@ -28,27 +24,24 @@ function drawGrid(a) {
 }
 
 function eraseGrid() {
-  document.getElementById("gameZone").remove();
+  document.getElementById("boardZone").remove();
 }
 
 function drawUI(a) {
   const ui = document.createElement("ui");
   ui.id = "uiZone";
+  const playerX = a.entities["player"].x;
+  const playerY = a.entities["player"].y;
   const nickText = document.createTextNode("\"" + a.nick + "\" = ");
-  const posText = document.createTextNode(a.entities["player"].x + ":" + a.entities["player"].y);
+  const posText = document.createTextNode(playerX + ":" + playerY);
   ui.appendChild(nickText);
-  ui.append(posText);
-  document.getElementById("play").appendChild(ui);
+  ui.appendChild(posText);
   ui.appendChild(document.createElement("br"));
-  document.getElementById("play").appendChild(document.createElement("br"));
+  ui.appendChild(document.createElement("br"));
+  document.getElementById("play").appendChild(ui);
 }
 
 function eraseUI() {
-  const erase = document.getElementsByTagName("br");
-  document.getElementsByTagName("br")[1].remove();
-  if (erase.length === 2) {
-    document.getElementsByTagName("br")[0].remove();
-  }
   document.getElementById("uiZone").remove();
 }
 
