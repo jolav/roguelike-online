@@ -13,12 +13,14 @@ func gameLoop(a *app) {
 
 		case sendToken := <-a.Ch.askNewGame:
 			fullToken := a.Runs.add(&a.Conf)
+			fullToken.Fov.rayCast(fullToken)
 			fullToken.Map.convertMapToView(fullToken, a.Conf)
 			sendToken <- fullToken
 
 		case askTurn := <-a.Ch.askNewTurn:
 			r := a.Runs[askTurn.token]
 			movement(askTurn.action, r)
+			r.Fov.rayCast(r)
 			r.Map.convertMapToView(r, a.Conf)
 			a.Runs[askTurn.token] = r
 			askTurn.comm <- r

@@ -28,10 +28,6 @@ function playGame(a) {
   document.getElementById("play").style.display = "block";
   render.drawUI(a);
   render.drawGrid(a);
-  render.eraseUI();
-  render.drawUI(a);
-  render.eraseGrid();
-  render.drawGrid(a);
   window.addEventListener('keydown', function (e) {
     const action = actionKey(e);
     startNewTurn(action);
@@ -51,7 +47,6 @@ async function startNewTurn(action) {
   render.drawUI(data);
   render.eraseGrid();
   render.drawGrid(data);
-  //console.log(a.view);
 }
 
 export {

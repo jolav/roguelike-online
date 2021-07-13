@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -48,10 +49,14 @@ func randomInt(min, max int) int {
 	return r.Intn(max-min+1) + min
 }
 
-func get2dArray(rows, cols int) [][]int {
-	a := make([][]int, rows)
+func get2dArray(rows, cols int) [][]string {
+	a := make([][]string, rows)
 	for i := range a {
-		a[i] = make([]int, cols)
+		a[i] = make([]string, cols)
 	}
 	return a
+}
+
+func round(f float64) float64 {
+	return math.Floor(f + .5)
 }

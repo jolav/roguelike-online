@@ -7,15 +7,17 @@ type runs map[string]*run
 type run struct {
 	Nick     string             `json:"nick"`
 	Token    string             `json:"token"`
-	View     [][]int            `json:"view"`
-	Legend   []string           `json:"legend"`
+	View     [][]string         `json:"view"`
+	Legend   map[string]string  `json:"legend"`
 	Entities map[string]*entity `json:"entities"`
 	Map      *gameMap           `json:"-"`
+	Fov      *FieldOfVision     `json:"-"`
 }
 
 func (rs *runs) add(c *config) *run {
 	r := newRun(c)
 	(*rs)[r.Token] = r
+	r.Fov.initFOV()
 	r.Map.initializeRandomMap()
 	r.Entities["player"] = newEntity(r.Map.Width/2, r.Map.Height/2, "@")
 	return r
@@ -46,6 +48,7 @@ func newRun(c *config) *run {
 			Width:  c.MapWidth,
 			Height: c.MapHeight,
 		},
+		Fov: &FieldOfVision{},
 	}
 }
 
@@ -53,10 +56,13 @@ func newRuns() runs {
 	return make(map[string]*run)
 }
 
-func getLegend() []string {
-	var legend = make([]string, 0)
-	legend = append(legend, ".")
-	legend = append(legend, "#")
-	legend = append(legend, "@")
+func getLegend() map[string]string {
+	var legend = make(map[string]string)
+	legend["unknown"] = " "
+	legend["wall"] = "#"
+	legend["floor"] = "."
+	legend["hero"] = "@"
+	legend["wallVisited"] = "##"
+	legend["floorVisited"] = ".."
 	return legend
 }
