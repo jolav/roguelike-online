@@ -18,7 +18,7 @@ function drawGrid(a) {
       let legend = a.legend[a.view[col][row]];
       if (len > 1) {
         legend = legend.slice(1);
-        visited[row][col] = true;
+        visited[col][row] = true;
       }
       const cellText = document.createTextNode(legend);
       cell.appendChild(cellText);
@@ -30,7 +30,7 @@ function drawGrid(a) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (visited[col][row]) {
-        const id = row + "-" + col;
+        const id = col + "-" + row;
         document.getElementById(id).classList.add("visited");
       }
     }

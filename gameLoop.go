@@ -2,20 +2,16 @@
 
 package main
 
-import (
-	"fmt"
-)
-
 func gameLoop(a *app) {
 
 	for {
 		select {
 
 		case sendToken := <-a.Ch.askNewGame:
-			fullToken := a.Runs.add(&a.Conf)
-			fullToken.Fov.rayCast(fullToken)
-			fullToken.Map.convertMapToView(fullToken, a.Conf)
-			sendToken <- fullToken
+			newRun := a.Runs.newRun(&a.Conf)
+			newRun.Fov.rayCast(newRun)
+			newRun.Map.convertMapToView(newRun, a.Conf)
+			sendToken <- newRun
 
 		case askTurn := <-a.Ch.askNewTurn:
 			r := a.Runs[askTurn.token]
@@ -27,7 +23,6 @@ func gameLoop(a *app) {
 		}
 	}
 	// UNREACHABLE CODE
-	fmt.Println("UNREACHABLE CODE")
 }
 
 func movement(action string, r *run) {

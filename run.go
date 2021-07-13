@@ -14,8 +14,8 @@ type run struct {
 	Fov      *FieldOfVision     `json:"-"`
 }
 
-func (rs *runs) add(c *config) *run {
-	r := newRun(c)
+func (rs *runs) newRun(c *config) *run {
+	r := newRunCreator(c)
 	(*rs)[r.Token] = r
 	r.Fov.initFOV()
 	r.Map.initializeRandomMap()
@@ -37,7 +37,7 @@ func (rs *runs) exists(token string) bool {
 	return false
 }
 
-func newRun(c *config) *run {
+func newRunCreator(c *config) *run {
 	return &run{
 		Nick:     getRandomNick(c.LenChars, c.LenIntegers),
 		Token:    getRandomString(c.TokenLength),
@@ -58,7 +58,7 @@ func newRuns() runs {
 
 func getLegend() map[string]string {
 	var legend = make(map[string]string)
-	legend["unknown"] = " "
+	legend["unknown"] = "\u00A0" // blank space
 	legend["wall"] = "#"
 	legend["floor"] = "."
 	legend["hero"] = "@"

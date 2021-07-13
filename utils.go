@@ -49,11 +49,13 @@ func randomInt(min, max int) int {
 	return r.Intn(max-min+1) + min
 }
 
-func get2dArray(rows, cols int) [][]string {
-	a := make([][]string, rows)
+func get2dArray(cols, rows int) [][]string {
+	a := make([][]string, cols)
 	for i := range a {
-		a[i] = make([]string, cols)
+		a[i] = make([]string, rows)
 	}
+	// a = array of size cols whose elements are array of size rows of string
+	// [cols][rows]string
 	return a
 }
 
