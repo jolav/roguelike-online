@@ -48,26 +48,20 @@ func (m *gameMap) IsVisible(x, y int) bool {
 }
 
 func (m *gameMap) convertMapToView(r *run, c config) {
-	pj := r.Entities["player"]
+	pj := r.Entities[0].Pos
 	camX := pj.X - c.ViewWidth/2
 	camY := pj.Y - c.ViewHeight/2
-	pjX := c.ViewWidth / 2
-	pjY := c.ViewHeight / 2
 	if camX < 0 {
 		camX = 0
-		pjX = pj.X
 	}
 	if (camX + c.ViewWidth) > m.Width {
 		camX = m.Width - c.ViewWidth
-		pjX = pj.X - camX
 	}
 	if camY < 0 {
 		camY = 0
-		pjY = pj.Y
 	}
 	if (camY + c.ViewHeight) > m.Height {
 		camY = m.Height - c.ViewHeight
-		pjY = pj.Y - camY
 	}
 
 	for x := 0; x < c.ViewWidth; x++ {
@@ -89,13 +83,62 @@ func (m *gameMap) convertMapToView(r *run, c config) {
 				r.View[x][y] = "wallVisited"
 				break
 			default:
-				//fmt.Println("DEFAULT")
+				//fmt.Println("PROBLEM")
 			}
 		}
 	}
-	// set player
-	r.View[pjX][pjY] = "hero"
+}
 
+func (m *gameMap) createPublicEntities(r *run, c config) {
+	// clear public
+	r.PublicEntities = newPublicEntities()
+	public := r.PublicEntities
+
+	// get cam offset
+	pj := r.Entities[0].Pos
+	camX := pj.X - c.ViewWidth/2
+	camY := pj.Y - c.ViewHeight/2
+	if camX < 0 {
+		camX = 0
+	}
+	if (camX + c.ViewWidth) > m.Width {
+		camX = m.Width - c.ViewWidth
+	}
+	if camY < 0 {
+		camY = 0
+	}
+	if (camY + c.ViewHeight) > m.Height {
+		camY = m.Height - c.ViewHeight
+	}
+
+	// copy player as public[0]
+	public = append(public, *r.Entities[0])
+	public[0].Pos.X = r.Entities[0].Pos.X - camX
+	public[0].Pos.Y = r.Entities[0].Pos.Y - camY
+	// copy only visible entities
+	var index int = 1
+	for k, _ := range r.Entities {
+		if m.IsVisible(r.Entities[k].Pos.X, r.Entities[k].Pos.Y) && k != 0 {
+			//fmt.Println(k, v)
+			public = append(public, *r.Entities[k])
+			public[index].Pos.X = r.Entities[k].Pos.X - camX
+			public[index].Pos.Y = r.Entities[k].Pos.Y - camY
+			index++
+		}
+	}
+	r.PublicEntities = public
+
+}
+
+func (m *gameMap) isEntityBlocking(r *run, x, y int) bool {
+	for k, _ := range r.Entities {
+		if r.Entities[k].Pos.X == x && r.Entities[k].Pos.Y == y {
+			if r.Entities[k].BlocksMov {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (m *gameMap) fillMapBlockedTiles() {

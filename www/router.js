@@ -37,16 +37,18 @@ function playGame(a) {
 async function startNewGame() {
   let aux = await http.fetchNewGame();
   a.updateGameData(aux);
+  console.log(a.entities);
   router.playGame(a);
-  console.log(a);
 }
 
 async function startNewTurn(action) {
   let data = await http.fetchNewTurn(action);
+  console.log(data.entities);
   render.eraseUI();
   render.drawUI(data);
   render.eraseGrid();
   render.drawGrid(data);
+
 }
 
 export {

@@ -11,6 +11,7 @@ func gameLoop(a *app) {
 			newRun := a.Runs.newRun(&a.Conf)
 			newRun.Fov.rayCast(newRun)
 			newRun.Map.convertMapToView(newRun, a.Conf)
+			newRun.Map.createPublicEntities(newRun, a.Conf)
 			sendToken <- newRun
 
 		case askTurn := <-a.Ch.askNewTurn:
@@ -18,6 +19,7 @@ func gameLoop(a *app) {
 			movement(askTurn.action, r)
 			r.Fov.rayCast(r)
 			r.Map.convertMapToView(r, a.Conf)
+			r.Map.createPublicEntities(r, a.Conf)
 			a.Runs[askTurn.token] = r
 			askTurn.comm <- r
 		}
@@ -37,9 +39,10 @@ func movement(action string, r *run) {
 	case "left":
 		dx = -1
 	}
-	var playerX = r.Entities["player"].X
-	var playerY = r.Entities["player"].Y
-	if !r.Map.Tiles[playerX+dx][playerY+dy].Blocked {
-		r.Entities["player"].move(dx, dy)
+	var playerX = r.Entities[0].Pos.X
+	var playerY = r.Entities[0].Pos.Y
+	if !r.Map.IsBlocked(playerX+dx, playerY+dy) &&
+		!r.Map.isEntityBlocking(r, playerX+dx, playerY+dy) {
+		r.Entities[0].move(dx, dy)
 	}
 }

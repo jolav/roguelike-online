@@ -8,7 +8,7 @@ function drawGrid(a) {
   const visited = initializeMultiArray(cols, rows, false);
   const board = document.createElement("board");
   board.id = "boardZone";
-
+  // draw tilemaps
   for (let row = 0; row < rows; row++) {
     const column = document.createElement("tr");
     for (let col = 0; col < cols; col++) {
@@ -27,6 +27,16 @@ function drawGrid(a) {
     board.appendChild(column);
   }
   document.getElementById('play').appendChild(board);
+  // draw entities
+  for (let e in a.entities) {
+    const posX = a.entities[e].pos.x;
+    const posY = a.entities[e].pos.y;
+    const legend = a.entities[e].pos.char;
+    const cell = document.getElementById(posX + "-" + posY);
+    if (cell === null) console.log(posX + "-" + posY);
+    cell.innerText = legend;
+  }
+  // draw visited
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       if (visited[col][row]) {
@@ -44,8 +54,8 @@ function eraseGrid() {
 function drawUI(a) {
   const ui = document.createElement("ui");
   ui.id = "uiZone";
-  const playerX = a.entities["player"].x;
-  const playerY = a.entities["player"].y;
+  const playerX = a.entities[0].pos.x;
+  const playerY = a.entities[0].pos.y;
   const nickText = document.createTextNode("\"" + a.nick + "\" = ");
   const posText = document.createTextNode(playerX + ":" + playerY);
   ui.appendChild(nickText);

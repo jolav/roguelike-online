@@ -22,16 +22,20 @@ type room struct {
 }
 
 const (
-	roomTries         = 5000
-	rooms             = 200
-	minSizeRoom       = 4
-	maxSizeRoom       = 25
-	minLengthCorridor = 2
-	maxLengthCorridor = 25
-	corridorPercent   = 15
+	roomTries         int = 5000
+	rooms             int = 200
+	minSizeRoom       int = 4
+	maxSizeRoom       int = 25
+	minLengthCorridor int = 2
+	maxLengthCorridor int = 25
+	corridorPercent   int = 15
+	foesTries         int = roomTries
+	maxFoes           int = rooms / 2
 )
 
-func (m *gameMap) initializeRandomMap() {
+// CREATE MAP
+
+func (m *gameMap) initializeRandom() {
 	m.fillMapBlockedTiles()
 	m.createSingleRoomInCenter()
 	success := 0
@@ -188,4 +192,75 @@ func (m *gameMap) fillRectRoom(r *room) {
 			m.Tiles[originX+x][originY+y] = &tile{false, false, false, false}
 		}
 	}
+}
+
+// POPULATE MAP
+
+func (m *gameMap) populate(r *run) {
+	r.Entities[0] = newEntity(
+		"player",
+		true,
+		true,
+		pos{
+			Char:   "@",
+			Facing: 'N',
+			X:      r.Map.Width / 2,
+			Y:      r.Map.Height / 2,
+		},
+		combat{},
+	)
+	success := 0
+	for tries := 1; tries < foesTries; tries++ {
+		p := m.pickRandomPointFromMap()
+		if m.checkIsRoomForFoe(p) && m.isNotOccupied(p, r.Entities) {
+			r.Entities[len(r.Entities)] = newEntity(
+				"rat",
+				true,
+				true,
+				pos{
+					Char:   "r",
+					Facing: 'N',
+					X:      p.X,
+					Y:      p.Y,
+				},
+				combat{},
+			)
+			success++
+			if success >= maxFoes {
+				return
+			}
+		}
+	}
+}
+
+func (m *gameMap) pickRandomPointFromMap() (p pos) {
+	p = pos{m.Width / 2, m.Height / 2, "E", 'N'}
+	var found bool = false
+	var limit int = 0
+	for !found && limit < 5000 {
+		p.X = randomInt(0, m.Width-1)
+		p.Y = randomInt(0, m.Height-1)
+		if !m.IsBlocked(p.X, p.Y) {
+			found = true
+		}
+		limit++
+	}
+	return p
+}
+
+func (m *gameMap) checkIsRoomForFoe(p pos) bool {
+	nei, _ := m.getClearNeighbours(p.X, p.Y)
+	if nei > 2 {
+		return true
+	}
+	return false
+}
+
+func (m *gameMap) isNotOccupied(p pos, e entities) bool {
+	for k, _ := range e {
+		if p.X == e[k].Pos.X && p.Y == e[k].Pos.X {
+			return false
+		}
+	}
+	return true
 }

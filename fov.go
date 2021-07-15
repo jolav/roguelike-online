@@ -37,15 +37,15 @@ func (f *FieldOfVision) rayCast(r *run) {
 		}
 	}
 	// mark player
-	pX := r.Entities["player"].X
-	pY := r.Entities["player"].Y
+	pX := r.Entities[0].Pos.X
+	pY := r.Entities[0].Pos.Y
 	r.Map.Tiles[pX][pY].Explored = true
 	r.Map.Tiles[pX][pY].Visible = true
 
 	losLength := r.Fov.losRadius
 	arcL := 135
 	arcR := 225
-	switch r.Entities["player"].Facing {
+	switch r.Entities[0].Pos.Facing {
 	case 'N':
 	case 'E':
 		arcL = 45
@@ -69,7 +69,7 @@ func (f *FieldOfVision) rayCast(r *run) {
 			losLength = 2
 			*/
 		} else {
-			losLength = 8 //2
+			losLength = losRadius // 2
 		}
 
 		for z := 0; z < losLength; z++ {
