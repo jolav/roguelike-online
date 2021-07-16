@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
-	"time"
 )
 
 func prettyPrintStruct(s interface{}) {
@@ -17,11 +16,10 @@ func prettyPrintStruct(s interface{}) {
 
 func getRandomString(length int) string {
 	const chars = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
-	var seed = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	b := make([]byte, length)
 	for i := range b {
-		b[i] = chars[seed.Intn(len(chars))]
+		b[i] = chars[rand.Intn(len(chars))]
 	}
 	return string(b)
 }
@@ -29,24 +27,22 @@ func getRandomString(length int) string {
 func getRandomNick(nameLength, numbersLength int) string {
 	const chars = "abcdefghijklmnopqrstuvwxyz"
 	const nums = "0123456789"
-	var seed = rand.New(rand.NewSource(time.Now().UnixNano()))
 	var nick = ""
 	b := make([]byte, nameLength)
 	for i := range b {
-		b[i] = chars[seed.Intn(len(chars))]
+		b[i] = chars[rand.Intn(len(chars))]
 	}
 	nick += string(b)
 	c := make([]byte, numbersLength)
 	for i := range c {
-		c[i] = nums[seed.Intn(len(nums))]
+		c[i] = nums[rand.Intn(len(nums))]
 	}
 	nick += string(c)
 	return nick
 }
 
 func randomInt(min, max int) int {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	return r.Intn(max-min+1) + min
+	return rand.Intn(max-min+1) + min
 }
 
 func get2dArray(cols, rows int) [][]string {

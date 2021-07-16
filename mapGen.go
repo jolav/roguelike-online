@@ -64,7 +64,7 @@ func (m *gameMap) pickRandomWallFromAnyRoom() (w *wall) {
 	for !found && limit < 5000 {
 		w.X = randomInt(0, m.Width-1)
 		w.Y = randomInt(0, m.Height-1)
-		if m.Tiles[w.X][w.Y].Blocked && m.notInTheBoardEdge(w.X, w.Y) {
+		if m.isBlocked(w.X, w.Y) && m.notInTheBoardEdge(w.X, w.Y) {
 			w.Nei, w.Dir = m.getClearNeighbours(w.X, w.Y)
 			if w.Nei == 1 {
 				found = true
@@ -81,19 +81,19 @@ func (m *gameMap) pickRandomWallFromAnyRoom() (w *wall) {
 func (m *gameMap) getClearNeighbours(x, y int) (int, string) {
 	var nei int = 0
 	var dir = "Zero"
-	if !m.Tiles[x][y-1].Blocked {
+	if !m.isBlocked(x, y-1) {
 		nei++
 		dir = "S"
 	}
-	if !m.Tiles[x][y+1].Blocked {
+	if !m.isBlocked(x, y+1) {
 		nei++
 		dir = "N"
 	}
-	if !m.Tiles[x+1][y].Blocked {
+	if !m.isBlocked(x+1, y) {
 		nei++
 		dir = "W"
 	}
-	if !m.Tiles[x-1][y].Blocked {
+	if !m.isBlocked(x-1, y) {
 		nei++
 		dir = "E"
 	}
@@ -160,7 +160,7 @@ func (m *gameMap) checkIsRoomForFeature(r *room) bool {
 	originY := r.Y // (m.Height - r.Height) / 2
 	for x := 0; x < r.Width; x++ {
 		for y := 0; y < r.Height; y++ {
-			if !m.Tiles[originX+x][originY+y].Blocked {
+			if !m.isBlocked(originX+x, originY+y) {
 				return false
 			}
 		}
@@ -240,7 +240,7 @@ func (m *gameMap) pickRandomPointFromMap() (p pos) {
 	for !found && limit < 5000 {
 		p.X = randomInt(0, m.Width-1)
 		p.Y = randomInt(0, m.Height-1)
-		if !m.IsBlocked(p.X, p.Y) {
+		if !m.isBlocked(p.X, p.Y) {
 			found = true
 		}
 		limit++

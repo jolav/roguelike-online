@@ -28,6 +28,10 @@ function actionKey(e) {
     case 'a':
       action = "left";
       break;
+    case 't':
+    case 'T':
+      action = "skip";
+      break;
     default:
     //console.log(e.target.id, ' -- Not recognized event');
   }

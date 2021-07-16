@@ -10,13 +10,13 @@ const (
 	losRadius = 8
 )
 
-type FieldOfVision struct {
+type fieldOfVision struct {
 	sin       map[int]float64
 	cos       map[int]float64
 	losRadius int
 }
 
-func (f *FieldOfVision) initFOV() {
+func (f *fieldOfVision) initFOV() {
 	f.cos = make(map[int]float64)
 	f.sin = make(map[int]float64)
 
@@ -29,10 +29,11 @@ func (f *FieldOfVision) initFOV() {
 	f.losRadius = losRadius
 }
 
-func (f *FieldOfVision) rayCast(r *run) {
+func (f *fieldOfVision) rayCast(r *run) {
 	// clean map
 	for x := 0; x < r.Map.Width; x++ {
 		for y := 0; y < r.Map.Height; y++ {
+			//r.Map.Tiles[x][y].Visible = true // see all map to see bugs
 			r.Map.Tiles[x][y].Visible = false
 		}
 	}
@@ -82,7 +83,7 @@ func (f *FieldOfVision) rayCast(r *run) {
 			}
 			r.Map.Tiles[roundedX][roundedY].Explored = true
 			r.Map.Tiles[roundedX][roundedY].Visible = true
-			if r.Map.Tiles[roundedX][roundedY].BlockLOS == true {
+			if r.Map.isBlockingLOS(roundedX, roundedY) {
 				break
 			}
 		}

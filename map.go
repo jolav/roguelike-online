@@ -15,7 +15,7 @@ type tile struct {
 	Visible  bool
 }
 
-func (m *gameMap) IsBlocked(x, y int) bool {
+func (m *gameMap) isBlocked(x, y int) bool {
 	if m.Tiles[x][y].Blocked {
 		return true
 	} else {
@@ -23,7 +23,7 @@ func (m *gameMap) IsBlocked(x, y int) bool {
 	}
 }
 
-func (m *gameMap) IsBlockingLOS(x, y int) bool {
+func (m *gameMap) isBlockingLOS(x, y int) bool {
 	if m.Tiles[x][y].BlockLOS {
 		return true
 	} else {
@@ -31,7 +31,7 @@ func (m *gameMap) IsBlockingLOS(x, y int) bool {
 	}
 }
 
-func (m *gameMap) IsExplored(x, y int) bool {
+func (m *gameMap) isExplored(x, y int) bool {
 	if m.Tiles[x][y].Explored {
 		return true
 	} else {
@@ -39,7 +39,7 @@ func (m *gameMap) IsExplored(x, y int) bool {
 	}
 }
 
-func (m *gameMap) IsVisible(x, y int) bool {
+func (m *gameMap) isVisible(x, y int) bool {
 	if m.Tiles[x][y].Visible {
 		return true
 	} else {
@@ -67,19 +67,19 @@ func (m *gameMap) convertMapToView(r *run, c config) {
 	for x := 0; x < c.ViewWidth; x++ {
 		for y := 0; y < c.ViewHeight; y++ {
 			switch {
-			case !m.IsExplored(camX+x, camY+y) && !m.IsVisible(camX+x, camY+y):
+			case !m.isExplored(camX+x, camY+y) && !m.isVisible(camX+x, camY+y):
 				r.View[x][y] = "unknown"
 				break
-			case m.IsVisible(camX+x, camY+y) && !m.IsBlocked(camX+x, camY+y):
+			case m.isVisible(camX+x, camY+y) && !m.isBlocked(camX+x, camY+y):
 				r.View[x][y] = "floor"
 				break
-			case m.IsVisible(camX+x, camY+y) && m.IsBlocked(camX+x, camY+y):
+			case m.isVisible(camX+x, camY+y) && m.isBlocked(camX+x, camY+y):
 				r.View[x][y] = "wall"
 				break
-			case m.IsExplored(camX+x, camY+y) && !m.IsBlocked(camX+x, camY+y):
+			case m.isExplored(camX+x, camY+y) && !m.isBlocked(camX+x, camY+y):
 				r.View[x][y] = "floorVisited"
 				break
-			case m.IsExplored(camX+x, camY+y) && m.IsBlocked(camX+x, camY+y):
+			case m.isExplored(camX+x, camY+y) && m.isBlocked(camX+x, camY+y):
 				r.View[x][y] = "wallVisited"
 				break
 			default:
@@ -118,7 +118,7 @@ func (m *gameMap) createPublicEntities(r *run, c config) {
 	// copy only visible entities
 	var index int = 1
 	for k, _ := range r.Entities {
-		if m.IsVisible(r.Entities[k].Pos.X, r.Entities[k].Pos.Y) && k != 0 {
+		if m.isVisible(r.Entities[k].Pos.X, r.Entities[k].Pos.Y) && k != 0 {
 			//fmt.Println(k, v)
 			public = append(public, *r.Entities[k])
 			public[index].Pos.X = r.Entities[k].Pos.X - camX
@@ -133,7 +133,7 @@ func (m *gameMap) createPublicEntities(r *run, c config) {
 func (m *gameMap) isEntityBlocking(r *run, x, y int) bool {
 	for k, _ := range r.Entities {
 		if r.Entities[k].Pos.X == x && r.Entities[k].Pos.Y == y {
-			if r.Entities[k].BlocksMov {
+			if r.Entities[k].isBlocking() {
 				return true
 			}
 		}

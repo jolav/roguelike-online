@@ -5,11 +5,11 @@ package main
 type entities map[int]*entity
 
 type entity struct {
-	Name      string `json:"name"`
-	BlocksMov bool   `json:"blocksMov"`
-	IsMobile  bool   `json:"isMobile"`
-	Pos       pos    `json:"pos"`
-	Combat    combat `json:"combat"`
+	Name   string `json:"name"`
+	Blocks bool   `json:"blocks"`
+	Mobile bool   `json:"mobile"`
+	Pos    pos    `json:"pos"`
+	Combat combat `json:"combat"`
 }
 
 type pos struct {
@@ -31,23 +31,28 @@ func (e *entity) move(dx, dy int) {
 	e.Pos.Y += dy
 }
 
+func (e *entity) isBlocking() bool {
+	return e.Blocks
+}
+
+func (e *entity) isMobile() bool {
+	return e.Mobile
+}
+
+func (e *entity) isCombatant() bool {
+	if e.Combat == (combat{}) {
+		return false
+	}
+	return true
+}
+
 func newEntity(name string, block bool, mob bool, p pos, c combat) *entity {
 	return &entity{
-		Name:      name,
-		BlocksMov: block,
-		IsMobile:  mob,
-		Pos: pos{
-			X:      p.X,
-			Y:      p.Y,
-			Char:   p.Char,
-			Facing: 'N',
-		},
-		Combat: combat{
-			HP:      c.HP,
-			MaxHP:   c.MaxHP,
-			Attack:  c.Attack,
-			Defence: c.Defence,
-		},
+		Name:   name,
+		Blocks: block,
+		Mobile: mob,
+		Pos:    p,
+		Combat: c,
 	}
 }
 

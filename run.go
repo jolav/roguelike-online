@@ -2,22 +2,31 @@
 
 package main
 
+import (
+	"math/rand"
+	"time"
+)
+
 type runs map[string]*run
 
 type run struct {
 	Nick           string            `json:"nick"`
 	Token          string            `json:"token"`
+	Seed           int64             `json:"-"`
 	View           [][]string        `json:"view"`
 	Legend         map[string]string `json:"legend"`
 	Entities       entities          `json:"-"`
 	PublicEntities []entity          `json:"entities"`
 	Map            *gameMap          `json:"-"`
-	Fov            *FieldOfVision    `json:"-"`
+	Fov            *fieldOfVision    `json:"-"`
 }
 
 func (rs *runs) newRun(c *config) *run {
+	seed := time.Now().UnixNano()
+	rand.Seed(seed)
 	r := newRunCreator(c)
 	(*rs)[r.Token] = r
+	r.Seed = seed
 	r.Fov.initFOV()
 	r.Map.initializeRandom()
 	r.Map.populate(r)
@@ -50,7 +59,7 @@ func newRunCreator(c *config) *run {
 			Width:  c.MapWidth,
 			Height: c.MapHeight,
 		},
-		Fov: &FieldOfVision{},
+		Fov: &fieldOfVision{},
 	}
 }
 

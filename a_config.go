@@ -24,8 +24,8 @@ func getConfigJSON() (configjson []byte) {
 			"lenIntegers" : 2,
 			"mapWidth"    : 100,
 			"mapHeight"   : 100,
-			"viewWidth"   : 31,
-			"viewHeight"  : 25
+			"viewWidth"   : 51,
+			"viewHeight"  : 41
 		}
 	}
 	`)
