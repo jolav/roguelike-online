@@ -2,6 +2,8 @@
 
 package main
 
+import "fmt"
+
 func gameLoop(a *app) {
 
 	for {
@@ -17,6 +19,7 @@ func gameLoop(a *app) {
 		case askTurn := <-a.Ch.askNewTurn:
 			r := a.Runs[askTurn.token]
 			movement(askTurn.action, r)
+			//movementFoes(r)
 			r.Fov.rayCast(r)
 			r.Map.convertMapToView(r, a.Conf)
 			r.Map.createPublicEntities(r, a.Conf)
@@ -25,6 +28,42 @@ func gameLoop(a *app) {
 		}
 	}
 	// UNREACHABLE CODE
+}
+
+func movementFoes(r *run) {
+	for k, v := range r.Entities {
+		if r.Map.isVisible(v.Pos.X, v.Pos.Y) {
+			if k != 0 {
+				fmt.Println("is in my LOS ...", v)
+				r.Map.pathFinding(r, v.Pos)
+			}
+		}
+	}
+}
+
+func (m *gameMap) pathFinding(r *run, start pos) {
+	paths := make([][]int, r.Map.Height)
+	for i := range paths {
+		paths[i] = make([]int, r.Map.Width)
+	}
+	fmt.Println("HUYYYY")
+	fmt.Println(len(paths))
+	//fmt.Println(paths[150][90])
+	fmt.Println(paths[90][150])
+	//paths := make([w][10]int)
+	end := pos{
+		X: r.Entities[0].Pos.X,
+		Y: r.Entities[0].Pos.Y,
+	}
+	queue := []pos{start}
+	fmt.Println(queue, end)
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+		if current == end {
+			break
+		}
+	}
 }
 
 func movement(action string, r *run) {

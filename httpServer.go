@@ -67,6 +67,8 @@ func action(w http.ResponseWriter, r *http.Request, a *app) {
 
 func checkValid(next http.HandlerFunc, rs runs) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(150 * time.Millisecond) //simulate network travel
+		startTime := time.Now()
 		r.ParseForm()
 		token := r.Form.Get("token")
 		if !rs.exists(token) {
@@ -74,6 +76,8 @@ func checkValid(next http.HandlerFunc, rs runs) http.HandlerFunc {
 			return
 		}
 		next.ServeHTTP(w, r)
+		duration := time.Now().Sub(startTime)
+		fmt.Println(duration)
 	}
 }
 

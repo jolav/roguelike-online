@@ -74,5 +74,6 @@ func getLegend() map[string]string {
 	legend["floor"] = "."
 	legend["wallVisited"] = "##"
 	legend["floorVisited"] = ".."
+	legend["path"] = "="
 	return legend
 }

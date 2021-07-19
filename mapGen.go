@@ -30,7 +30,7 @@ const (
 	maxLengthCorridor int = 25
 	corridorPercent   int = 15
 	foesTries         int = roomTries
-	maxFoes           int = rooms / 2
+	maxFoes           int = rooms / 4
 )
 
 // CREATE MAP
