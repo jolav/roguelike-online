@@ -58,3 +58,20 @@ func get2dArray(cols, rows int) [][]string {
 func round(f float64) float64 {
 	return math.Floor(f + .5)
 }
+
+func reversePosArray(reverse []pos) []pos {
+	for i, j := 0, len(reverse)-1; i < j; i, j = i+1, j-1 {
+		reverse[i], reverse[j] = reverse[j], reverse[i]
+	}
+	return reverse
+}
+
+func printArray(arr [][]int) {
+	for j := 0; j < len(arr[0]); j++ {
+		var aux []int
+		for i := 0; i < len(arr); i++ {
+			aux = append(aux, arr[i][j])
+		}
+		fmt.Println(aux)
+	}
+}

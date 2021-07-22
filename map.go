@@ -130,15 +130,15 @@ func (m *gameMap) createPublicEntities(r *run, c config) {
 
 }
 
-func (m *gameMap) isEntityBlocking(r *run, x, y int) bool {
+func (m *gameMap) isEntityBlocking(r *run, x, y int) (bool, *entity) {
 	for k, _ := range r.Entities {
 		if r.Entities[k].Pos.X == x && r.Entities[k].Pos.Y == y {
 			if r.Entities[k].isBlocking() {
-				return true
+				return true, r.Entities[k]
 			}
 		}
 	}
-	return false
+	return false, nil
 }
 
 func (m *gameMap) fillMapBlockedTiles() {

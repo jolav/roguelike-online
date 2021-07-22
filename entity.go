@@ -46,6 +46,38 @@ func (e *entity) isCombatant() bool {
 	return true
 }
 
+func (e *entity) attack(target *entity) {
+	d6 := randomInt(1, 6)
+	damage := e.Combat.Attack + d6 - target.Combat.Defence
+	if damage > 0 {
+		target.Combat.HP -= damage
+	}
+}
+
+func (e *entity) isDead() bool {
+	if e.Combat.HP > 0 {
+		return false
+	}
+	return true
+}
+
+func (p pos) add(p2 pos) pos {
+	return pos{
+		X: p.X + p2.X,
+		Y: p.Y + p2.Y,
+	}
+}
+
+func (p pos) at(grid [][]int) (int, bool) {
+	if p.X < 0 || p.X >= len(grid) {
+		return 0, false
+	}
+	if p.Y < 0 || p.Y >= len(grid[p.X]) {
+		return 0, false
+	}
+	return grid[p.X][p.Y], true
+}
+
 func newEntity(name string, block bool, mob bool, p pos, c combat) *entity {
 	return &entity{
 		Name:   name,

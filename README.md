@@ -1,8 +1,10 @@
-![Game Server](https://img.shields.io/badge/Server-0.0.13-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
+![Game Server](https://img.shields.io/badge/Server-0.0.14-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)** 
 
 ### Part 6 - Close Combat  
+
+![Gif Part 6](https://raw.githubusercontent.com/jolav/roguelike-online/main/www/_public/gifs/part6.gif)
 
 ### Part 5 - Placing Enemies
 

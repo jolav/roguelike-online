@@ -57,6 +57,19 @@ func (m *gameMap) initializeRandom() {
 	}
 }
 
+func (m *gameMap) initializeRandomFIXED() {
+	m.fillMapBlockedTiles()
+	for x := 0; x < m.Width; x++ {
+		for y := 0; y < m.Height; y++ {
+			if m.notInTheBoardEdge(x, y) {
+				m.Tiles[x][y] = &tile{false, false, false, false}
+
+			}
+		}
+	}
+
+}
+
 func (m *gameMap) pickRandomWallFromAnyRoom() (w *wall) {
 	w = new(wall)
 	var found bool = false
@@ -207,12 +220,17 @@ func (m *gameMap) populate(r *run) {
 			X:      r.Map.Width / 2,
 			Y:      r.Map.Height / 2,
 		},
-		combat{},
+		combat{
+			MaxHP:   30,
+			HP:      30,
+			Attack:  5,
+			Defence: 5,
+		},
 	)
 	success := 0
 	for tries := 1; tries < foesTries; tries++ {
 		p := m.pickRandomPointFromMap()
-		if m.checkIsRoomForFoe(p) && m.isNotOccupied(p, r.Entities) {
+		if m.checkIsRoomForFoe(p) && !m.isOccupied(p, r.Entities) {
 			r.Entities[len(r.Entities)] = newEntity(
 				"rat",
 				true,
@@ -223,8 +241,12 @@ func (m *gameMap) populate(r *run) {
 					X:      p.X,
 					Y:      p.Y,
 				},
-				combat{},
-			)
+				combat{
+					MaxHP:   10,
+					HP:      10,
+					Attack:  2,
+					Defence: 2,
+				})
 			success++
 			if success >= maxFoes {
 				return
@@ -256,11 +278,11 @@ func (m *gameMap) checkIsRoomForFoe(p pos) bool {
 	return false
 }
 
-func (m *gameMap) isNotOccupied(p pos, e entities) bool {
+func (m *gameMap) isOccupied(p pos, e entities) bool {
 	for k, _ := range e {
-		if p.X == e[k].Pos.X && p.Y == e[k].Pos.X {
-			return false
+		if p.X == e[k].Pos.X && p.Y == e[k].Pos.Y {
+			return true
 		}
 	}
-	return true
+	return false
 }

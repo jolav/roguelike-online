@@ -12,6 +12,7 @@ type runs map[string]*run
 type run struct {
 	Nick           string            `json:"nick"`
 	Token          string            `json:"token"`
+	GameOver       bool              `json:"gameOver"`
 	Seed           int64             `json:"-"`
 	View           [][]string        `json:"view"`
 	Legend         map[string]string `json:"legend"`
@@ -29,6 +30,7 @@ func (rs *runs) newRun(c *config) *run {
 	r.Seed = seed
 	r.Fov.initFOV()
 	r.Map.initializeRandom()
+	//r.Map.initializeRandomFIXED()
 	r.Map.populate(r)
 	return r
 }
@@ -51,6 +53,7 @@ func newRunCreator(c *config) *run {
 	return &run{
 		Nick:           getRandomNick(c.LenChars, c.LenIntegers),
 		Token:          getRandomString(c.TokenLength),
+		GameOver:       false,
 		View:           get2dArray(c.ViewWidth, c.ViewHeight),
 		Legend:         getLegend(),
 		Entities:       newEntities(),
