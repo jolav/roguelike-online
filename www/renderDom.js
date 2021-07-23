@@ -36,6 +36,12 @@ function drawGrid(a) {
     if (cell === null) console.log(posX + "-" + posY);
     cell.innerText = legend;
   }
+  // draw player again ensure is on the top
+  const posX = a.entities[0].pos.x;
+  const posY = a.entities[0].pos.y;
+  const legend = a.entities[0].pos.char;
+  const cell = document.getElementById(posX + "-" + posY);
+  cell.innerText = legend;
   // draw visited
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -54,15 +60,25 @@ function eraseGrid() {
 function drawUI(a) {
   const ui = document.createElement("ui");
   ui.id = "uiZone";
-  const playerX = a.entities[0].pos.x;
-  const playerY = a.entities[0].pos.y;
-  const nickText = document.createTextNode("\"" + a.nick + "\" = ");
-  const posText = document.createTextNode(playerX + ":" + playerY);
+  const player = a.entities[0];
+  const nickText = document.createTextNode("\"" + a.nick + "\" ");
+  const hp = "HP: " + player.combat.hp + "/" + player.combat.maxhp;
+  const hpText = document.createTextNode(hp);
+  const messages = document.createElement("textarea");
+  messages.id = "msgZone";
+  messages.setAttribute("cols", 70);
+  messages.setAttribute("rows", 5);
+  //messages.setAttribute("value", a.history);
   ui.appendChild(nickText);
-  ui.appendChild(posText);
+  ui.appendChild(hpText);
+  ui.appendChild(document.createElement("br"));
+  ui.appendChild(document.createElement("br"));
+  ui.appendChild(messages);
   ui.appendChild(document.createElement("br"));
   ui.appendChild(document.createElement("br"));
   document.getElementById("play").appendChild(ui);
+  document.getElementById("msgZone").value = a.history;
+
 }
 
 function eraseUI() {
@@ -86,3 +102,4 @@ function initializeMultiArray(cols, rows, value) {
   }
   return array;
 }
+

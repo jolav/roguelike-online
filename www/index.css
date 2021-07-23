@@ -43,8 +43,21 @@ button:hover {
 }
 
 section#play {
-  line-height: 0.8em;
-  font-size: 0.8em;
+  line-height: 0.7em;
+  font-size: 0.7em;
+}
+
+#uiZone {}
+
+#boardZone {}
+
+textarea#msgZone {
+  border: 0px;
+  outline: none;
+  resize: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
 }
 
 .visited {

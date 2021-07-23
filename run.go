@@ -15,6 +15,7 @@ type run struct {
 	GameOver       bool              `json:"gameOver"`
 	Seed           int64             `json:"-"`
 	View           [][]string        `json:"view"`
+	History        []string          `json:"history"`
 	Legend         map[string]string `json:"legend"`
 	Entities       entities          `json:"-"`
 	PublicEntities []entity          `json:"entities"`
@@ -55,6 +56,7 @@ func newRunCreator(c *config) *run {
 		Token:          getRandomString(c.TokenLength),
 		GameOver:       false,
 		View:           get2dArray(c.ViewWidth, c.ViewHeight),
+		History:        make([]string, 0),
 		Legend:         getLegend(),
 		Entities:       newEntities(),
 		PublicEntities: newPublicEntities(),

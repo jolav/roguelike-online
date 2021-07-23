@@ -2,6 +2,10 @@
 
 package main
 
+import (
+	"fmt"
+)
+
 type entities map[int]*entity
 
 type entity struct {
@@ -46,11 +50,14 @@ func (e *entity) isCombatant() bool {
 	return true
 }
 
-func (e *entity) attack(target *entity) {
+func (e *entity) attack(target *entity, r *run) {
 	d6 := randomInt(1, 6)
 	damage := e.Combat.Attack + d6 - target.Combat.Defence
 	if damage > 0 {
 		target.Combat.HP -= damage
+		combatMsg :=
+			fmt.Sprintf("%s deals %d damage to %s", e.Name, damage, target.Name)
+		r.History = append(r.History, combatMsg)
 	}
 }
 

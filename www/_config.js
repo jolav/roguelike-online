@@ -7,8 +7,13 @@ let a = {
   view: {},
   entities: [],
   legend: [],
-  updateGameData: function (data) {
+  history: [],
+  gameOver: false,
+  updateNewGameData: function (data) {
     a = data;
+    a.history = [
+      "Welcome to Roguelike.online !"
+    ];
   }
 };
 

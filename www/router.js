@@ -5,7 +5,7 @@ import { conf, a } from "./_config.js";
 import * as http from "./http.js";
 import * as render from "./renderDom.js";
 import * as router from "./router.js";
-import { actionKey } from "./controls.js";
+import { actionKey, looseGame } from "./controls.js";
 
 function landingPage() {
   document.getElementById("intro").style.display = "block";
@@ -36,19 +36,27 @@ function playGame(a) {
 
 async function startNewGame() {
   let aux = await http.fetchNewGame();
-  a.updateGameData(aux);
-  console.log(a.entities);
+  a.updateNewGameData(aux);
+  console.log(a.gameOver);
   router.playGame(a);
 }
 
 async function startNewTurn(action) {
   let data = await http.fetchNewTurn(action);
-  console.log(data.entities);
+  if (data.gameOver) {
+    looseGame();
+  }
+  console.log(data);
+  data.history.reverse();
+  let aux = "";
+  for (let i = 0; i < data.history.length; i++) {
+    aux += data.history[i] + " \n";
+  }
+  data.history = aux;
   render.eraseUI();
   render.drawUI(data);
   render.eraseGrid();
   render.drawGrid(data);
-
 }
 
 export {

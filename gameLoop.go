@@ -47,7 +47,7 @@ func movementFoes(r *run) {
 				if r.Map.isOccupied(path[1], r.Entities) {
 					if path[1] == pj {
 						//fmt.Println("Attacking ... ", path[1])
-						v.attack(player)
+						v.attack(player, r)
 						if player.isDead() {
 							r.Entities[0].Pos.Char = "%"
 							r.GameOver = true
@@ -160,7 +160,7 @@ func movement(action string, r *run) {
 	if !r.Map.isBlocked(newX, newY) {
 		isBlocking, e := r.Map.isEntityBlocking(r, newX, newY)
 		if isBlocking {
-			player.attack(e)
+			player.attack(e, r)
 			if e.isDead() {
 				e.Pos.Char = "%"
 				e.Blocks = false
