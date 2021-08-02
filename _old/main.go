@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	version     = "0.0.0"
+	version     = "0.0.15"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
@@ -40,9 +40,22 @@ type config struct {
 	ViewHeight  int `json:"viewHeight"`
 }
 
+type turn struct {
+	comm   chan *run
+	token  string
+	action string
+}
+
+type channels struct {
+	askNewGame chan chan *run
+	askNewTurn chan *turn
+}
+
 type app struct {
 	Syst system `json:"system"`
 	Conf config `json:"config"`
+	Ch   channels
+	Runs runs
 }
 
 func main() {
@@ -55,7 +68,14 @@ func main() {
 	a = &app{
 		Syst: a.Syst,
 		Conf: a.Conf,
+		Ch: channels{
+			askNewGame: make(chan chan *run),
+			askNewTurn: make(chan *turn),
+		},
+		Runs: newRuns(),
 	}
+	defer close(a.Ch.askNewGame)
+	defer close(a.Ch.askNewTurn)
 
 	//Custom Error Log File + Custom Info Log File
 	createCustomInfoLogFile(a.Syst.InfoLogFile)
@@ -65,8 +85,10 @@ func main() {
 	}
 	defer mylog.Close()
 
-	//go httpServer(a)
-	//gameLoop(a)
+	prettyPrintStruct(a)
+
+	go httpServer(a)
+	gameLoop(a)
 }
 
 func checkFlags() {

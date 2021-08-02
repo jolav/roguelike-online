@@ -20,7 +20,7 @@ func getConfigJSON() (configjson []byte) {
 		},
 		"config": {
 			"tokenLength" : 100,
-			"lenChars"    : 5,
+			"lenChars"    : 4,
 			"lenIntegers" : 2,
 			"mapWidth"    : 100,
 			"mapHeight"   : 100,

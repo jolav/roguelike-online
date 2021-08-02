@@ -17,15 +17,14 @@ Copyright: INCWADRA
 License: CC BY 3.0
 Comment: Taken from https://www.softicons.com/social-media-icons/habrapack-social-icons-by-incwadra/github-icon
 
+File: 
+Copyright: 
+License: 
+Comment: 
 
 ***** FONTS *****
 
-File: www/_public/fonts/PressStart2P.ttf
+File: www/_public/fonts/PressStart2P-Regular.ttf
 Copyright: CodeMan38
 License: SIL Open Font License (OFL) 
 Comment: Taken from https://fonts.google.com/specimen/Press+Start+2P
-
-File: www/_public/fonts/IndieFlower.ttf
-Copyright: Kimberly Geswein
-License: SIL Open Font License (OFL) 
-Comment: Taken from https://fonts.google.com/specimen/Indie+Flower

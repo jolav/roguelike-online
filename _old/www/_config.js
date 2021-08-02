@@ -4,6 +4,17 @@
 let a = {
   nick: "",
   token: "",
+  view: {},
+  entities: [],
+  legend: [],
+  history: [],
+  gameOver: false,
+  updateNewGameData: function (data) {
+    a = data;
+    a.history = [
+      "Welcome to Roguelike.online !"
+    ];
+  }
 };
 
 const conf = {
