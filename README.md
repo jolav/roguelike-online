@@ -2,7 +2,7 @@
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
 
-- [ ] **Setting Up**  
+- [X] **Setting Up**  
 - [ ] **Moving around @**  
 - [ ] **Map and Camera**  
 - [ ] **Generating Vault**  

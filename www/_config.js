@@ -4,6 +4,9 @@
 let a = {
   nick: "",
   token: "",
+  updateNewGameData: function (data) {
+    a = data;
+  }
 };
 
 const conf = {

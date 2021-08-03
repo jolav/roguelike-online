@@ -10,10 +10,12 @@ GOOS=windows GOARCH=amd64 CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc go build -ldfl
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 var (
@@ -23,26 +25,36 @@ var (
 )
 
 type system struct {
-	Mode          string `json:"mode"`
-	Host          string `json:"host"`
-	Port          int    `json:"port"`
-	ErrorsLogFile string `json:"errorsLogFile"`
-	InfoLogFile   string `json:"infoLogFile"`
+	Mode          string   `json:"mode"`
+	Host          string   `json:"host"`
+	Port          int      `json:"port"`
+	ErrorsLogFile string   `json:"errorsLogFile"`
+	InfoLogFile   string   `json:"infoLogFile"`
+	DevHosts      []string `json:"devHosts"`
 }
 
 type config struct {
-	TokenLength int `json:"tokenLength"`
-	LenChars    int `json:"lenChars"`
-	LenIntegers int `json:"lenIntegers"`
-	MapWidth    int `json:"mapWidth"`
-	MapHeight   int `json:"mapHeight"`
-	ViewWidth   int `json:"viewWidth"`
-	ViewHeight  int `json:"viewHeight"`
+	TokenLength  int `json:"tokenLength"`
+	NickChars    int `json:"nickChars"`
+	NickIntegers int `json:"nickIntegers"`
+}
+
+type turn struct {
+	comm   chan run
+	token  string
+	action string
+}
+
+type channels struct {
+	askGame chan chan run
+	askTurn chan turn
 }
 
 type app struct {
-	Syst system `json:"system"`
-	Conf config `json:"config"`
+	Sys  system `json:"system"`
+	Cnf  config `json:"config"`
+	Ch   channels
+	Runs runs
 }
 
 func main() {
@@ -51,22 +63,29 @@ func main() {
 	// Load Conf
 	var a = new(app)
 	loadConfigJSON(a)
-
 	a = &app{
-		Syst: a.Syst,
-		Conf: a.Conf,
+		Sys: checkMode(a.Sys),
+		Cnf: a.Cnf,
+		Ch: channels{
+			askGame: make(chan chan run),
+			askTurn: make(chan turn),
+		},
+		Runs: make(map[string]run),
 	}
+	defer close(a.Ch.askGame)
+	defer close(a.Ch.askTurn)
 
 	//Custom Error Log File + Custom Info Log File
-	createCustomInfoLogFile(a.Syst.InfoLogFile)
+	createCustomInfoLogFile(a.Sys.InfoLogFile)
 	var mylog *os.File
-	if a.Syst.Mode == "production" {
-		mylog = createCustomErrorLogFile(a.Syst.ErrorsLogFile)
+	if a.Sys.Mode != "dev" {
+		mylog = createCustomErrorLogFile(a.Sys.ErrorsLogFile)
 	}
 	defer mylog.Close()
 
-	//go httpServer(a)
-	//gameLoop(a)
+	prettyPrintStruct(a)
+	go a.httpServer()
+	a.gameLoop()
 }
 
 func checkFlags() {
@@ -78,6 +97,16 @@ func checkFlags() {
 		fmt.Printf("Date   :\t: %s\n", releaseDate)
 		os.Exit(0)
 	}
+}
+
+func checkMode(s system) system {
+	serverName, _ := os.Hostname()
+	serverName = strings.ToLower(serverName)
+	if sliceContainsString(serverName, s.DevHosts) {
+		s.Mode = "dev"
+		s.Port = 3000
+	}
+	return s
 }
 
 func createCustomInfoLogFile(f string) {
@@ -95,4 +124,38 @@ func createCustomErrorLogFile(f string) *os.File {
 	}
 	log.SetOutput(mylog)
 	return mylog
+}
+
+func loadConfigJSON(a *app) {
+	err := json.Unmarshal(getConfigJSON(), a)
+	if err != nil {
+		log.Fatal("Error parsing JSON config => \n", err)
+	}
+}
+
+func FAKE__getGlobalConfigJSON() (configjson []byte) {
+	// real getGlobalConfigJSON() in a_private.go file
+	configjson = []byte(`
+	{
+		"system": {
+			"mode": "production",
+			"host": "X.X.X.X",
+			"port": XXXXX,
+			"errorsLogFile": "path/to/errors/log/file",
+			"infoLogFile": "path/to/info/log/file",
+			"devHosts" : [
+				"name1",
+				"name2",
+				"name3",
+				"name4"
+			]
+		},
+		"config": {
+			"tokenLength" : 60,
+			"nickChars"    : 6,
+			"nickIntegers" : 3
+		}
+	}
+	`)
+	return
 }
