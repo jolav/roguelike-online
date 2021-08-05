@@ -4,10 +4,13 @@
 let a = {
   nick: "",
   token: "",
-  updateNewGameData: function (data) {
-    a = data;
-  }
+  gameOver: false,
+  entities: [],
 };
+
+function updateA(data) {
+  a = data;
+}
 
 const conf = {
   mode: "dev",
@@ -25,6 +28,7 @@ conf.apiUrlBase = function () {
 export {
   conf,
   a,
+  updateA,
 };
 
 /*

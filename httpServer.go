@@ -66,8 +66,15 @@ func (a *app) action(w http.ResponseWriter, r *http.Request) {
 
 func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		//time.Sleep(150 * time.Millisecond) //simulate network travel
-		//startTime := time.Now()
+		//
+		var startTime time.Time
+		var randomPing time.Duration
+		if a.Sys.Mode == "dev" {
+			startTime = time.Now()
+			randomPing = time.Duration(randomInt(120, 200)) * time.Millisecond
+			time.Sleep(randomPing) //simulate network travel
+		}
+		//
 		r.ParseForm()
 		token := r.Form.Get("token")
 		if !a.Runs.exists(token) {
@@ -75,8 +82,11 @@ func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		next.ServeHTTP(w, r)
-		//duration := time.Now().Sub(startTime)
-		//fmt.Println(duration)
+		//
+		if a.Sys.Mode == "dev" {
+			duration := time.Now().Sub(startTime)
+			fmt.Println(randomPing, duration-randomPing)
+		}
 	}
 }
 

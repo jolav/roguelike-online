@@ -2,14 +2,11 @@
 
 package main
 
-import "fmt"
-
 func (a *app) gameLoop() {
 	for {
 		select {
 		case askRun := <-a.Ch.askGame:
 			r := a.Runs.newRun(a.Cnf)
-			fmt.Println(len(a.Runs))
 			prettyPrintStruct(r)
 			askRun <- r
 
@@ -20,8 +17,11 @@ func (a *app) gameLoop() {
 					r.GameOver = true
 					a.Runs.delete(r.Token)
 				}
+			} else {
+				r.movePlayer(askTurn.action)
 			}
-			prettyPrintStruct(r)
+
+			//prettyPrintStruct(r.Entities[0])
 			askTurn.comm <- r
 		}
 	}

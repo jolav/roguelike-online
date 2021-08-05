@@ -1,9 +1,10 @@
 /* */
 "use strict";
 
-import { conf, a } from "./_config.js";
+import { conf, a, updateA } from "./_config.js";
 import * as http from "./http.js";
-import { actionKey } from "./controls.js";
+import { actionKey, lostGame } from "./controls.js";
+import * as render from "./render.js";
 
 function landingPage() {
   document.getElementById("intro").style.display = "block";
@@ -31,15 +32,22 @@ function playGame() {
 }
 
 async function startNewTurn(action) {
-  let aux = await http.fetchNewTurn(action);
-  console.log(aux);
+  const aux = await http.fetchNewTurn(action);
+  updateA(aux);
+  //console.log(a);
+  if (a.gameOver) {
+    lostGame();
+  }
+  render.draw();
 }
 
 async function startNewGame() {
   let aux = await http.fetchNewGame();
-  a.updateNewGameData(aux);
-  console.log(a);
+  updateA(aux);
+  //console.log(a);
   playGame();
+  render.draw();
+
 }
 
 export {

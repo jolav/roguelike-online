@@ -1,15 +1,13 @@
 /* */
 
 body {
-  font-family: 'Press Start 2P', Arial;
+  font-family: 'Indie Flower2', 'Press Start 2P', Arial;
   background-color: #454545;
   background-color: black;
   color: #fff;
-  font-size: 0.8em;
-  /* 0.15 for record gif */
+  font-size: 1em;
   margin: 2em auto;
   max-width: 800px;
-  padding: 1em;
   line-height: 1.4;
   text-align: justify;
 }
@@ -24,25 +22,53 @@ body {
   src: url(./_public/fonts/IndieFlower.ttf);
 }
 
-header {
+/* INTRO */
+
+section#intro header {
   float: right;
 }
 
-header a img {
+section#intro img {
   width: 32px;
 }
 
-button {
-  display: inline-block;
+section#intro button {
   background-color: white;
-  border-radius: 1em;
-  text-decoration: none;
+  border-radius: 2em;
   color: #454545;
   padding: 10px 15px;
-  font-size: 1em;
+  /*font-size: 1em;*/
   transition: all 0.2s;
 }
 
-button:hover {
-  background-color: white;
+section#intro button:hover {
+  background-color: #454545;
+  color: #fff
+}
+
+/* CONFIRM */
+
+/* PLAY */
+
+section#play {
+  font-family: 'Indie Flower2', Arial;
+  color: #fff;
+  /*font-weight: bold;*/
+  font-size: 1.2em;
+  margin: 2em auto;
+  max-width: 800px;
+  line-height: 1;
+  text-align: justify;
+}
+
+section#play .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-top: 20px;
+}
+
+section#play #board {
+  background-color: #454545;
+  background-color: black;
 }

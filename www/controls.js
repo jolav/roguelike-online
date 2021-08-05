@@ -43,6 +43,13 @@ function actionKey(e) {
   return action;
 }
 
+function lostGame() {
+  console.log('THIS IS THE END');
+  alert('YOU LOSE');
+  location.reload();
+}
+
 export {
   actionKey,
+  lostGame
 };

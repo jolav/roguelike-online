@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	version     = "0.0.0"
+	version     = "0.0.2"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
