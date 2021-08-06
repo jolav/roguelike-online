@@ -6,8 +6,9 @@ func (a *app) gameLoop() {
 	for {
 		select {
 		case askRun := <-a.Ch.askGame:
-			r := a.Runs.newRun(a.Cnf)
-			prettyPrintStruct(r)
+			r := newRun(a.Cnf)
+			a.Runs[r.Token] = r
+			//prettyPrintStruct(r)
 			askRun <- r
 
 		case askTurn := <-a.Ch.askTurn:

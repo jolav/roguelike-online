@@ -6,11 +6,23 @@ let a = {
   token: "",
   gameOver: false,
   entities: [],
+  map: {},
 };
 
 function updateA(data) {
   a = data;
 }
+
+function getMapSymbol(word) {
+  return String.fromCharCode(symbols.get(word));
+}
+
+const symbols = new Map([
+  ["floor", 183],   // middleDot
+  ["wall", 35],     // #
+  ["-", 0],
+  ["player", 64],   // @
+]);
 
 const conf = {
   mode: "dev",
@@ -18,6 +30,7 @@ const conf = {
 };
 
 conf.apiUrlBase = function () {
+  //console.log(conf);
   if (conf.mode === "dev") {
     return "http://localhost:3000";
   } else {
@@ -29,6 +42,7 @@ export {
   conf,
   a,
   updateA,
+  getMapSymbol,
 };
 
 /*

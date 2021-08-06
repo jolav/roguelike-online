@@ -2,7 +2,7 @@
 
 package main
 
-type entities map[int]entity
+type entities map[int]*entity
 
 type entity struct {
 	ID   int    `json:"id"`
@@ -15,10 +15,13 @@ type point struct {
 	Y int
 }
 
-func (e entity) move(dx, dy int) point {
+func (p point) getCoords() (x, y int) {
+	return p.X, p.Y
+}
+
+func (e *entity) move(dx, dy int) {
 	e.Pos.X += dx
 	e.Pos.Y += dy
-	return e.Pos
 }
 
 func newEntity(name string, id int, p point) entity {
