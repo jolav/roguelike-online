@@ -2,29 +2,45 @@
 
 package main
 
+import "fmt"
+
 func (a *app) gameLoop() {
 	for {
 		select {
 		case askRun := <-a.Ch.askGame:
 			r := newRun(a.Cnf)
-			a.Runs[r.Token] = r
-			//prettyPrintStruct(r)
+			a.Runs[r.Token] = &r
+			//showMap(r)
 			askRun <- r
 
 		case askTurn := <-a.Ch.askTurn:
 			r := a.Runs[askTurn.token]
-			if askTurn.action == "erase" {
+			action := askTurn.action
+			actionCompleted := false
+			switch action {
+			case "erase":
 				if a.Runs.exists(r.Token) {
 					r.GameOver = true
 					a.Runs.delete(r.Token)
 				}
-			} else {
-				r.movePlayer(askTurn.action)
+			default:
+				actionCompleted = r.movePlayer(action)
 			}
-
-			//prettyPrintStruct(r.Entities[0])
-			askTurn.comm <- r
+			if actionCompleted {
+				r.Map.toCameraView(r.Entities[0].Pos)
+				r.Turn++
+				//showMap(*r)
+			}
+			askTurn.comm <- *r
 		}
 	}
 	// UNREACHABLE CODE
+}
+
+func showMap(r run) {
+	fmt.Println("**************************")
+	printMap(r.Map.tiles)
+	fmt.Println("--------------------------")
+	printMap(r.Map.Camera)
+	fmt.Println("**************************")
 }

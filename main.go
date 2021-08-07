@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	version     = "0.0.3"
+	version     = "0.0.4"
 	releaseDate = "undefined"
 	iLog        *log.Logger
 )
@@ -70,7 +70,7 @@ func main() {
 			askGame: make(chan chan run),
 			askTurn: make(chan turn),
 		},
-		Runs: make(map[string]run),
+		Runs: make(map[string]*run),
 	}
 	defer close(a.Ch.askGame)
 	defer close(a.Ch.askTurn)

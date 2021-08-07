@@ -5,6 +5,7 @@ let a = {
   nick: "",
   token: "",
   gameOver: false,
+  turn: 0,
   entities: [],
   map: {},
 };
@@ -13,19 +14,8 @@ function updateA(data) {
   a = data;
 }
 
-function getMapSymbol(word) {
-  return String.fromCharCode(symbols.get(word));
-}
-
-const symbols = new Map([
-  ["floor", 183],   // middleDot
-  ["wall", 35],     // #
-  ["-", 0],
-  ["player", 64],   // @
-]);
-
 const conf = {
-  mode: "dev",
+  mode: "production",
   apiUrlBase: "",
 };
 
@@ -42,7 +32,6 @@ export {
   conf,
   a,
   updateA,
-  getMapSymbol,
 };
 
 /*

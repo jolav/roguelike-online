@@ -1,7 +1,7 @@
 /* */
 
 body {
-  font-family: 'Indie Flower2', 'Press Start 2P', Arial;
+  font-family: 'PressStart2P', Arial;
   background-color: #454545;
   background-color: black;
   color: #fff;
@@ -13,18 +13,20 @@ body {
 }
 
 @font-face {
-  font-family: 'Press Start 2P';
+  font-family: 'PressStart2P';
   src: url(./_public/fonts/PressStart2P.ttf);
 }
 
 @font-face {
-  font-family: 'Indie Flower';
-  src: url(./_public/fonts/IndieFlower.ttf);
+  font-family: 'VarelaRound';
+  src: url(./_public/fonts/VarelaRound.ttf);
 }
 
 /* INTRO */
 
 section#intro header {
+  display: flex;
+  align-items: center;
   float: right;
 }
 
@@ -33,12 +35,17 @@ section#intro img {
 }
 
 section#intro button {
-  background-color: white;
+  background-color: #fff;
   border-radius: 2em;
   color: #454545;
-  padding: 10px 15px;
+  padding: 5px 15px;
   /*font-size: 1em;*/
   transition: all 0.2s;
+}
+
+section#intro .buttons {
+  display: flex;
+  justify-content: space-around;
 }
 
 section#intro button:hover {
@@ -46,15 +53,21 @@ section#intro button:hover {
   color: #fff
 }
 
+section#intro .version, .buttons button {
+  font-family: 'VarelaRound', Arial;
+  font-weight: bold;
+  font-size: 1em;
+}
+
 /* CONFIRM */
 
 /* PLAY */
 
 section#play {
-  font-family: 'Indie Flower2', Arial;
+  font-family: 'VarelaRound', Arial;
   color: #fff;
   /*font-weight: bold;*/
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin: 2em auto;
   max-width: 800px;
   line-height: 1;

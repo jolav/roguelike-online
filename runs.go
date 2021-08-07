@@ -2,7 +2,7 @@
 
 package main
 
-type runs map[string]run
+type runs map[string]*run
 
 // RUNS
 

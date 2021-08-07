@@ -5,6 +5,7 @@ import { conf, a, updateA } from "./_config.js";
 import * as http from "./http.js";
 import { actionKey, lostGame } from "./controls.js";
 import * as render from "./render.js";
+import * as util from "./utils.js";
 
 function landingPage() {
   document.getElementById("intro").style.display = "block";
@@ -34,7 +35,8 @@ function playGame() {
 async function startNewTurn(action) {
   const aux = await http.fetchNewTurn(action);
   updateA(aux);
-  //console.log(a.map.tiles);
+  console.log(a.map);
+  //util.showTiles();
   if (a.gameOver) {
     lostGame();
   }
@@ -44,12 +46,13 @@ async function startNewTurn(action) {
 async function startNewGame() {
   let aux = await http.fetchNewGame();
   updateA(aux);
-  //console.log(a.map);
+  console.log(a.map);
+  //util.showTiles();
   playGame();
   render.draw();
-
 }
 
 export {
   landingPage,
 };
+
