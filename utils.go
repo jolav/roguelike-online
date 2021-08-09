@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"math/rand"
 )
 
@@ -51,6 +52,10 @@ func getRandomNick(nameLength, numbersLength int) string {
 
 func randomInt(min, max int) int {
 	return rand.Intn(max-min+1) + min
+}
+
+func round(f float64) float64 {
+	return math.Floor(f + .5)
 }
 
 func printMap(m [][]tile) {

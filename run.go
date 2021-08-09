@@ -8,14 +8,15 @@ import (
 )
 
 type run struct {
-	Nick     string   `json:"nick"`
-	Token    string   `json:"token"`
-	GameOver bool     `json:"gameOver"`
-	Turn     int      `json:"turn"`
-	Seed     int64    `json:"-"`
-	Counter  int      `json:"-"`
+	Nick     string `json:"nick"`
+	Token    string `json:"token"`
+	GameOver bool   `json:"gameOver"`
+	Turn     int    `json:"turn"`
+	seed     int64
+	counter  int
 	Entities entities `json:"entities"`
 	Map      gameMap  `json:"map"`
+	fov      fieldOfVision
 }
 
 // RUN
@@ -45,8 +46,20 @@ func (r run) movePlayer(action string) bool {
 }
 
 func (r run) PopulateMap() point {
-	centerPos := point{r.Map.Cols / 2, r.Map.Rows / 2}
-	player := newEntity("player", r.Counter, centerPos)
+	var found = false
+	pos := point{r.Map.Cols / 2, r.Map.Rows / 2}
+	var tries = 0
+	for !found && tries < 10000 {
+		x := randomInt(1, r.Map.Cols-2)
+		y := randomInt(1, r.Map.Rows-2)
+		if !r.Map.isBlocked(x, y) && !r.Map.isBlockingLOS(x, y) {
+			pos.X = x
+			pos.Y = y
+			found = true
+		}
+		tries++
+	}
+	player := newEntity("player", r.counter, pos)
 	r.Entities[player.id] = &player
 	return player.Pos
 }
@@ -59,14 +72,15 @@ func newRun(c config) run {
 		Token:    getRandomString(c.TokenLength),
 		Turn:     0,
 		GameOver: false,
-		Seed:     seed,
-		Counter:  0,
+		seed:     seed,
+		counter:  0,
 		Entities: entities{},
 		Map:      newGameMap(),
+		fov:      fieldOfVision{}.initFOV(),
 	}
 	playerPoint := r.PopulateMap()
-	r.Counter++
+	r.counter++
+	r.fov.rayCast(r)
 	r.Map.convertToCameraView(playerPoint)
-
 	return r
 }

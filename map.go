@@ -68,7 +68,11 @@ func (m gameMap) convertToCameraView(p point) {
 	}
 	for y := 0; y < m.CamRows; y++ {
 		for x := 0; x < m.CamCols; x++ {
-			m.Camera[y][x] = m.tiles[y+camY][x+camX]
+			if m.isExplored(x+camX, y+camY) {
+				m.Camera[y][x] = m.tiles[y+camY][x+camX]
+			} else {
+				m.Camera[y][x] = tile{}.set("unknown")
+			}
 		}
 	}
 }

@@ -16,6 +16,8 @@ func (t tile) set(terrain string) tile {
 		return tile{terrain, false, false, false, false}
 	case "wall":
 		return tile{terrain, true, true, false, false}
+	case "unknown":
+		return tile{terrain, true, true, false, false}
 	}
 	return tile{}
 }

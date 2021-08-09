@@ -27,6 +27,7 @@ func (a *app) gameLoop() {
 				actionCompleted = r.movePlayer(action)
 			}
 			if actionCompleted {
+				r.fov.rayCast(*r)
 				r.Map.convertToCameraView(r.Entities[0].Pos)
 				r.Turn++
 				//showMap(*r)

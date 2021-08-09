@@ -17,11 +17,22 @@ function drawBoard() {
   graphOffset = 0;// ppp / 8; arial in axis Y
   for (let y = 0; y < cv.height; y += ppp) {
     for (let x = 0; x < cv.width; x += ppp) {
-      //ctx.fillStyle = '#454545';
-      const terrain = a.map.tiles[y / ppp][x / ppp].terrain;
-      const symbol = util.getMapSymbol(terrain);
+      const tile = a.map.tiles[y / ppp][x / ppp];
+      const symbol = util.getMapSymbol(tile.terrain);
       ctx.textBaseline = "middle";
       ctx.textAlign = "center";
+      //  background color
+      if (tile.terrain === "wall" && tile.explored) { // CHEAT
+        ctx.fillStyle = "#557055";
+        ctx.fillRect(x - 1, y - 1, ppp, ppp);
+      }
+      // symbol
+      ctx.fillStyle = 'black';
+      if (tile.visible) {
+        ctx.fillStyle = '#ccc';
+      } else if (tile.explored && !tile.visible) {
+        ctx.fillStyle = '#454545';
+      }
       ctx.fillText(symbol, x + (ppp / 2), y + (ppp / 2) + graphOffset);
     }
   }
