@@ -44,6 +44,13 @@ func (r run) movePlayer(action string) bool {
 	return false
 }
 
+func (r run) PopulateMap() point {
+	centerPos := point{r.Map.Cols / 2, r.Map.Rows / 2}
+	player := newEntity("player", r.Counter, centerPos)
+	r.Entities[player.id] = &player
+	return player.Pos
+}
+
 func newRun(c config) run {
 	seed := time.Now().UnixNano()
 	rand.Seed(seed)
@@ -57,11 +64,9 @@ func newRun(c config) run {
 		Entities: entities{},
 		Map:      newGameMap(),
 	}
-	// Create player
-	centerPos := point{r.Map.Cols / 2, r.Map.Rows / 2}
-	player := newEntity("player", r.Counter, centerPos)
-	r.Entities[player.ID] = &player
+	playerPoint := r.PopulateMap()
 	r.Counter++
+	r.Map.convertToCameraView(playerPoint)
 
 	return r
 }

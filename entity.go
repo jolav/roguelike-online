@@ -5,7 +5,7 @@ package main
 type entities map[int]*entity
 
 type entity struct {
-	ID   int    `json:"id"`
+	id   int
 	Name string `json:"name"`
 	Pos  point  `json:"pos"`
 }
@@ -26,7 +26,7 @@ func (e *entity) move(dx, dy int) {
 
 func newEntity(name string, id int, p point) entity {
 	return entity{
-		ID:   id,
+		id:   id,
 		Name: name,
 		Pos:  p,
 	}

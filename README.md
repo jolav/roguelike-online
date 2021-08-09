@@ -1,4 +1,4 @@
-![Game Server](https://img.shields.io/badge/Server-0.0.4-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
+![Game Server](https://img.shields.io/badge/Server-0.0.5-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
 
@@ -6,7 +6,7 @@
 - [X] **Moving around @**  
 - [X] **Map**  
 - [X] **Camera**  
-- [ ] **Generating Vault**  
+- [X] **Generating Vault**  
 - [ ] **Field of View**  
 - [ ] **Placing Enemies**  
 - [ ] **Close Combat**  
@@ -16,6 +16,9 @@
 - [ ] **Save and load Runs**  
 - [ ] **Leaving the Vault**  
 
+---
 
 - [X] **Turn counter**  
-- [X] **Show server version in web**
+- [X] **Show server version in web**  
+- [ ] **Change player init point**  
+- [ ] **Choose player name at start** 

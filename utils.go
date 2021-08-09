@@ -52,3 +52,12 @@ func getRandomNick(nameLength, numbersLength int) string {
 func randomInt(min, max int) int {
 	return rand.Intn(max-min+1) + min
 }
+
+func printMap(m [][]tile) {
+	for y := 0; y < len(m); y++ {
+		for x := 0; x < len(m[0]); x++ {
+			fmt.Print(" ", m[y][x].Terrain, " ")
+		}
+		fmt.Println()
+	}
+}

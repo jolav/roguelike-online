@@ -6,7 +6,7 @@ import * as util from "./utils.js";
 
 const cv = document.getElementById('board');
 const ctx = cv.getContext('2d');
-const ppp = 24;
+const ppp = 16;
 let cols = 0;
 let rows = 0;
 let graphOffset = 0;
