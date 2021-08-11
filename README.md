@@ -1,4 +1,4 @@
-![Game Server](https://img.shields.io/badge/Server-0.0.6-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
+![Game Server](https://img.shields.io/badge/Server-0.0.7-orange.svg) ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
 
@@ -7,11 +7,11 @@
 - [X] **Setting Up**  
 - [X] **Moving around @**  
 - [X] **Map**  
-- [X] **Camera**  
+- [X] **View**  
 - [X] **Generating Vault**  
 - [X] **Field of View**  
 - [ ] **Placing Enemies**  
-- [ ] **Moving Enemied**  
+- [ ] **Moving Enemies**  
 - [ ] **Close Combat**  
 - [ ] **Creating UI**  
 - [ ] **Inventory and items**  
@@ -30,5 +30,5 @@
 
 - [X] **Turn counter**  
 - [X] **Show server version in web**  
-- [ ] **Show tooltip with on stats mouse over map**  
+- [ ] **Show tooltip wit stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   

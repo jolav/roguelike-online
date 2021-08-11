@@ -39,7 +39,7 @@ func (f fieldOfVision) rayCast(r run) {
 		}
 	}
 	// mark player
-	player := r.Entities[0]
+	player := r.entities[0]
 	var pX, pY = player.Pos.getCoords()
 	r.Map.tiles[pY][pX].Explored = true
 	r.Map.tiles[pY][pX].Visible = true

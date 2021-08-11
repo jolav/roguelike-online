@@ -23,20 +23,20 @@ type feature struct {
 
 const (
 	ROOM_TRIES          int = 10000 //5000
-	ROOMS               int = 150   //10   //200
+	MAX_ROOMS           int = 150   //10   //200
 	MIN_SIZE_ROOM       int = 4
 	MAX_SIZE_ROOM       int = 12 //12 //25
 	MIN_LENGTH_CORRIDOR int = 4  //2
 	MAX_LENGTH_CORRIDOR int = 25 //6 //25
 	CORRIDOR_PERCENT    int = 20
 	FOES_TRIES          int = ROOM_TRIES
-	MAX_FOES            int = ROOMS / 4
+	MAX_FOES            int = MAX_ROOMS / 4
 )
 
 func (m gameMap) generateVault() gameMap {
 	// http://www.roguebasin.com/index.php?title=Dungeon-Building_Algorithm
 	m.tiles = m.fillMapBlockedtiles(m.Rows, m.Cols)
-	m.Camera = m.fillMapBlockedtiles(m.CamRows, m.CamCols)
+	m.View = m.fillMapBlockedtiles(m.ViewRows, m.ViewCols)
 	//m.fillAllExceptBordersWithFloor()
 	m.createSingleRoomInCenter()
 	success := 0
@@ -48,7 +48,7 @@ func (m gameMap) generateVault() gameMap {
 			m.fillRoom(r)
 			m.fillWall(w)
 			success++
-			if success >= ROOMS {
+			if success >= MAX_ROOMS {
 				return m
 			}
 		} else {

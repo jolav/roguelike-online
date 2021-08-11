@@ -35,7 +35,7 @@ function playGame() {
 async function startNewTurn(action) {
   const aux = await http.fetchNewTurn(action);
   updateA(aux);
-  console.log(a);
+  showSomething();
   //util.showTiles();
   if (a.gameOver) {
     lostGame();
@@ -46,10 +46,14 @@ async function startNewTurn(action) {
 async function startNewGame() {
   let aux = await http.fetchNewGame();
   updateA(aux);
-  console.log(a);
+  showSomething();
   //util.showTiles();
   playGame();
   render.draw();
+}
+
+function showSomething() {
+  console.log(a);
 }
 
 export {

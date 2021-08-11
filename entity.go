@@ -2,22 +2,36 @@
 
 package main
 
-type entities map[int]*entity
-
 type entity struct {
 	id     int
 	Name   string `json:"name"`
 	Pos    point  `json:"pos"`
 	Facing rune   `json:"facing"`
+	Blocks bool   `json:"blocks"`
+	Mobile bool   `json:"mobile"`
+	Combat combat `json:"combat"`
 }
 
-type point struct {
-	X int
-	Y int
+type combat struct {
+	HP      int `json:"hp"`
+	MaxHP   int `json:"maxhp"`
+	Attack  int `json:"attack"`
+	Defence int `json:"defende"`
 }
 
-func (p point) getCoords() (x, y int) {
-	return p.X, p.Y
+func (e entity) isBlocking() bool {
+	return e.Blocks
+}
+
+func (e entity) isMobile() bool {
+	return e.Mobile
+}
+
+func (e entity) isCombatant() bool {
+	if e.Combat == (combat{}) {
+		return false
+	}
+	return true
 }
 
 func (e *entity) move(dx, dy int) {
@@ -31,6 +45,9 @@ func newEntity(name string, id int, p point) entity {
 		Name:   name,
 		Pos:    p,
 		Facing: entity{}.getInitialFacing(),
+		Blocks: entity{}.getIsBlocks(name),
+		Mobile: entity{}.getIsMobile(name),
+		Combat: entity{}.getCombatStats(name),
 	}
 }
 
@@ -46,4 +63,46 @@ func (e entity) getInitialFacing() rune {
 		return 'E'
 	}
 	return 'N'
+}
+
+func (e entity) getIsBlocks(name string) bool {
+	switch name {
+	case "player", "rat", "mole rat":
+		return true
+	}
+	return false
+}
+
+func (e entity) getIsMobile(name string) bool {
+	switch name {
+	case "player", "rat", "mole rat":
+		return true
+	}
+	return false
+}
+func (e entity) getCombatStats(name string) combat {
+	switch name {
+	case "player":
+		return combat{
+			MaxHP:   30,
+			HP:      30,
+			Attack:  5,
+			Defence: 5,
+		}
+	case "rat":
+		return combat{
+			MaxHP:   7,
+			HP:      7,
+			Attack:  3,
+			Defence: 2,
+		}
+	case "mole rat":
+		return combat{
+			MaxHP:   15,
+			HP:      15,
+			Attack:  4,
+			Defence: 6,
+		}
+	}
+	return combat{}
 }

@@ -6,7 +6,7 @@ import * as util from "./utils.js";
 
 const cv = document.getElementById('board');
 const ctx = cv.getContext('2d');
-const ppp = 16;
+const ppp = 12;//16;
 let cols = 0;
 let rows = 0;
 let graphOffset = 0;
@@ -22,7 +22,7 @@ function drawBoard() {
       ctx.textBaseline = "middle";
       ctx.textAlign = "center";
       //  background color
-      if (tile.terrain === "wall" && tile.explored) { // CHEAT
+      if (tile.terrain === "wall" && tile.explored) {
         ctx.fillStyle = "#557055";
         ctx.fillRect(x - 1, y - 1, ppp, ppp);
       }
@@ -63,19 +63,21 @@ function drawBorderOrGrid(option) {
   ctx.stroke();
 }
 
-function drawPlayer() {
-  ctx.fillStyle = 'green';
+function drawEntities() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  let player = a.entities[0].pos;
-  const symbol = util.getMapSymbol("player");
-  graphOffset = ppp / 2;
-  const aux = util.convertPlayerCoordsToCamCoords(player);
-  player.X = aux[0] * ppp;
-  player.Y = aux[1] * ppp;
-  // delete grid in player pos
-  ctx.clearRect(player.X + 2, player.Y + 2, ppp - 5, ppp - 5);
-  ctx.fillText(symbol, player.X + graphOffset, player.Y + graphOffset);
+  for (let i = a.entities.length - 1; i >= 0; i--) {
+    const e = a.entities[i];
+    const symbol = util.getMapSymbol(e.name);
+    ctx.fillStyle = util.getMapColor(e.name);//'orange';
+    graphOffset = ppp / 2;
+    const aux = util.convertMapsCoordToCameraCoords(e);
+    e.pos.X = aux[0] * ppp;
+    e.pos.Y = aux[1] * ppp;
+    // delete grid in entity pos
+    ctx.clearRect(e.pos.X + 2, e.pos.Y + 2, ppp - 5, ppp - 5);
+    ctx.fillText(symbol, e.pos.X + graphOffset, e.pos.Y + graphOffset);
+  }
 }
 
 function drawUI() {
@@ -108,7 +110,7 @@ function draw() {
   drawUI();
   drawBorderOrGrid(0); // 0 border 1 grid
   drawBoard();
-  drawPlayer();
+  drawEntities();
 }
 
 export {

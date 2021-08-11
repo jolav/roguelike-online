@@ -21,6 +21,13 @@ function convertPlayerCoordsToCamCoords(player) {
   return [Math.floor(player.X - camX), Math.floor(player.Y - camY)];
 }
 
+function convertMapsCoordToCameraCoords(entity) {
+  //console.log(entity, camera);
+  let camX = entity.pos.X - a.map.camera.X;
+  let camY = entity.pos.Y - a.map.camera.Y;
+  return [camX, camY];
+}
+
 function getMapSymbol(word) {
   return String.fromCharCode(symbols.get(word));
 }
@@ -30,6 +37,18 @@ const symbols = new Map([
   ["wall", 35],     // #
   ["-", 0],
   ["player", 64],   // @
+  ["rat", 114],     // r
+  ["mole rat", 82], // R
+]);
+
+function getMapColor(word) {
+  return colors.get(word);
+}
+
+const colors = new Map([
+  ["player", "green"],
+  ["rat", "purple"],
+  ["mole rat", "orange"],
 ]);
 
 function showTiles() {
@@ -43,7 +62,9 @@ function showTiles() {
 }
 
 export {
+  convertMapsCoordToCameraCoords,
   convertPlayerCoordsToCamCoords,
   getMapSymbol,
+  getMapColor,
   showTiles,
 };
