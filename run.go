@@ -2,6 +2,8 @@
 
 package main
 
+import "fmt"
+
 type run struct {
 	Nick           string `json:"nick"`
 	Token          string `json:"token"`
@@ -15,9 +17,9 @@ type run struct {
 	fov            fieldOfVision
 }
 
-func (r run) movePlayer(action string) bool {
-	player := r.entities[0]
-	var p = point{0, 0}
+func (r run) moveEntity(id int, action string) bool {
+	e := r.entities[id]
+	var next = point{0, 0}
 	var dx, dy = 0, 0
 	switch action {
 	case "up":
@@ -31,16 +33,43 @@ func (r run) movePlayer(action string) bool {
 	case "skip":
 		return true
 	}
-	p.X = player.Pos.X + dx
-	p.Y = player.Pos.Y + dy
-	if r.Map.isBlocked(p.X, p.Y) {
+	next.X = e.Pos.X + dx
+	next.Y = e.Pos.Y + dy
+	if r.Map.isBlocked(next.X, next.Y) {
 		return false
 	}
-	if p.isAnyEntityBlocking(r.entities) {
+	if next.isAnyEntityBlocking(r.entities) {
 		return false
 	}
-	player.move(dx, dy)
+	e.move(dx, dy)
 	return true
+}
+
+func (r run) moveEntities() {
+	ia := npcIA{}
+	randomAction := [4]string{"up", "down", "left", "right"}
+	var player = r.entities[0]
+	for _, e := range r.entities {
+		if e.Name != "player" {
+			if r.Map.isVisible(e.Pos.X, e.Pos.Y) { // Normal move
+				path := ia.pathFinding(e.Pos, player.Pos, r)
+				if path[1].isAnyEntityBlocking(r.entities) {
+					if path[1] == player.Pos {
+						fmt.Println(e.Name, "at", e.Pos, "attacking ... ", path[1])
+					} else {
+						// no trail
+						fmt.Println("Bug or No trail ??")
+					}
+				} else {
+					dx := path[1].X - path[0].X
+					dy := path[1].Y - path[0].Y
+					e.move(dx, dy)
+				}
+			} else { // Random move
+				r.moveEntity(e.id, randomAction[randomInt(0, 3)])
+			}
+		}
+	}
 }
 
 func (r run) createPublicEntities() []entity {
@@ -72,7 +101,13 @@ func (r run) PopulateMap() (o point, x int) {
 	for tries := 1; tries < FOES_TRIES; tries++ {
 		p = r.getRandomCoordsForPopulate()
 		if (p != point{0, 0}) {
-			foe := newEntity("rat", r.counter, p)
+			foeName := ""
+			if randomInt(1, 10) < 8 {
+				foeName = "rat"
+			} else {
+				foeName = "mole rat"
+			}
+			foe := newEntity(foeName, r.counter, p)
 			r.entities[foe.id] = &foe
 			r.counter++
 			success++

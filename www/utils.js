@@ -33,7 +33,7 @@ function getMapSymbol(word) {
 }
 
 const symbols = new Map([
-  ["floor", 183],   // middleDot
+  ["floor", 183],   // middleDot 183 or normal point 46
   ["wall", 35],     // #
   ["-", 0],
   ["player", 64],   // @
@@ -48,7 +48,7 @@ function getMapColor(word) {
 const colors = new Map([
   ["player", "green"],
   ["rat", "purple"],
-  ["mole rat", "orange"],
+  ["mole rat", "purple"],
 ]);
 
 function showTiles() {
@@ -61,10 +61,22 @@ function showTiles() {
   }
 }
 
+function initializeMultiArray(cols, rows, value) {
+  let array = [];
+  for (let y = 0; y < rows; y++) {
+    array[y] = [];
+    for (let x = 0; x < cols; x++) {
+      array[y][x] = value;
+    }
+  }
+  return array;
+}
+
 export {
   convertMapsCoordToCameraCoords,
   convertPlayerCoordsToCamCoords,
   getMapSymbol,
   getMapColor,
   showTiles,
+  initializeMultiArray,
 };

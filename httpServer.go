@@ -59,9 +59,10 @@ func (a *app) gameLoop() {
 					rs.delete(r.Token)
 				}
 			default:
-				actionCompleted = r.movePlayer(action)
+				actionCompleted = r.moveEntity(0, action)
 			}
 			if actionCompleted {
+				r.moveEntities()
 				r.fov.rayCast(*r)
 				r.Map.Camera = r.Map.buildView(r.entities[0].Pos)
 				r.PublicEntities = r.createPublicEntities()

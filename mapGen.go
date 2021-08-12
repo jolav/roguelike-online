@@ -23,14 +23,14 @@ type feature struct {
 
 const (
 	ROOM_TRIES          int = 10000 //5000
-	MAX_ROOMS           int = 150   //10   //200
+	MAX_ROOMS           int = 10    //10   //200
 	MIN_SIZE_ROOM       int = 4
 	MAX_SIZE_ROOM       int = 12 //12 //25
 	MIN_LENGTH_CORRIDOR int = 4  //2
 	MAX_LENGTH_CORRIDOR int = 25 //6 //25
 	CORRIDOR_PERCENT    int = 20
 	FOES_TRIES          int = ROOM_TRIES
-	MAX_FOES            int = MAX_ROOMS / 4
+	MAX_FOES            int = MAX_ROOMS / 3
 )
 
 func (m gameMap) generateVault() gameMap {

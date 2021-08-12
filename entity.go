@@ -44,14 +44,14 @@ func newEntity(name string, id int, p point) entity {
 		id:     id,
 		Name:   name,
 		Pos:    p,
-		Facing: entity{}.getInitialFacing(),
-		Blocks: entity{}.getIsBlocks(name),
-		Mobile: entity{}.getIsMobile(name),
-		Combat: entity{}.getCombatStats(name),
+		Facing: entity{}.createInitialFacing(),
+		Blocks: entity{}.createIsBlocks(name),
+		Mobile: entity{}.createIsMobile(name),
+		Combat: entity{}.createCombatStats(name),
 	}
 }
 
-func (e entity) getInitialFacing() rune {
+func (e entity) createInitialFacing() rune {
 	switch randomInt(1, 4) {
 	case 1:
 		return 'N'
@@ -65,7 +65,7 @@ func (e entity) getInitialFacing() rune {
 	return 'N'
 }
 
-func (e entity) getIsBlocks(name string) bool {
+func (e entity) createIsBlocks(name string) bool {
 	switch name {
 	case "player", "rat", "mole rat":
 		return true
@@ -73,14 +73,14 @@ func (e entity) getIsBlocks(name string) bool {
 	return false
 }
 
-func (e entity) getIsMobile(name string) bool {
+func (e entity) createIsMobile(name string) bool {
 	switch name {
 	case "player", "rat", "mole rat":
 		return true
 	}
 	return false
 }
-func (e entity) getCombatStats(name string) combat {
+func (e entity) createCombatStats(name string) combat {
 	switch name {
 	case "player":
 		return combat{

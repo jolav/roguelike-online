@@ -3,10 +3,10 @@
 package main
 
 const (
-	CAM_WIDTH  int = 41
-	CAM_HEIGHT int = 31
-	WIDTH      int = 100 //25
-	HEIGHT     int = 100 //21
+	CAM_WIDTH  int = 19
+	CAM_HEIGHT int = 11
+	WIDTH      int = 40 //25
+	HEIGHT     int = 40 //21
 )
 
 type gameMap struct {
