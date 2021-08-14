@@ -97,7 +97,8 @@ function drawEntities() {
 }
 
 function drawUI() {
-  document.getElementById("name").innerHTML = a.nick;
+  const hp = " -- HP: " + a.entities[0].combat.hp;
+  document.getElementById("name").innerHTML = a.nick + hp;
   const pos = "Pos " + a.entities[0].pos.X + ":" + a.entities[0].pos.Y;
   document.getElementById("pos").innerHTML = pos;
   const turn = "Turn :" + a.turn;

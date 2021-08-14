@@ -23,7 +23,7 @@ type feature struct {
 
 const (
 	ROOM_TRIES          int = 10000 //5000
-	MAX_ROOMS           int = 10    //10   //200
+	MAX_ROOMS           int = 150   //10   //200
 	MIN_SIZE_ROOM       int = 4
 	MAX_SIZE_ROOM       int = 12 //12 //25
 	MIN_LENGTH_CORRIDOR int = 4  //2

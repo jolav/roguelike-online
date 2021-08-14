@@ -2,8 +2,6 @@
 
 package main
 
-import "fmt"
-
 type run struct {
 	Nick           string `json:"nick"`
 	Token          string `json:"token"`
@@ -38,8 +36,19 @@ func (r run) moveEntity(id int, action string) bool {
 	if r.Map.isBlocked(next.X, next.Y) {
 		return false
 	}
-	if next.isAnyEntityBlocking(r.entities) {
-		return false
+	isBlocked, foe := next.getEntityBlocking(r.entities)
+	if isBlocked && foe.isCombatant() {
+		if e.id != 0 && foe.Name != "player" { // avoid attack inter npcs
+			return false
+		}
+		e.attacks(foe)
+		if foe.isDead() {
+			foe.Blocks = false
+			foe.Mobile = false
+			foe.Name = "corpse of " + foe.Name
+			foe.Combat = combat{}
+		}
+		return true
 	}
 	e.move(dx, dy)
 	return true
@@ -50,16 +59,28 @@ func (r run) moveEntities() {
 	randomAction := [4]string{"up", "down", "left", "right"}
 	var player = r.entities[0]
 	for _, e := range r.entities {
-		if e.Name != "player" {
-			if r.Map.isVisible(e.Pos.X, e.Pos.Y) { // Normal move
+		if e.Name != "player" && e.isMobile() {
+			if r.Map.isVisible(e.Pos.X, e.Pos.Y) { // Normal move in player LOS
 				path := ia.pathFinding(e.Pos, player.Pos, r)
 				if path[1].isAnyEntityBlocking(r.entities) {
-					if path[1] == player.Pos {
+					var action = ""
+					var dx = path[1].X - path[0].X
+					var dy = path[1].Y - path[0].Y
+					if dx == 1 {
+						action = "right"
+					} else if dx == -1 {
+						action = "left"
+					} else if dy == 1 {
+						action = "down"
+					} else {
+						action = "up"
+					}
+					r.moveEntity(e.id, action)
+					/*if path[1] == player.Pos {
 						fmt.Println(e.Name, "at", e.Pos, "attacking ... ", path[1])
 					} else {
-						// no trail
-						fmt.Println("Bug or No trail ??")
-					}
+						fmt.Println("No trail ??") // or bug ?
+					}*/
 				} else {
 					dx := path[1].X - path[0].X
 					dy := path[1].Y - path[0].Y
@@ -94,7 +115,7 @@ func (r run) PopulateMap() (o point, x int) {
 		p = point{r.Map.Cols / 2, r.Map.Rows / 2}
 	}
 	player := newEntity("player", r.counter, p)
-	r.entities[player.id] = &player
+	r.entities[player.id] = player
 	r.counter++
 	// populate all entities
 	success := 0
@@ -108,7 +129,7 @@ func (r run) PopulateMap() (o point, x int) {
 				foeName = "mole rat"
 			}
 			foe := newEntity(foeName, r.counter, p)
-			r.entities[foe.id] = &foe
+			r.entities[foe.id] = foe
 			r.counter++
 			success++
 		}

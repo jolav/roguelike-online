@@ -38,6 +38,7 @@ async function startNewTurn(action) {
   showSomething();
   //util.showTiles();
   if (a.gameOver) {
+    console.log('OIGAA');
     lostGame();
   }
   render.draw();
@@ -53,7 +54,8 @@ async function startNewGame() {
 }
 
 function showSomething() {
-  console.log(a);
+  //console.log(a.entities[0].combat);
+  console.log('************ NEW TURN ', a.turn, '**********', a.gameOver);
 }
 
 export {

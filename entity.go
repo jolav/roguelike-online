@@ -19,15 +19,15 @@ type combat struct {
 	Defence int `json:"defende"`
 }
 
-func (e entity) isBlocking() bool {
+func (e *entity) isBlocking() bool {
 	return e.Blocks
 }
 
-func (e entity) isMobile() bool {
+func (e *entity) isMobile() bool {
 	return e.Mobile
 }
 
-func (e entity) isCombatant() bool {
+func (e *entity) isCombatant() bool {
 	if e.Combat == (combat{}) {
 		return false
 	}
@@ -39,19 +39,37 @@ func (e *entity) move(dx, dy int) {
 	e.Pos.Y += dy
 }
 
-func newEntity(name string, id int, p point) entity {
-	return entity{
+func (e *entity) attacks(target *entity) {
+	d6 := randomInt(1, 6)
+	damage := e.Combat.Attack + d6 - target.Combat.Defence
+	if damage > 0 {
+		target.Combat.HP -= damage
+	}
+	//fmt.Printf("%s deals %d damage to %s\n", e.Name, damage, target.Name)
+}
+
+func (e *entity) isDead() bool {
+	if e.Combat.HP > 0 {
+		return false
+	}
+	return true
+}
+
+func newEntity(name string, id int, p point) *entity {
+	e := &entity{}
+	e = &entity{
 		id:     id,
 		Name:   name,
 		Pos:    p,
-		Facing: entity{}.createInitialFacing(),
-		Blocks: entity{}.createIsBlocks(name),
-		Mobile: entity{}.createIsMobile(name),
-		Combat: entity{}.createCombatStats(name),
+		Facing: e.createInitialFacing(),
+		Blocks: e.createIsBlocks(name),
+		Mobile: e.createIsMobile(name),
+		Combat: e.createCombatStats(name),
 	}
+	return e
 }
 
-func (e entity) createInitialFacing() rune {
+func (e *entity) createInitialFacing() rune {
 	switch randomInt(1, 4) {
 	case 1:
 		return 'N'
@@ -65,7 +83,7 @@ func (e entity) createInitialFacing() rune {
 	return 'N'
 }
 
-func (e entity) createIsBlocks(name string) bool {
+func (e *entity) createIsBlocks(name string) bool {
 	switch name {
 	case "player", "rat", "mole rat":
 		return true
@@ -73,36 +91,37 @@ func (e entity) createIsBlocks(name string) bool {
 	return false
 }
 
-func (e entity) createIsMobile(name string) bool {
+func (e *entity) createIsMobile(name string) bool {
 	switch name {
 	case "player", "rat", "mole rat":
 		return true
 	}
 	return false
 }
-func (e entity) createCombatStats(name string) combat {
+func (e *entity) createCombatStats(name string) combat {
+	c := combat{}
 	switch name {
 	case "player":
-		return combat{
+		c = combat{
 			MaxHP:   30,
 			HP:      30,
 			Attack:  5,
 			Defence: 5,
 		}
 	case "rat":
-		return combat{
+		c = combat{
 			MaxHP:   7,
 			HP:      7,
 			Attack:  3,
 			Defence: 2,
 		}
 	case "mole rat":
-		return combat{
+		c = combat{
 			MaxHP:   15,
 			HP:      15,
 			Attack:  4,
-			Defence: 6,
+			Defence: 4,
 		}
 	}
-	return combat{}
+	return c
 }

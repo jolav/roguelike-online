@@ -29,6 +29,9 @@ function convertMapsCoordToCameraCoords(entity) {
 }
 
 function getMapSymbol(word) {
+  if (word.slice(0, 9) === "corpse of") {
+    return String.fromCharCode(symbols.get(word.slice(0, 9)));
+  }
   return String.fromCharCode(symbols.get(word));
 }
 
@@ -39,9 +42,13 @@ const symbols = new Map([
   ["player", 64],   // @
   ["rat", 114],     // r
   ["mole rat", 82], // R
+  ["corpse of", 37]    // %
 ]);
 
 function getMapColor(word) {
+  if (word.slice(0, 9) === "corpse of") {
+    return colors.get(word.slice(10, word.length));
+  }
   return colors.get(word);
 }
 

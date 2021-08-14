@@ -26,6 +26,15 @@ func (p point) isAnyEntityBlocking(es entities) bool {
 	return false
 }
 
+func (p point) getEntityBlocking(es entities) (bool, *entity) {
+	for _, e := range es {
+		if e.Pos == p && e.isBlocking() {
+			return true, e
+		}
+	}
+	return false, nil
+}
+
 func (p point) isInside(grid [][]int) (int, bool) {
 	if p.X < 0 || p.X >= len(grid) {
 		return 0, false
