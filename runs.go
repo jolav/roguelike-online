@@ -23,10 +23,10 @@ func (rs runs) exists(token string) bool {
 	return false
 }
 
-func (rs runs) newRun(c config) run {
+func (rs runs) newRun(c config) *run {
 	seed := time.Now().UnixNano()
 	rand.Seed(seed)
-	r := run{
+	r := &run{
 		Nick:           getRandomNick(c.NickChars, c.NickIntegers),
 		Token:          getRandomString(c.TokenLength),
 		Turn:           0,
@@ -37,10 +37,12 @@ func (rs runs) newRun(c config) run {
 		PublicEntities: make([]entity, 0),
 		Map:            newGameMap(),
 		fov:            fieldOfVision{}.initFOV(),
+		History:        make([]string, 0),
 	}
+	r.History = append(r.History, "Nice Game")
 	playerPoint, counter := r.PopulateMap()
 	r.counter = counter
-	r.fov.rayCast(r)
+	r.fov.rayCast(*r)
 	r.Map.Camera = r.Map.buildView(playerPoint)
 	r.PublicEntities = r.createPublicEntities()
 	return r

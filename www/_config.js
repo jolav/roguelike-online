@@ -8,6 +8,7 @@ let a = {
   turn: 0,
   entities: [],
   map: {},
+  history: [],
 };
 
 function updateA(data) {

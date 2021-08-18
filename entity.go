@@ -2,6 +2,8 @@
 
 package main
 
+import "fmt"
+
 type entity struct {
 	id     int
 	Name   string `json:"name"`
@@ -39,13 +41,15 @@ func (e *entity) move(dx, dy int) {
 	e.Pos.Y += dy
 }
 
-func (e *entity) attacks(target *entity) {
+func (e *entity) attacks(target *entity, r *run) {
 	d6 := randomInt(1, 6)
 	damage := e.Combat.Attack + d6 - target.Combat.Defence
 	if damage > 0 {
 		target.Combat.HP -= damage
 	}
-	//fmt.Printf("%s deals %d damage to %s\n", e.Name, damage, target.Name)
+	combatMsg :=
+		fmt.Sprintf("%s deals %d damage to %s", e.Name, damage, target.Name)
+	r.History = append(r.History, combatMsg)
 }
 
 func (e *entity) isDead() bool {

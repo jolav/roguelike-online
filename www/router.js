@@ -38,9 +38,9 @@ async function startNewTurn(action) {
   showSomething();
   //util.showTiles();
   if (a.gameOver) {
-    console.log('OIGAA');
     lostGame();
   }
+  fixHistory();
   render.draw();
 }
 
@@ -53,9 +53,23 @@ async function startNewGame() {
   render.draw();
 }
 
+function fixHistory() {
+  a.history.reverse();
+  let h = "";
+  for (let i = 0; i < a.history.length; i++) {
+    h += a.history[i] + " \n";
+  }
+  a.history = h;
+}
+
 function showSomething() {
   //console.log(a.entities[0].combat);
-  console.log('************ NEW TURN ', a.turn, '**********', a.gameOver);
+  console.log('TURN => ', a.turn, a.history);
+  if (a.history !== null) {
+    for (let i = 0; i < a.history.length; i++) {
+      console.log(i, a.history[i]);
+    }
+  }
 }
 
 export {

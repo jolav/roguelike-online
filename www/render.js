@@ -6,7 +6,7 @@ import * as util from "./utils.js";
 
 const cv = document.getElementById('board');
 const ctx = cv.getContext('2d');
-const ppp = 16;//24;//16; // fails48 on FF but ok in chrome
+const ppp = 12;//24;//16; // fails48 on FF but ok in chrome
 let cols = 0;
 let rows = 0;
 const textOffset = ppp / 16;
@@ -15,17 +15,17 @@ const font = ppp + "px " + fontType;
 
 cv.addEventListener("mouseout", function (e) {
   // need 4 redraws to delete completely last red square
-  drawBorderOrGrid(1, "black");//#454545");
-  drawBorderOrGrid(1, "black");//#454545");
-  drawBorderOrGrid(1, "black");//#454545");
-  drawBorderOrGrid(1, "black");//#454545");
+  drawBorderOrGrid(1, "black");
+  drawBorderOrGrid(1, "black");
+  drawBorderOrGrid(1, "black");
+  drawBorderOrGrid(1, "black");
 });
 cv.addEventListener("mousemove", function (e) {
   getMouseOverPosition(cv, e);
 });
 
 function drawCellBorder(x, y) {
-  drawBorderOrGrid(1, "black");//#454545");
+  drawBorderOrGrid(1, "black");
   ctx.strokeStyle = "lightgreen";
   ctx.strokeRect(x * ppp, y * ppp, ppp, ppp);
 }
@@ -105,12 +105,20 @@ function drawUI() {
   document.getElementById("turn").innerHTML = turn;
 }
 
+function drawLogs() {
+  const messages = document.getElementById("msgZone");
+  messages.setAttribute("cols", 100);
+  messages.setAttribute("rows", 5);
+  messages.value = a.history;
+}
+
 function draw() {
   //console.log("draw");//, data);
   updateDataDraw();
   clearAll();
   drawUI();
-  drawBorderOrGrid(1, "black");// "#454545"); // 0 border 1 grid
+  drawLogs();
+  drawBorderOrGrid(1, "black");//"#454545"); // 0 border 1 grid
   drawBoard();
   drawEntities();
 }

@@ -8,9 +8,9 @@ func (a *app) gameLoop() {
 		select {
 		case askRun := <-a.Ch.askGame:
 			r := rs.newRun(a.Cnf)
-			rs[r.Token] = &r
+			rs[r.Token] = r
 			//showMap(r)
-			askRun <- r
+			askRun <- *r
 
 		case askTurn := <-a.Ch.askTurn:
 			r := rs[askTurn.token]

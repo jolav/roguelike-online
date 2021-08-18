@@ -13,9 +13,10 @@ type run struct {
 	PublicEntities []entity `json:"entities"`
 	Map            gameMap  `json:"map"`
 	fov            fieldOfVision
+	History        []string `json:"history"`
 }
 
-func (r run) moveEntity(id int, action string) bool {
+func (r *run) moveEntity(id int, action string) bool {
 	e := r.entities[id]
 	var next = point{0, 0}
 	var dx, dy = 0, 0
@@ -41,7 +42,7 @@ func (r run) moveEntity(id int, action string) bool {
 		if e.id != 0 && foe.Name != "player" { // avoid attack inter npcs
 			return false
 		}
-		e.attacks(foe)
+		e.attacks(foe, r)
 		if foe.isDead() {
 			foe.Blocks = false
 			foe.Mobile = false
@@ -54,14 +55,14 @@ func (r run) moveEntity(id int, action string) bool {
 	return true
 }
 
-func (r run) moveEntities() {
+func (r *run) moveEntities() {
 	ia := npcIA{}
 	randomAction := [4]string{"up", "down", "left", "right"}
 	var player = r.entities[0]
 	for _, e := range r.entities {
 		if e.Name != "player" && e.isMobile() {
 			if r.Map.isVisible(e.Pos.X, e.Pos.Y) { // Normal move in player LOS
-				path := ia.pathFinding(e.Pos, player.Pos, r)
+				path := ia.pathFinding(e.Pos, player.Pos, *r)
 				if path[1].isAnyEntityBlocking(r.entities) {
 					var action = ""
 					var dx = path[1].X - path[0].X
