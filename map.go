@@ -3,8 +3,8 @@
 package main
 
 const (
-	CAM_WIDTH  int = 41
-	CAM_HEIGHT int = 31
+	CAM_WIDTH  int = 50
+	CAM_HEIGHT int = 50
 	WIDTH      int = 100 //25
 	HEIGHT     int = 100 //21
 )

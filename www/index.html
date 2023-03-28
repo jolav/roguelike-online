@@ -5,7 +5,7 @@
   <title>Roguelike.online !</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Roguelike Online Game" />
+  <meta name="description" content="Roguelike Online Game. Browser game" />
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="./_public/sprites/favicon.png">
   <!-- CSS -->
@@ -13,9 +13,10 @@
 </head>
 
 <body>
+
   <section id="intro">
     <header>
-      <span class="version">version.0.0.10&nbsp;&nbsp;</span>
+      <span class="version">&nbsp;&nbsp;version.0.0.11&nbsp;&nbsp;</span>
       <a href="https://github.com/jolav/roguelike-online" target="_blank">
         <img src="./_public/sprites/github48x48.png">
       </a>
@@ -46,7 +47,7 @@
 
     <p>
       What's that siren? It sounds like the reactor's core fusion alarm that supplies power to the vault. And why
-      does everything smells like dead and closed
+      does everything smells like death and closed
     </p>
 
     <p>
@@ -70,6 +71,28 @@
 
   </section>
 
+  <!--
+  <section id="play">
+
+    <div class="container border">
+      <div id="name">
+        <span>Player</span>
+      </div>
+      <div id="turn">
+        Turn <span>-1</span>
+      </div>
+      <div id="pos">
+        Pos <span>0:0</span>
+      </div>
+    </div>
+    <div class="container2 border">
+      <textarea id="msgZone"></textarea>
+    </div>
+    <div class="border">
+      <canvas id="board"></canvas>
+    </div>
+  </section>-->
+
   <section id="play">
 
     <div class="container border">
@@ -90,11 +113,6 @@
       <canvas id="board"></canvas>
     </div>
   </section>
-
-  <!-- google-analytics -->
-  <!--#include file="/_public/templates/analytic.html" -->
-  <!-- cookie Law -->
-  <!--#include file="/_public/templates/cookieLaw.html" -->
 
   <script type="module" src="./index.js"></script>
 

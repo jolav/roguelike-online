@@ -29,3 +29,10 @@ File: www/_public/fonts/VarelaRound.ttf
 Copyright: Joe Prince
 License: SIL Open Font License (OFL) 
 Comment: Taken from https://fonts.google.com/specimen/Varela+Round
+
+File: www/_public/fonts/NotoSansMonoMedium.ttf
+Copyright: Google inc
+License: SIL Open Font License (OFL) 
+Comment: Taken from https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+
+

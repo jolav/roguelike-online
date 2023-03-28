@@ -17,17 +17,16 @@ function updateA(data) {
 
 const conf = {
   mode: "production",
-  apiUrlBase: "",
+  apiUrlBase: "https://roguelike.online/api/v0",
 };
 
-conf.apiUrlBase = function () {
-  //console.log(conf);
-  if (conf.mode === "dev") {
-    return "http://localhost:3000";
-  } else {
-    return "https://roguelike.online/api/v0";
+(function autoUpdateConf() {
+  if (window.location.hostname === "localhost") {
+    conf.mode = "dev"
+    conf.apiUrlBase = "http://localhost:3000"
   }
-}();
+})();
+
 
 export {
   conf,

@@ -49,6 +49,13 @@ func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
 
 func (a *app) loadGame(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("LOAD GAME")
+	type loadGame struct {
+		Status string `json:"status"`
+	}
+	lg := loadGame{
+		"loading",
+	}
+	sendJSONToClient(w, lg, 200)
 }
 
 func (a *app) action(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +78,7 @@ func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 		var randomPing time.Duration
 		if a.Sys.Mode == "dev" {
 			startTime = time.Now()
-			randomPing = time.Duration(randomInt(120, 200)) * time.Millisecond
+			randomPing = time.Duration(randomInt(150, 300)) * time.Millisecond
 			time.Sleep(randomPing) //simulate network travel
 		}
 		//
