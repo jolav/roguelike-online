@@ -1,18 +1,14 @@
 #Ignore these directories
 _aux/
-logs/
 tmp/
 _data/
 
 #Ignore these files
-.air.conf
 .env
-a_private.go
 _private.js
 _private.json
 
-# ignore binaries
-roguelike
+
 
 
 

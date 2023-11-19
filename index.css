@@ -39,7 +39,7 @@ section#intro a img {
   width: 32px;
 }
 
-section#intro button {
+section#intro #newGame {
   background-color: #fff;
   border-radius: 2em;
   color: #454545;
@@ -53,64 +53,18 @@ section#intro .buttons {
   justify-content: space-around;
 }
 
-section#intro button:hover {
+section#intro #newGame:hover {
   background-color: #454545;
   color: #fff
 }
 
 section#intro .version,
-.buttons button {
+.buttons #newGame {
   font-family: 'VarelaRound', sans-serif;
   font-weight: bold;
   font-size: 1em;
 }
 
-/* CONFIRM */
-
-/* PLAY */
-
-section#play {
-  font-family: 'NotoSansMonoMedium', 'VarelaRound', sans-serif;
-  color: #fff;
-  font-weight: bold;
-  font-size: 12px;
-  /*0.9em;*/
-  margin: 1em auto;
-  max-width: 800px;
-  line-height: 1;
-}
-
-section#play .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 10px 0px;
-}
-
-section#play #board {
-  background-color: #454545;
-  background-color: black;
-}
-
-.border {
-  margin-top: 0px;
-  border: 1px solid #454545;
-}
-
-section#play .container2 {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-textarea#msgZone {
-  font-family: 'VarelaRound', sans-serif;
-  font-weight: bold;
-  font-size: 12px;
-  border: 0px;
-  outline: none;
-  resize: none;
-  background-color: black;
-  color: white;
-  font-weight: bold;
+section#intro a, a:visited {
+  text-decoration: none;
 }
