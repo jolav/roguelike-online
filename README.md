@@ -5,7 +5,7 @@
 
 ## 0.1.0 MILESTONE 
 
-- [ ] **Setting Up**  
+- [X] **Setting Up**  
 - [ ] **Moving around @**  
 - [ ] **Render Basic Map**   
 - [ ] **Camera**  
@@ -27,6 +27,7 @@
 - [ ] **Save and load Runs**  
 - [ ] **Tilesets as well as ascii**  
 - [ ] **Help Modal**  
+- [ ] **Sound effects**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **Turn counter**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  

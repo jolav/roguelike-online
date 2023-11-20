@@ -1,20 +1,14 @@
 /* */
 
 body {
-  font-family: 'PressStart2P', 'VarelaRound', sans-serif;
-  background-color: #454545;
-  background-color: black;
-  color: #fff;
+  font-family: 'NotoSansMonoMedium', 'VarelaRound', sans-serif;
+  background-color: rgba(24, 24, 24);
+  color: rgba(255, 255, 255);
   font-size: 1em;
   margin: 2em auto;
   max-width: 800px;
   line-height: 1.2;
   text-align: justify;
-}
-
-@font-face {
-  font-family: 'PressStart2P';
-  src: url(./_public/fonts/PressStart2P.ttf);
 }
 
 @font-face {
@@ -29,14 +23,14 @@ body {
 
 /* INTRO */
 
+section#intro .intro {
+  font-size: 1.3em;
+}
+
 section#intro header {
   display: flex;
   align-items: center;
   float: right;
-}
-
-section#intro a img {
-  width: 32px;
 }
 
 section#intro #newGame {
@@ -44,7 +38,7 @@ section#intro #newGame {
   border-radius: 2em;
   color: #454545;
   padding: 5px 15px;
-  /*font-size: 1em;*/
+  font-size: 1.2em;
   transition: all 0.2s;
 }
 
@@ -55,7 +49,8 @@ section#intro .buttons {
 
 section#intro #newGame:hover {
   background-color: #454545;
-  color: #fff
+  color: #fff;
+  cursor: pointer;
 }
 
 section#intro .version,
@@ -63,8 +58,4 @@ section#intro .version,
   font-family: 'VarelaRound', sans-serif;
   font-weight: bold;
   font-size: 1em;
-}
-
-section#intro a, a:visited {
-  text-decoration: none;
 }
