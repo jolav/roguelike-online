@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.0-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
@@ -6,7 +6,7 @@
 ## 0.1.0 MILESTONE 
 
 - [X] **Setting Up**  
-- [ ] **Moving around @**  
+- [X] **Moving around @**  
 - [ ] **Render Basic Map**   
 - [ ] **Camera**  
 - [ ] **Field of View**  
@@ -29,7 +29,8 @@
 - [ ] **Help Modal**  
 - [ ] **Sound effects**  
 - [ ] **Player can modify ppp size 12/16/24...**  
-- [ ] **Turn counter**  
+- [X] **Turn counter**  
+- [ ] **Show PJ position**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile with mouse**  

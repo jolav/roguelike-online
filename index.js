@@ -2,10 +2,12 @@
 
 console.log('Loading.....index.js');
 
-//import { c } from "./_config.js";
+import * as game from "./game.js";
+import { actionKey } from "./controls.js";
 
 const init = {
   mode: "online",
+  where: window.location.hostname,
 
   intro: function () {
     console.log('#### INIT #####');
@@ -20,13 +22,19 @@ const init = {
   play: function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("playZone").style.display = "block";
-    console.log('NEW GAME =>');
+    document.body.style.overflow = "hidden";
+    game.begin();
+    window.addEventListener('keydown', function (e) {
+      const action = actionKey(e);
+      if (action !== undefined) {
+        game.newTurn(action);
+      }
+    });
   },
 
   init: function () {
-    const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
-    if (where === "localhost" || where === "127.0.0.1") {
+    if (init.where === "localhost" || init.where === "127.0.0.1") {
       init.mode = "dev";
     }
     init.intro();

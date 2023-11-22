@@ -20,6 +20,11 @@ Comment: Taken from https://www.softicons.com/social-media-icons/habrapack-socia
 
 ***** FONTS *****
 
+File: www/_public/fonts/PressStart2P.ttf
+Copyright: CodeMan38
+License: SIL Open Font License (OFL) 
+Comment: Taken from https://fonts.google.com/specimen/Press+Start+2P
+
 File: www/_public/fonts/VarelaRound.ttf
 Copyright: Joe Prince
 License: SIL Open Font License (OFL) 

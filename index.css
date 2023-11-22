@@ -5,10 +5,14 @@ body {
   background-color: rgba(24, 24, 24);
   color: rgba(255, 255, 255);
   font-size: 1em;
-  margin: 2em auto;
-  max-width: 800px;
   line-height: 1.2;
   text-align: justify;
+}
+
+
+@font-face {
+  font-family: 'PressStart2P';
+  src: url(./_public/fonts/PressStart2P.ttf);
 }
 
 @font-face {
@@ -22,6 +26,11 @@ body {
 }
 
 /* INTRO */
+
+section#intro {
+  max-width: 800px;
+  margin: 2em auto;
+}
 
 section#intro .intro {
   font-size: 1.3em;
@@ -58,4 +67,30 @@ section#intro .version,
   font-family: 'VarelaRound', sans-serif;
   font-weight: bold;
   font-size: 1em;
+}
+
+/* PLAY ZONE*/
+
+section#playZone {
+  overflow: hidden;
+}
+
+section#playZone #canvas {
+  border: 1px solid #bbbbbb;
+}
+
+/* Flex Layout */
+
+section#playZone .row {
+  display: flex;
+}
+
+section#playZone .column {
+  float: left;
+}
+
+section#playZone .right {
+  width: 200px;
+  text-align: center;
+
 }
