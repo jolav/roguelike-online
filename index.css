@@ -76,7 +76,7 @@ section#playZone {
 }
 
 section#playZone #canvas {
-  border: 1px solid #bbbbbb;
+  /*border: 1px solid #bbbbbb;*/
 }
 
 /* Flex Layout */
@@ -92,5 +92,6 @@ section#playZone .column {
 section#playZone .right {
   width: 200px;
   text-align: center;
-
 }
+
+section#playZone {}

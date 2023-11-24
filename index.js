@@ -4,6 +4,7 @@ console.log('Loading.....index.js');
 
 import * as game from "./game.js";
 import { actionKey } from "./controls.js";
+import { K } from "./_config.js";
 
 const init = {
   mode: "online",
@@ -13,6 +14,7 @@ const init = {
     console.log('#### INIT #####');
     document.getElementById("intro").style.display = "block";
     document.getElementById("playZone").style.display = "none";
+    document.getElementById("versionIntro").innerHTML = K.VERSION;
     document.getElementById("newGame").addEventListener("click", init.play);
     if (init.mode === "dev") { // auto start in dev mode
       init.play();
@@ -22,8 +24,9 @@ const init = {
   play: function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("playZone").style.display = "block";
+    document.getElementById("versionPanel").innerHTML = K.VERSION;
     document.body.style.overflow = "hidden";
-    game.begin();
+    game.start();
     window.addEventListener('keydown', function (e) {
       const action = actionKey(e);
       if (action !== undefined) {

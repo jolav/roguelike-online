@@ -2,43 +2,69 @@
 
 console.log('Loading.....render.js');
 
-import { K } from "./_config.js";
-import { g, pj } from "./game.js";
+import { K, lib } from "./_config.js";
+import { a, pj } from "./game.js";
 
-const canvas = document.getElementById(K.CANVAS_NAME);
-canvas.width = K.WIDTH;
-canvas.height = K.HEIGHT;
-const cols = K.WIDTH / K.PPP;
-const rows = K.HEIGHT / K.PPP;
-const textOffset = K.PPP / 16;
+let canvas = document.getElementById(K.CANVAS_NAME);
+canvas.width = K.WINDOW_WIDTH;
+canvas.height = K.WINDOW_HEIGHT;
+const textOffset = K.PPP; // 16,24,32 ...
 const ctx = canvas.getContext('2d');
-const fontType = "PressStart2P";
-const font = K.PPP + "px " + fontType;
-ctx.font = font;
+ctx.font = K.PPP + "px " + K.FONT;
 
-function player() {
-  ctx.fillStyle = "#fff";
-  ctx.fillText("@", pj.x * K.PPP, pj.y * K.PPP);
+function redraw() {
+  draw.clearAll();
+  draw.drawMap();
+  draw.drawPlayer();
+  panel.update();
 }
 
-function draw() {
-  clearAll();
-  setTime();
-  player();
-}
+const draw = {
+  drawMap: function () {
+    for (let col = 0; col < K.COLS; col++) {
+      for (let row = 0; row < K.ROWS; row++) {
+        const char = lib.getCharCode(a.map[col][row].terrain);
+        this.drawTile(col, row, char);
+      }
+    }
+  },
+  drawTile: function (x, y, char) {
+    ctx.fillStyle = "#fff";
+    ctx.fillText(char, x * K.PPP, y * K.PPP + textOffset);
+  },
+  drawPlayer: function () {
+    this.clearTile(pj.x, pj.y);
+    const char = lib.getCharCode("player");
+    this.drawTile(pj.x, pj.y, char);
+  },
+  clearAll: function () {
+    ctx.clearRect(0, 0, K.WINDOW_WIDTH, K.WINDOW_HEIGHT);
+    ctx.beginPath();
+  },
+  clearTile: function (x, y) {
+    ctx.fillStyle = "red";
+    ctx.clearRect(x * K.PPP, y * K.PPP, K.PPP, K.PPP);
+    ctx.beginPath();
+  },
+};
 
-function clearAll() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-}
-
-function setTime() {
-  let aa = g.currentDate.toDateString().slice(4);
-  let bb = g.currentDate.toTimeString().split(" ")[0];
-  document.getElementById("date").innerHTML = aa;
-  document.getElementById("time").innerHTML = bb;
-}
+const panel = {
+  update: function () {
+    this.currentTime();
+    this.pjPos();
+  },
+  pjPos: function () {
+    document.getElementById("pjX").innerHTML = pj.x;
+    document.getElementById("pjY").innerHTML = pj.y;
+  },
+  currentTime: function () {
+    let aa = a.date.toDateString().slice(4);
+    let bb = a.date.toTimeString().split(" ")[0];
+    document.getElementById("date").innerHTML = aa;
+    document.getElementById("time").innerHTML = bb;
+  }
+};
 
 export {
-  draw
+  redraw
 };

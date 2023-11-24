@@ -16,7 +16,11 @@
 
   <section id="intro">
     <header>
-      <span class="version">&nbsp;&nbsp;version.0.0.0&nbsp;&nbsp;</span>
+      <span class="version">
+        &nbsp;&nbsp;version.
+        <label id="versionIntro"></label>
+        &nbsp;&nbsp;
+      </span>
       <a href="https://github.com/jolav/roguelike-online" target="_blank">
         <img src="./_public/sprites/github48x48.png" alt="github logo">
       </a>
@@ -79,13 +83,18 @@
       <div class="column right">
 
         <section id="">
-          <h4><strong>CONTROL PANEL</strong></h4>
+          <h4><strong>ROGUELIKE</strong>
+            <small id="versionPanel"></small>
+          </h4>
 
           <div class="time">
-            <label id="date">29th Aug 2097</label>
+            <small id="date">29th Aug 2097</small><br>
             <label id="time">02:14:00</label>
           </div>
           <br>
+          <div class="pos">Player [<label id="pjX">0</label>,
+            <label id="pjY">0</label>]
+          </div>
 
         </section>
 

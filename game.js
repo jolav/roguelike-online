@@ -1,24 +1,35 @@
 /* */
 
-console.log('Loading.....game.js');
+console.log('Loadina.....game.js');
 
 import * as render from "./render.js";
-import { K } from "./_config.js";
+import * as map from "./map.js";
+import { K, lib } from "./_config.js";
 
-const g = {
-  currentDate: K.INIT_DATE,
-  counter: 0,
+const a = {
+  nick: "",
+  token: "",
+  gameOver: false,
+  turn: 0,
+  date: lib.getCurrentDate(0),
+  entities: [],
+  map: [],//{},
+  history: [],
 };
 
-function begin() {
-  render.draw();
+function start() {
+  map.create();
+  render.redraw();
 }
 
 function newTurn(action) {
-  g.counter++;
-  g.currentDate = new Date(K.INIT_DATE.getTime() + 1000 * g.counter);
+  if (!pj.canMove(action)) {
+    return;
+  }
+  a.turn++;
+  a.date = lib.getCurrentDate(a.turn);
   move(action);
-  render.draw();
+  render.redraw();
 }
 
 function move(action) {
@@ -41,14 +52,42 @@ function move(action) {
 }
 
 const pj = {
-  x: (K.WIDTH / 2) / K.PPP,
-  y: (K.HEIGHT / 2) / K.PPP,
+  x: Math.floor(K.COLS / 2),
+  y: Math.floor(K.ROWS / 2),
+  canMove: function (action) {
+    const destination = {
+      x: pj.x,
+      y: pj.y,
+      terrain: "",
+    };
+    switch (action) {
+      case "up":
+        destination.y--;
+        break;
+      case "down":
+        destination.y++;
+        break;
+      case "left":
+        destination.x--;
+        break;
+      case "right":
+        destination.x++;
+        break;
+      default:
+        break;
+    }
+    destination.terrain = a.map[destination.x][destination.y].terrain;
+    if (destination.terrain === "floor") {
+      return true;
+    }
+    return false;
+  }
 };
 
 export {
   pj,
-  begin,
+  start,
   newTurn,
-  g,
+  a,
 };
 
