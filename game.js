@@ -52,8 +52,8 @@ function move(action) {
 }
 
 const pj = {
-  x: Math.floor(K.COLS / 2),
-  y: Math.floor(K.ROWS / 2),
+  x: Math.floor(K.MAP_X / 2),
+  y: Math.floor(K.MAP_Y / 2),
   canMove: function (action) {
     const destination = {
       x: pj.x,
