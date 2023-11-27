@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.3-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.4-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
@@ -9,9 +9,8 @@
 - [X] **Moving around @**  
 - [X] **Render Basic Map**   
 - [X] **Camera**  
-- [ ] **Field of View**  
+- [X] **Field of View**  
 - [ ] **Generating Vault**  
-- [ ] **Line of Sight**  
 - [ ] **Placing Enemies**  
 - [ ] **Moving Enemies**  
 - [ ] **Close Combat**  

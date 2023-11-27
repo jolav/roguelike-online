@@ -3,15 +3,16 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.3",
+  VERSION: "0.0.4",
   // MapGen
   FONT: "PressStart2P",
   MAX_ROOMS: 20,
-  MAP_X: 33,//43, 
-  MAP_Y: 21,//25, 
+  MAP_X: 70,//43, 
+  MAP_Y: 40,//25, 
+  LOS_RADIUS: 50,
   // Render
   CANVAS_NAME: "canvas",
-  PPP: 24,
+  PPP: 16,
   WINDOW_WIDTH: window.innerWidth - 200,
   WINDOW_HEIGHT: window.innerHeight - 5,
   CAM_X: 0,
@@ -49,6 +50,10 @@ const lib = {
     const char = String.fromCharCode(charCode);
     return char;
   },
+  getColor: function (entity) {
+    const color = colors.get(entity);
+    return color;
+  },
   getCurrentDate: function (turn) {
     return new Date(K.INIT_DATE.getTime() + 1000 * turn);
   }
@@ -61,3 +66,8 @@ const symbols = new Map([
   ["player", 64],   // @
 ]);
 
+const colors = new Map([
+  ["player", "burlywood"],
+  ["visible", "#fff"],
+  ["explored", "#454545"],
+]);
