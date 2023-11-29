@@ -7,7 +7,6 @@ import { pj } from "./entity.js";
 import { K } from "./_config.js";
 
 function get() {
-
   for (let x = 0; x < K.MAP_X; x++) {
     for (let y = 0; y < K.MAP_Y; y++) {
       const i = pj.x + 0.5, j = pj.y + 0.5;
@@ -28,6 +27,8 @@ function get() {
           tile.explored = true;
         }
       }
+      // only for watch maps
+      tile.visible = true;
     }
   }
 }

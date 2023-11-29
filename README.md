@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.4-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.5-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
@@ -10,7 +10,7 @@
 - [X] **Render Basic Map**   
 - [X] **Camera**  
 - [X] **Field of View**  
-- [ ] **Generating Vault**  
+- [X] **Generating Vault**  
 - [ ] **Placing Enemies**  
 - [ ] **Moving Enemies**  
 - [ ] **Close Combat**  
@@ -19,7 +19,7 @@
 - [ ] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
 
-## POSSIBLE FEATURES  
+## FEATURES  
 
 - [ ] **Choose player name at start**  
 - [ ] **Directional FOV**  
@@ -27,13 +27,20 @@
 - [ ] **Tilesets as well as ascii**  
 - [ ] **Help Modal**  
 - [ ] **Sound effects**  
-- [ ] **Player can modify ppp size 12/16/24...**  
 - [X] **Turn counter**  
 - [X] **Show PJ position**  
 - [X] **Center camera if is greater than map**  
+- MOUSE
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile with mouse**  
+- MAPS
+- [ ] **Player can modify ppp size 12/16/24...**  
+- [ ] **resize map on windows resize**  
+- [ ] **Remove dead end corridors**  
+- [ ] **wider corridors**  
+- [ ] **Put pillars in large rooms**  
+- [ ] **add furniture**  
 
 ## BUGS
 

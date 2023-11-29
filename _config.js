@@ -3,16 +3,22 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.4",
+  VERSION: "0.0.5",
   // MapGen
-  FONT: "PressStart2P",
-  MAX_ROOMS: 20,
-  MAP_X: 70,//43, 
-  MAP_Y: 40,//25, 
+  ROOM_TRIES: 5000,
+  MAX_ROOMS: 50,
+  MIN_SIZE_ROOM: 8,
+  MAX_SIZE_ROOM: 40,
+  MIN_LENGTH_CORRIDOR: 5,
+  MAX_LENGTH_CORRIDOR: 20,
+  CORRIDOR_ODDS: 0,
+  MAP_X: 200,//43, 
+  MAP_Y: 110,//25, 
   LOS_RADIUS: 50,
   // Render
+  FONT: "PressStart2P",
   CANVAS_NAME: "canvas",
-  PPP: 16,
+  PPP: 8,
   WINDOW_WIDTH: window.innerWidth - 200,
   WINDOW_HEIGHT: window.innerHeight - 5,
   CAM_X: 0,
@@ -56,7 +62,10 @@ const lib = {
   },
   getCurrentDate: function (turn) {
     return new Date(K.INIT_DATE.getTime() + 1000 * turn);
-  }
+  },
+  randomInt: function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  },
 };
 
 const symbols = new Map([
