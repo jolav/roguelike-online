@@ -3,11 +3,10 @@
 console.log('Loading.....render.js');
 
 import { K, lib } from "./_config.js";
-import { a } from "./game.js";
-import { pj } from "./entity.js";
+import { r } from "./run.js";
 import * as  fov from "./fov.js";
 
-let canvas = document.getElementById(K.CANVAS_NAME);
+const canvas = document.getElementById(K.CANVAS_NAME);
 canvas.width = K.WINDOW_WIDTH;
 canvas.height = K.WINDOW_HEIGHT;
 const textOffset = K.PPP; // 16,24,32 ...
@@ -15,15 +14,18 @@ const ctx = canvas.getContext('2d');
 ctx.font = K.PPP + "px " + K.FONT;
 ctx.fillStyle = "black";
 
+let player;
+
 function redraw() {
+  player = r.entities[0].pos;
   cam.update();
-  fov.get();
+  fov.calculate();
   draw.clearAll();
   //draw.map();
   draw.camera();
-  draw.player();
+  draw.entities();
+  //draw.player();
   panel.update();
-  draw.player();
 }
 
 const cam = {
@@ -32,8 +34,8 @@ const cam = {
   maxX: K.MAP_X - K.CAM_X,
   maxY: K.MAP_Y - K.CAM_Y,
   update: function () {
-    this.x = pj.x - Math.floor(K.CAM_X / 2);
-    this.y = pj.y - Math.floor(K.CAM_Y / 2);
+    this.x = player.x - Math.floor(K.CAM_X / 2);
+    this.y = player.y - Math.floor(K.CAM_Y / 2);
     if (this.x < 0) {
       this.x = 0;
     } else if (this.x > this.maxX) {
@@ -53,7 +55,7 @@ const draw = {
       for (let y = K.DELTA_Y; y < K.CAM_Y + K.DELTA_Y; y++) {
         const posX = x + cam.x - K.DELTA_X;
         const posY = y + cam.y - K.DELTA_Y;
-        const tile = a.map[posX][posY];
+        const tile = r.map[posX][posY];
         const char = lib.getCharCode(tile.terrain);
         if (tile.visible) {
           this.tile(x, y, char, "visible");
@@ -63,28 +65,24 @@ const draw = {
       }
     }
   },
-  map: function () {
-    for (let x = 0; x < K.MAP_X; x++) {
-      for (let y = 0; y < K.MAP_Y; y++) {
-        const char = lib.getCharCode(a.map[x][y].terrain);
-        this.tile(x, y, char, "visible");
+  entities: function () {
+    for (let e of r.entities) {
+      const posX = e.pos.x - cam.x + K.DELTA_X;
+      const posY = e.pos.y - cam.y + K.DELTA_Y;
+      const tile = r.map[e.pos.x][e.pos.y];
+      if (tile.visible) {
+        const char = lib.getCharCode(e.type);
+        const color = e.type;
+        this.clearTile(posX, posY);
+        this.tile(posX, posY, char, color);
       }
     }
-    this.clearTile(pj.x, pj.y);
-    const char = lib.getCharCode("player");
-    this.tile(pj.x, pj.y, char, "player");
   },
   tile: function (x, y, char, color) {
     ctx.fillStyle = lib.getColor(color);
     ctx.fillText(char, x * K.PPP, y * K.PPP + textOffset);
   },
-  player: function () {
-    const posX = pj.x - cam.x + K.DELTA_X;
-    const posY = pj.y - cam.y + K.DELTA_Y;
-    this.clearTile(posX, posY);
-    const char = lib.getCharCode("player");
-    this.tile(posX, posY, char, "player");
-  },
+
   clearAll: function () {
     ctx.clearRect(0, 0, K.WINDOW_WIDTH, K.WINDOW_HEIGHT);
     ctx.beginPath();
@@ -92,6 +90,24 @@ const draw = {
   clearTile: function (x, y) {
     ctx.clearRect(x * K.PPP, y * K.PPP, K.PPP, K.PPP);
     ctx.beginPath();
+  },
+  player: function () {
+    const posX = player.x - cam.x + K.DELTA_X;
+    const posY = player.y - cam.y + K.DELTA_Y;
+    this.clearTile(posX, posY);
+    const char = lib.getCharCode("player");
+    this.tile(posX, posY, char, "player");
+  },
+  map: function () {
+    for (let x = 0; x < K.MAP_X; x++) {
+      for (let y = 0; y < K.MAP_Y; y++) {
+        const char = lib.getCharCode(r.map[x][y].terrain);
+        this.tile(x, y, char, "visible");
+      }
+    }
+    this.clearTile(player.x, player.y);
+    const char = lib.getCharCode("player");
+    this.tile(player.x, player.y, char, "player");
   },
 };
 
@@ -101,12 +117,12 @@ const panel = {
     this.pjPos();
   },
   pjPos: function () {
-    document.getElementById("pjX").innerHTML = pj.x;
-    document.getElementById("pjY").innerHTML = pj.y;
+    document.getElementById("pjX").innerHTML = player.x;
+    document.getElementById("pjY").innerHTML = player.y;
   },
   currentTime: function () {
-    let aa = a.date.toDateString().slice(4);
-    let bb = a.date.toTimeString().split(" ")[0];
+    let aa = r.date.toDateString().slice(4);
+    let bb = r.date.toTimeString().split(" ")[0];
     document.getElementById("date").innerHTML = aa;
     document.getElementById("time").innerHTML = bb;
   }
@@ -114,5 +130,4 @@ const panel = {
 
 export {
   redraw,
-  cam
 };

@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.5-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.6-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
@@ -11,7 +11,7 @@
 - [X] **Camera**  
 - [X] **Field of View**  
 - [X] **Generating Vault**  
-- [ ] **Placing Enemies**  
+- [X] **Placing Enemies**  
 - [ ] **Moving Enemies**  
 - [ ] **Close Combat**  
 - [ ] **Creating UI**  
@@ -41,9 +41,12 @@
 - [ ] **wider corridors**  
 - [ ] **Put pillars in large rooms**  
 - [ ] **add furniture**  
+- [ ] **seeds for reproducible runs**  
+- [ ] **tile walkable**  
 
 ## BUGS
 
+- [ ] **the initial room can go to the edge of the map, test with small map fro recreate it**   
 
 ## **Acknowledgment**
 

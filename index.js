@@ -2,7 +2,7 @@
 
 console.log('Loading.....index.js');
 
-import * as game from "./game.js";
+import { r } from "./run.js";
 import { actionKey } from "./controls.js";
 import { K } from "./_config.js";
 
@@ -26,11 +26,11 @@ const init = {
     document.getElementById("playZone").style.display = "block";
     document.getElementById("versionPanel").innerHTML = K.VERSION;
     document.body.style.overflow = "hidden";
-    game.start();
+    r.start();
     window.addEventListener('keydown', function (e) {
       const action = actionKey(e);
       if (action !== undefined) {
-        game.newTurn(action);
+        r.newTurn(action);
       }
     });
   },

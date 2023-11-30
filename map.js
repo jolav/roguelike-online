@@ -3,12 +3,8 @@
 console.log('Loading.....map.js');
 
 import { K, lib } from "./_config.js";
-import { a } from "./game.js";
 
-function create() {
-  //oneBigRoom();
-  vault();
-}
+const map = [];
 
 class Room {
   constructor(x, y, width, height) {
@@ -29,28 +25,29 @@ class Wall {
 }
 
 class Feature {
-  constructor(width, height) {
+  constructor(width, height, type) {
     this.width = width;
     this.height = height;
-    this.type = "";
+    this.type = type;
   }
+}
+
+function create() {
+  //return oneBigRoom();
+  return vault();
 }
 
 function vault() {
   fillMapWithWalls();
-  const r = createRoomInCenter();
-  fillRoom(r);
+  const rm = createRoomInCenter();
+  fillRoom(rm);
   let success = 0;
   for (let tries = 1; tries < K.ROOM_TRIES; tries++) {
-    //console.log(tries);
     const w = pickRandomWallFromAnyRoom();
     const f = pickRandomFeature();
-    const r = convertFeatureToRoom(w, f);
-    if (checkIsRoomForFeature(r)) {
-      //console.log(r);
-      //console.log(w);
-      //console.log(f);
-      fillRoom(r);
+    const rm = convertFeatureToRoom(w, f);
+    if (checkIsRoomForFeature(rm)) {
+      fillRoom(rm);
       fillWall(w);
       if (f.type === "room") {
         success++;
@@ -60,6 +57,7 @@ function vault() {
       }
     }
   }
+  return map;
 }
 
 function createRoomInCenter() {
@@ -67,8 +65,8 @@ function createRoomInCenter() {
   const height = lib.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
   const x = Math.floor((K.MAP_X - width) / 2);
   const y = Math.floor((K.MAP_Y - height) / 2);
-  const r = new Room(x, y, width, height);
-  return r;
+  const rm = new Room(x, y, width, height);
+  return rm;
 }
 
 function pickRandomWallFromAnyRoom() {
@@ -78,7 +76,7 @@ function pickRandomWallFromAnyRoom() {
   while (!found && limit < K.ROOM_TRIES) {
     w.x = lib.randomInt(4, K.MAP_X - 5);
     w.y = lib.randomInt(4, K.MAP_Y - 5);
-    if (a.map[w.x][w.y].blocks) {
+    if (map[w.x][w.y].blocks) {
       getClearNeighbours(w);
       if (w.nei === 1) {
         found = true;
@@ -95,19 +93,19 @@ function pickRandomWallFromAnyRoom() {
 function getClearNeighbours(w) {
   w.nei = 0;
   w.dir = "Zero";
-  if (!a.map[w.x][w.y - 1].blocks) {
+  if (!map[w.x][w.y - 1].blocks) {
     w.nei++;
     w.dir = "S";
   }
-  if (!a.map[w.x][w.y + 1].blocks) {
+  if (!map[w.x][w.y + 1].blocks) {
     w.nei++;
     w.dir = "N";
   }
-  if (!a.map[w.x + 1][w.y].blocks) {
+  if (!map[w.x + 1][w.y].blocks) {
     w.nei++;
     w.dir = "W";
   }
-  if (!a.map[w.x - 1][w.y].blocks) {
+  if (!map[w.x - 1][w.y].blocks) {
     w.nei++;
     w.dir = "E";
   }
@@ -131,47 +129,47 @@ function pickRandomFeature() {
 }
 
 function convertFeatureToRoom(w, f) {
-  const r = new Room(0, 0, 0, 0);
+  const rm = new Room(0, 0, 0, 0);
   switch (w.dir) {
     case "N":
-      r.x = w.x - Math.floor(f.width / 2);
-      r.y = w.y - f.height;
-      r.width = f.width;
-      r.height = f.height;
+      rm.x = w.x - Math.floor(f.width / 2);
+      rm.y = w.y - f.height;
+      rm.width = f.width;
+      rm.height = f.height;
       break;
     case "S":
-      r.x = w.x - Math.floor(f.width / 2);
-      r.y = w.y + 1;
-      r.width = f.width;
-      r.height = f.height;
+      rm.x = w.x - Math.floor(f.width / 2);
+      rm.y = w.y + 1;
+      rm.width = f.width;
+      rm.height = f.height;
       break;
     case "E":
-      r.x = w.x + 1;
-      r.y = w.y - Math.floor(f.width / 2);
-      r.width = f.height;
-      r.height = f.width;
+      rm.x = w.x + 1;
+      rm.y = w.y - Math.floor(f.width / 2);
+      rm.width = f.height;
+      rm.height = f.width;
       break;
     case "W":
-      r.x = w.x - f.height;
-      r.y = w.y - Math.floor(f.width / 2);
-      r.width = f.height;
-      r.height = f.width;
+      rm.x = w.x - f.height;
+      rm.y = w.y - Math.floor(f.width / 2);
+      rm.width = f.height;
+      rm.height = f.width;
   }
-  return r;
+  return rm;
 }
 
-function checkIsRoomForFeature(r) {
-  if (r.x + r.width > K.MAP_X - 1 || r.y + r.height > K.MAP_Y - 1) {
+function checkIsRoomForFeature(rm) {
+  if (rm.x + rm.width > K.MAP_X - 1 || rm.y + rm.height > K.MAP_Y - 1) {
     return false;
   }
-  if (r.x <= 0 || r.y <= 0) { // =0 avoid rooms just in the edge
+  if (rm.x <= 0 || rm.y <= 0) { // =0 avoid rooms just in the edge
     return false;
   }
-  const originX = r.x;
-  const originY = r.y;
-  for (let x = 0; x < r.width; x++) {
-    for (let y = 0; y < r.height; y++) {
-      if (!a.map[originX + x][originY + y].blocks) {
+  const originX = rm.x;
+  const originY = rm.y;
+  for (let x = 0; x < rm.width; x++) {
+    for (let y = 0; y < rm.height; y++) {
+      if (!map[originX + x][originY + y].blocks) {
         return false;
       }
     }
@@ -179,73 +177,30 @@ function checkIsRoomForFeature(r) {
   return true;
 }
 
-function fillRoom(r) {
-  const originX = r.x;
-  const originY = r.y;
-  for (let x = 0; x < r.width; x++) {
-    for (let y = 0; y < r.height; y++) {
-      a.map[originX + x][originY + y] = new Tile("floor");
+function fillRoom(rm) {
+  const originX = rm.x;
+  const originY = rm.y;
+  for (let x = 0; x < rm.width; x++) {
+    for (let y = 0; y < rm.height; y++) {
+      map[originX + x][originY + y] = new Tile("floor");
     }
   }
 }
 
 function fillWall(w) {
-  a.map[w.x][w.y] = new Tile("floor");
+  map[w.x][w.y] = new Tile("floor");
 }
 
 function fillMapWithWalls() {
   for (let x = 0; x < K.MAP_X; x++) {
-    a.map[x] = [];
+    map[x] = [];
     for (let y = 0; y < K.MAP_Y; y++) {
       const terrain = "wall";
-      a.map[x].push(
+      map[x].push(
         new Tile(terrain)
       );
     }
   }
-}
-
-function oneBigRoom() {
-  for (let x = 0; x < K.MAP_X; x++) {
-    a.map[x] = [];
-    for (let y = 0; y < K.MAP_Y; y++) {
-      let terrain = "floor";
-      if (x === 0 || y === 0
-        || x === K.MAP_X - 1 || y === K.MAP_Y - 1) {
-        terrain = "wall";
-      }
-      //<!-- testing FOV
-      if ((x === 8) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 16) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 24) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 32) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 40) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 48) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 56) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 64) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      //-->
-      a.map[x].push(
-        new Tile(terrain)
-      );
-    }
-  }
-  //console.log(a.map);
 }
 
 export {
@@ -280,4 +235,51 @@ class Tile {
     this.visible = p[4];
   }
 }
+
+//
+//<!-- testing FOV
+//
+function oneBigRoom() {
+  for (let x = 0; x < K.MAP_X; x++) {
+    map[x] = [];
+    for (let y = 0; y < K.MAP_Y; y++) {
+      let terrain = "floor";
+      if (x === 0 || y === 0
+        || x === K.MAP_X - 1 || y === K.MAP_Y - 1) {
+        terrain = "wall";
+      }
+      if ((x === 8) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 16) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 24) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 32) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 40) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 48) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 56) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      if ((x === 64) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
+        terrain = "wall";
+      }
+      map[x].push(
+        new Tile(terrain)
+      );
+    }
+  }
+  return map;
+}
+//
+//--> END TESTING FOV
+//
 

@@ -2,21 +2,20 @@
 
 console.log('Loading.....fov.js');
 
-import { a } from "./game.js";
-import { pj } from "./entity.js";
+import { r } from "./run.js";
 import { K } from "./_config.js";
 
-function get() {
+function calculate() {
   for (let x = 0; x < K.MAP_X; x++) {
     for (let y = 0; y < K.MAP_Y; y++) {
-      const i = pj.x + 0.5, j = pj.y + 0.5;
-      const tile = a.map[x][y];
+      const i = r.entities[0].pos.x + 0.5, j = r.entities[0].pos.y + 0.5;
+      const tile = r.map[x][y];
       tile.visible = false;
       if (isInsideCircle({ i, j }, { x, y }, K.LOS_RADIUS)) {
-        const path = line(new Point(pj.x, pj.y), new Point(x, y));
+        const path = line(new Point(r.entities[0].pos.x, r.entities[0].pos.y), new Point(x, y));
         tile.visible = true;
         for (let z = 1; z < path.length; z++) {
-          const routeTile = a.map[path[z].x][path[z].y];
+          const routeTile = r.map[path[z].x][path[z].y];
           if (routeTile.blocks || routeTile.blockLOS) {
             tile.visible = false;
             routeTile.visible = true;
@@ -27,8 +26,9 @@ function get() {
           tile.explored = true;
         }
       }
-      // only for watch maps
-      tile.visible = true;
+      // UNCOMMENT THIS FOR WATCH ALL THE MAP
+      //tile.visible = true;
+      //  
     }
   }
 }
@@ -75,6 +75,5 @@ function Point(x, y) {
 }
 
 export {
-  get,
-
+  calculate,
 };
