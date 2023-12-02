@@ -1,7 +1,7 @@
-![Game](https://img.shields.io/badge/Version-0.0.6-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.7-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
-## **[Play ROGUELIKE.ONLINE](https://roguelike.online)**  
+## **[Play the prologue ROGUELIKE.ONLINE](https://prologue.roguelike.online)**  
 
 ## 0.1.0 MILESTONE 
 
@@ -12,7 +12,7 @@
 - [X] **Field of View**  
 - [X] **Generating Vault**  
 - [X] **Placing Enemies**  
-- [ ] **Moving Enemies**  
+- [X] **Moving Enemies**  
 - [ ] **Close Combat**  
 - [ ] **Creating UI**  
 - [ ] **Inventary and items**  
@@ -30,6 +30,7 @@
 - [X] **Turn counter**  
 - [X] **Show PJ position**  
 - [X] **Center camera if is greater than map**  
+- [ ] **Improving enemy IA**  
 - MOUSE
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
@@ -46,7 +47,10 @@
 
 ## BUGS
 
+- [ ] **at startup foe can start same tile player**  
+- [ ] **at startup the source does not load properly**  
 - [ ] **the initial room can go to the edge of the map, test with small map fro recreate it**   
+- [X] **when the direction is changed, the system still continues to expand one turn in that direction**
 
 ## **Acknowledgment**
 

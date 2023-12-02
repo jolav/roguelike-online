@@ -4,12 +4,11 @@ console.log('Loading.....render.js');
 
 import { K, lib } from "./_config.js";
 import { r } from "./run.js";
-import * as  fov from "./fov.js";
 
 const canvas = document.getElementById(K.CANVAS_NAME);
 canvas.width = K.WINDOW_WIDTH;
 canvas.height = K.WINDOW_HEIGHT;
-const textOffset = K.PPP; // 16,24,32 ...
+const textOffset = K.PPP;
 const ctx = canvas.getContext('2d');
 ctx.font = K.PPP + "px " + K.FONT;
 ctx.fillStyle = "black";
@@ -19,7 +18,6 @@ let player;
 function redraw() {
   player = r.entities[0].pos;
   cam.update();
-  fov.calculate();
   draw.clearAll();
   //draw.map();
   draw.camera();
@@ -56,7 +54,7 @@ const draw = {
         const posX = x + cam.x - K.DELTA_X;
         const posY = y + cam.y - K.DELTA_Y;
         const tile = r.map[posX][posY];
-        const char = lib.getCharCode(tile.terrain);
+        const char = lib.charCode(tile.terrain);
         if (tile.visible) {
           this.tile(x, y, char, "visible");
         } else if (tile.explored && !tile.visible) {
@@ -71,7 +69,7 @@ const draw = {
       const posY = e.pos.y - cam.y + K.DELTA_Y;
       const tile = r.map[e.pos.x][e.pos.y];
       if (tile.visible) {
-        const char = lib.getCharCode(e.type);
+        const char = lib.charCode(e.type);
         const color = e.type;
         this.clearTile(posX, posY);
         this.tile(posX, posY, char, color);
@@ -79,8 +77,9 @@ const draw = {
     }
   },
   tile: function (x, y, char, color) {
-    ctx.fillStyle = lib.getColor(color);
-    ctx.fillText(char, x * K.PPP, y * K.PPP + textOffset);
+    ctx.fillStyle = lib.colorOfEntity(color);
+    ctx.textAlign = "center";
+    ctx.fillText(char, x * K.PPP + textOffset / 2, y * K.PPP + textOffset / 2);
   },
 
   clearAll: function () {
@@ -95,18 +94,18 @@ const draw = {
     const posX = player.x - cam.x + K.DELTA_X;
     const posY = player.y - cam.y + K.DELTA_Y;
     this.clearTile(posX, posY);
-    const char = lib.getCharCode("player");
+    const char = lib.charCode("player");
     this.tile(posX, posY, char, "player");
   },
   map: function () {
     for (let x = 0; x < K.MAP_X; x++) {
       for (let y = 0; y < K.MAP_Y; y++) {
-        const char = lib.getCharCode(r.map[x][y].terrain);
+        const char = lib.charCode(r.map[x][y].terrain);
         this.tile(x, y, char, "visible");
       }
     }
     this.clearTile(player.x, player.y);
-    const char = lib.getCharCode("player");
+    const char = lib.charCode("player");
     this.tile(player.x, player.y, char, "player");
   },
 };

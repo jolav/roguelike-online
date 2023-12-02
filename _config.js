@@ -3,20 +3,20 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.6",
+  VERSION: "0.0.7",
   // MapGen
   ROOM_TRIES: 5000,
-  MAX_ROOMS: 5,
+  MAX_ROOMS: 10,
   MIN_SIZE_ROOM: 5,
   MAX_SIZE_ROOM: 30,
   MIN_LENGTH_CORRIDOR: 5,
   MAX_LENGTH_CORRIDOR: 20,
   CORRIDOR_ODDS: 0,
-  MAP_X: 43,//43, 
-  MAP_Y: 25,//25, 
-  LOS_RADIUS: 16,
+  MAP_X: 50,//43, 
+  MAP_Y: 30,//25, 
+  LOS_RADIUS: 12,
   // Render
-  FONT: "PressStart2P",
+  FONT: "VarelaRound",
   CANVAS_NAME: "canvas",
   PPP: 16,
   WINDOW_WIDTH: window.innerWidth - 200,
@@ -26,8 +26,8 @@ let K = {
   DELTA_X: 0,
   DELTA_Y: 0,
   // Foes
-  FOES_TRIES: 5, //K.ROOM_TRIES,
-  MAX_FOES: 5,//K.MAX_ROOMS,
+  FOES_TRIES: 1000, //K.ROOM_TRIES,
+  MAX_FOES: 10,//K.MAX_ROOMS,
   // Game
   INIT_DATE: new Date("2097-08-29 02:14:00"),
 };
@@ -54,22 +54,22 @@ export {
 };
 
 const lib = {
-  getCharCode: function (symbol) {
+  charCode: function (symbol) {
     const charCode = symbols.get(symbol);
     const char = String.fromCharCode(charCode);
     return char;
   },
-  getColor: function (entity) {
+  colorOfEntity: function (entity) {
     const color = colors.get(entity);
     return color;
   },
-  getCurrentDate: function (turn) {
+  currentDate: function (turn) {
     return new Date(K.INIT_DATE.getTime() + 1000 * turn);
   },
   randomInt: function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
-  getRandomNick: function (nameLength, numbersLength) {
+  randomNick: function (nameLength, numbersLength) {
     const chars = "abcdefghijklmnopqrstuvwxyz";
     const nums = "0123456789";
     let nick = "";
@@ -81,7 +81,7 @@ const lib = {
     }
     return nick;
   },
-  getRandomString: function (length) {
+  randomString: function (length) {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let randomString = "";
     for (let i = 0; i < length; i++) {
@@ -89,6 +89,24 @@ const lib = {
       randomString += chars.charAt(randomIndex);
     }
     return randomString;
+  },
+  randomAction: function () {
+    const randomAction =
+      ["up", "down", "left", "right", "skip", "skip", "skip", "skip"];
+    return randomAction[this.randomInt(0, 7)];
+  },
+  pointsDistance: function (p1, p2) {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  },
+  shuffleArray: function (a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = a[i];
+      a[i] = a[j];
+      a[j] = temp;
+    }
   }
 };
 

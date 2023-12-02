@@ -7,28 +7,29 @@ import * as map from "./map.js";
 import { lib } from "./_config.js";
 import { e, es } from "./entity.js";
 import { K } from "./_config.js";
+import * as  fov from "./fov.js";
 
 const r = {
-  nick: lib.getRandomNick(5, 2),
-  token: lib.getRandomString(50),
+  nick: lib.randomNick(5, 2),
+  token: lib.randomString(50),
   gameOver: false,
   counter: 0,
   turn: 0,
-  date: lib.getCurrentDate(0),
+  date: lib.currentDate(0),
   entities: [],
   map: map.create(),
   history: ["......."],
 
   start: function () {
     populateMap();
+    fov.playerLOS();
     render.redraw();
-    //render.redraw(); test double for font bug ?????
   },
   newTurn: function (action) {
-    const d = r.entities[0].getMove(action);
-    if (r.entities[0].canMove(d[0], d[1])) {
-      r.entities[0].move(d[0], d[1]);
-    }
+    r.turn++;
+    r.date = lib.currentDate(r.turn);
+    es.move(action);
+    fov.playerLOS();
     render.redraw();
   },
 
@@ -47,6 +48,9 @@ function createFoes() {
       const foe = new e(r.counter, getFoeType(), p, true, true, true);
       r.entities[r.counter] = foe;
       r.counter++;
+    }
+    if (r.counter >= K.MAX_FOES) {
+      return;
     }
   }
 }
