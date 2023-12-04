@@ -31,6 +31,9 @@ const r = {
     es.move(action);
     fov.playerLOS();
     render.redraw();
+    if (r.gameOver) {
+      gameOver();
+    }
   },
 
 };
@@ -46,6 +49,9 @@ function createFoes() {
     let p = getRandomEmptyPoint();
     if (p !== undefined) {
       const foe = new e(r.counter, getFoeType(), p, true, true, true);
+      if (foe.isCombatant) {
+        takeCombatStats(foe);
+      }
       r.entities[r.counter] = foe;
       r.counter++;
     }
@@ -53,6 +59,27 @@ function createFoes() {
       return;
     }
   }
+}
+
+function takeCombatStats(foe) {
+  let data = [[15, 4, 4], [7, 3, 2], [40, 6, 6]];
+  let stats = [];
+  switch (foe.type) {
+    case "rat":
+      stats = data[1];
+      break;
+    case "mole rat":
+      stats = data[0];
+      break;
+    case "player":
+      stats = data[2];
+  }
+  foe.stats = {
+    hp: stats[0],
+    dmg: stats[1],
+    def: stats[2],
+  };
+
 }
 
 function getRandomEmptyPoint() {
@@ -90,7 +117,14 @@ function createPlayer() {
   const y = Math.floor(K.MAP_Y / 2);
   const pos = { x, y };
   const player = new e(r.counter, "player", pos, true, true, true);
+  takeCombatStats(player);
   return player;
+}
+
+function gameOver() {
+  console.log('THIS IS THE END');
+  alert('YOU LOSE');
+  location.reload();
 }
 
 export {

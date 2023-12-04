@@ -54,7 +54,7 @@ const draw = {
         const posX = x + cam.x - K.DELTA_X;
         const posY = y + cam.y - K.DELTA_Y;
         const tile = r.map[posX][posY];
-        const char = lib.charCode(tile.terrain);
+        const char = lib.mapSymbol(tile.terrain);
         if (tile.visible) {
           this.tile(x, y, char, "visible");
         } else if (tile.explored && !tile.visible) {
@@ -69,7 +69,7 @@ const draw = {
       const posY = e.pos.y - cam.y + K.DELTA_Y;
       const tile = r.map[e.pos.x][e.pos.y];
       if (tile.visible) {
-        const char = lib.charCode(e.type);
+        const char = lib.mapSymbol(e.type);
         const color = e.type;
         this.clearTile(posX, posY);
         this.tile(posX, posY, char, color);
@@ -94,18 +94,18 @@ const draw = {
     const posX = player.x - cam.x + K.DELTA_X;
     const posY = player.y - cam.y + K.DELTA_Y;
     this.clearTile(posX, posY);
-    const char = lib.charCode("player");
+    const char = lib.mapSymbol("player");
     this.tile(posX, posY, char, "player");
   },
   map: function () {
     for (let x = 0; x < K.MAP_X; x++) {
       for (let y = 0; y < K.MAP_Y; y++) {
-        const char = lib.charCode(r.map[x][y].terrain);
+        const char = lib.mapSymbol(r.map[x][y].terrain);
         this.tile(x, y, char, "visible");
       }
     }
     this.clearTile(player.x, player.y);
-    const char = lib.charCode("player");
+    const char = lib.mapSymbol("player");
     this.tile(player.x, player.y, char, "player");
   },
 };

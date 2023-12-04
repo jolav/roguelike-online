@@ -34,6 +34,9 @@ class Entity {
     this.pos.y += dy;
   }
   canMove(dx, dy) {
+    if (!this.isMobile()) {
+      return false; //deads not move
+    }
     const x = this.pos.x + dx;
     const y = this.pos.y + dy;
     const destination = r.map[x][y];
@@ -66,6 +69,75 @@ class Entity {
     }
     return [dx, dy];
   }
+  assaultMove() {
+    const pj = r.entities[0];
+    if (lib.pointsDistance(pj.pos, this.pos) === 1) {
+      this.melee(pj);
+      return [0, 0];
+    }
+    let options = [];
+    const init = lib.pointsDistance(pj.pos, this.pos);
+    const left = lib.pointsDistance(pj.pos,
+      { x: this.pos.x - 1, y: this.pos.y });
+    if (left <= init) {
+      options.push("left");
+    }
+    const right = lib.pointsDistance(pj.pos,
+      { x: this.pos.x + 1, y: this.pos.y });
+    if (right <= init) {
+      options.push("right");
+    }
+    const up = lib.pointsDistance(pj.pos,
+      { x: this.pos.x, y: this.pos.y - 1 });
+    if (up <= init) {
+      options.push("up");
+    }
+    const down = lib.pointsDistance(pj.pos,
+      { x: this.pos.x, y: this.pos.y + 1 });
+    if (down <= init) {
+      options.push("down");
+    }
+
+    lib.shuffleArray(options);
+    for (let o of options) {
+      const d = this.getMove(o);
+      if (this.canMove(d[0], d[1])) {
+        return [d[0], d[1]];
+      }
+    }
+    // if cant move and not adjacent player, rnd move
+    if (lib.pointsDistance(pj.pos, this.pos) > 1) {
+      options = ["up", "down", "left", "right"];
+      lib.shuffleArray(options);
+      for (let o of options) {
+        const d = this.getMove(o);
+        if (this.canMove(d[0], d[1])) {
+          return [d[0], d[1]];
+        }
+      }
+    }
+    return [0, 0];
+  }
+  melee(target) {
+    const att = this.stats.dmg + lib.randomInt(1, 6);
+    const def = target.stats.def;
+    const dmg = att - def;
+    if (dmg > 0) {
+      target.stats.hp -= dmg;
+    }
+    if (target.stats.hp <= 0) {
+      target.isDead = true;
+      if (target === r.entities[0]) {
+        r.gameOver = true;
+      } else {
+        delete target.stats;
+        target.blocks = false;
+        target.mobile = false;
+        target.combat = false;
+        target.type = "corpse of " + target.type;
+      }
+    }
+  }
 }
 
 const entities = {
@@ -95,9 +167,9 @@ const entities = {
       if (e.id === 0) {
         d = player.getMove(action);
       }
-      if (e.id !== 0 && e.isMobile) {
+      if (e.id !== 0 && e.isMobile()) {
         if (e.isVisible()) {
-          d = this.assaultMove(e);
+          d = e.assaultMove();
         } else {
           d = e.getMove(lib.randomAction());
         }
@@ -106,50 +178,16 @@ const entities = {
       const dy = d[1];
       if (e.canMove(dx, dy)) {
         e.move(dx, dy);
-      }
-    }
-  },
-  assaultMove: function (e) {
-    const pj = r.entities[0];
-    let options = [];
-    const init = lib.pointsDistance(pj.pos, e.pos);
-    const left = lib.pointsDistance(pj.pos, { x: e.pos.x - 1, y: e.pos.y });
-    if (left <= init) {
-      options.push("left");
-    }
-    const right = lib.pointsDistance(pj.pos, { x: e.pos.x + 1, y: e.pos.y });
-    if (right <= init) {
-      options.push("right");
-    }
-    const up = lib.pointsDistance(pj.pos, { x: e.pos.x, y: e.pos.y - 1 });
-    if (up <= init) {
-      options.push("up");
-    }
-    const down = lib.pointsDistance(pj.pos, { x: e.pos.x, y: e.pos.y + 1 });
-    if (down <= init) {
-      options.push("down");
-    }
-
-    lib.shuffleArray(options);
-    for (let o of options) {
-      const d = e.getMove(o);
-      if (e.canMove(d[0], d[1])) {
-        return [d[0], d[1]];
-      }
-    }
-    // if cant move and not adjacent player, rnd move
-    if (lib.pointsDistance(pj.pos, e.pos) > 1) {
-      options = ["up", "down", "left", "right"];
-      lib.shuffleArray(options);
-      for (let o of options) {
-        const d = e.getMove(o);
-        if (e.canMove(d[0], d[1])) {
-          return [d[0], d[1]];
+      } else if (e.id === 0 && action !== "skip") { //skip avoid self-harm
+        const targetX = player.pos.x + dx;
+        const targetY = player.pos.y + dy;
+        const foe = this.atPoint(targetX, targetY)[0];
+        if (foe !== undefined) { // avoid hitting walls
+          e.melee(foe);
         }
       }
     }
-    return [0, 0];
-  }
+  },
 };
 
 export {

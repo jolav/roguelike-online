@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.7",
+  VERSION: "0.0.8",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 10,
@@ -16,7 +16,7 @@ let K = {
   MAP_Y: 30,//25, 
   LOS_RADIUS: 12,
   // Render
-  FONT: "VarelaRound",
+  FONT: "VarelaRound",//"NotoSansMonoMedium",
   CANVAS_NAME: "canvas",
   PPP: 16,
   WINDOW_WIDTH: window.innerWidth - 200,
@@ -27,7 +27,7 @@ let K = {
   DELTA_Y: 0,
   // Foes
   FOES_TRIES: 1000, //K.ROOM_TRIES,
-  MAX_FOES: 10,//K.MAX_ROOMS,
+  MAX_FOES: 5,//K.MAX_ROOMS,
   // Game
   INIT_DATE: new Date("2097-08-29 02:14:00"),
 };
@@ -54,10 +54,12 @@ export {
 };
 
 const lib = {
-  charCode: function (symbol) {
-    const charCode = symbols.get(symbol);
-    const char = String.fromCharCode(charCode);
-    return char;
+
+  mapSymbol: function (symbol) {
+    if (symbol.slice(0, 9) === "corpse of") {
+      return String.fromCharCode(symbols.get(symbol.slice(0, 9)));
+    }
+    return String.fromCharCode(symbols.get(symbol));
   },
   colorOfEntity: function (entity) {
     const color = colors.get(entity);
