@@ -119,10 +119,12 @@ class Entity {
     return [0, 0];
   }
   melee(target) {
-    const att = this.stats.dmg + lib.randomInt(1, 6);
+    const att = this.stats.dmg + lib.randomInt(1, this.stats.dmg);
     const def = target.stats.def;
     const dmg = att - def;
     if (dmg > 0) {
+      const h = this.type + " deals " + dmg + " damage" + "\n";
+      r.history.push(h);
       target.stats.hp -= dmg;
     }
     if (target.stats.hp <= 0) {

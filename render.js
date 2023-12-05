@@ -16,7 +16,7 @@ ctx.fillStyle = "black";
 let player;
 
 function redraw() {
-  player = r.entities[0].pos;
+  player = r.entities[0];
   cam.update();
   draw.clearAll();
   //draw.map();
@@ -32,8 +32,8 @@ const cam = {
   maxX: K.MAP_X - K.CAM_X,
   maxY: K.MAP_Y - K.CAM_Y,
   update: function () {
-    this.x = player.x - Math.floor(K.CAM_X / 2);
-    this.y = player.y - Math.floor(K.CAM_Y / 2);
+    this.x = player.pos.x - Math.floor(K.CAM_X / 2);
+    this.y = player.pos.y - Math.floor(K.CAM_Y / 2);
     if (this.x < 0) {
       this.x = 0;
     } else if (this.x > this.maxX) {
@@ -91,8 +91,8 @@ const draw = {
     ctx.beginPath();
   },
   player: function () {
-    const posX = player.x - cam.x + K.DELTA_X;
-    const posY = player.y - cam.y + K.DELTA_Y;
+    const posX = player.pos.x - cam.x + K.DELTA_X;
+    const posY = player.pos.y - cam.y + K.DELTA_Y;
     this.clearTile(posX, posY);
     const char = lib.mapSymbol("player");
     this.tile(posX, posY, char, "player");
@@ -104,9 +104,9 @@ const draw = {
         this.tile(x, y, char, "visible");
       }
     }
-    this.clearTile(player.x, player.y);
+    this.clearTile(player.pos.x, player.pos.y);
     const char = lib.mapSymbol("player");
-    this.tile(player.x, player.y, char, "player");
+    this.tile(player.pos.x, player.pos.y, char, "player");
   },
 };
 
@@ -114,16 +114,37 @@ const panel = {
   update: function () {
     this.currentTime();
     this.pjPos();
+    this.stats();
+    this.history();
   },
   pjPos: function () {
-    document.getElementById("pjX").innerHTML = player.x;
-    document.getElementById("pjY").innerHTML = player.y;
+    document.getElementById("pjX").innerHTML = player.pos.x;
+    document.getElementById("pjY").innerHTML = player.pos.y;
   },
   currentTime: function () {
     let aa = r.date.toDateString().slice(4);
     let bb = r.date.toTimeString().split(" ")[0];
     document.getElementById("date").innerHTML = aa;
     document.getElementById("time").innerHTML = bb;
+  },
+  stats: function () {
+    const health = player.stats.hp + "/" + player.stats.maxHp;
+    document.getElementById("hp").innerHTML = health;
+    document.getElementById("dmg").innerHTML = player.stats.dmg;
+    document.getElementById("def").innerHTML = player.stats.def;
+  },
+  history: function () {
+    const h = [];
+    for (let line = 1; line <= 6; line++) {
+      const index = r.history.length - line;
+      h.push(r.history[index]);
+    }
+    document.getElementById("h1").innerHTML = h[0];
+    document.getElementById("h2").innerHTML = h[1];
+    document.getElementById("h3").innerHTML = h[2];
+    document.getElementById("h4").innerHTML = h[3];
+    document.getElementById("h5").innerHTML = h[4];
+    document.getElementById("h6").innerHTML = h[5];
   }
 };
 

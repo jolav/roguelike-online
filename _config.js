@@ -3,17 +3,17 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.8",
+  VERSION: "0.0.9",
   // MapGen
   ROOM_TRIES: 5000,
-  MAX_ROOMS: 10,
-  MIN_SIZE_ROOM: 5,
-  MAX_SIZE_ROOM: 30,
+  MAX_ROOMS: 50,
+  MIN_SIZE_ROOM: 4,
+  MAX_SIZE_ROOM: 12,
   MIN_LENGTH_CORRIDOR: 5,
   MAX_LENGTH_CORRIDOR: 20,
   CORRIDOR_ODDS: 0,
-  MAP_X: 50,//43, 
-  MAP_Y: 30,//25, 
+  MAP_X: 143,//43, 
+  MAP_Y: 125,//25, 
   LOS_RADIUS: 12,
   // Render
   FONT: "VarelaRound",//"NotoSansMonoMedium",
@@ -116,10 +116,10 @@ const symbols = new Map([
   ["floor", 183],   // middleDot 183 or normal point 46
   ["wall", 35],     // #
   ["-", 0],
-  ["player", 64],   // @
+  ["player", 64],   // @ 
   ["rat", 114],     // r
   ["mole rat", 82], // R
-  ["corpse of", 37]    // %
+  ["corpse of", 37]    // % 
 ]);
 
 const colors = new Map([

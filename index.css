@@ -94,4 +94,21 @@ section#playZone .right {
   text-align: center;
 }
 
-section#playZone {}
+section#playZone .right .pos {
+  text-align: center;
+}
+
+section#playZone .player {
+  font-size: 0.8em;
+  text-align: left;
+  margin-left: 10px;
+}
+
+section#playZone .right .history {
+  text-align: left;
+  font-size: 0.75em;
+  position: fixed;
+  padding: 5px;
+  bottom: 2em;
+  width: 100%;
+}

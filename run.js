@@ -18,7 +18,7 @@ const r = {
   date: lib.currentDate(0),
   entities: [],
   map: map.create(),
-  history: ["......."],
+  history: ["5", "4", "3", "2", "1", "Adventure begins..."],
 
   start: function () {
     populateMap();
@@ -62,7 +62,7 @@ function createFoes() {
 }
 
 function takeCombatStats(foe) {
-  let data = [[15, 4, 4], [7, 3, 2], [40, 6, 6]];
+  let data = [[15, 15, 3, 3], [7, 7, 2, 1], [50, 50, 3, 2]];
   let stats = [];
   switch (foe.type) {
     case "rat":
@@ -76,8 +76,9 @@ function takeCombatStats(foe) {
   }
   foe.stats = {
     hp: stats[0],
-    dmg: stats[1],
-    def: stats[2],
+    maxHp: stats[1],
+    dmg: stats[2],
+    def: stats[3],
   };
 
 }

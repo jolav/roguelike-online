@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.8-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.9-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue ROGUELIKE.ONLINE](https://prologue.roguelike.online)**  
@@ -14,7 +14,7 @@
 - [X] **Placing Enemies**  
 - [X] **Moving Enemies**  
 - [X] **Melee**  
-- [ ] **Creating UI**  
+- [X] **Creating UI**  
 - [ ] **Inventary and items**  
 - [ ] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
@@ -32,6 +32,7 @@
 - [X] **Center camera if is greater than map**  
 - [ ] **Improving enemy IA**  
 - [ ] **each entity different LOS radius**  
+- [ ] **sounds**  
 - MOUSE
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
@@ -45,6 +46,9 @@
 - [ ] **add furniture**  
 - [ ] **seeds for reproducible runs**  
 - [ ] **tile walkable**  
+- [ ] **render player last tp stay up and visible**  
+- [ ] **levels ? basements ? attics ?**
+
 
 ## BUGS
 
@@ -56,3 +60,4 @@
 ## **Acknowledgment**
 
 All the artwork is either public domain or released under a variety of Creative Commons licenses. To determine the copyright status of any of the artwork, consult the [Artwork Copyright File](https://github.com/jolav/roguelike-online/blob/main/artwork.txt)
+
