@@ -18,7 +18,7 @@ const r = {
   date: lib.currentDate(0),
   entities: [],
   map: map.create(),
-  history: ["5", "4", "3", "2", "1", "Adventure begins..."],
+  history: ["8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
 
   start: function () {
     populateMap();
@@ -26,61 +26,190 @@ const r = {
     render.redraw();
   },
   newTurn: function (action) {
+    const endTurnActions = ["up", "down", "left", "right", "skip", "fire"];
+    if (!endTurnActions.includes(action)) {
+      r.entities[0][action]();
+      render.redraw();
+      return;
+    }
     r.turn++;
     r.date = lib.currentDate(r.turn);
-    es.move(action);
+    es.turn(action);
     fov.playerLOS();
     render.redraw();
     if (r.gameOver) {
       gameOver();
     }
   },
-
 };
 
 function populateMap() {
   r.entities[0] = createPlayer();
   r.counter++;
-  createFoes();
+  foes.create();
+  items.create();
 }
 
-function createFoes() {
-  for (let tries = 0; tries < K.FOES_TRIES; tries++) {
-    let p = getRandomEmptyPoint();
-    if (p !== undefined) {
-      const foe = new e(r.counter, getFoeType(), p, true, true, true);
-      if (foe.isCombatant) {
-        takeCombatStats(foe);
+const foes = {
+  create: function () {
+    for (let tries = 0; tries < K.FOES_TRIES; tries++) {
+      let p = getRandomEmptyPoint();
+      if (p !== undefined) {
+        const foe = new e(r.counter, foes.type(), p, true, true, true, false);
+        if (foe.isCombatant) {
+          this.combatStats(foe);
+        }
+        r.entities[r.counter] = foe;
+        r.counter++;
       }
-      r.entities[r.counter] = foe;
-      r.counter++;
+      if (r.counter >= K.MAX_FOES) {
+        return;
+      }
     }
-    if (r.counter >= K.MAX_FOES) {
-      return;
+  },
+  type: function () {
+    const odds = lib.randomInt(1, 10);
+    if (odds < 8) {
+      return "rat";
+    } else {
+      return "mole rat";
     }
+  },
+  combatStats: function (foe) {
+    let data = [[40, 40, 15, 0, 0], [10, 10, 5, 0, 0]];
+    let stats = [];
+    switch (foe.type) {
+      case "rat":
+        stats = data[1];
+        break;
+      case "mole rat":
+        stats = data[0];
+        break;
+    }
+    foe.is = {
+      lootable: false
+    };
+    foe.combat = {
+      hp: stats[0],
+      maxHp: stats[1],
+      melee: stats[2],
+      range: stats[3],
+      defence: stats[4],
+    };
   }
-}
+};
 
-function takeCombatStats(foe) {
-  let data = [[15, 15, 3, 3], [7, 7, 2, 1], [50, 50, 3, 2]];
-  let stats = [];
-  switch (foe.type) {
-    case "rat":
-      stats = data[1];
-      break;
-    case "mole rat":
-      stats = data[0];
-      break;
-    case "player":
-      stats = data[2];
+const items = {
+  create: function () {
+    let items = 0;
+    for (let tries = 0; tries < K.ITEMS_TRIES; tries++) {
+      let p = getRandomEmptyPoint();
+      if (p !== undefined) {
+        const item = new e(r.counter, this.getType(), p, false, false, false, true);
+        this.takeItemStats(item);
+        r.entities[r.counter] = item;
+        r.counter++;
+        items++;
+      }
+      if (items >= K.MAX_ITEMS) {
+        return;
+      }
+    }
+  },
+  getType: function () {
+    const odds = lib.randomInt(1, 10);
+    switch (odds) {
+      case 1:
+      case 2:
+      case 3:
+        return "food";
+      case 4:
+      case 5:
+        return "supply";
+      case 6:
+      case 7:
+        return "medical";
+      case 8:
+        return "melee";
+      case 9:
+        return "firearm";
+      case 10:
+        return "body";
+    }
+  },
+  takeItemStats: function (item) {
+    item.is = {
+      visible: true,
+      lootable: true,
+      consumable: false,
+      equippable: false,
+      equipped: false,
+    };
+    item.data = {};
+    switch (item.type) {
+      case "food":
+        item.data.qty = lib.randomInt(1, 6);
+        item.is.consumable = true;
+        break;
+      case "supply":
+        item.data.qty = lib.randomInt(1, 3);
+        item.is.consumable = true;
+        break;
+      case "medical":
+        item.data.qty = lib.randomInt(1, 3);
+        item.is.consumable = true;
+        break;
+      case "firearm":
+        item.data.name = "Pistol 9mm";
+        item.data.range = 13 + lib.randomInt(1, 6);
+        item.is.equippable = true;
+        break;
+      case "melee":
+        item.data.name = "Baseball Bat";
+        item.data.melee = 18 + lib.randomInt(1, 6);
+        item.is.equippable = true;
+        break;
+      case "body":
+        item.data.name = "Cloth";
+        item.data.defence = 2 + lib.randomInt(1, 4);
+        item.is.equippable = true;
+    }
+    //console.log(JSON.stringify(item));
   }
-  foe.stats = {
+};
+
+function createPlayer() {
+  const x = Math.floor(K.MAP_X / 2);
+  const y = Math.floor(K.MAP_Y / 2);
+  const pos = { x, y };
+  const player = new e(r.counter, "player", pos, true, true, true, false);
+  const stats = [190, 200, 6, 0, 0];
+  player.combat = {
     hp: stats[0],
     maxHp: stats[1],
-    dmg: stats[2],
-    def: stats[3],
+    melee: stats[2],
+    range: stats[3],
+    defence: stats[4],
   };
+  player.inventory = {
+    food: 0,
+    supply: 0,
+    medical: 0
+  };
+  player.equipment = {
+    head: undefined,
+    body: undefined,
+    melee: undefined,
+    range: undefined,
+  };
+  //console.log(JSON.stringify(player, null, 2));
+  return player;
+}
 
+function gameOver() {
+  console.log('THIS IS THE END');
+  alert('YOU LOSE');
+  location.reload();
 }
 
 function getRandomEmptyPoint() {
@@ -92,8 +221,11 @@ function getRandomEmptyPoint() {
     let y = lib.randomInt(2, K.MAP_Y - 2);
     if (!r.map[x][y].blocks) {
       if (es.isPointFreeOfBlockingEntities(x, y)); {
-        p = { x, y };
-        found = true;
+        const resp = es.atPoint(x, y);
+        if (resp.length === 0) {
+          p = { x, y };
+          found = true;
+        }
       }
     }
     tries++;
@@ -102,30 +234,6 @@ function getRandomEmptyPoint() {
     return undefined;
   }
   return p;
-}
-
-function getFoeType() {
-  const odds = lib.randomInt(1, 10);
-  if (odds < 8) {
-    return "rat";
-  } else {
-    return "mole rat";
-  }
-}
-
-function createPlayer() {
-  const x = Math.floor(K.MAP_X / 2);
-  const y = Math.floor(K.MAP_Y / 2);
-  const pos = { x, y };
-  const player = new e(r.counter, "player", pos, true, true, true);
-  takeCombatStats(player);
-  return player;
-}
-
-function gameOver() {
-  console.log('THIS IS THE END');
-  alert('YOU LOSE');
-  location.reload();
 }
 
 export {

@@ -3,10 +3,10 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.9",
+  VERSION: "0.0.10",
   // MapGen
   ROOM_TRIES: 5000,
-  MAX_ROOMS: 50,
+  MAX_ROOMS: 200,
   MIN_SIZE_ROOM: 4,
   MAX_SIZE_ROOM: 12,
   MIN_LENGTH_CORRIDOR: 5,
@@ -14,11 +14,11 @@ let K = {
   CORRIDOR_ODDS: 0,
   MAP_X: 143,//43, 
   MAP_Y: 125,//25, 
-  LOS_RADIUS: 12,
+  LOS_RADIUS: 16,
   // Render
   FONT: "VarelaRound",//"NotoSansMonoMedium",
   CANVAS_NAME: "canvas",
-  PPP: 16,
+  PPP: 24,
   WINDOW_WIDTH: window.innerWidth - 200,
   WINDOW_HEIGHT: window.innerHeight - 5,
   CAM_X: 0,
@@ -27,7 +27,9 @@ let K = {
   DELTA_Y: 0,
   // Foes
   FOES_TRIES: 1000, //K.ROOM_TRIES,
-  MAX_FOES: 5,//K.MAX_ROOMS,
+  MAX_FOES: 100,//K.MAX_ROOMS,
+  ITEMS_TRIES: 1000,
+  MAX_ITEMS: 200,
   // Game
   INIT_DATE: new Date("2097-08-29 02:14:00"),
 };
@@ -119,7 +121,8 @@ const symbols = new Map([
   ["player", 64],   // @ 
   ["rat", 114],     // r
   ["mole rat", 82], // R
-  ["corpse of", 37]    // % 
+  ["corpse of", 37],    // %  
+  ["item", 63],    // ?
 ]);
 
 const colors = new Map([
@@ -128,4 +131,5 @@ const colors = new Map([
   ["explored", "#454545"],
   ["rat", "DeepPink"],
   ["mole rat", "DeepPink"],
+  ["item", "orange"],
 ]);

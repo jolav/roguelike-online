@@ -90,6 +90,7 @@ section#playZone .column {
 }
 
 section#playZone .right {
+  font-size: 0.80em;
   width: 200px;
   text-align: center;
 }
@@ -98,11 +99,17 @@ section#playZone .right .pos {
   text-align: center;
 }
 
-section#playZone .player {
-  font-size: 0.8em;
+section#playZone .player, .inventory, .loot {
   text-align: left;
   margin-left: 10px;
 }
+
+section#playZone .loot {
+  margin-top: 10px;
+  border: 1px solid rebeccapurple;
+
+}
+
 
 section#playZone .right .history {
   text-align: left;

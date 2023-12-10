@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.9-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.10-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue ROGUELIKE.ONLINE](https://prologue.roguelike.online)**  
@@ -15,7 +15,7 @@
 - [X] **Moving Enemies**  
 - [X] **Melee**  
 - [X] **Creating UI**  
-- [ ] **Inventary and items**  
+- [X] **Inventory and items**  
 - [ ] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
 
@@ -33,6 +33,13 @@
 - [ ] **Improving enemy IA**  
 - [ ] **each entity different LOS radius**  
 - [ ] **sounds**  
+- [ ] **add property visuals por entities render**  
+- [ ] **dummy items**  
+- [ ] **food from animal corpse takes time**  
+- [ ] **slow computer turn with animations**  
+- [ ] **move/attack animations**  
+- [ ] **damage tooltips**  
+- [ ] **help modal showing controls**  
 - MOUSE
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
@@ -47,15 +54,18 @@
 - [ ] **seeds for reproducible runs**  
 - [ ] **tile walkable**  
 - [ ] **render player last tp stay up and visible**  
-- [ ] **levels ? basements ? attics ?**
-
+- [ ] **levels ? basements ? attics ?**  
+- [ ] **render prioriries**  
+- [ ] **mark visited items** 
 
 ## BUGS
 
 - [ ] **at startup foe can start same tile player**  
 - [ ] **at startup the source does not load properly**  
-- [ ] **initial room can go to the edge of the map, test with small map fro recreate it**  
-- [X] **when direction is changed, system still continues to expand one turn in old direction**  
+- [ ] **initial room can go to the edge of the map in small maps**  
+- [X] **when changing direction, map continues one turn in old direction**  
+- [ ] **actions doing nothing autodamage player**  
+- [ ] **problems fighting if the target is on top of a corpse**  
 
 ## **Acknowledgment**
 

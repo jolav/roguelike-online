@@ -4,6 +4,7 @@ console.log('Loading.....render.js');
 
 import { K, lib } from "./_config.js";
 import { r } from "./run.js";
+import { es } from "./entity.js";
 
 const canvas = document.getElementById(K.CANVAS_NAME);
 canvas.width = K.WINDOW_WIDTH;
@@ -22,7 +23,7 @@ function redraw() {
   //draw.map();
   draw.camera();
   draw.entities();
-  //draw.player();
+  //draw.player(); // this must disappear, force player to render up
   panel.update();
 }
 
@@ -69,12 +70,17 @@ const draw = {
       const posY = e.pos.y - cam.y + K.DELTA_Y;
       const tile = r.map[e.pos.x][e.pos.y];
       if (tile.visible) {
-        const char = lib.mapSymbol(e.type);
-        const color = e.type;
+        let char = lib.mapSymbol(e.type);
+        let color = e.type;
+        if (e.isItem() && e.is.visible) {
+          color = "item";
+          char = lib.mapSymbol("item");
+        }
         this.clearTile(posX, posY);
         this.tile(posX, posY, char, color);
       }
     }
+    this.player();
   },
   tile: function (x, y, char, color) {
     ctx.fillStyle = lib.colorOfEntity(color);
@@ -115,6 +121,8 @@ const panel = {
     this.currentTime();
     this.pjPos();
     this.stats();
+    this.inventory();
+    this.loot();
     this.history();
   },
   pjPos: function () {
@@ -128,14 +136,38 @@ const panel = {
     document.getElementById("time").innerHTML = bb;
   },
   stats: function () {
-    const health = player.stats.hp + "/" + player.stats.maxHp;
+    const health = player.combat.hp + "/" + player.combat.maxHp;
     document.getElementById("hp").innerHTML = health;
-    document.getElementById("dmg").innerHTML = player.stats.dmg;
-    document.getElementById("def").innerHTML = player.stats.def;
+    document.getElementById("melee").innerHTML = "6 + " + (player.combat.melee - 6) + " = " + player.combat.melee;
+    document.getElementById("range").innerHTML = player.combat.range;
+    document.getElementById("defence").innerHTML = player.combat.defence;
+  },
+  inventory: function name() {
+    const i = player.inventory;
+    const e = player.equipment;
+    document.getElementById("i-food").innerHTML = i.food;
+    document.getElementById("i-supply").innerHTML = i.supply;
+    document.getElementById("i-medical").innerHTML = i.medical;
+    let text = "unarmed";
+    if (e.melee !== undefined) {
+      text = e.melee.data.name; //+ " " + e.melee.data.melee;
+    }
+    document.getElementById("i-melee").innerHTML = text;
+    text = "-";
+    if (e.range !== undefined) {
+      text = e.range.data.name; //+ " " + e.range.data.range;
+    }
+    document.getElementById("i-range").innerHTML = text;
+    text = "-";
+    if (e.body !== undefined) {
+      text = e.body.data.name; //+ " " + e.body.data.defence;
+    }
+    document.getElementById("i-body").innerHTML = text;
+    document.getElementById("i-head").innerHTML = "-";
   },
   history: function () {
     const h = [];
-    for (let line = 1; line <= 6; line++) {
+    for (let line = 1; line <= 9; line++) {
       const index = r.history.length - line;
       h.push(r.history[index]);
     }
@@ -145,6 +177,41 @@ const panel = {
     document.getElementById("h4").innerHTML = h[3];
     document.getElementById("h5").innerHTML = h[4];
     document.getElementById("h6").innerHTML = h[5];
+    document.getElementById("h7").innerHTML = h[6];
+    document.getElementById("h8").innerHTML = h[7];
+    document.getElementById("h9").innerHTML = h[8];
+  },
+  loot: function () {
+    let items = es.atPoint(player.pos.x, player.pos.y);
+    items.shift(); // remove player
+    for (let i = 0; i < 9; i++) {  //clean panel
+      document.getElementById("l" + i).innerHTML = "";
+    }
+    if (items.length < 1) { // clean panel
+      return;
+    }
+    for (let i = 0; i < items.length; i++) {
+      let text = items[i].type;
+      //console.log(JSON.stringify(items[i], null, 2));
+      if (items[i].type.includes("corpse of")) {
+        text = "(e)" + text;
+      } else if (items[i].is.consumable) {
+        text += " " + items[i].data.qty;
+      } else if (items[i].is.equippable) {
+        //console.log(JSON.stringify(items[i], null, 2));
+        if (items[i].type === "melee") {
+          text += " " + items[i].data.melee;
+        } else if (items[i].type === "firearm") {
+          text += " " + items[i].data.range;
+        } else if (items[i].type === "body") {
+          text += " " + items[i].data.defence;
+        }
+      }
+      if (items[i].is.equipped) {
+        text = "";
+      }
+      document.getElementById("l" + i).innerHTML = text;
+    }
   }
 };
 
