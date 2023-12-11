@@ -47,6 +47,10 @@ function actionKey(e) {
     case 'r':
       action = "selectFoe";
       break;
+    case "F":
+    case "f":
+      action = "fire";
+      break;
     //case 'E':
     //case 'e':
     //  action = "erase"; // remove item, loot, corpse from map

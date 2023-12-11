@@ -18,8 +18,7 @@ const r = {
   date: lib.currentDate(0),
   entities: [],
   map: map.create(),
-  history: ["8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
-
+  history: ["9", "8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
   start: function () {
     populateMap();
     fov.playerLOS();
@@ -56,7 +55,7 @@ const foes = {
       let p = getRandomEmptyPoint();
       if (p !== undefined) {
         const foe = new e(r.counter, foes.type(), p, true, true, true, false);
-        if (foe.isCombatant) {
+        if (foe.isCombatant()) {
           this.combatStats(foe);
         }
         r.entities[r.counter] = foe;
@@ -201,6 +200,11 @@ function createPlayer() {
     body: undefined,
     melee: undefined,
     range: undefined,
+  };
+  player.targets = {
+    when: r.turn - 1,
+    who: -1,
+    foes: [],
   };
   //console.log(JSON.stringify(player, null, 2));
   return player;

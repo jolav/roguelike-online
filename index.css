@@ -99,7 +99,7 @@ section#playZone .right .pos {
   text-align: center;
 }
 
-section#playZone .player, .inventory, .loot {
+section#playZone .player, .inventory, .loot, .selected {
   text-align: left;
   margin-left: 10px;
 }

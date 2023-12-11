@@ -9,10 +9,22 @@ import { es } from "./entity.js";
 const canvas = document.getElementById(K.CANVAS_NAME);
 canvas.width = K.WINDOW_WIDTH;
 canvas.height = K.WINDOW_HEIGHT;
+canvas.last = [];
 const textOffset = K.PPP;
 const ctx = canvas.getContext('2d');
 ctx.font = K.PPP + "px " + K.FONT;
 ctx.fillStyle = "black";
+
+/*canvas.addEventListener("mousemove", function (e) {
+  getMouseOverPosition(canvas, e);
+});
+
+function getMouseOverPosition(cv, e) {
+  const rect = cv.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / K.PPP);
+  const y = Math.floor((e.clientY - rect.top) / K.PPP);
+  draw.cellBorder(x, y);
+}*/
 
 let player;
 
@@ -23,6 +35,9 @@ function redraw() {
   //draw.map();
   draw.camera();
   draw.entities();
+  if (player.targets.who !== -1) {
+    draw.tileSelected();
+  }
   //draw.player(); // this must disappear, force player to render up
   panel.update();
 }
@@ -96,6 +111,14 @@ const draw = {
     ctx.clearRect(x * K.PPP, y * K.PPP, K.PPP, K.PPP);
     ctx.beginPath();
   },
+  tileSelected: function (x, y) {
+    const t = player.targets;
+    x = t.foes[t.who].pos.x;
+    y = t.foes[t.who].pos.y;
+    ctx.strokeStyle = "lightgreen";
+    ctx.strokeRect((x - cam.x) * K.PPP, (y - cam.y) * K.PPP - textOffset / 5
+      , K.PPP, K.PPP);
+  },
   player: function () {
     const posX = player.pos.x - cam.x + K.DELTA_X;
     const posY = player.pos.y - cam.y + K.DELTA_Y;
@@ -124,6 +147,7 @@ const panel = {
     this.inventory();
     this.loot();
     this.history();
+    this.selected();
   },
   pjPos: function () {
     document.getElementById("pjX").innerHTML = player.pos.x;
@@ -155,7 +179,7 @@ const panel = {
     document.getElementById("i-melee").innerHTML = text;
     text = "-";
     if (e.range !== undefined) {
-      text = e.range.data.name; //+ " " + e.range.data.range;
+      text = e.range.data.name + "(F)";//+ " " + e.range.data.range;
     }
     document.getElementById("i-range").innerHTML = text;
     text = "-";
@@ -165,21 +189,14 @@ const panel = {
     document.getElementById("i-body").innerHTML = text;
     document.getElementById("i-head").innerHTML = "-";
   },
-  history: function () {
-    const h = [];
-    for (let line = 1; line <= 9; line++) {
-      const index = r.history.length - line;
-      h.push(r.history[index]);
+  selected: function () {
+    let text = "(F)ire: ";
+    if (player.targets.who !== -1) {
+      const t = player.targets.foes[player.targets.who].type;
+      //console.log(t);
+      text += t;
     }
-    document.getElementById("h1").innerHTML = h[0];
-    document.getElementById("h2").innerHTML = h[1];
-    document.getElementById("h3").innerHTML = h[2];
-    document.getElementById("h4").innerHTML = h[3];
-    document.getElementById("h5").innerHTML = h[4];
-    document.getElementById("h6").innerHTML = h[5];
-    document.getElementById("h7").innerHTML = h[6];
-    document.getElementById("h8").innerHTML = h[7];
-    document.getElementById("h9").innerHTML = h[8];
+    document.getElementById("target").innerHTML = text;
   },
   loot: function () {
     let items = es.atPoint(player.pos.x, player.pos.y);
@@ -191,11 +208,11 @@ const panel = {
       return;
     }
     for (let i = 0; i < items.length; i++) {
-      let text = items[i].type;
+      let text = "(q)" + items[i].type;
       //console.log(JSON.stringify(items[i], null, 2));
-      if (items[i].type.includes("corpse of")) {
+      /*if (items[i].type.includes("corpse of")) {
         text = "(e)" + text;
-      } else if (items[i].is.consumable) {
+      } else*/ if (items[i].is.consumable) {
         text += " " + items[i].data.qty;
       } else if (items[i].is.equippable) {
         //console.log(JSON.stringify(items[i], null, 2));
@@ -212,7 +229,15 @@ const panel = {
       }
       document.getElementById("l" + i).innerHTML = text;
     }
-  }
+  },
+  history: function () {
+    let index = 1;
+    let last = r.history.length - 1;
+    for (let line = last; line > last - 9; line--) {
+      document.getElementById("h" + index).innerHTML = r.history[line];
+      index++;
+    }
+  },
 };
 
 export {

@@ -4,6 +4,7 @@ console.log('Loading.....entity.js');
 
 import { r } from "./run.js";
 import { lib } from "./_config.js";
+import { K } from "./_config.js";
 
 class Entity {
   constructor(id, type, pos, blocks, mobile, combat, item) {
@@ -22,10 +23,7 @@ class Entity {
     return this.mobile;
   }
   isCombatant() {
-    if (this.combat !== undefined) {
-      return true;
-    }
-    return false;
+    return this.combat;
   }
   isItem() {
     return this.item;
@@ -145,6 +143,33 @@ class Entity {
       }
     }
   }
+  fire(target) {
+    if (this.inventory.supply < 1) {
+      return;
+    }
+    this.inventory.supply--;
+    const att = this.combat.range + lib.randomInt(1, 5);
+    const def = target.combat.defence;
+    const damage = att - def;
+    if (damage > 0) {
+      const h = this.type + " deals " + damage + " damage" + "\n";
+      r.history.push(h);
+      target.combat.hp -= damage;
+    }
+    if (target.combat.hp <= 0) {
+      target.isDead = true;
+      //target.is.lootable = true; when corpses give loot, not yet done
+      if (target === r.entities[0]) {
+        r.gameOver = true;
+      } else {
+        delete target.combat;
+        target.blocks = false;
+        target.mobile = false;
+        target.combat = false;
+        target.type = "corpse of " + target.type;
+      }
+    }
+  }
   erase() {
     let itemsToErase = entities.atPoint(this.pos.x, this.pos.y);
     itemsToErase.shift(); // remove player
@@ -221,8 +246,23 @@ class Entity {
     }
   }
   selectFoe() {
-    console.log('selectFoe');
+    if (r.turn !== this.targets.when) {
+      this.targets = {
+        when: r.turn,
+        who: -1,
+        foes: entities.foesInSight(),
+      };
+      if (this.targets.foes.length > 0) {
+        this.targets.who = 0;
+      }
+    }
+    if (this.targets.foes.length === this.targets.who + 1) {
+      this.targets.who = 0;
+    } else if (this.targets.foes.length > this.targets.who) {
+      this.targets.who++;
+    }
   }
+  //console.log(this.targets);
   heal() {
     if (this.combat.hp < this.combat.maxHp && this.inventory.medical > 0) {
       this.combat.hp += 10;
@@ -235,6 +275,23 @@ class Entity {
 }
 
 const entities = {
+  foesInSight: function () {
+    const foesInSight = [];
+    for (let e of r.entities) {
+      if (e.id === 0) {
+        continue;
+      }
+      if (e.isVisible() && e.isCombatant() && !e.isDead) {
+        const pjX = r.entities[0].pos.x + 0.5;
+        const pjY = r.entities[0].pos.y + 0.5;
+        const distance = lib.entitiesDistance(pjX, pjY, e.pos.x, e.pos.y);
+        if (distance <= K.LOS_RADIUS) {
+          foesInSight.push(e);
+        }
+      }
+    }
+    return foesInSight;
+  },
   isPointFreeOfBlockingEntities: function (x, y) {
     for (let e of r.entities) {
       if (e.pos.x === x && e.pos.y === y) {
@@ -258,7 +315,12 @@ const entities = {
     const player = r.entities[0];
     for (let e of r.entities) {
       let d = [];
-      if (e.id === 0) {
+      if (e.id === 0 && action === "fire") {
+        if (e.combat.range > 0) {
+          e.fire(e.targets.foes[e.targets.who]);
+        }
+        continue;
+      } else {
         d = player.getMove(action);
       }
       if (e.id !== 0 && e.isMobile()) {

@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Version-0.0.10-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.0.11-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue ROGUELIKE.ONLINE](https://prologue.roguelike.online)**  
@@ -16,7 +16,7 @@
 - [X] **Melee**  
 - [X] **Creating UI**  
 - [X] **Inventory and items**  
-- [ ] **Ranged Combat**  
+- [X] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
 
 ## FEATURES  
@@ -40,6 +40,7 @@
 - [ ] **move/attack animations**  
 - [ ] **damage tooltips**  
 - [ ] **help modal showing controls**  
+- [ ] **settings: resize window, custom controls, change scale...**  
 - MOUSE
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   

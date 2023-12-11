@@ -3,10 +3,10 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.10",
+  VERSION: "0.0.11",
   // MapGen
   ROOM_TRIES: 5000,
-  MAX_ROOMS: 200,
+  MAX_ROOMS: 100,
   MIN_SIZE_ROOM: 4,
   MAX_SIZE_ROOM: 12,
   MIN_LENGTH_CORRIDOR: 5,
@@ -18,7 +18,7 @@ let K = {
   // Render
   FONT: "VarelaRound",//"NotoSansMonoMedium",
   CANVAS_NAME: "canvas",
-  PPP: 24,
+  PPP: 20,
   WINDOW_WIDTH: window.innerWidth - 200,
   WINDOW_HEIGHT: window.innerHeight - 5,
   CAM_X: 0,
@@ -27,9 +27,9 @@ let K = {
   DELTA_Y: 0,
   // Foes
   FOES_TRIES: 1000, //K.ROOM_TRIES,
-  MAX_FOES: 100,//K.MAX_ROOMS,
+  MAX_FOES: 50,//K.MAX_ROOMS,
   ITEMS_TRIES: 1000,
-  MAX_ITEMS: 200,
+  MAX_ITEMS: 120,
   // Game
   INIT_DATE: new Date("2097-08-29 02:14:00"),
 };
@@ -102,6 +102,11 @@ const lib = {
   pointsDistance: function (p1, p2) {
     const dx = p1.x - p2.x;
     const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  },
+  entitiesDistance: function (x1, y1, x2, y2) {
+    const dx = x1 - x2;
+    const dy = y1 - y2;
     return Math.sqrt(dx * dx + dy * dy);
   },
   shuffleArray: function (a) {
