@@ -1,7 +1,7 @@
-![Game](https://img.shields.io/badge/Version-0.0.11-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
-## **[Play the prologue ROGUELIKE.ONLINE](https://prologue.roguelike.online)**  
+## **[Play the prologue Online](https://prologue.roguelike.online)**  
 
 ## 0.1.0 MILESTONE 
 
@@ -17,7 +17,7 @@
 - [X] **Creating UI**  
 - [X] **Inventory and items**  
 - [X] **Ranged Combat**  
-- [ ] **Leaving the Vault**  
+- [X] **Leaving the Vault**  
 
 ## FEATURES  
 
@@ -62,7 +62,6 @@
 ## BUGS
 
 - [ ] **at startup foe can start same tile player**  
-- [ ] **at startup the source does not load properly**  
 - [ ] **initial room can go to the edge of the map in small maps**  
 - [X] **when changing direction, map continues one turn in old direction**  
 - [ ] **actions doing nothing autodamage player**  

@@ -12,7 +12,10 @@ import * as  fov from "./fov.js";
 const r = {
   nick: lib.randomNick(5, 2),
   token: lib.randomString(50),
-  gameOver: false,
+  gameOver: {
+    status: false,
+    win: false,
+  },
   counter: 0,
   turn: 0,
   date: lib.currentDate(0),
@@ -29,6 +32,9 @@ const r = {
     if (!endTurnActions.includes(action)) {
       r.entities[0][action]();
       render.redraw();
+      if (r.gameOver.status) {
+        gameOver();
+      }
       return;
     }
     r.turn++;
@@ -36,7 +42,7 @@ const r = {
     es.turn(action);
     fov.playerLOS();
     render.redraw();
-    if (r.gameOver) {
+    if (r.gameOver.status) {
       gameOver();
     }
   },
@@ -47,6 +53,8 @@ function populateMap() {
   r.counter++;
   foes.create();
   items.create();
+  createExit();
+  console.log(r.entities);
 }
 
 const foes = {
@@ -160,12 +168,12 @@ const items = {
         break;
       case "firearm":
         item.data.name = "Pistol 9mm";
-        item.data.range = 13 + lib.randomInt(1, 6);
+        item.data.range = 6 + lib.randomInt(1, 4);
         item.is.equippable = true;
         break;
       case "melee":
         item.data.name = "Baseball Bat";
-        item.data.melee = 18 + lib.randomInt(1, 6);
+        item.data.melee = 8 + lib.randomInt(1, 4);
         item.is.equippable = true;
         break;
       case "body":
@@ -178,11 +186,12 @@ const items = {
 };
 
 function createPlayer() {
-  const x = Math.floor(K.MAP_X / 2);
-  const y = Math.floor(K.MAP_Y / 2);
-  const pos = { x, y };
+  //const x = Math.floor(K.MAP_X / 2);
+  //const y = Math.floor(K.MAP_Y / 2);
+  //const pos = { x, y };
+  const pos = getRandomEmptyPoint();
   const player = new e(r.counter, "player", pos, true, true, true, false);
-  const stats = [190, 200, 6, 0, 0];
+  const stats = [180, 200, 6, 0, 0];
   player.combat = {
     hp: stats[0],
     maxHp: stats[1],
@@ -210,10 +219,31 @@ function createPlayer() {
   return player;
 }
 
+function createExit() {
+  const pos = getRandomEmptyPoint();
+  const item = new e(r.counter, "exit", pos, false, false, false, true);
+  item.is = {
+    visible: false,
+    lootable: false,
+    consumable: false,
+    equippable: false,
+    equipped: false,
+  };
+  r.entities[r.counter] = item;
+  r.counter++;
+}
+
 function gameOver() {
-  console.log('THIS IS THE END');
-  alert('YOU LOSE');
+  if (r.gameOver.win) {
+    console.log('THIS IS A VICTORY');
+    alert('YOU LEAVE THE VAULT');
+  }
+  if (!r.gameOver.win) {
+    console.log('THIS IS THE END');
+    alert('YOU LOSE');
+  }
   location.reload();
+
 }
 
 function getRandomEmptyPoint() {

@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.0.11",
+  VERSION: "0.1.0",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 100,
@@ -128,6 +128,7 @@ const symbols = new Map([
   ["mole rat", 82], // R
   ["corpse of", 37],    // %  
   ["item", 63],    // ?
+  ["exit", 60], // <
 ]);
 
 const colors = new Map([
@@ -137,4 +138,5 @@ const colors = new Map([
   ["rat", "DeepPink"],
   ["mole rat", "DeepPink"],
   ["item", "orange"],
+  ["exit", "yellow"]
 ]);

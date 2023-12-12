@@ -133,7 +133,7 @@ class Entity {
       target.isDead = true;
       //target.is.lootable = true; when corpses give loot, not yet done
       if (target === r.entities[0]) {
-        r.gameOver = true;
+        r.gameOver = { status: true };
       } else {
         delete target.combat;
         target.blocks = false;
@@ -160,7 +160,7 @@ class Entity {
       target.isDead = true;
       //target.is.lootable = true; when corpses give loot, not yet done
       if (target === r.entities[0]) {
-        r.gameOver = true;
+        r.gameOver = { status: true };
       } else {
         delete target.combat;
         target.blocks = false;
@@ -195,6 +195,9 @@ class Entity {
     let itemsToLoot = entities.atPoint(this.pos.x, this.pos.y);
     itemsToLoot.shift(); // remove player
     for (let e of itemsToLoot) {
+      if (e.type === "exit") {
+        r.gameOver = { status: true, win: true };
+      }
       if (e.is.lootable) {
         if (e.data.qty > 0) {
           this.inventory[e.type] += e.data.qty;
