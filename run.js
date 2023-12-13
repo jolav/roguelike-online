@@ -54,7 +54,7 @@ function populateMap() {
   foes.create();
   items.create();
   createExit();
-  console.log(r.entities);
+  //console.log(r.entities);
 }
 
 const foes = {

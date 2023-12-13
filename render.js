@@ -35,7 +35,7 @@ function redraw() {
   //draw.map();
   draw.camera();
   draw.entities();
-  if (player.targets.who !== -1) {
+  if (player.targets.who !== -1 && player.targets.foes.length > 0) {
     draw.tileSelected();
   }
   //draw.player(); // this must disappear, force player to render up
@@ -147,7 +147,9 @@ const panel = {
     this.inventory();
     this.loot();
     this.history();
-    this.selected();
+    if (player.targets.who !== -1 && player.targets.foes.length > 0) {
+      this.selected();
+    }
   },
   pjPos: function () {
     document.getElementById("pjX").innerHTML = player.pos.x;

@@ -1,7 +1,20 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
+
+## CONTROLS 
+
+(&uarr;) or (w) = Up  
+(&darr;) or (s) = Down  
+(&larr;) or (a) = Left  
+(&rarr;) or (d) = Right  
+(q) = Loot  
+(t) = Skip Turn  
+(1) = Eat Food  
+(3) = Heal with medical  
+(r) = Select Next Foe  
+(f) = Shoot firearm  
 
 ## 0.1.0 MILESTONE 
 
@@ -19,7 +32,7 @@
 - [X] **Ranged Combat**  
 - [X] **Leaving the Vault**  
 
-## FEATURES  
+## 1.0.0 MILESTONE 
 
 - [ ] **Choose player name at start**  
 - [ ] **Directional FOV**  
@@ -41,11 +54,14 @@
 - [ ] **damage tooltips**  
 - [ ] **help modal showing controls**  
 - [ ] **settings: resize window, custom controls, change scale...**  
-- MOUSE
+- [ ] **markings on the edge of the map indicating the address**  
+- [ ] **markers where noise is heard**  
+- MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile and foe with mouse**  
-- MAPS
+- MAPS  
+- [ ] **Fix textoffset**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
 - [ ] **Remove dead end corridors**  
@@ -55,17 +71,16 @@
 - [ ] **seeds for reproducible runs**  
 - [ ] **tile walkable**  
 - [ ] **render player last tp stay up and visible**  
-- [ ] **levels ? basements ? attics ?**  
+- [ ] **4 vault levels ? basements ? attics ?**  
 - [ ] **render prioriries**  
-- [ ] **mark visited items** 
-
-## BUGS
-
-- [ ] **at startup foe can start same tile player**  
-- [ ] **initial room can go to the edge of the map in small maps**  
+- [ ] **mark visited items**   
+- BUGS  
+- [X] **at startup foe can start same tile player**  
+- [X] **initial room can go to the edge of the map in small maps**  
 - [X] **when changing direction, map continues one turn in old direction**  
-- [ ] **actions doing nothing autodamage player**  
-- [ ] **problems fighting if the target is on top of a corpse**  
+- [X] **actions doing nothing autodamage player**  
+- [X] **if target is on top of a corpse, only foe deals damage**  
+- [X] **when selected foe dies, a new select without a valid target crash**  
 
 ## **Acknowledgment**
 

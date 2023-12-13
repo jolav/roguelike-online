@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.1.0",
+  VERSION: "0.1.1",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 100,
@@ -47,7 +47,7 @@ let K = {
     K.DELTA_Y = Math.floor((K.CAM_Y - K.MAP_Y) / 2);
     K.CAM_Y = K.MAP_Y;
   }
-  //console.log(K);
+  //console.log(JSON.stringify(K, null, 2));
 })();
 
 export {

@@ -264,8 +264,8 @@ class Entity {
     } else if (this.targets.foes.length > this.targets.who) {
       this.targets.who++;
     }
+    //console.log(this.targets);
   }
-  //console.log(this.targets);
   heal() {
     if (this.combat.hp < this.combat.maxHp && this.inventory.medical > 0) {
       this.combat.hp += 10;
@@ -340,9 +340,11 @@ const entities = {
       } else if (e.id === 0 && action !== "skip") { //skip avoid self-harm
         const targetX = player.pos.x + dx;
         const targetY = player.pos.y + dy;
-        const foe = this.atPoint(targetX, targetY)[0];
-        if (foe !== undefined) { // avoid hitting walls
-          e.melee(foe);
+        const foes = this.atPoint(targetX, targetY);//[0];
+        for (let f of foes) {
+          if (f !== undefined && f.isCombatant()) { // avoid walls and corpses
+            e.melee(f);
+          }
         }
       }
     }
