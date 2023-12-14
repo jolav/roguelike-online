@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.1-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.2-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -44,6 +44,7 @@
 - [X] **Show PJ position**  
 - [X] **Center camera if is greater than map**  
 - [ ] **Improving enemy IA**  
+- [ ] **better fov and select showing path**  
 - [ ] **each entity different LOS radius**  
 - [ ] **sounds**  
 - [ ] **add property visuals por entities render**  
@@ -55,6 +56,7 @@
 - [ ] **help modal showing controls**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **markings on the edge of the map indicating the address**  
+- [ ] **modify select system to f-arrows_for_select-f**  
 - [ ] **markers where noise is heard**  
 - MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
@@ -68,12 +70,14 @@
 - [ ] **wider corridors**  
 - [ ] **Put pillars in large rooms**  
 - [ ] **add furniture**  
+- [ ] **open/close doors**  
 - [ ] **seeds for reproducible runs**  
 - [ ] **tile walkable**  
-- [ ] **render player last tp stay up and visible**  
+- [ ] **render player last to stay up and visible**  
 - [ ] **4 vault levels ? basements ? attics ?**  
 - [ ] **render prioriries**  
 - [ ] **mark visited items**   
+- [ ] **new terrain type = rock**  
 - BUGS  
 - [X] **at startup foe can start same tile player**  
 - [X] **initial room can go to the edge of the map in small maps**  

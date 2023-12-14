@@ -2,7 +2,7 @@
 
 console.log('Loading.....render.js');
 
-import { K, lib } from "./_config.js";
+import { K } from "./_config.js";
 import { r } from "./run.js";
 import { es } from "./entity.js";
 
@@ -11,7 +11,10 @@ canvas.width = K.WINDOW_WIDTH;
 canvas.height = K.WINDOW_HEIGHT;
 canvas.last = [];
 const textOffset = K.PPP;
+const gridBorder = 2;
 const ctx = canvas.getContext('2d');
+//ctx.textBaseline = "middle";
+ctx.textBaseline = "ideographic"; // remove divide by two en tile Y, 117
 ctx.font = K.PPP + "px " + K.FONT;
 ctx.fillStyle = "black";
 
@@ -32,7 +35,6 @@ function redraw() {
   player = r.entities[0];
   cam.update();
   draw.clearAll();
-  //draw.map();
   draw.camera();
   draw.entities();
   if (player.targets.who !== -1 && player.targets.foes.length > 0) {
@@ -70,7 +72,7 @@ const draw = {
         const posX = x + cam.x - K.DELTA_X;
         const posY = y + cam.y - K.DELTA_Y;
         const tile = r.map[posX][posY];
-        const char = lib.mapSymbol(tile.terrain);
+        const char = aux.mapSymbol(tile.terrain);
         if (tile.visible) {
           this.tile(x, y, char, "visible");
         } else if (tile.explored && !tile.visible) {
@@ -85,11 +87,11 @@ const draw = {
       const posY = e.pos.y - cam.y + K.DELTA_Y;
       const tile = r.map[e.pos.x][e.pos.y];
       if (tile.visible) {
-        let char = lib.mapSymbol(e.type);
+        let char = aux.mapSymbol(e.type);
         let color = e.type;
         if (e.isItem() && e.is.visible) {
           color = "item";
-          char = lib.mapSymbol("item");
+          char = aux.mapSymbol("item");
         }
         this.clearTile(posX, posY);
         this.tile(posX, posY, char, color);
@@ -97,10 +99,17 @@ const draw = {
     }
     this.player();
   },
+  player: function () {
+    const posX = player.pos.x - cam.x + K.DELTA_X;
+    const posY = player.pos.y - cam.y + K.DELTA_Y;
+    this.clearTile(posX, posY);
+    const char = aux.mapSymbol("player");
+    this.tile(posX, posY, char, "player");
+  },
   tile: function (x, y, char, color) {
-    ctx.fillStyle = lib.colorOfEntity(color);
+    ctx.fillStyle = aux.colorOfEntity(color);
     ctx.textAlign = "center";
-    ctx.fillText(char, x * K.PPP + textOffset / 2, y * K.PPP + textOffset / 2);
+    ctx.fillText(char, x * K.PPP + textOffset / 2, y * K.PPP + textOffset /*/ 2*/);
   },
 
   clearAll: function () {
@@ -116,26 +125,8 @@ const draw = {
     x = t.foes[t.who].pos.x;
     y = t.foes[t.who].pos.y;
     ctx.strokeStyle = "lightgreen";
-    ctx.strokeRect((x - cam.x) * K.PPP, (y - cam.y) * K.PPP - textOffset / 5
+    ctx.strokeRect((x - cam.x) * K.PPP, (y - cam.y) * K.PPP /*- textOffset*/
       , K.PPP, K.PPP);
-  },
-  player: function () {
-    const posX = player.pos.x - cam.x + K.DELTA_X;
-    const posY = player.pos.y - cam.y + K.DELTA_Y;
-    this.clearTile(posX, posY);
-    const char = lib.mapSymbol("player");
-    this.tile(posX, posY, char, "player");
-  },
-  map: function () {
-    for (let x = 0; x < K.MAP_X; x++) {
-      for (let y = 0; y < K.MAP_Y; y++) {
-        const char = lib.mapSymbol(r.map[x][y].terrain);
-        this.tile(x, y, char, "visible");
-      }
-    }
-    this.clearTile(player.pos.x, player.pos.y);
-    const char = lib.mapSymbol("player");
-    this.tile(player.pos.x, player.pos.y, char, "player");
   },
 };
 
@@ -245,3 +236,39 @@ const panel = {
 export {
   redraw,
 };
+
+const aux = {
+  mapSymbol: function (symbol) {
+    if (symbol.slice(0, 9) === "corpse of") {
+      return String.fromCharCode(symbols.get(symbol.slice(0, 9)));
+    }
+    return String.fromCharCode(symbols.get(symbol));
+  },
+  colorOfEntity: function (entity) {
+    const color = colors.get(entity);
+    return color;
+  },
+};
+
+const symbols = new Map([
+  ["floor", 183],   // middleDot 183 or normal point 46
+  ["wall", 35],     // #
+  ["-", 0],
+  ["player", 64],   // @
+  ["rat", 114],     // r
+  ["mole rat", 82], // R
+  ["corpse of", 37],    // %
+  ["item", 63],    // ?
+  ["exit", 60], // <
+]);
+
+const colors = new Map([
+  ["player", "burlywood"],
+  ["visible", "#fff"],
+  ["explored", "#454545"],
+  ["rat", "DeepPink"],
+  ["mole rat", "DeepPink"],
+  ["item", "orange"],
+  ["exit", "yellow"]
+]);
+

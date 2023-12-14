@@ -33,7 +33,6 @@ class Feature {
 }
 
 function create() {
-  //return oneBigRoom();
   return vault();
 }
 
@@ -235,51 +234,4 @@ class Tile {
     this.visible = p[4];
   }
 }
-
-//
-//<!-- testing FOV
-//
-function oneBigRoom() {
-  for (let x = 0; x < K.MAP_X; x++) {
-    map[x] = [];
-    for (let y = 0; y < K.MAP_Y; y++) {
-      let terrain = "floor";
-      if (x === 0 || y === 0
-        || x === K.MAP_X - 1 || y === K.MAP_Y - 1) {
-        terrain = "wall";
-      }
-      if ((x === 8) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 16) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 24) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 32) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 40) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 48) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 56) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      if ((x === 64) && (y === 5 || y === 10 || y === 15 || y === 20 || y === 25 || y === 30 || y === 35)) {
-        terrain = "wall";
-      }
-      map[x].push(
-        new Tile(terrain)
-      );
-    }
-  }
-  return map;
-}
-//
-//--> END TESTING FOV
-//
 

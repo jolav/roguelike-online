@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.1.1",
+  VERSION: "0.1.2",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 100,
@@ -18,7 +18,7 @@ let K = {
   // Render
   FONT: "VarelaRound",//"NotoSansMonoMedium",
   CANVAS_NAME: "canvas",
-  PPP: 20,
+  PPP: 24,
   WINDOW_WIDTH: window.innerWidth - 200,
   WINDOW_HEIGHT: window.innerHeight - 5,
   CAM_X: 0,
@@ -56,17 +56,6 @@ export {
 };
 
 const lib = {
-
-  mapSymbol: function (symbol) {
-    if (symbol.slice(0, 9) === "corpse of") {
-      return String.fromCharCode(symbols.get(symbol.slice(0, 9)));
-    }
-    return String.fromCharCode(symbols.get(symbol));
-  },
-  colorOfEntity: function (entity) {
-    const color = colors.get(entity);
-    return color;
-  },
   currentDate: function (turn) {
     return new Date(K.INIT_DATE.getTime() + 1000 * turn);
   },
@@ -119,24 +108,3 @@ const lib = {
   }
 };
 
-const symbols = new Map([
-  ["floor", 183],   // middleDot 183 or normal point 46
-  ["wall", 35],     // #
-  ["-", 0],
-  ["player", 64],   // @ 
-  ["rat", 114],     // r
-  ["mole rat", 82], // R
-  ["corpse of", 37],    // %  
-  ["item", 63],    // ?
-  ["exit", 60], // <
-]);
-
-const colors = new Map([
-  ["player", "burlywood"],
-  ["visible", "#fff"],
-  ["explored", "#454545"],
-  ["rat", "DeepPink"],
-  ["mole rat", "DeepPink"],
-  ["item", "orange"],
-  ["exit", "yellow"]
-]);

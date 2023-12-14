@@ -170,21 +170,6 @@ class Entity {
       }
     }
   }
-  erase() {
-    let itemsToErase = entities.atPoint(this.pos.x, this.pos.y);
-    itemsToErase.shift(); // remove player
-    let indexToErase = [];
-    for (let index = 0; index < itemsToErase.length; index++) {
-      indexToErase.push(itemsToErase[index].id);
-    }
-    let newItems = [];
-    (r.entities).map(function (item, index) {
-      if (!indexToErase.includes(item.id)) {
-        newItems.push(item);
-      }
-    });
-    r.entities = newItems;
-  }
   delete(id) {
     const index = r.entities.findIndex(function (e) {
       return e.id === id;
