@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.2-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.3-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -63,7 +63,7 @@
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile and foe with mouse**  
 - MAPS  
-- [ ] **Fix textoffset**  
+- [X] **Fix textoffset**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
 - [ ] **Remove dead end corridors**  

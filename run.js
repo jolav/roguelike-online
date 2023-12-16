@@ -2,7 +2,7 @@
 
 console.log('Loading.....game.js');
 
-import * as render from "./render.js";
+import * as render from "./render_ascii.js";
 import * as map from "./map.js";
 import { lib } from "./_config.js";
 import { e, es } from "./entity.js";
@@ -23,46 +23,50 @@ const r = {
   map: map.create(),
   history: ["9", "8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
   start: function () {
-    populateMap();
+    this.populateMap();
     fov.playerLOS();
-    render.redraw();
+    this.draw();
   },
   newTurn: function (action) {
+    const player = r.entities[0];
     const endTurnActions = ["up", "down", "left", "right", "skip", "fire"];
     if (!endTurnActions.includes(action)) {
-      r.entities[0][action]();
-      render.redraw();
-      if (r.gameOver.status) {
+      player[action]();
+      this.draw();
+      if (this.gameOver.status) {
         gameOver();
       }
       return;
     }
-    r.turn++;
-    r.date = lib.currentDate(r.turn);
+    this.turn++;
+    this.date = lib.currentDate(this.turn);
     es.turn(action);
     fov.playerLOS();
-    render.redraw();
-    if (r.gameOver.status) {
+    this.draw();
+    if (this.gameOver.status) {
       gameOver();
     }
   },
+  populateMap: function () {
+    this.entities[0] = createPlayer();
+    this.counter++;
+    foes.create();
+    items.create();
+    createExit();
+    //console.log(this.entities);
+  },
+  draw: function () {
+    const options = [render.ascii];
+    options[K.RENDER_TYPE]();
+  }
 };
-
-function populateMap() {
-  r.entities[0] = createPlayer();
-  r.counter++;
-  foes.create();
-  items.create();
-  createExit();
-  //console.log(r.entities);
-}
 
 const foes = {
   create: function () {
     for (let tries = 0; tries < K.FOES_TRIES; tries++) {
-      let p = getRandomEmptyPoint();
-      if (p !== undefined) {
-        const foe = new e(r.counter, foes.type(), p, true, true, true, false);
+      let pos = aux.randomEmptyPoint();
+      if (pos !== undefined) {
+        const foe = new e(r.counter, foes.type(), pos, true, true, true, false);
         if (foe.isCombatant()) {
           this.combatStats(foe);
         }
@@ -110,7 +114,7 @@ const items = {
   create: function () {
     let items = 0;
     for (let tries = 0; tries < K.ITEMS_TRIES; tries++) {
-      let p = getRandomEmptyPoint();
+      let p = aux.randomEmptyPoint();
       if (p !== undefined) {
         const item = new e(r.counter, this.getType(), p, false, false, false, true);
         this.takeItemStats(item);
@@ -186,10 +190,7 @@ const items = {
 };
 
 function createPlayer() {
-  //const x = Math.floor(K.MAP_X / 2);
-  //const y = Math.floor(K.MAP_Y / 2);
-  //const pos = { x, y };
-  const pos = getRandomEmptyPoint();
+  const pos = aux.randomEmptyPoint();
   const player = new e(r.counter, "player", pos, true, true, true, false);
   const stats = [180, 200, 6, 0, 0];
   player.combat = {
@@ -220,7 +221,7 @@ function createPlayer() {
 }
 
 function createExit() {
-  const pos = getRandomEmptyPoint();
+  const pos = aux.randomEmptyPoint();
   const item = new e(r.counter, "exit", pos, false, false, false, true);
   item.is = {
     visible: false,
@@ -243,34 +244,35 @@ function gameOver() {
     alert('YOU LOSE');
   }
   location.reload();
-
-}
-
-function getRandomEmptyPoint() {
-  let p = { x: 0, y: 0 };
-  let found = false;
-  let tries = 0;
-  while (!found && tries < K.FOES_TRIES) {
-    let x = lib.randomInt(2, K.MAP_X - 2);
-    let y = lib.randomInt(2, K.MAP_Y - 2);
-    if (!r.map[x][y].blocks) {
-      if (es.isPointFreeOfBlockingEntities(x, y)); {
-        const resp = es.atPoint(x, y);
-        if (resp.length === 0) {
-          p = { x, y };
-          found = true;
-        }
-      }
-    }
-    tries++;
-  }
-  if (p.x === 0) {
-    return undefined;
-  }
-  return p;
 }
 
 export {
   r,
+};
+
+const aux = {
+  randomEmptyPoint: function () {
+    let p = { x: 0, y: 0 };
+    let found = false;
+    let tries = 0;
+    while (!found && tries < K.FOES_TRIES) {
+      let x = lib.randomInt(2, K.MAP_X - 2);
+      let y = lib.randomInt(2, K.MAP_Y - 2);
+      if (!r.map[x][y].blocks) {
+        if (es.isPointFreeOfBlockingEntities(x, y)); {
+          const resp = es.atPoint(x, y);
+          if (resp.length === 0) {
+            p = { x, y };
+            found = true;
+          }
+        }
+      }
+      tries++;
+    }
+    if (p.x === 0) {
+      return undefined;
+    }
+    return p;
+  }
 };
 

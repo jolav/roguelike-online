@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.1.2",
+  VERSION: "0.1.3",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 100,
@@ -16,6 +16,7 @@ let K = {
   MAP_Y: 125,//25, 
   LOS_RADIUS: 16,
   // Render
+  RENDER_TYPE: 0, // 0 = ASCII
   FONT: "VarelaRound",//"NotoSansMonoMedium",
   CANVAS_NAME: "canvas",
   PPP: 24,
@@ -49,11 +50,6 @@ let K = {
   }
   //console.log(JSON.stringify(K, null, 2));
 })();
-
-export {
-  K,
-  lib,
-};
 
 const lib = {
   currentDate: function (turn) {
@@ -105,6 +101,15 @@ const lib = {
       a[i] = a[j];
       a[j] = temp;
     }
-  }
+  },
+  sleep: function (ms) {
+    return new Promise(resolve => {
+      setTimeout(resolve, ms);
+    });
+  },
 };
 
+export {
+  K,
+  lib,
+};
