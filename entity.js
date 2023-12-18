@@ -42,7 +42,7 @@ class Entity {
     const x = this.pos.x + dx;
     const y = this.pos.y + dy;
     const destination = r.map[x][y];
-    if (destination.blocks) {
+    if (!destination.walkable) {
       return false;
     }
     if (entities.isPointFreeOfBlockingEntities(x, y)) {

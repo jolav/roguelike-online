@@ -40,19 +40,19 @@ class Tile {
     let p = [];
     switch (terrain) {
       case "floor":
-        p = [terrain, false, false, false, false];
+        p = [terrain, true, false, false, false];
         break;
       case "wall":
-        p = [terrain, true, true, false, false];
+        p = [terrain, false, true, false, false];
         break;
       case "unknown":
-        p = [terrain, true, true, false, false];
+        p = [terrain, false, true, false, false];
         break;
       default:
         p = [];
     }
     this.terrain = terrain;
-    this.blocks = p[1];
+    this.walkable = p[1];
     this.blockLOS = p[2];
     this.explored = p[3];
     this.visible = p[4];
@@ -101,7 +101,7 @@ const vault = {
     while (!found && limit < K.ROOM_TRIES) {
       w.x = lib.randomInt(4, K.MAP_X - 5);
       w.y = lib.randomInt(4, K.MAP_Y - 5);
-      if (map[w.x][w.y].blocks) {
+      if (!map[w.x][w.y].walkable) {
         this.getClearNeighbours(w);
         if (w.nei === 1) {
           found = true;
@@ -117,19 +117,19 @@ const vault = {
   getClearNeighbours: function (w) {
     w.nei = 0;
     w.dir = "Zero";
-    if (!map[w.x][w.y - 1].blocks) {
+    if (map[w.x][w.y - 1].walkable) {
       w.nei++;
       w.dir = "S";
     }
-    if (!map[w.x][w.y + 1].blocks) {
+    if (map[w.x][w.y + 1].walkable) {
       w.nei++;
       w.dir = "N";
     }
-    if (!map[w.x + 1][w.y].blocks) {
+    if (map[w.x + 1][w.y].walkable) {
       w.nei++;
       w.dir = "W";
     }
-    if (!map[w.x - 1][w.y].blocks) {
+    if (map[w.x - 1][w.y].walkable) {
       w.nei++;
       w.dir = "E";
     }
@@ -190,7 +190,7 @@ const vault = {
     const originY = rm.y;
     for (let x = 0; x < rm.width; x++) {
       for (let y = 0; y < rm.height; y++) {
-        if (!map[originX + x][originY + y].blocks) {
+        if (map[originX + x][originY + y].walkable) {
           return false;
         }
       }

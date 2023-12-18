@@ -22,7 +22,7 @@ function playerLOS() {
         tile.visible = true;
         for (let z = 1; z < path.length; z++) {
           const routeTile = r.map[path[z].x][path[z].y];
-          if (routeTile.blocks || routeTile.blockLOS) {
+          if (!routeTile.walkable || routeTile.blockLOS) {
             tile.visible = false;
             routeTile.visible = true;
             z = path.length;

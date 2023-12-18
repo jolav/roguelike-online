@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.3-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.4-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -72,7 +72,7 @@
 - [ ] **add furniture**  
 - [ ] **open/close doors**  
 - [ ] **seeds for reproducible runs**  
-- [ ] **tile walkable**  
+- [X] **tile walkable**  
 - [ ] **render player last to stay up and visible**  
 - [ ] **4 vault levels ? basements ? attics ?**  
 - [ ] **render prioriries**  

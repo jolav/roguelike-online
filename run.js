@@ -258,7 +258,7 @@ const aux = {
     while (!found && tries < K.FOES_TRIES) {
       let x = lib.randomInt(2, K.MAP_X - 2);
       let y = lib.randomInt(2, K.MAP_Y - 2);
-      if (!r.map[x][y].blocks) {
+      if (r.map[x][y].walkable) {
         if (es.isPointFreeOfBlockingEntities(x, y)); {
           const resp = es.atPoint(x, y);
           if (resp.length === 0) {
