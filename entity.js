@@ -152,6 +152,7 @@ class Entity {
       target.is.mobile = false;
       target.is.combatant = false;
       target.type = "corpse of " + target.type;
+      r.entities[0].targets.who = -1; //deselect dead
     }
   }
   delete(id) {
@@ -273,10 +274,14 @@ const entities = {
       case "loot":
       case "eat":
       case "heal":
-      case "fire":
         player[action]();
         break;
       case "skip":
+        break;
+      case "fire":
+        if (player.combat.range > 0 && player.targets.who !== -1) {
+          player.fire(player.targets.foes[player.targets.who]);
+        }
         break;
       default:
         d = player.getDirection(action);

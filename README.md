@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.5-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.6-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -34,11 +34,8 @@
 
 ## 1.0.0 MILESTONE 
 
-- [ ] **Choose player name at start**  
 - [ ] **Directional FOV**  
-- [ ] **Save and load Runs**  
 - [ ] **Tilesets as well as ascii**  
-- [ ] **Help Modal**  
 - [ ] **Sound effects**  
 - [X] **Turn counter**  
 - [X] **Show PJ position**  
@@ -46,37 +43,38 @@
 - [ ] **Improving enemy IA**  
 - [ ] **better fov and select showing path**  
 - [ ] **each entity different LOS radius**  
-- [ ] **sounds**  
-- [ ] **add property visuals por entities render**  
 - [ ] **dummy items**  
 - [ ] **food from animal corpse takes time**  
 - [ ] **slow computer turn with animations**  
 - [ ] **move/attack animations**  
 - [ ] **damage tooltips**  
-- [ ] **help modal showing controls**  
-- [ ] **settings: resize window, custom controls, change scale...**  
-- [ ] **markings on the edge of the map indicating the address**  
+- [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **modify select system to f-arrows_for_select-f**  
 - [ ] **markers where noise is heard**  
+- [ ] **only pass turn if action is really done**  
 - MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile and foe with mouse**  
-- MAPS  
-- [X] **Fix textoffset**  
+- SETTINGS  
+- [ ] **help modal showing controls settings and config**  
+- [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
+- [ ] **Choose player name at start**  
+- [ ] **Save and load Runs**  
+- [ ] **seeds for reproducible runs**  
+- MAPS  
+- [X] **Fix textoffset**  
 - [ ] **Remove dead end corridors**  
 - [ ] **wider corridors**  
 - [ ] **Put pillars in large rooms**  
 - [ ] **add furniture**  
 - [ ] **open/close doors**  
-- [ ] **seeds for reproducible runs**  
 - [X] **tile walkable**  
-- [ ] **render player last to stay up and visible**  
 - [ ] **4 vault levels ? basements ? attics ?**  
-- [ ] **render prioriries**  
-- [ ] **mark visited items**   
+- [ ] **render order, tiles-items-foes-player**  
+- [ ] **mark visited items using visited tiles**   
 - [ ] **new terrain type = rock**  
 - BUGS  
 - [X] **at startup foe can start same tile player**  
@@ -85,6 +83,7 @@
 - [X] **actions doing nothing autodamage player**  
 - [X] **if target is on top of a corpse, only foe deals damage**  
 - [X] **when selected foe dies, a new select without a valid target crash**  
+- [X] **fire not working**  
 
 ## **Acknowledgment**
 
