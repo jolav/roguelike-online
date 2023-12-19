@@ -3,7 +3,7 @@
 console.log('Loading....._config.js');
 
 let K = {
-  VERSION: "0.1.4",
+  VERSION: "0.1.5",
   // MapGen
   ROOM_TRIES: 5000,
   MAX_ROOMS: 100,

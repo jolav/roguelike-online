@@ -11,24 +11,15 @@ class Entity {
     this.id = id;
     this.type = type;
     this.pos = pos;
-    this.blocks = blocks;
-    this.mobile = mobile;
-    this.combat = combat;
-    this.item = item;
+    this.is = {
+      blocking: blocks,
+      mobile: mobile,
+      combatant: combat,
+      item: item,
+    };
+    //console.log(this);
   }
-  isBlocking() {
-    return this.blocks;
-  }
-  isMobile() {
-    return this.mobile;
-  }
-  isCombatant() {
-    return this.combat;
-  }
-  isItem() {
-    return this.item;
-  }
-  isVisible() { // is in player LOS
+  isInPlayerLOS() {
     return r.map[this.pos.x][this.pos.y].visible;
   }
   move(dx, dy) {
@@ -36,8 +27,9 @@ class Entity {
     this.pos.y += dy;
   }
   canMove(dx, dy) {
-    if (!this.isMobile()) {
-      return false; //deads not move
+    // better skip turn in deads and remove this
+    if (!this.is.mobile) {
+      return false; //deads not move 
     }
     const x = this.pos.x + dx;
     const y = this.pos.y + dy;
@@ -50,7 +42,7 @@ class Entity {
     }
     return false;
   }
-  getMove(action) {
+  getDirection(action) {
     let dx = 0;
     let dy = 0;
     switch (action) {
@@ -102,7 +94,7 @@ class Entity {
 
     lib.shuffleArray(options);
     for (let o of options) {
-      const d = this.getMove(o);
+      const d = this.getDirection(o);
       if (this.canMove(d[0], d[1])) {
         return [d[0], d[1]];
       }
@@ -112,7 +104,7 @@ class Entity {
       options = ["up", "down", "left", "right"];
       lib.shuffleArray(options);
       for (let o of options) {
-        const d = this.getMove(o);
+        const d = this.getDirection(o);
         if (this.canMove(d[0], d[1])) {
           return [d[0], d[1]];
         }
@@ -130,17 +122,7 @@ class Entity {
       target.combat.hp -= damage;
     }
     if (target.combat.hp <= 0) {
-      target.isDead = true;
-      //target.is.lootable = true; when corpses give loot, not yet done
-      if (target === r.entities[0]) {
-        r.gameOver = { status: true };
-      } else {
-        delete target.combat;
-        target.blocks = false;
-        target.mobile = false;
-        target.combat = false;
-        target.type = "corpse of " + target.type;
-      }
+      this.killing(target);
     }
   }
   fire(target) {
@@ -157,17 +139,19 @@ class Entity {
       target.combat.hp -= damage;
     }
     if (target.combat.hp <= 0) {
-      target.isDead = true;
-      //target.is.lootable = true; when corpses give loot, not yet done
-      if (target === r.entities[0]) {
-        r.gameOver = { status: true };
-      } else {
-        delete target.combat;
-        target.blocks = false;
-        target.mobile = false;
-        target.combat = false;
-        target.type = "corpse of " + target.type;
-      }
+      this.killing(target);
+    }
+  }
+  killing(target) {
+    //target.is.lootable = true; when corpses give loot, not yet done
+    if (target === r.entities[0]) {
+      r.gameOver = { status: true };
+    } else {
+      delete target.combat;
+      target.is.blocking = false;
+      target.is.mobile = false;
+      target.is.combatant = false;
+      target.type = "corpse of " + target.type;
     }
   }
   delete(id) {
@@ -186,7 +170,6 @@ class Entity {
       if (e.is.lootable) {
         if (e.data.qty > 0) {
           this.inventory[e.type] += e.data.qty;
-          //this.delete(e.id);
         }
         if (e.is.equippable && !e.is.equipped) {
           switch (e.type) {
@@ -196,41 +179,18 @@ class Entity {
               break;
             case "melee":
               this.equipment.melee = e;
-              this.combat.melee = 6 + this.equipment.melee.data.melee;
+              this.combat.melee = this.equipment.melee.data.melee;
               break;
             case "body":
               this.equipment.body = e;
               this.combat.defence = this.equipment.body.data.defence;
           }
-          e.is.visible = false;
           e.is.equipped = true;
           e.is.lootable = false;
           e.pos = this.pos; // player carries item
-          //this.updateSlots();
-          //this.delete(e.id);
         }
         this.delete(e.id);
       }
-    }
-  }
-  updateSlots() {
-    if (this.equipment.melee !== undefined) {
-      this.combat.melee = 6 + this.equipment.melee.data.melee;
-    }
-    if (this.equipment.range !== undefined) {
-      this.combat.range = this.equipment.range.data.range;
-    }
-    if (this.equipment.body !== undefined) {
-      this.combat.defence = this.equipment.body.data.defence;
-    }
-    if (this.equipment.head !== undefined) {
-      this.combat.defence = this.equipment.head.data.defence;
-    }
-  }
-  eat() {
-    if (this.combat.hp < this.combat.maxHp && this.inventory.food > 0) {
-      this.combat.hp++;
-      this.inventory.food--;
     }
   }
   selectFoe() {
@@ -251,6 +211,12 @@ class Entity {
     }
     //console.log(this.targets);
   }
+  eat() {
+    if (this.combat.hp < this.combat.maxHp && this.inventory.food > 0) {
+      this.combat.hp++;
+      this.inventory.food--;
+    }
+  }
   heal() {
     if (this.combat.hp < this.combat.maxHp && this.inventory.medical > 0) {
       this.combat.hp += 10;
@@ -269,7 +235,7 @@ const entities = {
       if (e.id === 0) {
         continue;
       }
-      if (e.isVisible() && e.isCombatant() && !e.isDead) {
+      if (e.isInPlayerLOS() && e.is.combatant) {
         const pjX = r.entities[0].pos.x + 0.5;
         const pjY = r.entities[0].pos.y + 0.5;
         const distance = lib.entitiesDistance(pjX, pjY, e.pos.x, e.pos.y);
@@ -283,7 +249,7 @@ const entities = {
   isPointFreeOfBlockingEntities: function (x, y) {
     for (let e of r.entities) {
       if (e.pos.x === x && e.pos.y === y) {
-        if (e.isBlocking()) {
+        if (e.is.blocking) {
           return false;
         }
       }
@@ -300,37 +266,50 @@ const entities = {
     return resp;
   },
   turn: function (action) {
+    // char turn
     const player = r.entities[0];
-    for (let e of r.entities) {
-      let d = [];
-      if (e.id === 0 && action === "fire") {
-        if (e.combat.range > 0) {
-          e.fire(e.targets.foes[e.targets.who]);
-        }
-        continue;
-      } else {
-        d = player.getMove(action);
-      }
-      if (e.id !== 0 && e.isMobile()) {
-        if (e.isVisible()) {
-          d = e.assaultMove();
+    let d = [];
+    switch (action) {
+      case "loot":
+      case "eat":
+      case "heal":
+      case "fire":
+        player[action]();
+        break;
+      case "skip":
+        break;
+      default:
+        d = player.getDirection(action);
+        if (player.canMove(d[0], d[1])) {
+          player.move(d[0], d[1]);
         } else {
-          d = e.getMove(lib.randomAction());
-        }
-      }
-      const dx = d[0];
-      const dy = d[1];
-      if (e.canMove(dx, dy)) {
-        e.move(dx, dy);
-      } else if (e.id === 0 && action !== "skip") { //skip avoid self-harm
-        const targetX = player.pos.x + dx;
-        const targetY = player.pos.y + dy;
-        const foes = this.atPoint(targetX, targetY);//[0];
-        for (let f of foes) {
-          if (f !== undefined && f.isCombatant()) { // avoid walls and corpses
-            e.melee(f);
+          const targetX = player.pos.x + d[0];
+          const targetY = player.pos.y + d[1];
+          if (r.map[targetX][targetY].walkable) {
+            const foes = this.atPoint(targetX, targetY);
+            for (let f of foes) {
+              if (f.is.combatant) {
+                player.melee(f);
+              }
+            }
           }
         }
+    }
+    // entities turn
+    for (let e of r.entities) {
+      if (e.id === 0) {
+        continue;
+      }
+      let d = [];
+      if (e.is.mobile) {
+        if (e.isInPlayerLOS()) {
+          d = e.assaultMove();
+        } else {
+          d = e.getDirection(lib.randomAction());
+        }
+      }
+      if (e.canMove(d[0], d[1])) {
+        e.move(d[0], d[1]);
       }
     }
   },

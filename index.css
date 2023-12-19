@@ -107,13 +107,11 @@ section#playZone .player, .inventory, .loot, .selected {
 section#playZone .loot {
   margin-top: 10px;
   border: 1px solid rebeccapurple;
-
 }
-
 
 section#playZone .right .history {
   text-align: left;
-  font-size: 0.75em;
+  font-size: 0.80em;
   position: fixed;
   padding: 5px;
   bottom: 2em;

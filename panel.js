@@ -34,7 +34,7 @@ const panel = {
   stats: function () {
     const health = player.combat.hp + "/" + player.combat.maxHp;
     document.getElementById("hp").innerHTML = health;
-    document.getElementById("melee").innerHTML = "6 + " + (player.combat.melee - 6) + " = " + player.combat.melee;
+    document.getElementById("melee").innerHTML = player.combat.melee;
     document.getElementById("range").innerHTML = player.combat.range;
     document.getElementById("defence").innerHTML = player.combat.defence;
   },
@@ -46,17 +46,17 @@ const panel = {
     document.getElementById("i-medical").innerHTML = i.medical;
     let text = "unarmed";
     if (e.melee !== undefined) {
-      text = e.melee.data.name; //+ " " + e.melee.data.melee;
+      text = e.melee.data.name;
     }
     document.getElementById("i-melee").innerHTML = text;
     text = "-";
     if (e.range !== undefined) {
-      text = e.range.data.name + "(F)";//+ " " + e.range.data.range;
+      text = e.range.data.name + "(F)";
     }
     document.getElementById("i-range").innerHTML = text;
     text = "-";
     if (e.body !== undefined) {
-      text = e.body.data.name; //+ " " + e.body.data.defence;
+      text = e.body.data.name;
     }
     document.getElementById("i-body").innerHTML = text;
     document.getElementById("i-head").innerHTML = "-";

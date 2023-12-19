@@ -63,7 +63,7 @@ const draw = {
         const char = aux.mapSymbol(tile.terrain);
         if (tile.visible) {
           this.tile(x, y, char, "visible");
-        } else if (tile.explored && !tile.visible) {
+        } else if (tile.explored) {
           this.tile(x, y, char, "explored");
         }
       }
@@ -71,20 +71,21 @@ const draw = {
   },
   entities: function () {
     for (let e of r.entities) {
-      if (e.id !== 0) {
-        const posX = e.pos.x - cam.x + K.DELTA_X;
-        const posY = e.pos.y - cam.y + K.DELTA_Y;
-        const tile = r.map[e.pos.x][e.pos.y];
-        if (tile.visible) {
-          let char = aux.mapSymbol(e.type);
-          let color = e.type;
-          if (e.isItem() && e.is.visible) {
-            color = "item";
-            char = aux.mapSymbol("item");
-          }
-          this.clearTile(posX, posY);
-          this.tile(posX, posY, char, color);
+      if (e.id === 0) {
+        continue;
+      }
+      const posX = e.pos.x - cam.x + K.DELTA_X;
+      const posY = e.pos.y - cam.y + K.DELTA_Y;
+      const tile = r.map[e.pos.x][e.pos.y];
+      if (tile.visible) {
+        let char = aux.mapSymbol(e.type);
+        let color = e.type;
+        if (e.is.item) {
+          color = "item";
+          char = aux.mapSymbol("item");
         }
+        this.clearTile(posX, posY);
+        this.tile(posX, posY, char, color);
       }
     }
     this.player();
@@ -99,7 +100,7 @@ const draw = {
   tile: function (x, y, char, color) {
     ctx.fillStyle = aux.colorOfEntity(color);
     ctx.textAlign = "center";
-    ctx.fillText(char, x * K.PPP + textOffset / 2, y * K.PPP + textOffset /*/ 2*/);
+    ctx.fillText(char, x * K.PPP + textOffset / 2, y * K.PPP + textOffset);
   },
   clearAll: function () {
     ctx.clearRect(0, 0, K.WINDOW_WIDTH, K.WINDOW_HEIGHT);
@@ -114,8 +115,7 @@ const draw = {
     x = t.foes[t.who].pos.x;
     y = t.foes[t.who].pos.y;
     ctx.strokeStyle = "lightgreen";
-    ctx.strokeRect((x - cam.x) * K.PPP, (y - cam.y) * K.PPP /*- textOffset*/
-      , K.PPP, K.PPP);
+    ctx.strokeRect((x - cam.x) * K.PPP, (y - cam.y) * K.PPP, K.PPP, K.PPP);
   },
 };
 
@@ -155,6 +155,6 @@ const colors = new Map([
   ["rat", "DeepPink"],
   ["mole rat", "DeepPink"],
   ["item", "orange"],
-  ["exit", "yellow"]
+  ["exit", "yellow"],
 ]);
 

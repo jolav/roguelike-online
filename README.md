@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.4-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.5-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  

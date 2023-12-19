@@ -29,27 +29,23 @@ const r = {
   },
   newTurn: function (action) {
     const player = r.entities[0];
-    const endTurnActions = ["up", "down", "left", "right", "skip", "fire"];
-    if (!endTurnActions.includes(action)) {
+    const notConsumingTurnActions = ["selectFoe"];
+    if (notConsumingTurnActions.includes(action)) {
       player[action]();
       this.draw();
-      if (this.gameOver.status) {
-        gameOver();
-      }
       return;
     }
-    this.turn++;
-    this.date = lib.currentDate(this.turn);
     es.turn(action);
     fov.playerLOS();
     this.draw();
+    this.turn++;
+    this.date = lib.currentDate(this.turn);
     if (this.gameOver.status) {
       gameOver();
     }
   },
   populateMap: function () {
-    this.entities[0] = createPlayer();
-    this.counter++;
+    character.create();
     foes.create();
     items.create();
     createExit();
@@ -63,17 +59,18 @@ const r = {
 
 const foes = {
   create: function () {
+    let foes = 0;
     for (let tries = 0; tries < K.FOES_TRIES; tries++) {
       let pos = aux.randomEmptyPoint();
       if (pos !== undefined) {
-        const foe = new e(r.counter, foes.type(), pos, true, true, true, false);
-        if (foe.isCombatant()) {
-          this.combatStats(foe);
-        }
+        const foe = new e(r.counter, this.type(), pos, true, true, true, false);
+        this.combatStats(foe);
         r.entities[r.counter] = foe;
         r.counter++;
+        foes++;
+        //console.log(JSON.stringify(foe, null, 2));
       }
-      if (r.counter >= K.MAX_FOES) {
+      if (foes >= K.MAX_FOES) {
         return;
       }
     }
@@ -98,6 +95,7 @@ const foes = {
         break;
     }
     foe.is = {
+      ...foe.is,
       lootable: false
     };
     foe.combat = {
@@ -114,20 +112,21 @@ const items = {
   create: function () {
     let items = 0;
     for (let tries = 0; tries < K.ITEMS_TRIES; tries++) {
-      let p = aux.randomEmptyPoint();
-      if (p !== undefined) {
-        const item = new e(r.counter, this.getType(), p, false, false, false, true);
-        this.takeItemStats(item);
+      let pos = aux.randomEmptyPoint();
+      if (pos !== undefined) {
+        const item = new e(r.counter, this.type(), pos, false, false, false, true);
+        this.itemStats(item);
         r.entities[r.counter] = item;
         r.counter++;
         items++;
+        //console.log(JSON.stringify(item, null, 2));
       }
       if (items >= K.MAX_ITEMS) {
         return;
       }
     }
   },
-  getType: function () {
+  type: function () {
     const odds = lib.randomInt(1, 10);
     switch (odds) {
       case 1:
@@ -148,9 +147,9 @@ const items = {
         return "body";
     }
   },
-  takeItemStats: function (item) {
+  itemStats: function (item) {
     item.is = {
-      visible: true,
+      ...item.is,
       lootable: true,
       consumable: false,
       equippable: false,
@@ -172,12 +171,12 @@ const items = {
         break;
       case "firearm":
         item.data.name = "Pistol 9mm";
-        item.data.range = 6 + lib.randomInt(1, 4);
+        item.data.range = 4 + lib.randomInt(1, 4);
         item.is.equippable = true;
         break;
       case "melee":
         item.data.name = "Baseball Bat";
-        item.data.melee = 8 + lib.randomInt(1, 4);
+        item.data.melee = 6 + lib.randomInt(1, 4);
         item.is.equippable = true;
         break;
       case "body":
@@ -185,46 +184,47 @@ const items = {
         item.data.defence = 2 + lib.randomInt(1, 4);
         item.is.equippable = true;
     }
-    //console.log(JSON.stringify(item));
   }
 };
 
-function createPlayer() {
-  const pos = aux.randomEmptyPoint();
-  const player = new e(r.counter, "player", pos, true, true, true, false);
-  const stats = [180, 200, 6, 0, 0];
-  player.combat = {
-    hp: stats[0],
-    maxHp: stats[1],
-    melee: stats[2],
-    range: stats[3],
-    defence: stats[4],
-  };
-  player.inventory = {
-    food: 0,
-    supply: 0,
-    medical: 0
-  };
-  player.equipment = {
-    head: undefined,
-    body: undefined,
-    melee: undefined,
-    range: undefined,
-  };
-  player.targets = {
-    when: r.turn - 1,
-    who: -1,
-    foes: [],
-  };
-  //console.log(JSON.stringify(player, null, 2));
-  return player;
-}
+const character = {
+  create: function () {
+    const pos = aux.randomEmptyPoint();
+    const player = new e(r.counter, "player", pos, true, true, true, false);
+    const stats = [180, 200, 4, 0, 0];
+    player.combat = {
+      hp: stats[0],
+      maxHp: stats[1],
+      melee: stats[2],
+      range: stats[3],
+      defence: stats[4],
+    };
+    player.inventory = {
+      food: 0,
+      supply: 0,
+      medical: 0
+    };
+    player.equipment = {
+      head: undefined,
+      body: undefined,
+      melee: undefined,
+      range: undefined,
+    };
+    player.targets = {
+      when: r.turn - 1,
+      who: -1,
+      foes: [],
+    };
+    //console.log(JSON.stringify(player, null, 2));
+    r.entities[0] = player;
+    r.counter++;
+  }
+};
 
 function createExit() {
   const pos = aux.randomEmptyPoint();
   const item = new e(r.counter, "exit", pos, false, false, false, true);
   item.is = {
-    visible: false,
     lootable: false,
     consumable: false,
     equippable: false,
@@ -259,12 +259,9 @@ const aux = {
       let x = lib.randomInt(2, K.MAP_X - 2);
       let y = lib.randomInt(2, K.MAP_Y - 2);
       if (r.map[x][y].walkable) {
-        if (es.isPointFreeOfBlockingEntities(x, y)); {
-          const resp = es.atPoint(x, y);
-          if (resp.length === 0) {
-            p = { x, y };
-            found = true;
-          }
+        if (es.atPoint(x, y).length === 0) {
+          p = { x, y };
+          found = true;
         }
       }
       tries++;
