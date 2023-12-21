@@ -9,12 +9,6 @@ body {
   text-align: justify;
 }
 
-
-@font-face {
-  font-family: 'PressStart2P';
-  src: url(./_public/fonts/PressStart2P.ttf);
-}
-
 @font-face {
   font-family: 'VarelaRound';
   src: url(./_public/fonts/VarelaRound.ttf);

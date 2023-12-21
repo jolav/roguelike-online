@@ -2,9 +2,8 @@
 
 console.log('Loading.....index.js');
 
-import { r } from "./run.js";
-import { actionKey } from "./controls.js";
-import { K } from "./_config.js";
+import { C } from "./_config.js";
+import { ask } from "./ask.js";
 
 const init = {
   mode: "online",
@@ -14,25 +13,20 @@ const init = {
     console.log('#### INIT #####');
     document.getElementById("intro").style.display = "block";
     document.getElementById("playZone").style.display = "none";
-    document.getElementById("versionIntro").innerHTML = K.VERSION;
+    ask.init(function () {
+      document.getElementById("versionIntro").innerHTML = C.VERSION;
+    });
     document.getElementById("newGame").addEventListener("click", init.play);
     if (init.mode === "dev") { // auto start in dev mode
-      init.play();
+      //init.play();
     }
   },
 
   play: function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("playZone").style.display = "block";
-    document.getElementById("versionPanel").innerHTML = K.VERSION;
+    document.getElementById("versionPanel").innerHTML = C.VERSION;
     document.body.style.overflow = "hidden";
-    r.start();
-    window.addEventListener('keydown', function (e) {
-      const action = actionKey(e);
-      if (action !== undefined) {
-        r.newTurn(action);
-      }
-    });
   },
 
   init: function () {
