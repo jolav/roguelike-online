@@ -2,8 +2,8 @@
 
 body {
   font-family: 'NotoSansMonoMedium', 'VarelaRound', sans-serif;
-  background-color: rgba(24, 24, 24);
-  color: rgba(255, 255, 255);
+  background-color: #181818;
+  color: #ffffff;
   font-size: 1em;
   line-height: 1.2;
   text-align: justify;
@@ -37,7 +37,7 @@ section#intro header {
 }
 
 section#intro #newGame {
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 2em;
   color: #454545;
   padding: 5px 15px;
@@ -52,7 +52,7 @@ section#intro .buttons {
 
 section#intro #newGame:hover {
   background-color: #454545;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -70,7 +70,8 @@ section#playZone {
 }
 
 section#playZone #canvas {
-  /*border: 1px solid #bbbbbb;*/
+  border: 1px solid #464646;
+  border: 1px solid #ffffff;
 }
 
 /* Flex Layout */
@@ -85,7 +86,7 @@ section#playZone .column {
 
 section#playZone .right {
   font-size: 0.80em;
-  width: 200px;
+  width: 250px;
   text-align: center;
 }
 

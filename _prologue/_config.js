@@ -2,15 +2,34 @@
 
 console.log('Loading....._config.js');
 
-let C = {
-  VERSION: 0
+const C = {
+  VERSION: 0,
+  MS_PER_TURN: 0,
+  // Render
+  RENDER_TYPE: 0, // 0 = ASCII
+  CANVAS_NAME: "canvas",
+  PPP: 24,
+  FONT: "VarelaRound",//"NotoSansMonoMedium",
+  // Camera dimensions
+  CAM_PIXELS_X: window.innerWidth - 300,
+  CAM_PIXELS_Y: window.innerHeight - 15,
+  CAM_COLS: undefined,
+  CAM_ROWS: undefined,
+  CAM_DELTA_X: undefined,
+  CAM_DELTA_Y: undefined,
+  // Game
+  INIT_DATE: new Date("2097-08-29 02:14:00"),
 };
 
-(function autoUpdateK() {
-  //console.log('Autoupdate');
+(function autoUpdateC() {
+  C.CAM_COLS = Math.floor(C.CAM_PIXELS_X / C.PPP);
+  C.CAM_ROWS = Math.floor(C.CAM_PIXELS_Y / C.PPP);
+  C.CAM_DELTA_X = Math.floor((C.CAM_PIXELS_X - (C.CAM_COLS * C.PPP)) / 2);
+  C.CAM_DELTA_Y = Math.floor((C.CAM_PIXELS_Y - (C.CAM_ROWS * C.PPP)) / 2);
+  //console.log(JSON.stringify(C, null, 2));
 })();
 
-const aux = {
+const lib = {
   sleep: function (ms) {
     return new Promise(function (resolve) {
       setTimeout(resolve, ms);
@@ -19,9 +38,13 @@ const aux = {
   randomInt: function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
+  currentDate: function (turn) {
+    return new Date(C.INIT_DATE.getTime() + C.MS_PER_TURN * turn);
+  },
 };
 
 export {
   C,
-  aux,
+  lib,
 };
+

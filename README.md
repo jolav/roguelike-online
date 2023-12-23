@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.0-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -19,7 +19,7 @@
 ## PROLOGUE 0.1.0 MILESTONE 
 
 - [X] **Setting Up**  
-- [ ] **Moving around @**  
+- [X] **Moving around @**  
 - [ ] **Render Basic Map**   
 - [ ] **Camera**  
 - [ ] **Field of View**  
@@ -37,7 +37,7 @@
 - [ ] **Directional FOV**  
 - [ ] **Tilesets as well as ascii**  
 - [ ] **Sound effects**  
-- [ ] **Turn counter**  
+- [X] **Turn counter**  
 - [ ] **Show PJ position**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
