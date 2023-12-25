@@ -9,6 +9,7 @@ class Player {
     this.id = id;
     this.type = "player";
     this.pos = { x: 10, y: 10 };
+    this.last = this.pos;
     const stats = [180, 200, 4, 0, 0];
     this.combat = {
       hp: stats[0],
@@ -39,6 +40,7 @@ class Player {
         target.x--;
         break;
     }
+    this.last = this.pos;
     this.pos = target;
   }
 }

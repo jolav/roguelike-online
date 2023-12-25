@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.1-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.1.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -47,7 +47,9 @@
 - [ ] **dummy items**  
 - [ ] **food from animal corpse takes time**  
 - [ ] **slow computer turn with animations**  
-- [ ] **move/attack animations**  
+- [X] **move animations**  
+- [ ] **attack melee animations**  
+- [ ] **ranged combat animations**  
 - [ ] **damage tooltips**  
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **select system to f-arrows_for_select-f**  

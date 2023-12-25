@@ -9,6 +9,8 @@ const C = {
   RENDER_TYPE: 0, // 0 = ASCII
   CANVAS_NAME: "canvas",
   PPP: 24,
+  FPS: 60,
+  ANIMATION_SPEED: 2,
   FONT: "VarelaRound",//"NotoSansMonoMedium",
   // Camera dimensions
   CAM_PIXELS_X: window.innerWidth - 300,

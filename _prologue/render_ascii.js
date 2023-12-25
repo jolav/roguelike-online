@@ -2,7 +2,7 @@
 
 console.log('Loading.....render_ascii.js');
 
-import { C } from "./_config.js";
+import { C, lib } from "./_config.js";
 import { t } from "./ask.js";
 
 const canvas = document.getElementById(C.CANVAS_NAME);
@@ -18,7 +18,9 @@ ctx.font = C.PPP + "px " + C.FONT;
 function ascii() {
   draw.clearAll();
   draw.grid();
-  draw.player();
+  //draw.player();
+  //animation.player();
+  draw.playerAnimation();
 }
 
 const draw = {
@@ -47,7 +49,40 @@ const draw = {
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+  },
+  playerAnimation: async function () {
+    const x = t.pj.last.x;
+    const y = t.pj.last.y;
+    const dx = t.pj.pos.x - t.pj.last.x;
+    const dy = t.pj.pos.y - t.pj.last.y;
+    for (let i = 1; i <= C.PPP; i += C.ANIMATION_SPEED) {
+      draw.clearAll();
+      draw.grid();
+      ctx.fillStyle = "orange";
+      ctx.fillText(
+        "@",
+        (x * C.PPP) + (C.PPP / 2) + pH + i * dx,
+        (y * C.PPP) + pV + i * dy
+      );
+      await lib.sleep(1000 / C.FPS);
+    }
+
   }
+};
+
+const animation = {
+  continueAnimation: true,
+  player: function () {
+    if (animation.continueAnimation) {
+      setTimeout(function () {
+        requestAnimationFrame(animation.player);
+        // Drawing code 
+        draw.clearAll();
+        draw.grid();
+        draw.playerA();
+      }, 1000 / C.FPS);
+    }
+  },
 };
 
 export {
