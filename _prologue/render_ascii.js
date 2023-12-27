@@ -18,12 +18,30 @@ ctx.font = C.PPP + "px " + C.FONT;
 function ascii() {
   draw.clearAll();
   draw.grid();
-  //draw.player();
-  //animation.player();
-  draw.playerAnimation();
+  draw.map();
+  draw.player();
+  //draw.playerAnimation();
 }
 
 const draw = {
+  map: function () {
+    for (let x = 0; x < t.map.length; x++) {
+      for (let y = 0; y < t.map[0].length; y++) {
+        const tile = t.map[x][y];
+        const char = aux.mapSymbol(tile.terrain);
+        const color = aux.colorOfEntity("visible");
+        this.tile(x, y, char, color);
+      }
+    }
+  },
+  tile: function (x, y, char, color) {
+    ctx.fillStyle = color;
+    ctx.fillText(char, (x * C.PPP) + (C.PPP / 2) + pH, (y * C.PPP) + pV);
+  },
+  clearTile: function (x, y) {
+    ctx.clearRect(x * C.PPP, y * C.PPP + pV, C.PPP, C.PPP);
+    ctx.beginPath();
+  },
   grid: function () {
     const pH = C.CAM_DELTA_X; // padding vertical
     const pV = C.CAM_DELTA_Y; // padding horizontal
@@ -40,15 +58,16 @@ const draw = {
     //ctx.strokeStyle = "#fff";
     ctx.stroke();
   },
-  player: function () {
-    const x = t.pj.pos.x;
-    const y = t.pj.pos.y;
-    ctx.fillStyle = "orange";
-    ctx.fillText("@", (x * C.PPP) + (C.PPP / 2) + pH, (y * C.PPP) + pV);
-  },
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+  },
+  player: function () {
+    const x = t.pj.pos.x;
+    const y = t.pj.pos.y;
+    this.clearTile(x, y);
+    ctx.fillStyle = "orange";
+    ctx.fillText("@", (x * C.PPP) + (C.PPP / 2) + pH, (y * C.PPP) + pV);
   },
   playerAnimation: async function () {
     const x = t.pj.last.x;
@@ -58,6 +77,7 @@ const draw = {
     for (let i = 1; i <= C.PPP; i += C.ANIMATION_SPEED) {
       draw.clearAll();
       draw.grid();
+      draw.map();
       ctx.fillStyle = "orange";
       ctx.fillText(
         "@",
@@ -66,24 +86,45 @@ const draw = {
       );
       await lib.sleep(1000 / C.FPS);
     }
-
+    this.clearTile(x + dx, y + dy);
+    this.player(x + dx, y + dy);
   }
 };
 
-const animation = {
-  continueAnimation: true,
-  player: function () {
-    if (animation.continueAnimation) {
-      setTimeout(function () {
-        requestAnimationFrame(animation.player);
-        // Drawing code 
-        draw.clearAll();
-        draw.grid();
-        draw.playerA();
-      }, 1000 / C.FPS);
+const aux = {
+  mapSymbol: function (symbol) {
+    if (symbol.slice(0, 9) === "corpse of") {
+      return String.fromCharCode(legend.get(symbol.slice(0, 9)));
     }
+    return String.fromCharCode(legend.get(symbol));
+  },
+  colorOfEntity: function (entity) {
+    const color = colors.get(entity);
+    return color;
   },
 };
+
+const legend = new Map([
+  ["floor", 183],   // middleDot 183 or normal point 46
+  ["wall", 35],     // #
+  ["-", 0],
+  ["player", 64],   // @
+  ["rat", 114],     // r
+  ["mole rat", 82], // R
+  ["corpse of", 37],    // %
+  ["item", 63],    // ?
+  ["exit", 60], // <
+]);
+
+const colors = new Map([
+  ["player", "burlywood"],
+  ["visible", "#fff"],
+  ["explored", "#454545"],
+  ["rat", "DeepPink"],
+  ["mole rat", "DeepPink"],
+  ["item", "orange"],
+  ["exit", "yellow"],
+]);
 
 export {
   ascii,

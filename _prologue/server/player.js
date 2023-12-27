@@ -1,6 +1,8 @@
 /* */
 
-console.log('Loading....../server/player.js');
+console.log('Loading...../server/player.js');
+
+import { r } from "./run.js";
 
 const moveActions = ["UP", "DOWN", "RIGHT", "LEFT"];
 
@@ -10,6 +12,7 @@ class Player {
     this.type = "player";
     this.pos = { x: 10, y: 10 };
     this.last = this.pos;
+    this.turnDone = false;
     const stats = [180, 200, 4, 0, 0];
     this.combat = {
       hp: stats[0],
@@ -21,10 +24,10 @@ class Player {
   }
   takeAction(action) {
     if (moveActions.includes(action)) {
-      this.move(action);
+      this.wantMove(action);
     }
   }
-  move(action) {
+  wantMove(action) {
     const target = { x: this.pos.x, y: this.pos.y };
     switch (action) {
       case "UP":
@@ -40,8 +43,18 @@ class Player {
         target.x--;
         break;
     }
-    this.last = this.pos;
-    this.pos = target;
+    if (this.canMove(target)) {
+      this.last = this.pos;
+      this.pos = target;
+      this.actionDone = true;
+    }
+  }
+  canMove(target) {
+    const tile = r.map[target.x][target.y];
+    if (tile.walkable) {
+      return true;
+    }
+    return false;
   }
 }
 

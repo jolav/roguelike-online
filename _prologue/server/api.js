@@ -16,27 +16,23 @@ const api = {
   version: function () {
     return data.version;
   },
-  run: function () {
+  run: function (cam) {
     r.start();
-    newRun();
+    prepareDataForTheClient(cam);
     return data;
   },
-  turn: function (action) {
+  turn: function (action, cam) {
     r.oneMoreTurn(action);
-    updateTurn();
+    prepareDataForTheClient(cam);
     //console.log(JSON.stringify(data, null, 2));
     return data;
   }
 };
 
-function newRun() {
+function prepareDataForTheClient(cam) {
   data.pj = r.pj;
   data.turn = r.turn;
-}
-
-function updateTurn() {
-  data.pj = r.pj;
-  data.turn = r.turn;
+  data.map = r.map;
 }
 
 export {

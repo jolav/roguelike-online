@@ -20,11 +20,18 @@ const ask = {
   run: async function () {
     const delay = lib.randomInt(100, 200) + 150;
     await lib.sleep(delay);
-    t = api.run();
+    const cam = {
+      cols: C.CAM_COLS,
+      rows: C.CAM_ROWS
+    };
+    t = api.run(cam);
     C.MS_PER_TURN = t.msPerTurn;
     render.ascii();
     panel.update();
     window.addEventListener('keydown', function (e) {
+      if (e.repeat) {
+        //return;
+      }
       const action = actionKey(e);
       if (action !== undefined) {
         ask.turn(action);
@@ -35,7 +42,11 @@ const ask = {
   turn: async function (action) {
     const delay = lib.randomInt(100, 200) + 150;
     await lib.sleep(delay);
-    t = api.turn(action);
+    const cam = {
+      cols: C.CAM_COLS,
+      rows: C.CAM_ROWS
+    };
+    t = api.turn(action, cam);
     render.ascii();
     panel.update();
     //console.log(JSON.stringify(t, null, 2));

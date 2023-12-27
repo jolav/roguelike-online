@@ -3,11 +3,15 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.1.1",
+  VERSION: "0.0.2",
   MS_PER_TURN: 1000,
+  TRIES: 1000,
   // Render
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
+  // Map
+  COLS: 39,
+  ROWS: 24,
 };
 
 export {
