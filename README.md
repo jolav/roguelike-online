@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.2-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.3-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -21,7 +21,7 @@
 - [X] **Setting Up**  
 - [X] **Moving around @**  
 - [X] **Render Basic Map**   
-- [ ] **Camera**  
+- [X] **Camera**  
 - [ ] **Field of View**  
 - [ ] **Generating Vault**  
 - [ ] **Placing Enemies**  
@@ -38,7 +38,7 @@
 - [ ] **Tilesets as well as ascii**  
 - [ ] **Sound effects**  
 - [X] **Turn counter**  
-- [ ] **Show PJ position**  
+- [X] **Show PJ position**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **Improving enemy IA**  
@@ -47,7 +47,7 @@
 - [ ] **dummy items**  
 - [ ] **food from animal corpse takes time**  
 - [ ] **slow computer turn with animations**  
-- [X] **move animations**  
+- [ ] **move animations**  
 - [ ] **on key pressed down ,animation with constant speed**  
 - [ ] **attack melee animations**  
 - [ ] **ranged combat animations**  

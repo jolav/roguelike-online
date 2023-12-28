@@ -25,9 +25,9 @@ const r = {
     this.pj = new Player(this.counter);
     this.counter++;
   },
-  oneMoreTurn: function (action) {
+  oneMoreTurn: function () {
     this.pj.actionDone = false;
-    this.pj.takeAction(action);
+    this.pj.takeAction();
     if (!this.pj.actionDone) {
       return;
     }

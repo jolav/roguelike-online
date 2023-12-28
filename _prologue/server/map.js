@@ -43,9 +43,9 @@ const vault = {
     return this.map;
   },
   fillMapWithWalls: function () {
-    for (let x = 0; x < K.COLS; x++) {
+    for (let x = 0; x < K.MAP_COLS; x++) {
       this.map[x] = [];
-      for (let y = 0; y < K.ROWS; y++) {
+      for (let y = 0; y < K.MAP_ROWS; y++) {
         const terrain = "wall";
         this.map[x].push(
           new Tile(terrain)
@@ -54,9 +54,9 @@ const vault = {
     }
   },
   cleanRoom: function () {
-    for (let x = 0; x < K.COLS; x++) {
-      for (let y = 0; y < K.ROWS; y++) {
-        if (x !== 0 && y !== 0 && x !== K.COLS - 1 && y !== K.ROWS - 1) {
+    for (let x = 0; x < K.MAP_COLS; x++) {
+      for (let y = 0; y < K.MAP_ROWS; y++) {
+        if (x !== 0 && y !== 0 && x !== K.MAP_COLS - 1 && y !== K.MAP_ROWS - 1) {
           this.map[x][y] = new Tile("floor");
         }
       }

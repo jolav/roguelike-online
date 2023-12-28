@@ -8,6 +8,7 @@ import { t } from "./ask.js";
 function update() {
   panel.version();
   panel.currentTime();
+  panel.pjPos();
 }
 
 const panel = {
@@ -19,6 +20,10 @@ const panel = {
     let bb = lib.currentDate(t.turn).toTimeString().split(" ")[0];
     document.getElementById("date").innerHTML = aa;
     document.getElementById("time").innerHTML = bb;
+  },
+  pjPos: function () {
+    document.getElementById("pjX").innerHTML = t.pj.pos.x;
+    document.getElementById("pjY").innerHTML = t.pj.pos.y;
   },
 };
 

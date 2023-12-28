@@ -3,6 +3,7 @@
 console.log('Loading...../server/player.js');
 
 import { r } from "./run.js";
+import { K } from "./_conf.js";
 
 const moveActions = ["UP", "DOWN", "RIGHT", "LEFT"];
 
@@ -10,7 +11,9 @@ class Player {
   constructor(id) {
     this.id = id;
     this.type = "player";
-    this.pos = { x: 10, y: 10 };
+    const x = Math.floor(K.MAP_COLS / 2);
+    const y = Math.floor(K.MAP_ROWS / 2);
+    this.pos = { x: x, y: y };
     this.last = this.pos;
     this.turnDone = false;
     const stats = [180, 200, 4, 0, 0];
@@ -22,7 +25,8 @@ class Player {
       defence: stats[4],
     };
   }
-  takeAction(action) {
+  takeAction() {
+    const action = K.ACTION;
     if (moveActions.includes(action)) {
       this.wantMove(action);
     }

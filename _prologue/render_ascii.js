@@ -25,9 +25,9 @@ function ascii() {
 
 const draw = {
   map: function () {
-    for (let x = 0; x < t.map.length; x++) {
-      for (let y = 0; y < t.map[0].length; y++) {
-        const tile = t.map[x][y];
+    for (let x = 0; x < t.view.length; x++) {
+      for (let y = 0; y < t.view[0].length; y++) {
+        const tile = t.view[x][y];
         const char = aux.mapSymbol(tile.terrain);
         const color = aux.colorOfEntity("visible");
         this.tile(x, y, char, color);
@@ -63,8 +63,8 @@ const draw = {
     ctx.beginPath();
   },
   player: function () {
-    const x = t.pj.pos.x;
-    const y = t.pj.pos.y;
+    const x = t.pj.pos.x - t.cam.x;
+    const y = t.pj.pos.y - t.cam.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
     ctx.fillText("@", (x * C.PPP) + (C.PPP / 2) + pH, (y * C.PPP) + pV);
