@@ -3,7 +3,7 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.3",
+  VERSION: "0.0.4",
   MS_PER_TURN: 1000,
   TRIES: 1000,
   ACTION: undefined,
@@ -11,8 +11,10 @@ const K = {
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
   // Map
-  MAP_COLS: 39,
-  MAP_ROWS: 24,
+  MAP_COLS: 50,//39,
+  MAP_ROWS: 30,//24,
+  //
+  LOS_RANGE: 12,
 };
 
 export {
@@ -59,6 +61,20 @@ const lib = {
       }
     }
     return array;
+  },
+  Point: function (x, y) {
+    this.x = x;
+    this.y = y;
+  },
+  euclideanDistance: function (p1, p2) {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  },
+  diagonalDistance: function (p1, p2) {
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    return Math.max(Math.abs(dx), Math.abs(dy));
   }
 };
 

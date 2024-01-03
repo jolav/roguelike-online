@@ -11,11 +11,14 @@ const data = {
   pj: undefined,
   turn: undefined,
   view: [],
-  cam: {
-    x: 0,
-    y: 0
-  },
+  cam: r.cam,
   receivedFromClient: function (action, cam) {
+    //Only for test make map same size as browser actual size
+    if (window.location.hostname === "localhost") {
+      K.MAP_COLS = cam.cols;
+      K.MAP_ROWS = cam.rows;
+    }
+    //
     K.ACTION = action;
     K.CAM_COLS = cam.cols;
     K.CAM_ROWS = cam.rows;
@@ -29,29 +32,17 @@ const data = {
   prepareForClient: function () {
     data.pj = r.pj;
     data.turn = r.turn;
-    data.updateView();
+    data.cam = r.cam;
+    data.view = data.updateView();
   },
   updateView: function () {
-    let x = r.pj.pos.x - Math.floor(K.CAM_COLS / 2);
-    let y = r.pj.pos.y - Math.floor(K.CAM_ROWS / 2);
-    if (x < 0) {
-      x = 0;
-    } else if (x > K.MAP_COLS - K.CAM_COLS) {
-      x = K.MAP_COLS - K.CAM_COLS;
-    }
-    if (y < 0) {
-      y = 0;
-    } else if (y > K.MAP_ROWS - K.CAM_ROWS) {
-      y = K.MAP_ROWS - K.CAM_ROWS;
-    }
-    this.cam = { x, y };
     const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
     for (let col = 0; col < K.CAM_COLS; col++) {
       for (let row = 0; row < K.CAM_ROWS; row++) {
-        view[col][row] = r.map[x + col][y + row];
+        view[col][row] = r.map[this.cam.x + col][this.cam.y + row];
       }
     }
-    this.view = view;
+    return view;
   }
 };
 

@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.3-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.4-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -22,7 +22,7 @@
 - [X] **Moving around @**  
 - [X] **Render Basic Map**   
 - [X] **Camera**  
-- [ ] **Field of View**  
+- [X] **Field of View**  
 - [ ] **Generating Vault**  
 - [ ] **Placing Enemies**  
 - [ ] **Moving Enemies**  

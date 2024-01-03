@@ -3,7 +3,7 @@
 console.log('Loading...../server/player.js');
 
 import { r } from "./run.js";
-import { K } from "./_conf.js";
+import { K, lib } from "./_conf.js";
 
 const moveActions = ["UP", "DOWN", "RIGHT", "LEFT"];
 
@@ -13,7 +13,7 @@ class Player {
     this.type = "player";
     const x = Math.floor(K.MAP_COLS / 2);
     const y = Math.floor(K.MAP_ROWS / 2);
-    this.pos = { x: x, y: y };
+    this.pos = new lib.Point(x, y);
     this.last = this.pos;
     this.turnDone = false;
     const stats = [180, 200, 4, 0, 0];
@@ -32,7 +32,7 @@ class Player {
     }
   }
   wantMove(action) {
-    const target = { x: this.pos.x, y: this.pos.y };
+    const target = new lib.Point(this.pos.x, this.pos.y);
     switch (action) {
       case "UP":
         target.y--;

@@ -2,7 +2,7 @@
 
 console.log('Loading...../server/map.js');
 
-import { K } from "./_conf.js";
+import { K, lib } from "./_conf.js";
 
 function create() {
   return vault.create();
@@ -40,6 +40,7 @@ const vault = {
   create: function name() {
     this.fillMapWithWalls();
     this.cleanRoom();
+    this.putColumns();
     return this.map;
   },
   fillMapWithWalls: function () {
@@ -59,6 +60,15 @@ const vault = {
         if (x !== 0 && y !== 0 && x !== K.MAP_COLS - 1 && y !== K.MAP_ROWS - 1) {
           this.map[x][y] = new Tile("floor");
         }
+      }
+    }
+  },
+  putColumns: function () {
+    for (let c = 0; c < 50; c++) {
+      const a = lib.randomInt(1, K.MAP_COLS - 1);
+      const b = lib.randomInt(1, K.MAP_ROWS - 1);
+      if (this.map[a][b].walkable) {
+        this.map[a][b] = new Tile("wall");
       }
     }
   }

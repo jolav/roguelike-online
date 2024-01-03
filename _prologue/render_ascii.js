@@ -29,8 +29,15 @@ const draw = {
       for (let y = 0; y < t.view[0].length; y++) {
         const tile = t.view[x][y];
         const char = aux.mapSymbol(tile.terrain);
-        const color = aux.colorOfEntity("visible");
-        this.tile(x, y, char, color);
+        let color;
+        if (tile.visible) {
+          color = aux.colorOfEntity("visible");
+        } else if (tile.explored) {
+          color = aux.colorOfEntity("explored");
+        }
+        if (color) {
+          this.tile(x, y, char, color);
+        }
       }
     }
   },
