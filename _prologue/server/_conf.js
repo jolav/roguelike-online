@@ -3,7 +3,7 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.4",
+  VERSION: "0.0.5",
   MS_PER_TURN: 1000,
   TRIES: 1000,
   ACTION: undefined,
@@ -11,10 +11,17 @@ const K = {
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
   // Map
-  MAP_COLS: 50,//39,
-  MAP_ROWS: 30,//24,
+  ROOM_TRIES: 5000,
+  MAX_ROOMS: 100,
+  MIN_SIZE_ROOM: 4,
+  MAX_SIZE_ROOM: 12,
+  MIN_LENGTH_CORRIDOR: 5,
+  MAX_LENGTH_CORRIDOR: 20,
+  CORRIDOR_ODDS: 0,
+  MAP_COLS: 116,//39,
+  MAP_ROWS: 72,//24,
   //
-  LOS_RANGE: 12,
+  LOS_RANGE: 100,
 };
 
 export {
