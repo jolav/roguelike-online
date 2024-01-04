@@ -5,7 +5,8 @@ console.log('Loading...../server/map.js');
 import { K, lib } from "./_conf.js";
 
 function create() {
-  return vault.create();
+  //return vault.create();
+  return vault2.create();
 }
 
 class Room {
@@ -68,7 +69,7 @@ const vault = {
     const rm = this.createRoomInCenter();
     this.fillRoom(rm);
     let success = 0;
-    for (let tries = 1; tries < K.ROOM_TRIES; tries++) {
+    for (let tries = 1; tries < K.TRIES; tries++) {
       const w = this.pickRandomWallFromAnyRoom();
       const f = this.pickRandomFeature();
       const rm = this.convertFeatureToRoom(w, f);
@@ -79,7 +80,7 @@ const vault = {
           success++;
         }
         if (success >= K.MAX_ROOMS) {
-          tries = K.ROOM_TRIES;
+          tries = K.TRIES;
         }
       }
     }
@@ -97,7 +98,7 @@ const vault = {
     let found = false;
     let limit = 0;
     const w = new Wall(0, 0, 0, "");
-    while (!found && limit < K.ROOM_TRIES) {
+    while (!found && limit < K.TRIES) {
       w.x = lib.randomInt(4, K.MAP_COLS - 5);
       w.y = lib.randomInt(4, K.MAP_ROWS - 5);
       if (!this.map[w.x][w.y].walkable) {
@@ -226,7 +227,7 @@ const vault2 = { // one big room
   create: function name() {
     this.fillMapWithWalls();
     this.cleanRoom();
-    this.putColumns();
+    this.putColumns(20);
     return this.map;
   },
   fillMapWithWalls: function () {
@@ -249,8 +250,8 @@ const vault2 = { // one big room
       }
     }
   },
-  putColumns: function () {
-    for (let c = 0; c < 50; c++) {
+  putColumns: function (many) {
+    for (let c = 0; c < many; c++) {
       const a = lib.randomInt(1, K.MAP_COLS - 1);
       const b = lib.randomInt(1, K.MAP_ROWS - 1);
       if (this.map[a][b].walkable) {

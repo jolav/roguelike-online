@@ -4,6 +4,7 @@ console.log('Loading...../server/player.js');
 
 import { r } from "./run.js";
 import { K, lib } from "./_conf.js";
+import { npcs } from "./npc.js";
 
 const moveActions = ["UP", "DOWN", "RIGHT", "LEFT"];
 
@@ -55,6 +56,9 @@ class Player {
   }
   canMove(target) {
     const tile = r.map[target.x][target.y];
+    if (npcs.atPoint(target).length > 0) {
+      return false;
+    }
     if (tile.walkable) {
       return true;
     }

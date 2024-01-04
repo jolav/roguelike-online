@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.5-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.6-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -24,7 +24,7 @@
 - [X] **Camera**  
 - [X] **Field of View**  
 - [X] **Generating Vault**  
-- [ ] **Placing Enemies**  
+- [X] **Placing Enemies**  
 - [ ] **Moving Enemies**  
 - [ ] **Melee**  
 - [ ] **Creating UI**  
@@ -82,6 +82,7 @@
 - [ ] **mark visited items using visited tiles**   
 - [ ] **new terrain type = rock**  
 - [ ] **array with rooms**  
+- [ ] **playerLOS instead of cam size inside (fors) for server calculations**  
 
 ## **Acknowledgment**
 

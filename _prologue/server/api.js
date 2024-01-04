@@ -4,6 +4,7 @@ console.log('Loading...../server/api.js');
 
 import { K, lib } from "./_conf.js";
 import { r } from "./run.js";
+import { npcs } from "./npc.js";
 
 const data = {
   version: K.VERSION,
@@ -11,6 +12,7 @@ const data = {
   pj: undefined,
   turn: undefined,
   view: [],
+  npcs: [],
   cam: r.cam,
   receivedFromClient: function (action, cam) {
     //Only for test make map same size as browser actual size
@@ -34,6 +36,7 @@ const data = {
     data.turn = r.turn;
     data.cam = r.cam;
     data.view = data.updateView();
+    data.npcs = data.updateNpcs();
   },
   updateView: function () {
     const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
@@ -43,6 +46,26 @@ const data = {
       }
     }
     return view;
+  },
+  updateNpcs: function () {
+    const result = [];
+    for (let col = 0; col < K.CAM_COLS; col++) {
+      for (let row = 0; row < K.CAM_ROWS; row++) {
+        const candidates = npcs.atPoint({
+          x: this.cam.x + col,
+          y: this.cam.y + row,
+        });
+        if (candidates.length === 1) {
+          const tile = r.map[candidates[0].pos.x][candidates[0].pos.y];
+          if (tile.visible) {
+            result.push(candidates[0]);
+          }
+        } else if (candidates.length > 1) {
+          console.log('ALERT, ALERT', candidates);
+        }
+      }
+    }
+    return result;
   }
 };
 
@@ -54,14 +77,12 @@ const api = {
     data.receivedFromClient(undefined, cam);
     r.start();
     data.prepareForClient();
-    //console.log(data.view[0][0]);
     return data;
   },
   turn: function (action, cam) {
     data.receivedFromClient(action, cam);
     r.oneMoreTurn();
     data.prepareForClient();
-    //console.log(JSON.stringify(data, null, 2));
     return data;
   }
 };

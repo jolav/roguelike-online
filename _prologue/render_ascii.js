@@ -19,6 +19,7 @@ function ascii() {
   draw.clearAll();
   draw.grid();
   draw.map();
+  draw.npcs();
   draw.player();
   //draw.playerAnimation();
 }
@@ -68,6 +69,16 @@ const draw = {
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+  },
+  npcs: function () {
+    for (let npc of t.npcs) {
+      const x = npc.pos.x - t.cam.x;
+      const y = npc.pos.y - t.cam.y;
+      const char = aux.mapSymbol(npc.type);
+      const color = aux.colorOfEntity(npc.type);
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
   },
   player: function () {
     const x = t.pj.pos.x - t.cam.x;

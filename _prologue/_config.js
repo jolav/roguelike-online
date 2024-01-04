@@ -8,7 +8,7 @@ const C = {
   // Render
   RENDER_TYPE: 0, // 0 = ASCII
   CANVAS_NAME: "canvas",
-  PPP: 8,
+  PPP: 24,
   FPS: 60,
   ANIMATION_SPEED: 2,
   FONT: "VarelaRound",//"NotoSansMonoMedium",

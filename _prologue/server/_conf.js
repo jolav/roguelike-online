@@ -3,15 +3,14 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.5",
+  VERSION: "0.0.6",
   MS_PER_TURN: 1000,
-  TRIES: 1000,
+  TRIES: 5000,
   ACTION: undefined,
   // Render
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
   // Map
-  ROOM_TRIES: 5000,
   MAX_ROOMS: 100,
   MIN_SIZE_ROOM: 4,
   MAX_SIZE_ROOM: 12,
@@ -22,6 +21,9 @@ const K = {
   MAP_ROWS: 72,//24,
   //
   LOS_RANGE: 100,
+  // Npc
+  MAX_NPCS: 10,
+  MAX_ITEMS: 120,
 };
 
 export {
@@ -82,6 +84,6 @@ const lib = {
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
     return Math.max(Math.abs(dx), Math.abs(dy));
-  }
+  },
 };
 
