@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.7-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.8-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -26,7 +26,7 @@
 - [X] **Generating Vault**  
 - [X] **Placing Enemies**  
 - [X] **Moving Enemies**  
-- [ ] **Melee**  
+- [X] **Melee**  
 - [ ] **Creating UI**  
 - [ ] **Inventory and items**  
 - [ ] **Ranged Combat**  
@@ -41,7 +41,7 @@
 - [X] **Show PJ position**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
-- [ ] **Improving enemy IA**  
+- [ ] **Improving enemy IA ,options2 not working**  
 - [ ] **better fov and select showing path**  
 - [ ] **each entity different LOS radius**  
 - [ ] **dummy items**  
@@ -59,6 +59,7 @@
 - [ ] **character stats, skills amd tricks**  
 - [ ] **minigames open lock, sudoku, hacking**  
 - [ ] **lights, ilumination**  
+- [ ] **simulate nuclear shelter collapse**  
 - MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
@@ -77,12 +78,14 @@
 - [ ] **Put pillars in large rooms**  
 - [ ] **add furniture**  
 - [ ] **open/close doors**  
-- [ ] **4 vault levels ? basements ? attics ?**  
+- [ ] **4 nuclear shelter levels ? basements ? attics ?**  
 - [ ] **render order, tiles-items-foes-player**  
 - [ ] **mark visited items using visited tiles**   
 - [ ] **new terrain type = rock**  
 - [ ] **array with rooms**  
 - [ ] **playerLOS instead of cam size inside (fors) for server calculations**  
+- BUGS   
+- [ ] **npcs dead in the same tile disappear**  
 
 ## **Acknowledgment**
 

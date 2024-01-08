@@ -3,7 +3,7 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.7",
+  VERSION: "0.0.8",
   MS_PER_TURN: 1000,
   TRIES: 500,
   ACTION: undefined,
@@ -22,7 +22,7 @@ const K = {
   //
   LOS_RANGE: 100,
   // Npc
-  MAX_NPCS: 10,
+  MAX_NPCS: 2,
   MAX_ITEMS: 120,
 };
 

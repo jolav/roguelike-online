@@ -6,7 +6,7 @@ import { lib, K } from "./_conf.js";
 import * as  player from "./player.js";
 import * as map from "./map.js";
 import * as fov from "./fov.js";
-import { npcs, createNPCs } from "./npc.js";
+import { npcs } from "./npc.js";
 
 const r = {
   nick: lib.randomNick(5, 2),
@@ -22,12 +22,12 @@ const r = {
   cam: { x: 0, y: 0 },
   npcs: [],
   //items: [],
-  //history: ["8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
+  history: ["8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
   start: function () {
     this.map = map.create();
     this.pj = player.create(this.counter);
     this.counter++;
-    this.npcs = createNPCs(r.counter);
+    this.npcs = npcs.create(r.counter);
     this.counter += this.npcs.length;
     this.cam = aux.updateCam();
     fov.get();
@@ -39,6 +39,9 @@ const r = {
       return;
     }
     npcs.turn(this.pj.pos, this.map);
+    if (this.gameOver.status) {
+      aux.gameOver();
+    }
     this.cam = aux.updateCam();
     fov.get();
     this.turn++;
@@ -61,6 +64,17 @@ const aux = {
     }
     return { x, y };
   },
+  gameOver: function () {
+    if (r.gameOver.win) {
+      console.log('THIS IS A VICTORY');
+      alert('YOU LEAVE THE VAULT');
+    }
+    if (!r.gameOver.win) {
+      console.log('THIS IS THE END');
+      alert('YOU LOSE');
+    }
+    location.reload();
+  }
 };
 
 export {

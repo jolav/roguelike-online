@@ -5,8 +5,8 @@ console.log('Loading...../server/map.js');
 import { K, lib } from "./_conf.js";
 
 function create() {
-  //return vault.create();
-  return vault2.create();
+  //return shelter.create();
+  return shelter2.create();
 }
 
 class Room {
@@ -62,7 +62,7 @@ class Tile {
   }
 }
 
-const vault = {
+const shelter = {
   map: [],
   create: function () {
     this.fillMapWithWalls();
@@ -222,7 +222,7 @@ const vault = {
   }
 };
 
-const vault2 = { // one big room
+const shelter2 = { // one big room
   map: [],
   create: function name() {
     this.fillMapWithWalls();

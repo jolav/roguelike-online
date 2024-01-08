@@ -21,6 +21,9 @@ function actionKey(e) {
     case 'A':
       action = "LEFT";
       break;
+    case 'T':
+      action = "SKIP";
+      break;
     default:
     //console.log(e.key.toUpperCase(), ' -- Not recognized event');
   }
