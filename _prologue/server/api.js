@@ -13,6 +13,7 @@ const data = {
   turn: undefined,
   view: [],
   npcs: [],
+  history: [],
   cam: r.cam,
   receivedFromClient: function (action, cam) {
     //Only for test make map same size as browser actual size
@@ -37,6 +38,7 @@ const data = {
     data.cam = r.cam;
     data.view = data.updateView();
     data.npcs = data.updateNpcs();
+    data.history = r.history;
   },
   updateView: function () {
     const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});

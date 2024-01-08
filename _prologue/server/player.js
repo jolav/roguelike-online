@@ -88,11 +88,13 @@ class Player {
     const def = target.combat.defence;
     const damage = att - def;
     if (damage > 0) {
-      const h = this.type + " deals " + damage + " damage" + "\n";
+      const h = "+ " + this.type + " deals " + damage + " damage to " + target.type + "\n";
       r.history.push(h);
       target.combat.hp -= damage;
     }
     if (target.combat.hp <= 0) {
+      const h = "+ " + target.type + " dies" + "\n";
+      r.history.push(h);
       delete target.combat;
       target.is.blocking = false;
       target.is.mobile = false;

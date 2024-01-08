@@ -3,7 +3,7 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.8",
+  VERSION: "0.0.9",
   MS_PER_TURN: 1000,
   TRIES: 500,
   ACTION: undefined,

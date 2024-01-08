@@ -117,8 +117,10 @@ const aux = {
     return String.fromCharCode(legend.get(symbol));
   },
   colorOfEntity: function (entity) {
-    const color = colors.get(entity);
-    return color;
+    if (entity.slice(0, 9) === "corpse of") {
+      return colors.get(entity.slice(10, entity.length));
+    }
+    return colors.get(entity);
   },
 };
 

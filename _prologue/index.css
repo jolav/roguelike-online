@@ -90,11 +90,7 @@ section#playZone .right {
   text-align: center;
 }
 
-section#playZone .right .pos {
-  text-align: center;
-}
-
-section#playZone .player, .inventory, .loot, .selected {
+section#playZone .player, .coord, .inventory, .loot, .selected {
   text-align: left;
   margin-left: 10px;
 }

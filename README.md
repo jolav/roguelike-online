@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.8-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.9-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -27,7 +27,7 @@
 - [X] **Placing Enemies**  
 - [X] **Moving Enemies**  
 - [X] **Melee**  
-- [ ] **Creating UI**  
+- [X] **Creating UI**  
 - [ ] **Inventory and items**  
 - [ ] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
