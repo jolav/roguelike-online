@@ -4,9 +4,13 @@ console.log('Loading...../server/player.js');
 
 import { r } from "./run.js";
 import { K, lib } from "./_conf.js";
-import { npcs } from "./npc.js";
+import { entities } from "./entities.js";
 
 const moveActions = ["UP", "DOWN", "RIGHT", "LEFT"];
+
+function create(id) {
+  return new Player(id);
+}
 
 class Player {
   constructor(id) {
@@ -16,7 +20,7 @@ class Player {
     const y = Math.floor(K.MAP_ROWS / 2);
     this.pos = new lib.Point(x, y);
     this.last = this.pos;
-    this.turnDone = false;
+    this.actionDone = false;
     const stats = [180, 200, 4, 0, 0];
     this.combat = {
       hp: stats[0],
@@ -56,10 +60,7 @@ class Player {
   }
   canMove(target) {
     const tile = r.map[target.x][target.y];
-    if (npcs.atPoint(target).length > 0) {
-      return false;
-    }
-    if (tile.walkable) {
+    if (tile.walkable && entities.isEmptyPoint(target, r.npcs)) {
       return true;
     }
     return false;
@@ -67,6 +68,6 @@ class Player {
 }
 
 export {
-  Player,
+  create,
 };
 

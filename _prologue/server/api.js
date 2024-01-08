@@ -4,7 +4,7 @@ console.log('Loading...../server/api.js');
 
 import { K, lib } from "./_conf.js";
 import { r } from "./run.js";
-import { npcs } from "./npc.js";
+import { entities } from "./entities.js";
 
 const data = {
   version: K.VERSION,
@@ -51,17 +51,18 @@ const data = {
     const result = [];
     for (let col = 0; col < K.CAM_COLS; col++) {
       for (let row = 0; row < K.CAM_ROWS; row++) {
-        const candidates = npcs.atPoint({
+        const candidates = entities.atPoint({
           x: this.cam.x + col,
           y: this.cam.y + row,
-        });
+        }, r.npcs
+        );
         if (candidates.length === 1) {
           const tile = r.map[candidates[0].pos.x][candidates[0].pos.y];
           if (tile.visible) {
             result.push(candidates[0]);
           }
         } else if (candidates.length > 1) {
-          console.log('ALERT, ALERT', candidates);
+          //console.log('ALERT, ALERT', candidates);
         }
       }
     }

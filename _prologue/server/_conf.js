@@ -3,9 +3,9 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.6",
+  VERSION: "0.0.7",
   MS_PER_TURN: 1000,
-  TRIES: 5000,
+  TRIES: 500,
   ACTION: undefined,
   // Render
   CAM_COLS: undefined,
@@ -61,6 +61,11 @@ const lib = {
     }
     return randomString;
   },
+  randomAction: function () {
+    const randomAction =
+      ["UP", "DOWN", "LEFT", "RIGHT", "SKIP", "SKIP", "SKIP", "SKIP"];
+    return randomAction[this.randomInt(0, 7)];
+  },
   initializeMultiArray: function (cols, rows, value) {
     let array = [];
     for (let i = 0; i < cols; i++) {
@@ -84,6 +89,14 @@ const lib = {
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
     return Math.max(Math.abs(dx), Math.abs(dy));
+  },
+  shuffleArray: function (a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = a[i];
+      a[i] = a[j];
+      a[j] = temp;
+    }
   },
 };
 
