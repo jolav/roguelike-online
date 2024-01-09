@@ -74,99 +74,94 @@
 
   <section id="playZone">
 
-    <div class="row">
+    <div class="column left">
+      <canvas id="canvas"></canvas>
+    </div>
 
-      <div class="column left">
-        <canvas id="canvas"></canvas>
-      </div>
+    <div class="column right">
 
+      <section id="panel">
+        <div><strong>PROLOGUE</strong>
+          <small id="versionPanel"></small>
+        </div>
 
-      <div class="column right">
+        <div class="time">
+          <label id="time">02:14:00</label>
+          <small><label id="date">29th Aug 2097</label></small>
+        </div>
+        <br>
 
-        <section id="panel">
-          <div><strong>PROLOGUE</strong>
-            <small id="versionPanel"></small>
+        <div class="player">
+          <div class="coords">Coords : [<label id="coords">0</label>]
           </div>
-
-          <div class="time">
-            <label id="time">02:14:00</label>
-            <small><label id="date">29th Aug 2097</label></small>
+          <div class="health">Health : <label id="hp">200</label>/<label id="maxHp">200</label>
           </div>
-          <br>
-
-          <div class="player">
-            <div class="coords">Coords : [<label id="coords">0</label>]
-            </div>
-            <div class="health">Health : <label id="hp">200</label>/<label id="maxHp">200</label>
-            </div>
-            <div class="melee">Melee &nbsp;: <label id="melee">Unarmed</label>
-            </div>
-            <div class="range">Range &nbsp;: <label id="range">-</label>
-            </div>
-            <div class="defence">Defence: <label id="defence">200</label>
-            </div>
+          <div class="melee">Melee &nbsp;: <label id="melee">Unarmed</label>
           </div>
-          <br>
-          <!--
-          <div class="inventory">
-            <div class="title">INVENTARY</div>
-            <div class="i1">(1)Food &nbsp;&nbsp;:
-              <label id="i-food">0</label>
-            </div>
-            <div class="i1">(-)Supply :
-              <label id="i-supply">0</label>
-            </div>
-            <div class="i1">(3)Medical:
-              <label id="i-medical">0</label>
-            </div>
-            <div class="i1">(-)Melee:
-              <label id="i-melee">Unarmed</label>
-            </div>
-            <div class="i1">(R)Range:
-              <label id="i-range">-</label>
-            </div>
-            <div class="i1">(-)Head&nbsp;:
-              <label id="i-head">-</label>
-            </div>
-            <div class="i1">(-)Body&nbsp;:
-              <label id="i-body">-</label>
-            </div>
+          <div class="range">Range &nbsp;: <label id="range">-</label>
           </div>
-          <br>
+          <div class="defence">Defence: <label id="defence">200</label>
+          </div>
+        </div>
+        <br>
 
+        <div class="inventory">
+          <div class="title">INVENTARY</div>
+          <div class="i1">(1)Food &nbsp;&nbsp;:
+            <label id="i-food">0</label>
+          </div>
+          <div class="i1">(-)Supply :
+            <label id="i-supply">0</label>
+          </div>
+          <div class="i1">(3)Medical:
+            <label id="i-medical">0</label>
+          </div>
+          <div class="i1">(-)Melee:
+            <label id="i-melee">Unarmed</label>
+          </div>
+          <div class="i1">(R)Range:
+            <label id="i-range">-</label>
+          </div>
+          <div class="i1">(-)Head&nbsp;:
+            <label id="i-head">-</label>
+          </div>
+          <div class="i1">(-)Body&nbsp;:
+            <label id="i-body">-</label>
+          </div>
+        </div>
+        <br>
+        <!--
           <div class="selected">
             <div id="target">(F)ire:</div>
           </div>
         -->
 
-          <div class="loot">
-            <div id="l0">&nbsp;</div>
-            <div id="l1">&nbsp;</div>
-            <div id="l2">&nbsp;</div>
-            <div id="l3">&nbsp;</div>
-            <div id="l4">&nbsp;</div>
-            <div id="l5">&nbsp;</div>
-            <div id="l6">&nbsp;</div>
-            <div id="l7">&nbsp;</div>
-            <div id="l8">&nbsp;</div>
-            <div id="l9">&nbsp;</div>
-          </div>
+        <div class="loot">
+          <div id="l0">&nbsp;</div>
+          <div id="l1">&nbsp;</div>
+          <div id="l2">&nbsp;</div>
+          <div id="l3">&nbsp;</div>
+          <div id="l4">&nbsp;</div>
+          <div id="l5">&nbsp;</div>
+          <div id="l6">&nbsp;</div>
+          <div id="l7">&nbsp;</div>
+          <div id="l8">&nbsp;</div>
+          <div id="l9">&nbsp;</div>
+        </div>
 
-          <div class="history">
-            <div id="h1"></div>
-            <div id="h2"></div>
-            <div id="h3"></div>
-            <div id="h4"></div>
-            <div id="h5"></div>
-            <div id="h6"></div>
-            <div id="h7"></div>
-            <div id="h8"></div>
-            <div id="h9"></div>
-          </div>
+        <div class="history">
+          <div id="h1"></div>
+          <div id="h2"></div>
+          <div id="h3"></div>
+          <div id="h4"></div>
+          <div id="h5"></div>
+          <div id="h6"></div>
+          <div id="h7"></div>
+          <div id="h8"></div>
+          <div id="h9"></div>
+        </div>
 
-        </section>
-
-      </div>
+      </section>
 
     </div>
 

@@ -10,8 +10,8 @@ function update() {
   panel.version();
   panel.currentTime();
   panel.stats();
-  //panel.inventory();
-  //panel.loot();
+  panel.inventory();
+  panel.loot();
   panel.history();
 }
 
@@ -62,6 +62,56 @@ const panel = {
       index++;
     }
   },
+  inventory: function () {
+    const i = pj.inventory;
+    const e = pj.equipment;
+    document.getElementById("i-food").innerHTML = i.food;
+    document.getElementById("i-supply").innerHTML = i.supply;
+    document.getElementById("i-medical").innerHTML = i.medical;
+    let text = "unarmed";
+    if (e.melee !== undefined) {
+      text = e.melee.data.name;
+    }
+    document.getElementById("i-melee").innerHTML = text;
+    text = "-";
+    if (e.range !== undefined) {
+      text = e.range.data.name + "(F)";
+    }
+    document.getElementById("i-range").innerHTML = text;
+    text = "-";
+    if (e.body !== undefined) {
+      text = e.body.data.name;
+    }
+    document.getElementById("i-body").innerHTML = text;
+    document.getElementById("i-head").innerHTML = "-";
+  },
+  loot: function () {
+    let items = lib.atPoint(pj.pos, t.items);
+    for (let i = 0; i < 9; i++) {  //clean panel
+      document.getElementById("l" + i).innerHTML = "";
+    }
+    if (items.length < 1) { // clean panel
+      return;
+    }
+    for (let i = 0; i < items.length; i++) {
+      let text = "(q)" + items[i].type;
+      if (items[i].is.consumable) {
+        text += " " + items[i].data.qty;
+      } else if (items[i].is.equippable) {
+        if (items[i].type === "melee") {
+          text += " " + items[i].data.melee;
+        } else if (items[i].type === "firearm") {
+          text += " " + items[i].data.range;
+        } else if (items[i].type === "body") {
+          text += " " + items[i].data.defence;
+        }
+      }
+      if (items[i].is.equipped) {
+        text = "";
+      }
+      document.getElementById("l" + i).innerHTML = text;
+    }
+  }
 };
 
 export {

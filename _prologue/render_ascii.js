@@ -13,12 +13,13 @@ const pV = C.CAM_DELTA_Y;
 const ctx = canvas.getContext("2d");
 ctx.textBaseline = "top";
 ctx.textAlign = "center";
-ctx.font = C.PPP + "px " + C.FONT;
+ctx.font = C.PPP + "px " + C.FONT[1];
 
 function ascii() {
   draw.clearAll();
   draw.grid();
   draw.map();
+  draw.items();
   draw.npcs();
   draw.player();
   //draw.playerAnimation();
@@ -69,6 +70,16 @@ const draw = {
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+  },
+  items: function () {
+    for (let item of t.items) {
+      const x = item.pos.x - t.cam.x;
+      const y = item.pos.y - t.cam.y;
+      const char = aux.mapSymbol("item");
+      const color = aux.colorOfEntity("item");
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
   },
   npcs: function () {
     for (let npc of t.npcs) {

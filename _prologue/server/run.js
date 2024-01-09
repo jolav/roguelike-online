@@ -6,7 +6,8 @@ import { lib, K } from "./_conf.js";
 import * as  player from "./player.js";
 import * as map from "./map.js";
 import * as fov from "./fov.js";
-import { npcs } from "./npc.js";
+import { npcs } from "./npcs.js";
+import { items } from "./items.js";
 
 const r = {
   nick: lib.randomNick(5, 2),
@@ -21,7 +22,7 @@ const r = {
   map: [],
   cam: { x: 0, y: 0 },
   npcs: [],
-  //items: [],
+  items: [],
   history: ["8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."],
   start: function () {
     this.map = map.create();
@@ -29,6 +30,8 @@ const r = {
     this.counter++;
     this.npcs = npcs.create(r.counter);
     this.counter += this.npcs.length;
+    this.items = items.create(r.counter);
+    this.counter += this.items.length;
     this.cam = aux.updateCam();
     fov.get();
   },

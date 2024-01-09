@@ -11,7 +11,7 @@ const C = {
   PPP: 24,
   FPS: 60,
   ANIMATION_SPEED: 2,
-  FONT: "VarelaRound",//"NotoSansMonoMedium",
+  FONT: ["sans-serif", "VarelaRound", "NotoSansMonoMedium"],
   // Camera dimensions
   CAM_PIXELS_X: window.innerWidth - 300,
   CAM_PIXELS_Y: window.innerHeight - 15,
@@ -42,6 +42,15 @@ const lib = {
   },
   currentDate: function (turn) {
     return new Date(C.INIT_DATE.getTime() + C.MS_PER_TURN * turn);
+  },
+  atPoint: function (p, es) {
+    let resp = [];
+    for (let e of es) {
+      if (e.pos.x === p.x && e.pos.y === p.y) {
+        resp.push(e);
+      }
+    }
+    return resp;
   },
 };
 

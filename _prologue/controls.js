@@ -24,6 +24,15 @@ function actionKey(e) {
     case 'T':
       action = "SKIP";
       break;
+    case 'Q':
+      action = "LOOT";
+      break;
+    case '1':
+      action = "EAT";
+      break;
+    case '3':
+      action = "HEAL";
+      break;
     default:
     //console.log(e.key.toUpperCase(), ' -- Not recognized event');
   }

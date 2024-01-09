@@ -3,7 +3,7 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.9",
+  VERSION: "0.0.10",
   MS_PER_TURN: 1000,
   TRIES: 500,
   ACTION: undefined,
@@ -20,10 +20,10 @@ const K = {
   MAP_COLS: 116,//39,
   MAP_ROWS: 72,//24,
   //
-  LOS_RANGE: 100,
+  LOS_RANGE: 15,
   // Npc
-  MAX_NPCS: 2,
-  MAX_ITEMS: 120,
+  MAX_NPCS: 4,
+  MAX_ITEMS: 10,
 };
 
 export {
@@ -98,5 +98,8 @@ const lib = {
       a[j] = temp;
     }
   },
+  niceLog: function (o) {
+    return JSON.stringify(o, null, 2);
+  }
 };
 

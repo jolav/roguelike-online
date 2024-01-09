@@ -13,6 +13,7 @@ const data = {
   turn: undefined,
   view: [],
   npcs: [],
+  items: [],
   history: [],
   cam: r.cam,
   receivedFromClient: function (action, cam) {
@@ -39,6 +40,7 @@ const data = {
     data.view = data.updateView();
     data.npcs = data.updateNpcs();
     data.history = r.history;
+    data.items = data.updateItems();
   },
   updateView: function () {
     const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
@@ -57,6 +59,27 @@ const data = {
           x: this.cam.x + col,
           y: this.cam.y + row,
         }, r.npcs
+        );
+        if (candidates.length === 1) {
+          const tile = r.map[candidates[0].pos.x][candidates[0].pos.y];
+          if (tile.visible) {
+            result.push(candidates[0]);
+          }
+        } else if (candidates.length > 1) {
+          //console.log('ALERT, ALERT', candidates);
+        }
+      }
+    }
+    return result;
+  },
+  updateItems: function () {
+    const result = [];
+    for (let col = 0; col < K.CAM_COLS; col++) {
+      for (let row = 0; row < K.CAM_ROWS; row++) {
+        const candidates = entities.atPoint({
+          x: this.cam.x + col,
+          y: this.cam.y + row,
+        }, r.items
         );
         if (candidates.length === 1) {
           const tile = r.map[candidates[0].pos.x][candidates[0].pos.y];

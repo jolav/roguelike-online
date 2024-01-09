@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading...../server/npc.js');
+console.log('Loading...../server/npcs.js');
 
 import { K, lib } from "./_conf.js";
 import { entities } from "./entities.js";
@@ -111,15 +111,16 @@ class Npc {
     console.log(this.id, 'did not move');
   }
   melee(target) {
-    //console.log(JSON.stringify(target, null, 2));
     const att = this.combat.melee + lib.randomInt(1, 5);
     const def = target.combat.defence;
-    const damage = att - def;
+    let damage = att - def;
     if (damage > 0) {
-      const h = "- " + this.type + " deals " + damage + " damage to " + target.type + "\n";
-      r.history.push(h);
       target.combat.hp -= damage;
+    } else {
+      damage = 0;
     }
+    const h = "- " + this.type + " deals " + damage + " damage to " + target.type + "\n";
+    r.history.push(h);
     if (target.id === 0 && target.combat.hp <= 0) {
       r.gameOver = {
         status: true
@@ -143,20 +144,21 @@ const npcs = {
     }
   },
   create: function (counter) {
-    let foes = 0;
     let result = [];
+    if (K.MAX_NPCS === 0) { return result; }
+    let foes = 0;
     for (let tries = 0; tries < K.TRIES; tries++) {
       let pos = entities.randomEmptyPoint(result);
       if (pos !== undefined) {
         const foe = new Npc(
           counter,
-          aux.npcsType(),
+          aux.npcType(),
           pos,
           true,
           true,
           true,
         );
-        aux.npcsCombatStats(foe);
+        aux.npcCombatStats(foe);
         result.push(foe);
         counter++;
         foes++;
@@ -171,8 +173,12 @@ const npcs = {
   }
 };
 
+export {
+  npcs,
+};
+
 const aux = {
-  npcsType: function () {
+  npcType: function () {
     const odds = lib.randomInt(1, 10);
     if (odds < 8) {
       return "rat";
@@ -180,7 +186,7 @@ const aux = {
       return "mole rat";
     }
   },
-  npcsCombatStats: function (foe) {
+  npcCombatStats: function (foe) {
     let data = [[40, 40, 15, 0, 0, 10], [10, 10, 5, 0, 0, 6]];
     let stats = [];
     switch (foe.type) {
@@ -204,8 +210,4 @@ const aux = {
       los: stats[5],
     };
   },
-};
-
-export {
-  npcs,
 };
