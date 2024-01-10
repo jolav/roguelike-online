@@ -6,6 +6,24 @@ import { K, lib } from "./_conf.js";
 import { r } from "./run.js";
 import { entities } from "./entities.js";
 
+const api = {
+  version: function () {
+    return data.version;
+  },
+  run: function (cam) {
+    data.receivedFromClient(undefined, cam);
+    r.start();
+    data.prepareForClient();
+    return data;
+  },
+  turn: function (action, cam, selected) {
+    data.receivedFromClient(action, cam, selected);
+    r.oneMoreTurn();
+    data.prepareForClient();
+    return data;
+  }
+};
+
 const data = {
   version: K.VERSION,
   msPerTurn: K.MS_PER_TURN,
@@ -16,7 +34,7 @@ const data = {
   items: [],
   history: [],
   cam: r.cam,
-  receivedFromClient: function (action, cam) {
+  receivedFromClient: function (action, cam, selected) {
     //Only for test make map same size as browser actual size
     if (window.location.hostname === "localhost") {
       K.MAP_COLS = cam.cols;
@@ -26,6 +44,7 @@ const data = {
     K.ACTION = action;
     K.CAM_COLS = cam.cols;
     K.CAM_ROWS = cam.rows;
+    K.ID_SELECTED = selected;
     if (cam.cols > K.MAP_COLS) {
       K.CAM_COLS = K.MAP_COLS;
     }
@@ -92,24 +111,6 @@ const data = {
       }
     }
     return result;
-  }
-};
-
-const api = {
-  version: function () {
-    return data.version;
-  },
-  run: function (cam) {
-    data.receivedFromClient(undefined, cam);
-    r.start();
-    data.prepareForClient();
-    return data;
-  },
-  turn: function (action, cam) {
-    data.receivedFromClient(action, cam);
-    r.oneMoreTurn();
-    data.prepareForClient();
-    return data;
   }
 };
 

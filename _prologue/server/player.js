@@ -60,6 +60,9 @@ class Player {
       case "LOOT":
         done = this.loot();
         break;
+      case "FIRE":
+        done = this.fire();
+        break;
     }
     if (done) {
       this.actionDone = true;
@@ -111,7 +114,6 @@ class Player {
     this.pos = target;
   }
   melee(target) {
-    //console.log(JSON.stringify(target, null, 2));
     this.actionDone = true;
     const att = this.combat.melee + lib.randomInt(1, 5);
     const def = target.combat.defence;
@@ -124,15 +126,44 @@ class Player {
     const h = "+ " + this.type + " deals " + damage + " damage to " + target.type + "\n";
     r.history.push(h);
     if (target.combat.hp <= 0) {
-      const h = "+ " + target.type + " dies" + "\n";
-      r.history.push(h);
-      delete target.combat;
-      target.is.blocking = false;
-      target.is.mobile = false;
-      target.is.combatant = false;
-      target.type = "corpse of " + target.type;
-      //deselect dead    
+      this.killingNpc(target);
     }
+  }
+  fire() {
+    let done = false;
+    const indexTarget = r.npcs.findIndex(function (e) {
+      return e.id === K.ID_SELECTED;
+    });
+    const target = r.npcs[indexTarget];
+    if (this.inventory.supply < 1) {
+      return done;
+    }
+    this.inventory.supply--;
+    this.actionDone = true;
+    const att = this.combat.range + lib.randomInt(1, 5);
+    const def = target.combat.defence;
+    let damage = att - def;
+    if (damage > 0) {
+      target.combat.hp -= damage;
+    } else {
+      damage = 0;
+    }
+    const h = "+ " + this.type + " deals " + damage + " damage to " + target.type + "\n";
+    r.history.push(h);
+    if (target.combat.hp <= 0) {
+      this.killingNpc(target);
+    }
+    done = true;
+    return done;
+  }
+  killingNpc(target) {
+    const h = "+ " + target.type + " dies" + "\n";
+    r.history.push(h);
+    delete target.combat;
+    target.is.blocking = false;
+    target.is.mobile = false;
+    target.is.combatant = false;
+    target.type = "corpse of " + target.type;
   }
   eat() {
     if (this.combat.hp < this.combat.maxHp && this.inventory.food > 0) {

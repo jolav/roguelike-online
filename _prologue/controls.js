@@ -33,6 +33,12 @@ function actionKey(e) {
     case '3':
       action = "HEAL";
       break;
+    case 'F':
+      action = "FIRE";
+      break;
+    case 'R':
+      action = "SELECT";
+      break;
     default:
     //console.log(e.key.toUpperCase(), ' -- Not recognized event');
   }

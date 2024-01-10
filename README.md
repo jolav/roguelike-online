@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.10-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.11-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -29,7 +29,7 @@
 - [X] **Melee**  
 - [X] **Creating UI**  
 - [X] **Inventory and items**  
-- [ ] **Ranged Combat**  
+- [X] **Ranged Combat**  
 - [ ] **Leaving the Vault**  
 
 ## PROLOGUE 1.0.0 MILESTONE 
@@ -61,7 +61,8 @@
 - [ ] **mini screen for shooting from far distance**  
 - [ ] **lights, ilumination**  
 - [ ] **simulate nuclear shelter collapse**  
-- [ ] **restrict the data passed about items,npcs to client**  
+- [ ] **check all incoming data from client, dont trust**  
+- [ ] **send cliente as little data as possible**  
 - MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   

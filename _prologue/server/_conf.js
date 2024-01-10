@@ -3,10 +3,13 @@
 console.log('Loading...../server/_conf.js');
 
 const K = {
-  VERSION: "0.0.10",
-  MS_PER_TURN: 1000,
+  // general
+  VERSION: "0.0.11",
   TRIES: 500,
+  // turn
   ACTION: undefined,
+  SELECTED: undefined,
+  MS_PER_TURN: 1000,
   // Render
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
@@ -19,11 +22,11 @@ const K = {
   CORRIDOR_ODDS: 0,
   MAP_COLS: 116,//39,
   MAP_ROWS: 72,//24,
-  //
+  // Player
   LOS_RANGE: 15,
   // Npc
-  MAX_NPCS: 4,
-  MAX_ITEMS: 10,
+  MAX_NPCS: 2,
+  MAX_ITEMS: 50,
 };
 
 export {

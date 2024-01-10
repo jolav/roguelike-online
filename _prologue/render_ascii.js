@@ -22,6 +22,9 @@ function ascii() {
   draw.items();
   draw.npcs();
   draw.player();
+  if (C.INDEX_SELECTED !== undefined) {
+    draw.tileSelected();
+  }
   //draw.playerAnimation();
 }
 
@@ -46,6 +49,17 @@ const draw = {
   tile: function (x, y, char, color) {
     ctx.fillStyle = color;
     ctx.fillText(char, (x * C.PPP) + (C.PPP / 2) + pH, (y * C.PPP) + pV);
+  },
+  tileSelected: function (x, y) {
+    x = C.NPC_SELECTED.pos.x;
+    y = C.NPC_SELECTED.pos.y;
+    ctx.strokeStyle = "lightgreen";
+    ctx.strokeRect(
+      (x - t.cam.x) * C.PPP + pH,
+      (y - t.cam.y) * C.PPP + pV,
+      C.PPP,
+      C.PPP
+    );
   },
   clearTile: function (x, y) {
     ctx.clearRect(x * C.PPP, y * C.PPP + pV, C.PPP, C.PPP);

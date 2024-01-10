@@ -5,6 +5,9 @@ console.log('Loading....._config.js');
 const C = {
   VERSION: 0,
   MS_PER_TURN: 0,
+  INDEX_SELECTED: undefined,
+  ID_SELECTED: undefined,
+  NPC_SELECTED: undefined,
   // Render
   RENDER_TYPE: 0, // 0 = ASCII
   CANVAS_NAME: "canvas",

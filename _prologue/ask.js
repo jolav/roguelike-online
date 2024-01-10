@@ -40,17 +40,71 @@ const ask = {
     //console.log(JSON.stringify(t, null, 2));
   },
   turn: async function (action) {
+    if (action === "SELECT") {
+      select.action();
+      render.ascii();
+      panel.update();
+      return;
+    }
     const delay = lib.randomInt(100, 200) + 150;
     await lib.sleep(delay);
     const cam = {
       cols: C.CAM_COLS,
       rows: C.CAM_ROWS
     };
-    t = api.turn(action, cam);
+    t = api.turn(action, cam, C.ID_SELECTED);
+    select.update();
     render.ascii();
     panel.update();
     //console.log(JSON.stringify(t, null, 2));
   },
+};
+
+const select = {
+  selectables: [],//this.getSelectables(),
+  action: function () {
+    this.getSelectables();
+    if (this.selectables.length === 0) {
+      C.INDEX_SELECTED = undefined;
+    } else if (C.INDEX_SELECTED === undefined) {
+      C.INDEX_SELECTED = 0;
+    } else {
+      if (C.INDEX_SELECTED >= this.selectables.length - 1) {
+        C.INDEX_SELECTED = 0;
+      } else {
+        C.INDEX_SELECTED++;
+      }
+    }
+    if (C.INDEX_SELECTED !== undefined) {
+      C.ID_SELECTED = select.selectables[C.INDEX_SELECTED].id;
+      C.NPC_SELECTED = select.selectables[C.INDEX_SELECTED];
+    }
+  },
+  update: function () {
+    this.getSelectables();
+    if (C.INDEX_SELECTED === undefined) {
+      return;
+    }
+    if (!this.isSelectedStillAlive()) {
+      C.INDEX_SELECTED = undefined;
+      C.ID_SELECTED = undefined;
+    }
+  },
+  isSelectedStillAlive: function () {
+    const indexTarget = this.selectables.findIndex(function (e) {
+      return e.id === C.ID_SELECTED;
+    });
+    const target = this.selectables[indexTarget];
+    return target;
+  },
+  getSelectables: function name() {
+    this.selectables = [];
+    for (let e of t.npcs) {
+      if (e.is.combatant) {
+        this.selectables.push(e);
+      }
+    }
+  }
 };
 
 export {

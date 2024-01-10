@@ -13,6 +13,7 @@ function update() {
   panel.inventory();
   panel.loot();
   panel.history();
+  panel.selected();
 }
 
 let pj;
@@ -111,7 +112,14 @@ const panel = {
       }
       document.getElementById("l" + i).innerHTML = text;
     }
-  }
+  },
+  selected: function () {
+    let text = "(F)ire: ";
+    if (C.INDEX_SELECTED !== undefined) {
+      text += C.NPC_SELECTED.type;
+    }
+    document.getElementById("target").innerHTML = text;
+  },
 };
 
 export {
