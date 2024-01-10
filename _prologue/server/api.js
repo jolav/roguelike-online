@@ -33,14 +33,15 @@ const data = {
   npcs: [],
   items: [],
   history: [],
+  gameOver: r.gameOver,
   cam: r.cam,
   receivedFromClient: function (action, cam, selected) {
-    //Only for test make map same size as browser actual size
-    if (window.location.hostname === "localhost") {
+    //Only for dev make map same size as browser actual size
+    if (window.location.hostname === K.DEV) {
       K.MAP_COLS = cam.cols;
       K.MAP_ROWS = cam.rows;
     }
-    //
+    //-------------------------------------------------------
     K.ACTION = action;
     K.CAM_COLS = cam.cols;
     K.CAM_ROWS = cam.rows;
@@ -60,6 +61,7 @@ const data = {
     data.npcs = data.updateNpcs();
     data.history = r.history;
     data.items = data.updateItems();
+    data.gameOver = r.gameOver;
   },
   updateView: function () {
     const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});

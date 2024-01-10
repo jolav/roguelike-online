@@ -188,6 +188,7 @@ class Player {
     for (let e of itemsToLoot) {
       if (e.type === "exit") {
         r.gameOver = { status: true, win: true };
+        done = true;
       }
       if (e.is.lootable) {
         if (e.data.qty > 0) {

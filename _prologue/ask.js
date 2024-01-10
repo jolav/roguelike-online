@@ -53,6 +53,9 @@ const ask = {
       rows: C.CAM_ROWS
     };
     t = api.turn(action, cam, C.ID_SELECTED);
+    if (t.gameOver.status) {
+      aux.gameOver();
+    }
     select.update();
     render.ascii();
     panel.update();
@@ -105,6 +108,21 @@ const select = {
       }
     }
   }
+};
+
+const aux = {
+  gameOver: function () {
+    if (t.gameOver.win) {
+      //console.log('THIS IS A VICTORY');
+      alert('YOU LEAVE THE VAULT');
+    }
+    if (!t.gameOver.win) {
+      //console.log('THIS IS THE END');
+      alert('YOU LOSE');
+    }
+    location.reload();
+  }
+
 };
 
 export {

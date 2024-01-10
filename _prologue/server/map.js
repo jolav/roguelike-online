@@ -5,8 +5,12 @@ console.log('Loading...../server/map.js');
 import { K, lib } from "./_conf.js";
 
 function create() {
-  //return shelter.create();
-  return shelter2.create();
+  //Only for dev make map same size as browser actual size
+  if (window.location.hostname === K.DEV) {
+    return shelter2.create();
+  }
+  //-------------------------------------------------------
+  return shelter.create();
 }
 
 class Room {

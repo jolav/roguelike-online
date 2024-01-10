@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.11-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -30,7 +30,7 @@
 - [X] **Creating UI**  
 - [X] **Inventory and items**  
 - [X] **Ranged Combat**  
-- [ ] **Leaving the Vault**  
+- [X] **Leaving the Vault**  
 
 ## PROLOGUE 1.0.0 MILESTONE 
 

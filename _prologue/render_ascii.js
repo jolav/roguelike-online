@@ -89,8 +89,12 @@ const draw = {
     for (let item of t.items) {
       const x = item.pos.x - t.cam.x;
       const y = item.pos.y - t.cam.y;
-      const char = aux.mapSymbol("item");
-      const color = aux.colorOfEntity("item");
+      let char = aux.mapSymbol("item");
+      let color = aux.colorOfEntity("item");
+      if (item.type === "exit") {
+        char = aux.mapSymbol(item.type);
+        color = aux.colorOfEntity(item.type);
+      }
       this.clearTile(x, y);
       this.tile(x, y, char, color);
     }

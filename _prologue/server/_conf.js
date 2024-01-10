@@ -4,8 +4,9 @@ console.log('Loading...../server/_conf.js');
 
 const K = {
   // general
-  VERSION: "0.0.11",
+  VERSION: "0.1.0",
   TRIES: 500,
+  DEV: "localhost",
   // turn
   ACTION: undefined,
   SELECTED: undefined,
@@ -25,8 +26,8 @@ const K = {
   // Player
   LOS_RANGE: 15,
   // Npc
-  MAX_NPCS: 2,
-  MAX_ITEMS: 50,
+  MAX_NPCS: 60,
+  MAX_ITEMS: 150,
 };
 
 export {

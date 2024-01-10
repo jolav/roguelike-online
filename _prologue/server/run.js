@@ -70,14 +70,12 @@ const aux = {
   gameOver: function () {
     if (r.gameOver.win) {
       console.log('THIS IS A VICTORY');
-      alert('YOU LEAVE THE VAULT');
     }
     if (!r.gameOver.win) {
       console.log('THIS IS THE END');
-      alert('YOU LOSE');
     }
-    location.reload();
   }
+
 };
 
 export {
