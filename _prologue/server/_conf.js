@@ -4,7 +4,7 @@ console.log('Loading...../server/_conf.js');
 
 const K = {
   // general
-  VERSION: "0.1.0",
+  VERSION: "0.1.1",
   TRIES: 500,
   DEV: "localhost",
   // turn

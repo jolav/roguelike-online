@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)
 
 ## **[Play the prologue Online](https://prologue.roguelike.online)**  
@@ -16,22 +16,6 @@
 (r) = Select Next Foe  
 (f) = Select target/shoot  
 
-## PROLOGUE 0.1.0 MILESTONE 
-
-- [X] **Setting Up**  
-- [X] **Moving around @**  
-- [X] **Render Basic Map**   
-- [X] **Camera**  
-- [X] **Field of View**  
-- [X] **Generating Vault**  
-- [X] **Placing Enemies**  
-- [X] **Moving Enemies**  
-- [X] **Melee**  
-- [X] **Creating UI**  
-- [X] **Inventory and items**  
-- [X] **Ranged Combat**  
-- [X] **Leaving the Vault**  
-
 ## PROLOGUE 1.0.0 MILESTONE 
 
 - [ ] **Directional FOV ??**  
@@ -46,11 +30,6 @@
 - [ ] **each entity different LOS radius**  
 - [ ] **dummy items**  
 - [ ] **food from animal corpse takes time**  
-- [ ] **slow computer turn with animations**  
-- [ ] **move animations**  
-- [ ] **on key pressed down ,animation with constant speed**  
-- [ ] **attack melee animations**  
-- [ ] **ranged combat animations**  
 - [ ] **damage tooltips**  
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **select system to f-arrows_for_select-f**  
@@ -63,6 +42,12 @@
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **check all incoming data from client, dont trust**  
 - [ ] **send cliente as little data as possible**  
+- ANIMATIONS  
+- [ ] **slow computer turn with animations**  
+- [ ] **move animations**  
+- [ ] **on key pressed down ,animation with constant speed**  
+- [ ] **attack melee animations**  
+- [ ] **ranged combat animations**  
 - MOUSE  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
@@ -88,7 +73,23 @@
 - [ ] **array with rooms**  
 - [ ] **playerLOS instead of cam size inside (fors) for server calculations**  
 - BUGS   
-- [ ] **npcs dead in the same tile disappear**  
+- [X] **npcs dead in the same tile disappear**  
+
+## PROLOGUE 0.1.0 MILESTONE 
+
+- [X] **Setting Up**  
+- [X] **Moving around @**  
+- [X] **Render Basic Map**   
+- [X] **Camera**  
+- [X] **Field of View**  
+- [X] **Generating Vault**  
+- [X] **Placing Enemies**  
+- [X] **Moving Enemies**  
+- [X] **Melee**  
+- [X] **Creating UI**  
+- [X] **Inventory and items**  
+- [X] **Ranged Combat**  
+- [X] **Leaving the Vault**  
 
 ## **Acknowledgment**
 

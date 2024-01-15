@@ -73,7 +73,7 @@ const data = {
     return view;
   },
   updateNpcs: function () {
-    const result = [];
+    let result = [];
     for (let col = 0; col < K.CAM_COLS; col++) {
       for (let row = 0; row < K.CAM_ROWS; row++) {
         const candidates = entities.atPoint({
@@ -86,8 +86,13 @@ const data = {
           if (tile.visible) {
             result.push(candidates[0]);
           }
-        } else if (candidates.length > 1) {
-          //console.log('ALERT, ALERT', candidates);
+        } else if (candidates.length > 1) { // corpses
+          const tile = r.map[candidates[0].pos.x][candidates[0].pos.y];
+          if (tile.visible) {
+            for (let c of candidates) {
+              result.push(c);
+            }
+          }
         }
       }
     }

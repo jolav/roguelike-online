@@ -87,10 +87,17 @@ const panel = {
     document.getElementById("i-head").innerHTML = "-";
   },
   loot: function () {
-    let items = lib.atPoint(pj.pos, t.items);
     for (let i = 0; i < 9; i++) {  //clean panel
       document.getElementById("l" + i).innerHTML = "";
     }
+    const corpses = lib.atPoint(pj.pos, t.npcs);
+    let line = 0;
+    for (let i = 0; i < corpses.length; i++) {
+      let text = corpses[i].type;
+      document.getElementById("l" + line).innerHTML = text;
+      line++;
+    }
+    const items = lib.atPoint(pj.pos, t.items);
     if (items.length < 1) { // clean panel
       return;
     }
@@ -110,7 +117,8 @@ const panel = {
       if (items[i].is.equipped) {
         text = "";
       }
-      document.getElementById("l" + i).innerHTML = text;
+      document.getElementById("l" + line).innerHTML = text;
+      line++;
     }
   },
   selected: function () {
