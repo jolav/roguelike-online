@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>Roguelike Online</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Roguelike Online Game. Browser game. Client-Authoritative Server Game">
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/x-icon" href="./assets/favicon32.png">
+
+	<!--CSS-->
+	<style>
+		/*---------- General ------------*/
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			font: normal 1em sans-serif;
+			color: #555;
+		}
+
+		ul,
+		nav {
+			list-style: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: inherit;
+			cursor: pointer;
+			opacity: 0.9;
+		}
+
+		a.real {
+			text-decoration: underline;
+			color: #2196F3;
+		}
+
+		a:hover {
+			opacity: 1;
+			color: orange;
+		}
+
+		a.btn {
+			color: #fff;
+			border-radius: 4px;
+			text-transform: uppercase;
+			background-color: #2196F3;
+			font-weight: 800;
+			text-align: center;
+		}
+
+		hr {
+			width: 150px;
+			height: 2px;
+			background-color: #2196F3;
+			border: 0;
+			margin-bottom: 10px;
+		}
+
+		section {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 20px 100px;
+		}
+
+		@media (max-width: 1000px) {
+			section {
+				padding: 20px 50px;
+			}
+		}
+
+		@media (max-width: 600px) {
+			section {
+				padding: 15px 30px;
+			}
+		}
+
+		section .title {
+			color: #414a4f;
+			text-transform: capitalize;
+			font: bold 32px sans-serif;
+			margin-bottom: 15px;
+			text-align: center;
+		}
+
+		section p {
+			max-width: 800px;
+			text-align: center;
+			margin-bottom: 15px;
+			padding: 0 20px;
+			line-height: 1.5;
+		}
+
+		ul.grid {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		img.responsive {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.verticalImage {
+			vertical-align: middle;
+		}
+
+		/*------------- Header -------------*/
+		header {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 10;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			color: #fff;
+			padding: 35px 100px 0;
+		}
+
+		header h2 {
+			font-family: sans-serif;
+		}
+
+		header nav {
+			display: flex;
+			font-size: 1.3em;
+		}
+
+		header nav li {
+			margin: 0 20px;
+		}
+
+		header nav li:first-child {
+			margin-left: 0;
+		}
+
+		@media (min-width: 700px) {
+			header {
+				padding: 20px 50px;
+			}
+
+			header nav li:last-child {
+				margin-right: 50px;
+			}
+
+			.bigLogo {
+				display: block;
+			}
+
+			.smallLogo {
+				display: none;
+			}
+		}
+
+		@media (max-width: 700px) {
+			header {
+				flex-direction: column;
+			}
+
+			header h2 {
+				margin-bottom: 5px;
+			}
+
+			.bigLogo {
+				display: none;
+			}
+
+			.smallLogo {
+				display: block;
+			}
+		}
+
+		/*---------------- bg Section ----------------*/
+		.bg {
+			position: relative;
+			justify-content: center;
+			min-height: 100vh;
+			color: #fff;
+			text-align: center;
+		}
+
+		.bg .background-image {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			/*background-size: 100% 100%;*/
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-color: #2196F3;
+			z-index: -1;
+		}
+
+		.bg .background-image:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #414a4f;
+			opacity: 0.4;
+		}
+
+		.bg h1 {
+			font: bold 60px sans-serif;
+			margin-bottom: 15px;
+		}
+
+		.bg .game {
+			font: normal 28px sans-serif;
+			margin-bottom: 40px;
+		}
+
+		.bg a.btn {
+			padding: 20px 46px;
+		}
+
+		@media (max-width: 800px) {
+			.bg {
+				min-height: 600px;
+			}
+
+			.bg h1 {
+				font-size: 48px;
+			}
+
+			.bg h3 {
+				font-size: 24px;
+			}
+
+			.bg a.btn {
+				padding: 15px 40px;
+			}
+		}
+
+		/*-------------------- Lore Section ---------------------*/
+		.lore {
+			background-color: #fff;
+		}
+
+		.lore p {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		.lore .grid li {
+			padding: 20px;
+			height: 350px;
+			border-radius: 3px;
+			background-clip: content-box;
+			background-size: cover;
+			background-position: center;
+			background-color: #333;
+		}
+
+		.lore .grid li.small {
+			flex-basis: 40%;
+		}
+
+		.lore .grid li.large {
+			flex-basis: 60%;
+		}
+
+		@media (max-width: 1000px) {
+
+			.lore .grid li.small,
+			.lore .grid li.large {
+				flex-basis: 100%;
+			}
+		}
+
+		/*---------------------- Features Section ---------------------*/
+		.features {
+			background-color: #f7f7f7;
+		}
+
+		.features .grid li {
+			padding: 0 30px;
+			flex-basis: 33%;
+			text-align: center;
+		}
+
+		.features .grid li i {
+			font-size: 50px;
+			color: #2196F3;
+			margin-bottom: 25px;
+		}
+
+		.features .grid li .featuresTitle {
+			color: #555;
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 25px;
+		}
+
+		.features .grid li p {
+			margin: 0;
+		}
+
+		@media (max-width: 1000px) {
+			.features .grid li {
+				flex-basis: 70%;
+				margin-bottom: 65px;
+			}
+
+			.features .grid li:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		@media (max-width: 600px) {
+			.features .grid li {
+				flex-basis: 100%;
+			}
+		}
+
+		/*--------------------- Contact Section ---------------------*/
+		.contact {
+			background-color: #f7f7f7;
+		}
+
+		.contact form {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			max-width: 800px;
+			width: 80%;
+		}
+
+		.contact form input {
+			padding: 15px;
+			flex: 1;
+			margin-right: 30px;
+			font-size: 18px;
+			color: #555;
+		}
+
+		.contact form .btn {
+			padding: 18px 42px;
+		}
+
+		@media (max-width: 800px) {
+			.contact form input {
+				flex-basis: 100%;
+				margin: 0 0 20px 0;
+			}
+		}
+
+		/*------------- Footer -------------*/
+		footer {
+			font-family: sans-serif;
+			font-size: 1.1em;
+		}
+
+		footer.pie {
+			color: #f2f2f2;
+			background-color: #414a4f;
+		}
+
+		footer.pie .top .leftFooter {
+			line-height: 1.5em
+		}
+
+		footer.pie .top .leftFooter p {
+			/*font-size: 1.1em;*/
+			color: orange;
+		}
+
+		footer.pie .top .leftFooter a:hover {
+			text-decoration: underline !important;
+			color: #428bca;
+		}
+
+		footer.pie .top .rightFooter ul {
+			display: flex;
+			margin-bottom: 15px;
+		}
+
+		footer.pie .top .rightFooter ul li {
+			margin: 0 10px;
+		}
+
+		footer.pie .top .rightFooter li div.sprite {
+			opacity: 0.8;
+		}
+
+		footer.pie .bottom {
+			display: flex;
+			justify-content: center;
+			padding: 10px 0px;
+		}
+
+		footer.pie .bottom .end {
+			font-family: sans-serif;
+			font-size: 0.9em;
+			padding: 10px 20px;
+			background-color: #4caf50;
+			border-radius: 5px;
+			color: #f2f2f2;
+		}
+
+		@media (max-width: 600px) {
+			footer.pie .top {
+				display: flex;
+				flex-flow: column wrap;
+				justify-content: center;
+				align-items: center;
+			}
+
+			footer.pie {
+				padding: 20px 0px;
+			}
+
+			footer.pie .top .rightFooter {
+				margin: 20px 0;
+			}
+		}
+
+		@media (min-width: 600px) {
+			footer.pie .top {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: space-evenly;
+				align-items: center;
+			}
+
+			footer.pie {
+				padding: 70px 0px;
+			}
+
+			footer.pie .bottom {
+				margin-top: 10px;
+			}
+		}
+
+		/* Generated by http://css.spritegen.com CSS Sprite Generator */
+
+		.ask-us,
+		.random,
+		.server,
+		.world,
+		.favicon48,
+		.github48x48,
+		.favicon32 {
+			display: inline-block;
+			background: url('./assets/sprite.png') no-repeat;
+			overflow: hidden;
+			text-indent: -9999px;
+			text-align: left;
+		}
+
+		.ask-us {
+			background-position: -0px -0px;
+			width: 106px;
+			height: 20px;
+		}
+
+		.random {
+			background-position: -0px -20px;
+			width: 64px;
+			height: 64px;
+		}
+
+		.server {
+			background-position: -0px -84px;
+			width: 64px;
+			height: 64px;
+		}
+
+		.world {
+			background-position: -0px -148px;
+			width: 64px;
+			height: 64px;
+		}
+
+		.favicon48 {
+			background-position: -0px -212px;
+			width: 48px;
+			height: 48px;
+		}
+
+		.github48x48 {
+			background-position: -48px -212px;
+			width: 48px;
+			height: 48px;
+		}
+
+		.favicon32 {
+			background-position: -64px -20px;
+			width: 32px;
+			height: 32px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<div>
+			<div class="smallLogo">
+				<div class="favicon32"></div>
+			</div>
+			<div class="bigLogo">
+				<div class="favicon48"></div>
+			</div>
+		</div>
+		<div>
+			<nav>
+
+				<ul>
+					<!--<li><a href="/forum">Forum</a></li>-->
+					<!--<li><a href="/wiki">Wiki</a></li>-->
+					<!--<li>
+						<img class="verticalImage" alt="Version" id="v" src="." height="20">
+					</li>-->
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<section class="bg">
+		<div class="background-image" style="background-image: url(assets/background.webp);"></div>
+		<h1>Roguelike Online</h1>
+		<div class="game">Post Apocalyptic 2D Turn Based Game</div>
+		<a href="https://prologue.roguelike.online" class="btn">Play PROLOGUE</a>
+	</section>
+
+	<section class="lore">
+		<div class="title">Lore</div>
+		<p>In the end, the nuclear weapons were launched...
+		</p>
+		<p>It has been almost 120 years since then. The day everything went wrong. No one remembers how it started.
+			Somewhere there may be records of it, but it's just that no one cares.
+		</p>
+		<p>&nbsp;</p>
+
+		<!--<img class="responsive" src="assets/mapExample.webp">-->
+
+		<ul class="grid">
+			<li class="small" style="background-image: url(assets/waste1.webp); "></li>
+			<li class="large" style="background-image: url(assets/waste2.webp); "></li>
+		</ul>
+
+	</section>
+
+	<section class="features">
+		<div class="title">2D Roguelike Game</div>
+		<p><strong>Open Source</strong></p>
+		<ul class="grid">
+			<li>
+				<div class="server"></div>
+				<div class="featuresTitle">Authoritative Server</div>
+				<p>All player actions are validated by the server which is where everything that happens in the game takes
+					place.
+				</p>
+			</li>
+			<li>
+				<div class="random"></div>
+				<div class="featuresTitle">Procedural</div>
+				<p>Procedurally generated content offers a lot of replayability as the locations are different each time.</p>
+			</li>
+			<li>
+				<div class="world"></div>
+				<div class="featuresTitle">Open World</div>
+				<p>You rule your destiny and can approach objectives freely
+				</p>
+			</li>
+		</ul>
+	</section>
+
+	<section class="lore">
+		<ul class="grid">
+			<li class="large" style="background-image: url(assets/waste3.webp); "></li>
+			<li class="small" style="background-image: url(assets/waste4.webp); "></li>
+		</ul>
+	</section>
+
+	<section class="contact">
+		<div class="title">Ask us anything</div>
+		<p>You can submit your questions, feedbacks or feature requests by
+			<strong><a class="real m"
+					href="#">630a0d050c23110c0416060f0a08064d0c0d0f0a0d06O87f2e9cbeeeae8e9cae2e3eee8cbeeeae8e9deeae6f4
+				</a></strong>
+			or opening an issue on
+			<strong><a class="real" href="https://github.com/jolav/roguelike-online/issues">github
+				</a></strong>
+		</p>
+		<p>We are
+			looking forward to hearing from you</p>
+		<p>
+			<a class="m" aria-label="Contact Email"
+				href="#">630a0d050c23110c0416060f0a08064d0c0d0f0a0d06O87f2e9cbeeeae8e9cae2e3eee8cbeeeae8e9deeae6f4
+			</a>
+		</p>
+	</section>
+
+	<footer class="pie" id="pie">
+		<div class="top">
+			<div class="leftFooter">
+				<p>
+					<strong>Roguelike Online</strong>&nbsp;&nbsp;
+					<!--<img class="verticalImage" alt="Version" id="v" src=".">-->
+				</p>
+				<ul>
+					<li>
+						<a class="m" aria-label="Contact Email"
+							href="#">630a0d050c23110c0416060f0a08064d0c0d0f0a0d06O87f2e9cbeeeae8e9cae2e3eee8cbeeeae8e9deeae6f4</a>
+					</li>
+				</ul>
+			</div>
+			<div class="rightFooter">
+				<ul>
+					<li>
+						<a href="https://github.com/jolav/roguelike-online">
+							<img alt="GitHub Stars" src="https://img.shields.io/github/stars/jolav/roguelike-online?style=social">
+						</a>
+					</li>
+					<!--<li>
+						<a href="/wiki">Wiki</a>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+		<div class="bottom">
+			<div class="end">
+				<strong>ROGUELIKE.ONLINE &copy;2021-<span id="year"></span></strong>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		window.onload = function () {
+
+			const VERSION = "0.0.0"
+
+			function getValue(oldValue) {
+				let value = "";
+				const keyInHex = oldValue.substr(0, 2);
+				const key = parseInt(keyInHex, 16);
+				for (let n = 2; n < oldValue.length; n += 2) {
+					const charInHex = oldValue.substr(n, 2)
+					const char = parseInt(charInHex, 16);
+					const output = char ^ key;
+					value += String.fromCharCode(output);
+				}
+				return value;
+			}
+
+			const ms = document.getElementsByClassName("m");
+
+			for (let i = 0; i < ms.length; i++) {
+				const el = ms[i]
+				const oldValue = el.innerHTML;
+				const aux = oldValue.split("O")[0]
+				const value = getValue(aux);
+				if (i === 0) {
+					el.textContent = "email"
+				}
+				if (i === 1) {
+					el.innerHTML = '<div class="ask-us"></div>';
+				}
+				if (i === 2) {
+					el.textContent = value;
+				}
+				el.href = 'mailto:' + value;
+			}
+
+			/*const versionImage = document.createElement("img")
+			versionImage.src = "https://img.shields.io/badge/Version-" + VERSION + "-orange.svg"
+			document.getElementById("v").src = versionImage.src*/
+
+			const year = document.getElementById("year")
+			year.textContent = new Date().getFullYear()
+
+		}
+	</script>
+
+</body>
+
+</html>

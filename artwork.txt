@@ -2,41 +2,69 @@
 ########################      PROLOGUE      #########################
 #####################################################################
 
-***** IMAGES *****
+########## IMAGES ##########
 
-File: 
+File: www/_public/images/waste1.webp
+Copyright: moonpirate
+License: Content License 
+Comment: Taken from https://pixabay.com/photos/gasmask-dystopian-meltdown-lonesome-6958738/
+
+File: www/_public/images/waste2.webp
+Copyright: frozenstarro
+License: Content License 
+Comment: Taken from https://pixabay.com/illustrations/apocalypse-post-apocalyptic-5851414/
+
+File: www/_public/images/background.webp
+Copyright: AftermathKla
+License: Content License 
+Comment: Taken from https://pixabay.com/illustrations/city-urban-sun-palaces-civil-war-7907780/
+
+File: www/_public/images/waste4.webp
+Copyright: Wendelin_Jacober
+License: Content License 
+Comment: Taken from https://pixabay.com/photos/atom-nuclear-power-plant-abandoned-3669818/
+
+File: www/_public/images/waste3.webp
+Copyright: MerandaDevan
+License: Content License 
+Comment: Taken from https://pixabay.com/illustrations/ai-generated-end-times-apocalypse-8112803/
+
+File: www/_public/images/
 Copyright: 
 License: 
-Comment: 
+Comment:Taken from
 
-***** ICONS *****
+########## ICONS ##########
 
-File: www/_public/sprites/favicon.png
+File: www/_public/icons/favicon32.png
+File: www/_public/icons/favicon48.png
 Copyright: Delapouite
 License: CC BY 3.0
-Comment: Taken from https://game-icons.net/1x1/delapouite/cyborg-face.html
+Comment: Taken from https://game-icons.net/1x1/delapouite/fallout-shelter.html
 
-File: www/_public/sprites/github48x48.png
+File: www/_public/icons/github48x48.png
 Copyright: INCWADRA
 License: CC BY 3.0
 Comment: Taken from https://www.softicons.com/social-media-icons/habrapack-social-icons-by-incwadra/github-icon
 
+File: www/_public/icons/random.png
+Copyright: Christopher Schreiner
+License: Apache 2.0
+Comment:Taken from https://pictogrammers.com/library/mdi/icon/counter/
 
-***** FONTS *****
+File: www/_public/icons/server.png
+Copyright: Austin Andrews 
+License: Apache 2.0
+Comment:Taken from https://pictogrammers.com/library/mdi/icon/server-network/
 
-File: www/_public/fonts/PressStart2P.ttf
-Copyright: CodeMan38
-License: SIL Open Font License (OFL) 
-Comment: Taken from https://fonts.google.com/specimen/Press+Start+2P
-
-File: www/_public/fonts/VarelaRound.ttf
-Copyright: Joe Prince
-License: SIL Open Font License (OFL) 
-Comment: Taken from https://fonts.google.com/specimen/Varela+Round
-
-File: www/_public/fonts/NotoSansMonoMedium.ttf
-Copyright: Google inc
-License: SIL Open Font License (OFL) 
-Comment: Taken from https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+File: www/_public/icons/procedural.png
+Copyright: GreenTurtwig
+License: Apache 2.0
+Comment:Taken from https://pictogrammers.com/library/mdi/icon/earth-box/
+ 
+File: www/_public/icons/
+Copyright: 
+License: 
+Comment:Taken from
 
 
