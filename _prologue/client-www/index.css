@@ -1,0 +1,59 @@
+/* */
+
+body {
+  font-family: 'IBM', sans-serif, serif;
+  background-color: #293133;
+  /*background-color: #454545;*/
+  color: #ffffff;
+  font-size: 1em;
+  line-height: 1.2;
+  text-align: justify;
+}
+
+@font-face {
+  font-family: 'IBM';
+  src: url(./assets/fonts/IBMPlexSans.ttf);
+}
+
+/* INTRO */
+
+section#intro {
+  max-width: 800px;
+  margin: 2em auto;
+}
+
+section#intro .intro {
+  font-size: 1.3em;
+}
+
+section#intro header {
+  display: flex;
+  align-items: center;
+  float: right;
+}
+
+section#intro .buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+section#intro .buttons div#newGame, div#prototype {
+  background-color: #ffffff;
+  border-radius: 2em;
+  color: #293133;
+  padding: 10px 25px;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+section#intro .buttons div#newGame:hover, div#prototype:hover {
+  background-color: #454545;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* PLAY ZONE*/
+
+section#playZone {
+  overflow: hidden;
+}

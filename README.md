@@ -1,5 +1,5 @@
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/Prologue-0.0.0-orange.svg) 
+![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg) 
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
@@ -8,8 +8,8 @@
 ## PROLOGUE 1.0.0 MILESTONE 
 
 - [X] **Prologue.0.0.0 Start**  
-- [ ] **Prologue.0.1.0 Setting Up Client Server**  
-- [ ] **Prologue.0.2.0 Authentication**  
+- [X] **Prologue.0.1.0 Setting Up Client Server**  
+- [ ] **Prologue.0.2.0 Basic Authentication**  
 - [ ] **Prologue.0.3.0 Server runs/run loop**  
 - [ ] **Prologue.0.4.0 Moving around @**  
 - [ ] **Prologue.0.5.0 Basic Map**   
@@ -72,7 +72,7 @@
 - [ ] **Critical Attack Effects**  
 - [ ] **Private and public runs**  
 - [ ] **Diagonal Movement using Ahead,,Back, turn Left and turn Right**  
-- [ ] **minigames open lock, sudoku, hacking**  
+- [ ] **minigames open lock, sudoku, hacking, brute force**  
 - [ ] **mini screen for shooting from far distance**  
 - [ ] **Grid centered on x,y instead of x+0.5,y+0.5 avoiding offsets**  
 - [ ] **Directional FOV**  
