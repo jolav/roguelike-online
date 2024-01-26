@@ -1,5 +1,5 @@
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/Prologue-0.1.0-orange.svg) 
+![Game](https://img.shields.io/badge/Prologue-0.2.0-orange.svg) 
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
@@ -9,8 +9,8 @@
 
 - [X] **Prologue.0.0.0 Start**  
 - [X] **Prologue.0.1.0 Setting Up Client Server**  
-- [ ] **Prologue.0.2.0 Basic Authentication**  
-- [ ] **Prologue.0.3.0 Server runs/run loop**  
+- [X] **Prologue.0.2.0 Server runs/run loop**  
+- [ ] **Prologue.0.3.0 Basic Authentication**  
 - [ ] **Prologue.0.4.0 Moving around @**  
 - [ ] **Prologue.0.5.0 Basic Map**   
 - [ ] **Prologue.0.6.0 Camera**  
@@ -26,7 +26,7 @@
 - [ ] **Prologue.0.16.0 Ranged Combat**  
 - [ ] **Prologue.0.17.0 Multiple Shelter Levels**  
 - [ ] **Prologue.0.18.0 Leaving the Shelter**
-- CLIENT  
+- **CLIENT**  
 - [ ] **Sound effects**  
 - [ ] **Turn counter into datetime**  
 - [ ] **Show PJ position ??**  
@@ -41,22 +41,25 @@
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile and foe with mouse**  
-- SETTINGS  
+- **SETTINGS**  
 - [ ] **help modal showing controls settings and config**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
-- FEATURES  
+- **GAME FEATURES**  
 - [ ] **Choose player name at start**  
 - [ ] **lights, ilumination**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **dummy items**  
+- **SERVER**  
 - [ ] **seeds for reproducible runs**  
 - [ ] **check all incoming data from client, dont trust**  
-- [ ] **Global Time is Server UTC Time**  
-- MAPS  
+- [ ] **Global Time ingame is Server UTC Time**  
+- [ ] **manage runs, set a maximun**  
+- [ ] **save in files and delete runs from memory after some inactivity**  
+- **MAPS**  
 - [ ] **Remove dead end corridors ??**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  
@@ -64,7 +67,7 @@
 - [ ] **open/close doors**  
 - [ ] **mark visited items using visited tiles**   
 - [ ] **array with rooms**  
-- OPTIONALS   
+- **OPTIONALS**   
 - [ ] **move, melee and ranged combat animations**  
 - [ ] **info about criatures/npc must be unblocked**  
 - [ ] **R highligths all criatures/npcs same color except the one selected**  
@@ -78,6 +81,7 @@
 - [ ] **Directional FOV**  
 - [ ] **Tilesets as well as ascii**  
 - [ ] **two letter names on ascii**  
+- [ ] **Players account** 
 - [ ] **Turn Based Multi Player**    
 
 ## **Acknowledgment**

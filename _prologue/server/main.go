@@ -1,5 +1,5 @@
 /*
-go build -ldflags="-X 'main.releaseDate=$(date -u +%F_%T)'" -o prologue
+go build -ldflags="-X 'main.releaseDate=$(date -u +%F_%T)'" -o prologueBin
 */
 
 package main
@@ -14,9 +14,10 @@ import (
 )
 
 var (
-	version     = "0.1.0"
-	releaseDate = "undefined"
-	iLog        *log.Logger
+	version        = "0.2.0"
+	releaseDate    = "undefined"
+	iLog           *log.Logger
+	configJSONFile = "./private.json"
 )
 
 type system struct {
@@ -28,8 +29,29 @@ type system struct {
 	DevHosts      []string `json:"devHosts"`
 }
 
+type config struct {
+	SurnameFile  string `json:"surnameFile"`
+	TokenLength  int    `json:"tokenLength"`
+	NickChars    int    `json:"nickChars"`
+	NickIntegers int    `json:"nickIntegers"`
+}
+
+type turn struct {
+	comm   chan run
+	token  string
+	action string
+}
+
+type channels struct {
+	askGame chan chan run
+	askTurn chan turn
+}
+
 type app struct {
-	Sys system `json:"system"`
+	Sys  system `json:"system"`
+	Cnf  config `json:"config"`
+	Ch   channels
+	Runs runs
 }
 
 func main() {
@@ -37,10 +59,18 @@ func main() {
 
 	// Load Conf
 	var a = new(app)
-	LoadJSONFile("./private.json", a)
+	loadJSONFile(configJSONFile, a)
 	a = &app{
 		Sys: checkMode(a.Sys),
+		Cnf: a.Cnf,
+		Ch: channels{
+			askGame: make(chan chan run),
+			askTurn: make(chan turn),
+		},
+		Runs: make(map[string]*run),
 	}
+	defer close(a.Ch.askGame)
+	defer close(a.Ch.askTurn)
 
 	//Custom Error Log File + Custom Info Log File
 	createCustomInfoLogFile(a.Sys.InfoLogFile)
@@ -50,10 +80,10 @@ func main() {
 	}
 	defer mylog.Close()
 
-	prettyPrintStruct(a)
+	//prettyPrintStruct(a)
 
 	go a.httpServerUP()
-	gameLoop()
+	a.gameLoop()
 }
 
 func checkFlags() {

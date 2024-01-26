@@ -2,9 +2,24 @@
 
 package main
 
-func gameLoop() {
+import "fmt"
+
+func (a *app) gameLoop() {
+	var rs = a.Runs
 	for {
-		select {}
+		select {
+		case askRun := <-a.Ch.askGame:
+			r := rs.newRun(a.Cnf)
+			rs[r.token] = r
+			askRun <- *r
+
+		case askTurn := <-a.Ch.askTurn:
+			r := rs[askTurn.token]
+			action := askTurn.action
+			actionCompleted := false
+			fmt.Println(action, actionCompleted)
+			askTurn.comm <- *r
+		}
 	}
 	// UNREACHABLE CODE
 }

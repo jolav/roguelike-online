@@ -3,6 +3,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -20,9 +21,13 @@ func sliceContainsString(str string, slice []string) bool {
 	return false
 }
 
-func prettyPrintStruct(s interface{}) {
+func prettyPrintStructExported(s interface{}) {
 	result, _ := json.MarshalIndent(s, "", "    ") //"\t")
 	fmt.Print(string(result), "\n")
+}
+
+func prettyPrintStruct(s interface{}) {
+	fmt.Printf("%+v\n", s)
 }
 
 func sendJSONToClient(w http.ResponseWriter, d interface{}, status int) {
@@ -37,7 +42,7 @@ func sendJSONToClient(w http.ResponseWriter, d interface{}, status int) {
 	w.Write(dataJSON)
 }
 
-func LoadJSONFile(filePath string, data interface{}) {
+func loadJSONFile(filePath string, data interface{}) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatalln("Cannot open config file", err)
@@ -51,4 +56,24 @@ func LoadJSONFile(filePath string, data interface{}) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func searchLineInFile(filePath string, searching int) (line string) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal("ERROR FILE 1 = ", err)
+	}
+	defer file.Close()
+	var actual = 1
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		if actual == searching {
+			return scanner.Text()
+		}
+		actual++
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal("ERROR FILE 2 = ", err)
+	}
+	return ""
 }
