@@ -4,6 +4,7 @@ console.log('Loading.....index.js');
 
 import { c } from "./_config.js";
 import { ask } from "./http.js";
+import { actionKey } from "./controls.js";
 
 const init = {
   mode: "online",
@@ -33,11 +34,20 @@ const init = {
     }
   },
   play: function () {
-    ask.newGame();
+    ask.game();
     document.getElementById("landingPage").style.display = "none";
     document.getElementById("playZone").style.display = "block";
     document.getElementById("versionPanel").innerHTML = c.VERSION;
     document.body.style.overflow = "hidden";
+    window.addEventListener('keydown', function (e) {
+      if (e.repeat) {
+        //return;
+      }
+      const action = actionKey(e);
+      if (action !== undefined) {
+        ask.turn(action);
+      }
+    });
   },
   ping: async function () {
     [c.VERSION, c.LAG] = await ask.ping();

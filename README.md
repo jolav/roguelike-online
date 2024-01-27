@@ -1,5 +1,5 @@
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/Prologue-0.2.0-orange.svg) 
+![Game](https://img.shields.io/badge/Prologue-0.3.0-orange.svg) 
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
@@ -10,7 +10,7 @@
 - [X] **Prologue.0.0.0 Start**  
 - [X] **Prologue.0.1.0 Setting Up Client Server**  
 - [X] **Prologue.0.2.0 Server runs/run loop**  
-- [ ] **Prologue.0.3.0 Basic Authentication**  
+- [X] **Prologue.0.3.0 Basic Authentication**  
 - [ ] **Prologue.0.4.0 Moving around @**  
 - [ ] **Prologue.0.5.0 Basic Map**   
 - [ ] **Prologue.0.6.0 Camera**  

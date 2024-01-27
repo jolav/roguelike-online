@@ -9,10 +9,14 @@ const ask = {
   ping: function name() {
     return fetchAPI.ping();
   },
-  newGame: async function () {
-    t = await fetchAPI.newGame();
+  game: async function () {
+    t = await fetchAPI.game();
     render.ascii();
   },
+  turn: async function (action) {
+    /*t =*/ await fetchAPI.turn(action);
+    render.ascii();
+  }
 };
 
 const fetchAPI = {
@@ -28,7 +32,7 @@ const fetchAPI = {
     }
     return [data.version, data.lag];
   },
-  newGame: async function () {
+  game: async function () {
     let data;
     try {
       data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT);
@@ -38,11 +42,18 @@ const fetchAPI = {
     }
     return data;
   },
-  newTurn: async function (action) {
+  turn: async function (action) {
     let data = {};
+    console.log(t);
     try {
-      const param = "&action=" + action + "&token=" + c.TOKEN;
-      data = await fetch(c.API_URL + c.ACTION_ENDPOINT, 'POST', param);
+      const params = {
+        action: action,
+        token: t.token
+      };
+      data = await fetch(c.API_URL + c.ACTION_ENDPOINT, {
+        method: 'POST',
+        body: new URLSearchParams(params),
+      });
     } catch (err) {
       console.error("ERROR FETCHING NEW TURN => ", err);
     }

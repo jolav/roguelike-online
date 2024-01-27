@@ -17,7 +17,7 @@ func (a *app) gameLoop() {
 			r := rs[askTurn.token]
 			action := askTurn.action
 			actionCompleted := false
-			fmt.Println(action, actionCompleted)
+			fmt.Sprintln("ASKTURN", action, actionCompleted)
 			askTurn.comm <- *r
 		}
 	}

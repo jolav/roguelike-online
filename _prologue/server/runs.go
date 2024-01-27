@@ -35,7 +35,6 @@ func (rs runs) newRun(c config) *run {
 		counter:  0,
 		gameOver: false,
 	}
-
 	//prettyPrintStruct(r)
 	return r
 }
