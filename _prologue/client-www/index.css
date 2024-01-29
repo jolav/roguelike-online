@@ -3,7 +3,6 @@
 body {
   font-family: 'IBM', sans-serif, serif;
   background-color: #293133;
-  /*background-color: #454545;*/
   color: #ffffff;
   font-size: 1em;
   line-height: 1.2;
@@ -63,11 +62,10 @@ section#playZone #canvas {
   border: 1px solid #ffffff;
 }
 
-/* Flex Layout */
-
-/*section#playZone .row {
+section#playZone #panel .panelTitle {
   display: flex;
-}*/
+  justify-content: space-around;
+}
 
 section#playZone .column {
   float: left;

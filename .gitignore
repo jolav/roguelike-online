@@ -13,7 +13,7 @@ private.go
 a_private.go
 
 # binary
-prologue
+#prologueBin
 
 
 

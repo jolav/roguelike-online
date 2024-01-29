@@ -16,8 +16,11 @@ func (a *app) gameLoop() {
 		case askTurn := <-a.Ch.askTurn:
 			r := rs[askTurn.token]
 			action := askTurn.action
-			actionCompleted := false
-			fmt.Sprintln("ASKTURN", action, actionCompleted)
+			fmt.Printf("Turn %d , action %s\n", r.turn, action)
+			r.validAction = r.pj.action(action)
+			if r.validAction {
+				r.turn++
+			}
 			askTurn.comm <- *r
 		}
 	}

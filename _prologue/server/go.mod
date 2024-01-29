@@ -1,3 +1,3 @@
-module roguelike.online/_prologue
+module roguelike-online/_prologue/server
 
-go 1.21.4
+go 1.21.6

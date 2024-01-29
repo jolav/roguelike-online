@@ -20,7 +20,12 @@ func randomInt2(min, max int) int {
 func randomNick(nameLength, numbersLength int, file string) string {
 	const chars = "abcdefghijklmnopqrstuvwxyz"
 	const nums = "0123456789"
-	var nick = "guest_"
+	var nick = "guest"
+	c := make([]byte, numbersLength)
+	for i := range c {
+		c[i] = nums[rand.Intn(len(nums))]
+	}
+	nick += string(c) + "_"
 	var b = searchLineInFile(file, randomInt2(1, 88799))
 	if b == "" {
 		aux := make([]byte, nameLength)
@@ -31,12 +36,7 @@ func randomNick(nameLength, numbersLength int, file string) string {
 		b = strings.ToUpper(string(aux))
 
 	}
-	nick += string(b) + "_"
-	c := make([]byte, numbersLength)
-	for i := range c {
-		c[i] = nums[rand.Intn(len(nums))]
-	}
-	nick += string(c)
+	nick += string(b)
 	return nick
 }
 

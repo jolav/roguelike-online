@@ -1,6 +1,6 @@
 /* */
 
-import { c, lib } from "./_config.js";
+import { c } from "./_config.js";
 import * as render from "./render_ascii.js";
 
 let t;
@@ -11,11 +11,18 @@ const ask = {
   },
   game: async function () {
     t = await fetchAPI.game();
+    c.NICK = t.nick;
+    c.TOKEN = t.token;
+    //console.log('GAME,', t);
     render.ascii();
   },
   turn: async function (action) {
-    /*t =*/ await fetchAPI.turn(action);
+    t = await fetchAPI.turn(action);
+    t.nick = c.NICK;
+    t.token = c.TOKEN;
+    //console.log('TURN,', t);
     render.ascii();
+
   }
 };
 
@@ -33,18 +40,20 @@ const fetchAPI = {
     return [data.version, data.lag];
   },
   game: async function () {
+    const start = Date.now();
     let data;
     try {
       data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT);
-      data = data.json();
+      data = await data.json();
+      data.lag = Date.now() - start;
     } catch (err) {
       console.error("ERROR fetchAPI NewRun => ", err);
     }
     return data;
   },
   turn: async function (action) {
+    const start = Date.now();
     let data = {};
-    console.log(t);
     try {
       const params = {
         action: action,
@@ -54,6 +63,8 @@ const fetchAPI = {
         method: 'POST',
         body: new URLSearchParams(params),
       });
+      data = await data.json();
+      data.lag = Date.now() - start;
     } catch (err) {
       console.error("ERROR FETCHING NEW TURN => ", err);
     }

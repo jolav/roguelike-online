@@ -27,13 +27,15 @@ func (rs runs) newRun(c config) *run {
 	}
 
 	r := &run{
-		nick:     randomNick(c.NickChars, c.NickIntegers, c.SurnameFile),
-		token:    token,
-		turn:     0,
-		seed:     seed,
-		x:        rand.New(rand.NewSource(seed)),
-		counter:  0,
-		gameOver: false,
+		nick:        randomNick(c.NickChars, c.NickIntegers, c.SurnameFile),
+		token:       token,
+		turn:        0,
+		seed:        seed,
+		x:           rand.New(rand.NewSource(seed)),
+		counter:     0,
+		gameOver:    false,
+		validAction: true,
+		pj:          *newPlayer(),
 	}
 	//prettyPrintStruct(r)
 	return r

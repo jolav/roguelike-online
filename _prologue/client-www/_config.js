@@ -21,7 +21,10 @@ const c = {
   CAM_DELTA_X: undefined,
   CAM_DELTA_Y: undefined,
   // Game
-  INIT_DATE: undefined,
+  NICK: "",
+  TOKEN: "",
+  INIT_DATE: new Date("2097-08-29 02:14:00"),
+  MS_PER_TURN: 1000,
 };
 
 (function autoUpdateC() {
@@ -32,8 +35,8 @@ const c = {
 })();
 
 const lib = {
-  prettyPrint: function (d) {
-    console.log(JSON.stringify(d, null, 2));
+  currentDate: function (turn) {
+    return new Date(c.INIT_DATE.getTime() + c.MS_PER_TURN * turn);
   },
 };
 

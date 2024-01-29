@@ -43,18 +43,7 @@ func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
 	a.Ch.askGame <- newRunChannel
 	var runData run
 	runData = <-newRunChannel
-	sendJSONToClient(w, process(runData), http.StatusOK)
-}
-
-func (a *app) loadGame(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("LOADING GAME")
-	type loadGame struct {
-		Status string `json:"status"`
-	}
-	lg := loadGame{
-		"loading",
-	}
-	sendJSONToClient(w, lg, http.StatusOK)
+	sendJSONToClient(w, processNewGame(runData), http.StatusOK)
 }
 
 func (a *app) action(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +56,18 @@ func (a *app) action(w http.ResponseWriter, r *http.Request) {
 	defer close(t.comm)
 	a.Ch.askTurn <- t
 	runData := <-t.comm
-	sendJSONToClient(w, runData, 200)
+	sendJSONToClient(w, processTurn(runData), 200)
+}
+
+func (a *app) loadGame(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("LOADING GAME")
+	type loadGame struct {
+		Status string `json:"status"`
+	}
+	lg := loadGame{
+		"loading",
+	}
+	sendJSONToClient(w, lg, http.StatusOK)
 }
 
 func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
