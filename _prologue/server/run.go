@@ -11,9 +11,10 @@ type run struct {
 	token       string
 	turn        int
 	seed        int64
-	x           *rand.Rand
+	rnd         *rand.Rand
 	counter     int
 	gameOver    bool
 	validAction bool
 	pj          player
+	zoneMap     zoneMap
 }

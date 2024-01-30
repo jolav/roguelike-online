@@ -10,20 +10,19 @@ const ask = {
     return fetchAPI.ping();
   },
   game: async function () {
-    t = await fetchAPI.game();
+    t = await fetchAPI.game(c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
     //console.log('GAME,', t);
     render.ascii();
   },
   turn: async function (action) {
-    t = await fetchAPI.turn(action);
+    t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
     t.nick = c.NICK;
     t.token = c.TOKEN;
     //console.log('TURN,', t);
     render.ascii();
-
-  }
+  },
 };
 
 const fetchAPI = {
@@ -39,11 +38,14 @@ const fetchAPI = {
     }
     return [data.version, data.lag];
   },
-  game: async function () {
+  game: async function (cam) {
     const start = Date.now();
-    let data;
+    let data = {};
     try {
-      data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT);
+      data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT + "?" +
+        new URLSearchParams({
+          cam: cam,
+        }));
       data = await data.json();
       data.lag = Date.now() - start;
     } catch (err) {
@@ -51,13 +53,14 @@ const fetchAPI = {
     }
     return data;
   },
-  turn: async function (action) {
+  turn: async function (action, cam) {
     const start = Date.now();
     let data = {};
     try {
       const params = {
         action: action,
-        token: t.token
+        token: t.token,
+        cam: cam,
       };
       data = await fetch(c.API_URL + c.ACTION_ENDPOINT, {
         method: 'POST',

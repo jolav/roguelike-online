@@ -38,8 +38,13 @@ func (a *app) httpServerUP() {
 }
 
 func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	d := r.Form.Get("cam")
+	newRunChannelParams := make(chan string)
 	newRunChannel := make(chan run)
+	defer close(newRunChannelParams)
 	defer close(newRunChannel)
+	a.Ch.askGameParams <- d
 	a.Ch.askGame <- newRunChannel
 	var runData run
 	runData = <-newRunChannel
@@ -51,6 +56,7 @@ func (a *app) action(w http.ResponseWriter, r *http.Request) {
 	t := turn{
 		token:  r.Form.Get("token"),
 		action: r.Form.Get("action"),
+		cam:    r.Form.Get("cam"),
 		comm:   make(chan run),
 	}
 	defer close(t.comm)
@@ -72,15 +78,6 @@ func (a *app) loadGame(w http.ResponseWriter, r *http.Request) {
 
 func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		//
-		/*var startTime time.Time
-		var randomPing time.Duration
-		if a.Sys.Mode == "dev" {
-			startTime = time.Now()
-			randomPing = time.Duration(randomInt(150, 300)) * time.Millisecond
-			time.Sleep(randomPing) //simulate network travel
-		}*/
-		//
 		r.ParseForm()
 		token := r.Form.Get("token")
 		if !a.Runs.exists(token) {
@@ -88,11 +85,6 @@ func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		next.ServeHTTP(w, r)
-		//
-		if a.Sys.Mode == "dev" {
-			//duration := time.Now().Sub(startTime)
-			//fmt.Println(randomPing, duration-randomPing)
-		}
 	}
 }
 

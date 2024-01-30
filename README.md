@@ -1,5 +1,5 @@
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/Prologue-0.4.0-orange.svg) 
+![Game](https://img.shields.io/badge/Prologue-0.5.0-orange.svg) 
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
@@ -12,7 +12,7 @@
 - [X] **Prologue.0.2.0 Server runs/run loop**  
 - [X] **Prologue.0.3.0 Basic Authentication**  
 - [X] **Prologue.0.4.0 Moving around @**  
-- [ ] **Prologue.0.5.0 Basic Map**   
+- [X] **Prologue.0.5.0 Basic Map**   
 - [ ] **Prologue.0.6.0 Camera**  
 - [ ] **Prologue.0.7.0 Field of View**  
 - [ ] **Prologue.0.8.0 Generating Shelter**  
@@ -28,12 +28,12 @@
 - [ ] **Prologue.0.18.0 Leaving the Shelter**
 - **CLIENT**  
 - [ ] **Sound effects**  
-- [ ] **Turn counter into datetime**  
+- [X] **Turn counter into datetime**  
 - [ ] **Show PJ position ??**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-items-foes-player**  
-- [ ] **only pass turn if action is really done, no effect actions**  
+- [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
 - [ ] **Each input movement is queued and previewed on client**   
 - [ ] **on key pressed down ,movement at constant speed**  
@@ -54,7 +54,7 @@
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **dummy items**  
 - **SERVER**  
-- [ ] **seeds for reproducible runs**  
+- [X] **seeds for reproducible runs**  
 - [ ] **check all incoming data from client, dont trust**  
 - [ ] **Global Time ingame is Server UTC Time**  
 - [ ] **manage runs, set a maximun**  
@@ -82,7 +82,10 @@
 - [ ] **Tilesets as well as ascii**  
 - [ ] **two letter names on ascii**  
 - [ ] **Players account** 
+- [ ] **incremental views to reduce bandwith**  
 - [ ] **Turn Based Multi Player**    
+- **BUGS**  
+- [ ] **init ping doesnt end**  
 
 ## **Acknowledgment**
 

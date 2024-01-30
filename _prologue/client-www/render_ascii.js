@@ -19,11 +19,34 @@ ctx.font = c.PPP + "px " + c.FONT[1];
 function ascii() {
   draw.clearAll();
   draw.grid();
+  draw.view();
   draw.player();
   panel.update();
 }
 
 const draw = {
+  view: function () {
+    for (let y = 0; y < c.CAM_ROWS; y++) {
+      for (let x = 0; x < c.CAM_COLS; x++) {
+
+        const tile = t.view[y][x];
+        const char = aux.mapSymbol(tile.terrain);
+        let color = "#fff";
+        if (tile.visible) {
+          color = aux.colorOfEntity("visible");
+        } else if (tile.explored) {
+          color = aux.colorOfEntity("explored");
+        }
+        if (color) {
+          this.tile(x, y, char, color);
+        }
+      }
+    }
+  },
+  tile: function (x, y, char, color) {
+    ctx.fillStyle = color;
+    ctx.fillText(char, (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
+  },
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
@@ -35,10 +58,10 @@ const draw = {
   player: function () {
     const x = t.pj.pos.now.x; //- t.cam.x;
     const y = t.pj.pos.now.y; //- t.cam.y;
-    //this.clearTile(x, y);
+    this.clearTile(x, y);
     ctx.fillStyle = "orange";
-    ctx.fillText("@", (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV,
-      c.PPP); // Fourth Argument max width to render the string.
+    ctx.fillText("@", (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);//,
+    //  c.PPP); // Fourth Argument max width to render the string.
   },
   grid: function () {
     const pH = c.CAM_DELTA_X; // padding vertical
@@ -54,7 +77,45 @@ const draw = {
     ctx.strokeStyle = "#3e4547";
     ctx.stroke();
   },
+
 };
+
+const aux = {
+  mapSymbol: function (symbol) {
+    if (symbol.slice(0, 9) === "corpse of") {
+      return String.fromCharCode(legend.get(symbol.slice(0, 9)));
+    }
+    return String.fromCharCode(legend.get(symbol));
+  },
+  colorOfEntity: function (entity) {
+    if (entity.slice(0, 9) === "corpse of") {
+      return colors.get(entity.slice(10, entity.length));
+    }
+    return colors.get(entity);
+  },
+};
+
+const legend = new Map([
+  ["floor", 183],   // middleDot 183 or normal point 46
+  ["wall", 35],     // #
+  ["-", 0],
+  ["player", 64],   // @
+  ["rat", 114],     // r
+  ["mole rat", 82], // R
+  ["corpse of", 37],    // %
+  ["item", 63],    // ?
+  ["exit", 60], // <
+]);
+
+const colors = new Map([
+  ["player", "burlywood"],
+  ["visible", "#fff"],
+  ["explored", "#454545"],
+  ["rat", "DeepPink"],
+  ["mole rat", "DeepPink"],
+  ["item", "orange"],
+  ["exit", "yellow"],
+]);
 
 export {
   ascii

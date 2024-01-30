@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	version        = "0.4.0"
+	version        = "0.5.0"
 	releaseDate    = "undefined"
 	iLog           *log.Logger
 	configJSONFile = "./private.json"
@@ -38,13 +38,15 @@ type config struct {
 
 type turn struct {
 	comm   chan run
+	cam    string
 	token  string
 	action string
 }
 
 type channels struct {
-	askGame chan chan run
-	askTurn chan turn
+	askGame       chan chan run
+	askGameParams chan string
+	askTurn       chan turn
 }
 
 type app struct {
@@ -64,12 +66,14 @@ func main() {
 		Sys: checkMode(a.Sys),
 		Cnf: a.Cnf,
 		Ch: channels{
-			askGame: make(chan chan run),
-			askTurn: make(chan turn),
+			askGame:       make(chan chan run),
+			askGameParams: make(chan string),
+			askTurn:       make(chan turn),
 		},
 		Runs: make(map[string]*run),
 	}
 	defer close(a.Ch.askGame)
+	defer close(a.Ch.askGameParams)
 	defer close(a.Ch.askTurn)
 
 	//Custom Error Log File + Custom Info Log File
