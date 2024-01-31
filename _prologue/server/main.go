@@ -5,6 +5,7 @@ go build -ldflags="-X 'main.releaseDate=$(date -u +%F_%T)'" -o prologueBin
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -14,7 +15,7 @@ import (
 )
 
 var (
-	version        = "0.5.0"
+	version        = "0.5.1"
 	releaseDate    = "undefined"
 	iLog           *log.Logger
 	configJSONFile = "./private.json"
@@ -61,7 +62,9 @@ func main() {
 
 	// Load Conf
 	var a = new(app)
-	loadJSONFile(configJSONFile, a)
+	//loadJSONFile(configJSONFile, a)
+	loadConfigJSON(a)
+
 	a = &app{
 		Sys: checkMode(a.Sys),
 		Cnf: a.Cnf,
@@ -132,4 +135,36 @@ func createCustomErrorLogFile(f string) *os.File {
 	}
 	log.SetOutput(mylog)
 	return mylog
+}
+
+func loadConfigJSON(a *app) {
+	err := json.Unmarshal(getConfigJSON(), a)
+	if err != nil {
+		log.Fatal("Error parsing JSON config => \n", err)
+	}
+}
+
+func ExamplegetConfigJSON() (configjson []byte) {
+	configjson = []byte(`
+	{
+		"system": {
+			"mode": "dev",
+			"host": "localhost",
+			"port": 3000,
+			"errorsLogFile": "/path/to/errors.log",
+			"infoLogFile": "/path/to/info.log",
+			"devHosts": [
+				"dev1",
+				"dev2"
+			]
+		},
+		"config": {
+			"surnameFile": "./aux/surname.txt",
+			"tokenLength": 10,
+			"nickChars": 8,
+			"nickIntegers": 4
+		}
+	}
+	`)
+	return
 }

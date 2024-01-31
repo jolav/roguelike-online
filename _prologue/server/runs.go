@@ -11,6 +11,12 @@ import (
 
 type runs map[string]*run
 
+func (rs runs) delete(token string) {
+	if rs.exists(token) {
+		delete(rs, token)
+	}
+}
+
 func (rs runs) exists(token string) bool {
 	_, ok := rs[token]
 	if ok {
@@ -36,9 +42,16 @@ func (rs runs) newRun(c config, cols, rows int) *run {
 		counter:     0,
 		gameOver:    false,
 		validAction: true,
-		pj:          *newPlayer(),
+		pj:          player{}, //*newPlayer(),
+		zoneMap:     zoneMap{},
 	}
-	r.zoneMap = generateShelterLevelFitsScreen(*r.rnd, cols, rows)
+	r.zoneMap = newGameMap(*r.rnd, cols, rows)
+	r.pj = *newPlayer(r.zoneMap)
+	/* COPIAR ESTE PATRON
+	   https://github.com/jolav/roguelike-online/blob/63c888300f96575ee1acb24aa4f619b061c986ce/_prologue/server/run.js
+	*/
+
+	// center player
 	//prettyPrintStruct(r)
 	return r
 }

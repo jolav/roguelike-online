@@ -59,11 +59,11 @@ func (pj *player) move(action string, m zoneMap) bool {
 		pj.Target.Y--
 	}
 	isDiagonal := sliceContainsString(action, diagonalMovements)
-	if pj.tileIsWalkable(m) && !isDiagonal {
+	if pj.isTargetWalkable(m) && !isDiagonal {
 		pj.Actual = pj.Target
 		return true
 	}
-	if isDiagonal && pj.diagonalDontDisturb(action, m) && pj.tileIsWalkable(m) {
+	if isDiagonal && pj.canMoveDiagonal(action, m) && pj.isTargetWalkable(m) {
 		pj.Actual = pj.Target
 		return true
 	}
@@ -71,7 +71,15 @@ func (pj *player) move(action string, m zoneMap) bool {
 	return false
 }
 
-func (pj *player) diagonalDontDisturb(action string, m zoneMap) bool {
+func (pj *player) isTargetWalkable(m zoneMap) bool {
+	can := false
+	if m.tiles[pj.Target.Y][pj.Target.X].Walkable {
+		can = true
+	}
+	return can
+}
+
+func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 	switch action {
 	case "UPRIGHT":
 		if !m.tiles[pj.Actual.Y-1][pj.Actual.X].Walkable {
@@ -105,24 +113,18 @@ func (pj *player) diagonalDontDisturb(action string, m zoneMap) bool {
 	return true
 }
 
-func (pj *player) tileIsWalkable(m zoneMap) bool {
-	can := false
-	if m.tiles[pj.Target.Y][pj.Target.X].Walkable {
-		can = true
-	}
-	return can
-}
-
-func newPlayer() *player {
+func newPlayer(m zoneMap) *player {
+	var x = len(m.tiles[0]) / 2
+	var y = len(m.tiles) / 2
 	pj := &player{
 		components.Position{
 			Actual: components.Point{
-				X: 5,
-				Y: 5,
+				X: x,
+				Y: y,
 			},
 			Target: components.Point{
-				X: 5,
-				Y: 5,
+				X: x,
+				Y: y,
 			},
 		},
 	}

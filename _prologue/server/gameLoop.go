@@ -19,6 +19,7 @@ func (a *app) gameLoop() {
 			cols, rows = paramCamValues(askGameParams)
 
 		case askRun := <-a.Ch.askGame:
+			fmt.Println("NewGame")
 			r := rs.newRun(a.Cnf, cols, rows)
 			rs[r.token] = r
 			askRun <- *r
@@ -26,8 +27,6 @@ func (a *app) gameLoop() {
 		case askTurn := <-a.Ch.askTurn:
 			cols, rows = paramCamValues(askTurn.cam)
 			r := rs[askTurn.token]
-			//r.zoneMap.cam.cols = cols
-			//r.zoneMap.cam.rows = rows
 			action := askTurn.action
 			fmt.Printf("Turn %d , action %s\n", r.turn, action)
 			r.validAction = r.pj.action(action, r.zoneMap)

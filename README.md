@@ -1,5 +1,5 @@
+![Game](https://img.shields.io/badge/Prologue-0.5.1-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/Prologue-0.5.0-orange.svg) 
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
@@ -13,6 +13,7 @@
 - [X] **Prologue.0.3.0 Basic Authentication**  
 - [X] **Prologue.0.4.0 Moving around @**  
 - [X] **Prologue.0.5.0 Basic Map**   
+- [X] **Prologue.0.5.1 code refactoring**  
 - [ ] **Prologue.0.6.0 Camera**  
 - [ ] **Prologue.0.7.0 Field of View**  
 - [ ] **Prologue.0.8.0 Generating Shelter**  
@@ -29,7 +30,6 @@
 - **CLIENT**  
 - [ ] **Sound effects**  
 - [X] **Turn counter into datetime**  
-- [ ] **Show PJ position ??**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-items-foes-player**  
@@ -68,6 +68,7 @@
 - [ ] **mark visited items using visited tiles**   
 - [ ] **array with rooms**  
 - **OPTIONALS**   
+- [ ] **Show PJ position- maybe as a skill**  
 - [ ] **move, melee and ranged combat animations**  
 - [ ] **info about criatures/npc must be unblocked**  
 - [ ] **R highligths all criatures/npcs same color except the one selected**  

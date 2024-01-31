@@ -3,11 +3,11 @@
 package main
 
 type clientDataTurn struct {
-	Turn        int      `json:"turn"`
-	GameOver    bool     `json:"gameOver"`
-	ValidAction bool     `json:"validAction"`
-	PJ          player   `json:"pj"`
-	View        [][]tile `json:"view"`
+	Turn        int    `json:"turn"`
+	GameOver    bool   `json:"gameOver"`
+	ValidAction bool   `json:"validAction"`
+	PJ          player `json:"pj"`
+	View        tiles  `json:"view"`
 }
 
 func processTurn(r run) clientDataTurn {
@@ -21,12 +21,12 @@ func processTurn(r run) clientDataTurn {
 }
 
 type clientDataNewGame struct {
-	Nick     string   `json:"nick"`
-	Token    string   `json:"token"`
-	Turn     int      `json:"turn"`
-	GameOver bool     `json:"gameOver"`
-	PJ       player   `json:"pj"`
-	View     [][]tile `json:"view"`
+	Nick     string `json:"nick"`
+	Token    string `json:"token"`
+	Turn     int    `json:"turn"`
+	GameOver bool   `json:"gameOver"`
+	PJ       player `json:"pj"`
+	View     tiles  `json:"view"`
 }
 
 func processNewGame(r run) clientDataNewGame {
