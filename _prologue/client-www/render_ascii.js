@@ -56,8 +56,8 @@ const draw = {
     ctx.beginPath();
   },
   player: function () {
-    const x = t.pj.pos.now.x; //- t.cam.x;
-    const y = t.pj.pos.now.y; //- t.cam.y;
+    const x = t.pj.pos.now.x - t.cam.x;
+    const y = t.pj.pos.now.y - t.cam.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
     ctx.fillText("@", (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);//,

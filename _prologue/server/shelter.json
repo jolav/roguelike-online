@@ -6,8 +6,8 @@
     "MIN_CORRIDOR_LENGTH": 5,
     "MAX_CORRIDOR_LENGTH": 20,
     "CORRIDOR_ODDS": 0,
-    "MAP_COLS": 59,
-    "MAP_ROWS": 40,
+    "MAP_COLS": 90,
+    "MAP_ROWS": 62,
     "MAX_NPCS": 60
   },
   "2": {
@@ -17,8 +17,8 @@
     "MIN_CORRIDOR_LENGTH": 0,
     "MAX_CORRIDOR_LENGTH": 0,
     "CORRIDOR_ODDS": 0,
-    "MAP_COLS": 80,
-    "MAP_ROWS": 0,
+    "MAP_COLS": 59,
+    "MAP_ROWS": 40,
     "MAX_NPCS": 0
   }
 }

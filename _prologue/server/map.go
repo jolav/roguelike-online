@@ -61,8 +61,8 @@ func newGameMap(rnd rand.Rand, camCols, camRows int) zoneMap {
 		tiles: nil,
 	}
 	//prettyPrintStructExported(m.c)
-	var option = 0
-	var cols = [2]int{m.cam.cols, m.c.MAP_COLS} // adjunst map to screen
+	var option = 1
+	var cols = [2]int{m.cam.cols, m.c.MAP_COLS} // adjust map to screen
 	var rows = [2]int{m.cam.rows, m.c.MAP_ROWS}
 	m.tiles = m.generateShelter(cols[option], rows[option])
 	return m

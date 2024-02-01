@@ -13,7 +13,10 @@ const ask = {
     t = await fetchAPI.game(c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
+    c.CAM_COLS = t.view[0].length;
+    c.CAM_ROWS = t.view.length;
     //console.log('GAME,', t);
+
     render.ascii();
   },
   turn: async function (action) {
