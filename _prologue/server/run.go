@@ -15,6 +15,7 @@ type run struct {
 	counter     int
 	gameOver    bool
 	validAction bool
+	cam         camera
 	pj          player
 	zoneMap     zoneMap
 }

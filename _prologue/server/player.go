@@ -60,14 +60,14 @@ func (pj *player) move(action string, m zoneMap) bool {
 	}
 	isDiagonal := sliceContainsString(action, diagonalMovements)
 	if pj.isTargetWalkable(m) && !isDiagonal {
-		pj.Actual = pj.Target
+		pj.Current = pj.Target
 		return true
 	}
 	if isDiagonal && pj.canMoveDiagonal(action, m) && pj.isTargetWalkable(m) {
-		pj.Actual = pj.Target
+		pj.Current = pj.Target
 		return true
 	}
-	pj.Target = pj.Actual
+	pj.Target = pj.Current
 	return false
 }
 
@@ -82,31 +82,31 @@ func (pj *player) isTargetWalkable(m zoneMap) bool {
 func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 	switch action {
 	case "UPRIGHT":
-		if !m.tiles[pj.Actual.Y-1][pj.Actual.X].Walkable {
+		if !m.tiles[pj.Current.Y-1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Actual.Y][pj.Actual.X+1].Walkable {
+		if !m.tiles[pj.Current.Y][pj.Current.X+1].Walkable {
 			return false
 		}
 	case "DOWNRIGHT":
-		if !m.tiles[pj.Actual.Y+1][pj.Actual.X].Walkable {
+		if !m.tiles[pj.Current.Y+1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Actual.Y][pj.Actual.X+1].Walkable {
+		if !m.tiles[pj.Current.Y][pj.Current.X+1].Walkable {
 			return false
 		}
 	case "DOWNLEFT":
-		if !m.tiles[pj.Actual.Y+1][pj.Actual.X].Walkable {
+		if !m.tiles[pj.Current.Y+1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Actual.Y][pj.Actual.X-1].Walkable {
+		if !m.tiles[pj.Current.Y][pj.Current.X-1].Walkable {
 			return false
 		}
 	case "UPLEFT":
-		if !m.tiles[pj.Actual.Y-1][pj.Actual.X].Walkable {
+		if !m.tiles[pj.Current.Y-1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Actual.Y][pj.Actual.X-1].Walkable {
+		if !m.tiles[pj.Current.Y][pj.Current.X-1].Walkable {
 			return false
 		}
 	}
@@ -118,13 +118,17 @@ func newPlayer(m zoneMap) *player {
 	var y = len(m.tiles) / 2
 	pj := &player{
 		components.Position{
-			Actual: components.Point{
+			Current: components.Point{
 				X: x,
 				Y: y,
 			},
 			Target: components.Point{
 				X: x,
 				Y: y,
+			},
+			View: components.Point{
+				X: -1,
+				Y: -1,
 			},
 		},
 	}

@@ -1,24 +1,24 @@
 {
   "1": {
-    "MAX_ROOMS": 100,
-    "MIN_SIZE_ROOM": 4,
-    "MAX_SIZE_ROOM": 12,
-    "MIN_CORRIDOR_LENGTH": 5,
-    "MAX_CORRIDOR_LENGTH": 20,
-    "CORRIDOR_ODDS": 0,
-    "MAP_COLS": 90,
-    "MAP_ROWS": 62,
-    "MAX_NPCS": 60
+    "rooms": 100,
+    "room_min_size": 4,
+    "room_max_size": 12,
+    "corridor_min_length": 5,
+    "corridor_max_length": 20,
+    "corridor_odds": 0,
+    "cols": 61,
+    "rows": 42,
+    "npcs": 60
   },
   "2": {
-    "MAX_ROOMS": 0,
-    "MIN_SIZE_ROOM": 0,
-    "MAX_SIZE_ROOM": 0,
-    "MIN_CORRIDOR_LENGTH": 0,
-    "MAX_CORRIDOR_LENGTH": 0,
-    "CORRIDOR_ODDS": 0,
-    "MAP_COLS": 59,
-    "MAP_ROWS": 40,
-    "MAX_NPCS": 0
+    "rooms": 0,
+    "room_min_size": 0,
+    "room_max_size": 0,
+    "corridor_min_length": 0,
+    "corridor_max_length": 0,
+    "corridor_odds": 0,
+    "cols": 59,
+    "rows": 40,
+    "npcs": 0
   }
 }

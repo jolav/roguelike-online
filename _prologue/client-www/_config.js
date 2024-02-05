@@ -20,6 +20,8 @@ const c = {
   CAM_ROWS: undefined,
   CAM_DELTA_X: undefined,
   CAM_DELTA_Y: undefined,
+  VIEW_COLS: undefined,
+  VIEW_ROWS: undefined,
   // Game
   NICK: "",
   TOKEN: "",

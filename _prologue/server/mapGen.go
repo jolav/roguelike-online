@@ -25,42 +25,50 @@ type feature struct {
 	Height int
 }
 
-func (m zoneMap) generateShelter(cols, rows int) [][]tile {
-	m.tiles = m.fillMapWith(cols, rows, "floor")
-	m.cleanRoom(cols, rows, "wall")
-	m.putColumns(100, cols, rows, m.rnd)
+func (m zoneMap) generateShelter() [][]tile {
+	m.tiles = m.createMap()
+	m.fillMapWith("floor")
+	m.cleanRoom("wall")
+	//m.putColumns(10, m.rnd)
 	return m.tiles
 }
 
-func (m zoneMap) putColumns(many, cols, rows int, rnd rand.Rand) {
+func (m zoneMap) putColumns(many int, rnd rand.Rand) {
 	for c := 0; c < many; c++ {
-		x := randomInt(1, cols-1, rnd)
-		y := randomInt(1, rows-1, rnd)
+		x := randomInt(1, m.k.COLS-1, rnd)
+		y := randomInt(1, m.k.ROWS-1, rnd)
 		if m.tiles[y][x].Walkable == true {
 			m.tiles[y][x] = tile{}.create("wall")
 		}
 	}
 }
 
-func (m zoneMap) cleanRoom(cols, rows int, fill string) {
-	for y := 0; y < rows; y++ {
-		for x := 0; x < cols; x++ {
-			if y == 0 || x == 0 || x == cols-1 || y == rows-1 {
+func (m zoneMap) cleanRoom(fill string) {
+	for y := 0; y < m.k.ROWS; y++ {
+		for x := 0; x < m.k.COLS; x++ {
+			if y == 0 || x == 0 || x == m.k.COLS-1 || y == m.k.ROWS-1 {
 				m.tiles[y][x] = tile{}.create(fill)
 			}
 		}
 	}
 }
-
-func (m zoneMap) fillMapWith(cols, rows int, fill string) [][]tile {
-	tiles := make([][]tile, rows)
-	for i := range tiles {
-		tiles[i] = make([]tile, cols)
+func (m zoneMap) createMap() [][]tile {
+	m.tiles = make([][]tile, m.k.ROWS)
+	for i := range m.tiles {
+		m.tiles[i] = make([]tile, m.k.COLS)
 	}
-	for y := 0; y < rows; y++ {
-		for x := 0; x < cols; x++ {
-			tiles[y][x] = tile{}.create(fill)
+	for y := 0; y < m.k.ROWS; y++ {
+		for x := 0; x < m.k.COLS; x++ {
+			m.tiles[y][x] = tile{}
 		}
 	}
-	return tiles
+	return m.tiles
+}
+
+func (m zoneMap) fillMapWith(fill string) {
+	for y := 0; y < m.k.ROWS; y++ {
+		for x := 0; x < m.k.COLS; x++ {
+			m.tiles[y][x] = tile{}.create(fill)
+		}
+	}
 }

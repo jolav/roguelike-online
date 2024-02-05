@@ -10,25 +10,25 @@ import (
 
 func (a *app) gameLoop() {
 	var rs = a.Runs
-	var cols int
-	var rows int
+	var camCols int
+	var camRows int
 	for {
 		select {
 
 		case askGameParams := <-a.Ch.askGameParams:
-			cols, rows = paramCamValues(askGameParams)
+			camCols, camRows = paramCamValues(askGameParams)
 
 		case askRun := <-a.Ch.askGame:
-			fmt.Println("NewGame")
-			r := rs.newRun(a.Cnf, cols, rows)
+			fmt.Println("##### Asking for a New Game")
+			r := rs.newRun(a.Cnf, camCols, camRows)
 			rs[r.token] = r
 			askRun <- *r
 
 		case askTurn := <-a.Ch.askTurn:
-			cols, rows = paramCamValues(askTurn.cam)
+			camCols, camRows = paramCamValues(askTurn.cam)
 			r := rs[askTurn.token]
 			action := askTurn.action
-			fmt.Printf("Turn %d , action %s\n", r.turn, action)
+			fmt.Printf("##### Turn %d , action %s\n", r.turn, action)
 			r.validAction = r.pj.action(action, r.zoneMap)
 			if r.validAction {
 				r.turn++
@@ -40,15 +40,15 @@ func (a *app) gameLoop() {
 }
 
 func paramCamValues(params string) (int, int) {
-	cols := 0
-	rows := 0
-	cols, err := strconv.Atoi((strings.Split(params, "_")[0]))
+	camCols := 0
+	camRows := 0
+	camCols, err := strconv.Atoi((strings.Split(params, "_")[0]))
 	if err != nil {
-		cols = 0
+		camCols = 0
 	}
-	rows, err = strconv.Atoi((strings.Split(params, "_")[1]))
+	camRows, err = strconv.Atoi((strings.Split(params, "_")[1]))
 	if err != nil {
-		rows = 0
+		camRows = 0
 	}
-	return cols, rows
+	return camCols, camRows
 }

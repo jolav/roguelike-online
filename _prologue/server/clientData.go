@@ -5,83 +5,87 @@ package main
 import "roguelike-online/_prologue/server/components"
 
 type clientDataTurn struct {
-	Turn        int              `json:"turn"`
-	GameOver    bool             `json:"gameOver"`
-	ValidAction bool             `json:"validAction"`
-	PJ          player           `json:"pj"`
-	Cam         components.Point `json:"cam"`
-	View        tiles            `json:"view"`
+	Turn        int    `json:"turn"`
+	GameOver    bool   `json:"gameOver"`
+	ValidAction bool   `json:"validAction"`
+	PJ          player `json:"pj"`
+	Cam         camera `json:"cam"`
+	View        tiles  `json:"view"`
 }
 
 func processTurn(r run) clientDataTurn {
-	cam := updateCam(r)
+	r.cam = r.cam.updateCam(r)
+	r.pj.View = updatePjView(r)
 	cd := clientDataTurn{
 		Turn:     r.turn,
 		GameOver: r.gameOver,
 		PJ:       r.pj,
-		Cam:      cam,
-		View:     from2Dto1D(r.zoneMap, cam),
+		Cam:      r.cam,
+		View:     fromMapToView(r),
 	}
 	return cd
 }
 
 type clientDataNewGame struct {
-	Nick     string           `json:"nick"`
-	Token    string           `json:"token"`
-	Turn     int              `json:"turn"`
-	GameOver bool             `json:"gameOver"`
-	PJ       player           `json:"pj"`
-	Cam      components.Point `json:"cam"`
-	View     tiles            `json:"view"`
+	Nick     string `json:"nick"`
+	Token    string `json:"token"`
+	Turn     int    `json:"turn"`
+	GameOver bool   `json:"gameOver"`
+	PJ       player `json:"pj"`
+	Cam      camera `json:"cam"`
+	View     tiles  `json:"view"`
 }
 
 func processNewGame(r run) clientDataNewGame {
-	cam := updateCam(r)
+	r.cam = r.cam.updateCam(r)
+	r.pj.View = updatePjView(r)
 	cd := clientDataNewGame{
 		Nick:     r.nick,
 		Token:    r.token,
 		Turn:     r.turn,
 		GameOver: r.gameOver,
 		PJ:       r.pj,
-		Cam:      cam,
-		View:     from2Dto1D(r.zoneMap, cam),
+		Cam:      r.cam,
+		View:     fromMapToView(r),
 	}
 	return cd
 }
 
-func updateCam(r run) components.Point {
-	m := r.zoneMap
-	cam := r.zoneMap.cam
-	pj := r.pj
-	rows := len(m.tiles)
-	cols := len(m.tiles[0])
-
-	cam.X = pj.Actual.X - (cam.cols / 2)
-	cam.Y = pj.Actual.Y - (cam.rows / 2)
-	if cam.X < 0 {
-		cam.X = 0
-	}
-	if cam.X+cam.cols > cols {
-		cam.X = cols - cam.cols
-	}
-	if cam.Y < 0 {
-		cam.Y = 0
-	}
-	if cam.Y+cam.rows > rows {
-		cam.Y = rows - cam.rows
-	}
-	return components.Point{
-		X: cam.X,
-		Y: cam.Y,
-	}
+func updatePjView(r run) components.Point {
+	var p = r.pj.View
+	p.X = r.pj.Current.X - r.cam.X
+	p.Y = r.pj.Current.Y - r.cam.Y
+	return p
 }
 
-func from2Dto1D(m zoneMap, cam components.Point) [][]tile {
-	res := m.fillMapWith(m.cam.cols, m.cam.rows, "unknown")
-	for y := 0; y < m.cam.rows; y++ {
-		for x := 0; x < m.cam.cols; x++ {
-			res[y][x] = m.tiles[y+cam.Y][x+cam.X]
+func fromMapToView(r run) [][]tile {
+	var cols = r.cam.cols
+	var rows = r.cam.rows
+	if r.cam.cols > r.zoneMap.k.COLS {
+		cols = r.zoneMap.k.COLS
+	}
+	if r.cam.rows > r.zoneMap.k.ROWS {
+		rows = r.zoneMap.k.ROWS
+	}
+	res := createMapAndfillWith(cols, rows, "unknown")
+
+	for y := 0; y < rows; y++ {
+		for x := 0; x < cols; x++ {
+			res[y][x] = r.zoneMap.tiles[y+r.cam.Y][x+r.cam.X]
 		}
 	}
 	return res
+}
+
+func createMapAndfillWith(cols, rows int, fill string) [][]tile {
+	tiles := make([][]tile, rows)
+	for i := range tiles {
+		tiles[i] = make([]tile, cols)
+	}
+	for y := 0; y < rows; y++ {
+		for x := 0; x < cols; x++ {
+			tiles[y][x] = tile{}.create(fill)
+		}
+	}
+	return tiles
 }

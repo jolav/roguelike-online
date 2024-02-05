@@ -9,21 +9,20 @@ import (
 type zonesConf []zoneConf
 
 type zoneConf struct {
-	MAX_ROOMS           int `json:"max_rooms"`
-	MIN_SIZE_ROOM       int `json:"min_size_room"`
-	MAX_SIZE_ROOM       int `json:"max_size_room"`
-	MIN_CORRIDOR_LENGTH int `json:"min_corridor_length"`
-	MAX_CORRIDOR_LENGTH int `json:"max_corridor_length"`
+	ROOMS               int `json:"rooms"`
+	ROOM_MIN_SIZE       int `json:"room_min_size"`
+	ROOM_MAX_SIZE       int `json:"room_max_size"`
+	CORRIDOR_MIN_LENGTH int `json:"corridor_min_length"`
+	CORRIDOR_MAX_LENGTH int `json:"corridor_max_length"`
 	CORRIDOR_ODDS       int `json:"corridor_odds"`
-	MAP_COLS            int `json:"map_cols"`
-	MAP_ROWS            int `json:"map_rows"`
-	MAX_NPCS            int `json:"max_npcs"`
+	COLS                int `json:"cols"`
+	ROWS                int `json:"rows"`
+	NPCS                int `json:"pcs"`
 }
 
 type zoneMap struct {
 	id  int
-	c   zoneConf
-	cam camera
+	k   zoneConf
 	rnd rand.Rand
 	tiles
 }
@@ -50,20 +49,20 @@ func (t tile) create(terrain string) tile {
 	return tile{}
 }
 
-func newGameMap(rnd rand.Rand, camCols, camRows int) zoneMap {
+func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 	zones := make(map[string]zoneConf)
 	loadJSONFile("./shelter.json", &zones)
 	m := zoneMap{
 		id:    1,
-		c:     zones["1"],
-		cam:   *newCamera(camCols, camRows),
+		k:     zones["1"],
 		rnd:   rnd,
-		tiles: nil,
+		tiles: [][]tile{},
 	}
-	//prettyPrintStructExported(m.c)
-	var option = 1
-	var cols = [2]int{m.cam.cols, m.c.MAP_COLS} // adjust map to screen
-	var rows = [2]int{m.cam.rows, m.c.MAP_ROWS}
-	m.tiles = m.generateShelter(cols[option], rows[option])
+	var option = 1 // 0 => adjust map to screen for testing
+	if option == 0 {
+		m.k.COLS = cam.cols
+		m.k.ROWS = cam.rows
+	}
+	m.tiles = m.generateShelter()
 	return m
 }
