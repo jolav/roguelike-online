@@ -18,4 +18,5 @@ type run struct {
 	cam         camera
 	pj          player
 	zoneMap     zoneMap
+	fov         fiedOfVision
 }

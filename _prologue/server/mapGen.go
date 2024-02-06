@@ -29,7 +29,7 @@ func (m zoneMap) generateShelter() [][]tile {
 	m.tiles = m.createMap()
 	m.fillMapWith("floor")
 	m.cleanRoom("wall")
-	//m.putColumns(10, m.rnd)
+	m.putColumns(100, m.rnd)
 	return m.tiles
 }
 

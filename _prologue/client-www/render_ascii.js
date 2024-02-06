@@ -34,8 +34,7 @@ const draw = {
       for (let x = 0; x < c.VIEW_COLS; x++) {
         const tile = t.view[y][x];
         const char = aux.mapSymbol(tile.terrain);
-        //let color;
-        let color = "#fff";
+        let color; //= "#fff";
         if (tile.visible) {
           color = aux.colorOfEntity("visible");
         } else if (tile.explored) {
@@ -89,7 +88,8 @@ const draw = {
       ctx.moveTo(pH, y);
       ctx.lineTo(canvas.width - pH, y);
     }
-    ctx.strokeStyle = "#3e4547";
+    ctx.strokeStyle = "#323535";
+
     ctx.stroke();
   },
 
@@ -125,7 +125,7 @@ const legend = new Map([
 const colors = new Map([
   ["player", "burlywood"],
   ["visible", "#fff"],
-  ["explored", "#646a6b"],
+  ["explored", "#464a4a"],
   ["rat", "DeepPink"],
   ["mole rat", "DeepPink"],
   ["item", "orange"],

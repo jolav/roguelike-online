@@ -31,6 +31,7 @@ func (a *app) gameLoop() {
 			fmt.Printf("##### Turn %d , action %s\n", r.turn, action)
 			r.validAction = r.pj.action(action, r.zoneMap)
 			if r.validAction {
+				r.fov.rayCast(*r)
 				r.turn++
 			}
 			askTurn.comm <- *r

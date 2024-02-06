@@ -58,7 +58,7 @@ func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 		rnd:   rnd,
 		tiles: [][]tile{},
 	}
-	var option = 1 // 0 => adjust map to screen for testing
+	var option = 0 // 0 => adjust map to screen for testing
 	if option == 0 {
 		m.k.COLS = cam.cols
 		m.k.ROWS = cam.rows

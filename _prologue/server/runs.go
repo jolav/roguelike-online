@@ -45,9 +45,11 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 		cam:         *newCamera(camCols, camRows),
 		pj:          player{},
 		zoneMap:     zoneMap{},
+		fov:         fiedOfVision{}.initFOV(),
 	}
 	r.zoneMap = newGameMap(*r.rnd, r.cam)
 	r.pj = *newPlayer(r.zoneMap)
+	r.fov.rayCast(*r)
 	//prettyPrintStruct(r)
 	return r
 }
