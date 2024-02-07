@@ -38,7 +38,7 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 		token:       token,
 		turn:        0,
 		seed:        seed,
-		rnd:         rand.New(rand.NewSource(1)),
+		rnd:         rand.New(rand.NewSource(seed)),
 		counter:     0,
 		gameOver:    false,
 		validAction: true,

@@ -18,6 +18,7 @@ type zoneConf struct {
 	COLS                int `json:"cols"`
 	ROWS                int `json:"rows"`
 	NPCS                int `json:"pcs"`
+	TRIES               int `json:"-"`
 }
 
 type zoneMap struct {
@@ -58,7 +59,8 @@ func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 		rnd:   rnd,
 		tiles: [][]tile{},
 	}
-	var option = 0 // 0 => adjust map to screen for testing
+	m.k.TRIES = 9999
+	var option = 1 // 0 => adjust map to screen for testing
 	if option == 0 {
 		m.k.COLS = cam.cols
 		m.k.ROWS = cam.rows

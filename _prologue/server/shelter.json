@@ -1,13 +1,13 @@
 {
   "1": {
-    "rooms": 100,
+    "rooms": 200,
     "room_min_size": 4,
     "room_max_size": 12,
-    "corridor_min_length": 5,
-    "corridor_max_length": 20,
+    "corridor_min_length": 2,
+    "corridor_max_length": 10,
     "corridor_odds": 0,
-    "cols": 61,
-    "rows": 42,
+    "cols": 120,
+    "rows": 70,
     "npcs": 60
   },
   "2": {

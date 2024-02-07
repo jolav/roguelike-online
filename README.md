@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.7.0-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.8.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -17,7 +17,7 @@
 - [X] **Prologue.0.6.0 Camera**  
 - [X] **Prologue.0.6.1 code refactoring**  
 - [X] **Prologue.0.7.0 Field of View**  
-- [ ] **Prologue.0.8.0 Generating Shelter**  
+- [X] **Prologue.0.8.0 Generating Shelter**  
 - [ ] **Prologue.0.9.0 Saving/Loading Runs**  
 - [ ] **Prologue.0.10.0 Placing and Moving Enemies**  
 - [ ] **Prologue.0.11.0 Turn Time System**  
@@ -61,7 +61,9 @@
 - [ ] **manage runs, set a maximun**  
 - [ ] **save in files and delete runs from memory after some inactivity**  
 - **MAPS**  
+- [ ] **random pj start point**  
 - [ ] **Remove dead end corridors ??**  
+- [ ] **check all map is connected**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  
 - [ ] **add furniture**  

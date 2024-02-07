@@ -28,8 +28,8 @@ func (f fiedOfVision) rayCast(r run) {
 	// clean map
 	for y := 0; y < r.zoneMap.k.ROWS; y++ {
 		for x := 0; x < r.zoneMap.k.COLS; x++ {
-			//r.zoneMap.tiles[y][x].Visible = true // see all map to see bugs
-			r.zoneMap.tiles[y][x].Visible = false
+			r.zoneMap.tiles[y][x].Visible = true // see all map to see bugs
+			//r.zoneMap.tiles[y][x].Visible = false
 		}
 	}
 	// mark player
