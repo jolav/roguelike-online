@@ -36,7 +36,7 @@ section#landingPage .buttons {
   justify-content: space-around;
 }
 
-section#landingPage .buttons div#newGame, div#prototype {
+section#landingPage .buttons div#newGame, div#prototype, div#loadGame {
   background-color: #ffffff;
   border-radius: 2em;
   color: #293133;
@@ -45,7 +45,7 @@ section#landingPage .buttons div#newGame, div#prototype {
   font-weight: bold;
 }
 
-section#landingPage .buttons div#newGame:hover, div#prototype:hover {
+section#landingPage .buttons div#newGame:hover, div#prototype:hover, div#loadGame:hover {
   background-color: #454545;
   color: #ffffff;
   cursor: pointer;

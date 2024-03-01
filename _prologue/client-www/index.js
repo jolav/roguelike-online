@@ -23,7 +23,10 @@ const init = {
     document.getElementById("playZone").style.display = "none";
     await init.ping(); // once at least to get version
     document.getElementById("ping").style.color = "#61868d";
-    document.getElementById("newGame").addEventListener("click", init.play);
+    document.getElementById("newGame").addEventListener("click", function () {
+      clearTimeout(pinger);
+      init.play();
+    });
     document.getElementById("prototype").addEventListener("click", function () {
       window.location.href = c.PROTOTYPE_URL;
     });

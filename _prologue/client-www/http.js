@@ -6,7 +6,7 @@ import * as render from "./render_ascii.js";
 let t;
 
 const ask = {
-  ping: function name() {
+  ping: function () {
     return fetchAPI.ping();
   },
   game: async function () {
