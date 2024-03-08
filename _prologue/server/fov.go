@@ -26,16 +26,16 @@ func (f fiedOfVision) initFOV() fiedOfVision {
 
 func (f fiedOfVision) rayCast(r run) {
 	// clean map
-	for y := 0; y < r.zoneMap.k.ROWS; y++ {
-		for x := 0; x < r.zoneMap.k.COLS; x++ {
-			r.zoneMap.tiles[y][x].Visible = true // see all map to see bugs
-			//r.zoneMap.tiles[y][x].Visible = false
+	for y := 0; y < r.zoneMap.K.ROWS; y++ {
+		for x := 0; x < r.zoneMap.K.COLS; x++ {
+			r.zoneMap.Tiles[y][x].Visible = true // see all map to see bugs
+			//r.zoneMap.Tiles[y][x].Visible = false
 		}
 	}
 	// mark player
 	var pX, pY = r.pj.Current.X, r.pj.Current.Y
-	r.zoneMap.tiles[pY][pX].Explored = true
-	r.zoneMap.tiles[pY][pX].Visible = true
+	r.zoneMap.Tiles[pY][pX].Explored = true
+	r.zoneMap.Tiles[pY][pX].Visible = true
 
 	losLength := r.fov.losRadius
 
@@ -48,13 +48,13 @@ func (f fiedOfVision) rayCast(r run) {
 			y += f.cos[i]
 			roundedX := int(round(x))
 			roundedY := int(round(y))
-			if x < 0 || x > float64(r.zoneMap.k.COLS-1) ||
-				y < 0 || y > float64(r.zoneMap.k.ROWS-1) {
+			if x < 0 || x > float64(r.zoneMap.K.COLS-1) ||
+				y < 0 || y > float64(r.zoneMap.K.ROWS-1) {
 				break
 			}
-			r.zoneMap.tiles[roundedY][roundedX].Explored = true
-			r.zoneMap.tiles[roundedY][roundedX].Visible = true
-			if r.zoneMap.tiles[roundedY][roundedX].BlockLOS {
+			r.zoneMap.Tiles[roundedY][roundedX].Explored = true
+			r.zoneMap.Tiles[roundedY][roundedX].Visible = true
+			if r.zoneMap.Tiles[roundedY][roundedX].BlockLOS {
 				break
 			}
 		}

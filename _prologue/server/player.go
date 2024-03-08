@@ -73,7 +73,7 @@ func (pj *player) move(action string, m zoneMap) bool {
 
 func (pj *player) isTargetWalkable(m zoneMap) bool {
 	can := false
-	if m.tiles[pj.Target.Y][pj.Target.X].Walkable {
+	if m.Tiles[pj.Target.Y][pj.Target.X].Walkable {
 		can = true
 	}
 	return can
@@ -82,31 +82,31 @@ func (pj *player) isTargetWalkable(m zoneMap) bool {
 func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 	switch action {
 	case "UPRIGHT":
-		if !m.tiles[pj.Current.Y-1][pj.Current.X].Walkable {
+		if !m.Tiles[pj.Current.Y-1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Current.Y][pj.Current.X+1].Walkable {
+		if !m.Tiles[pj.Current.Y][pj.Current.X+1].Walkable {
 			return false
 		}
 	case "DOWNRIGHT":
-		if !m.tiles[pj.Current.Y+1][pj.Current.X].Walkable {
+		if !m.Tiles[pj.Current.Y+1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Current.Y][pj.Current.X+1].Walkable {
+		if !m.Tiles[pj.Current.Y][pj.Current.X+1].Walkable {
 			return false
 		}
 	case "DOWNLEFT":
-		if !m.tiles[pj.Current.Y+1][pj.Current.X].Walkable {
+		if !m.Tiles[pj.Current.Y+1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Current.Y][pj.Current.X-1].Walkable {
+		if !m.Tiles[pj.Current.Y][pj.Current.X-1].Walkable {
 			return false
 		}
 	case "UPLEFT":
-		if !m.tiles[pj.Current.Y-1][pj.Current.X].Walkable {
+		if !m.Tiles[pj.Current.Y-1][pj.Current.X].Walkable {
 			return false
 		}
-		if !m.tiles[pj.Current.Y][pj.Current.X-1].Walkable {
+		if !m.Tiles[pj.Current.Y][pj.Current.X-1].Walkable {
 			return false
 		}
 	}
@@ -114,8 +114,8 @@ func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 }
 
 func newPlayer(m zoneMap) *player {
-	var x = len(m.tiles[0]) / 2
-	var y = len(m.tiles) / 2
+	var x = len(m.Tiles[0]) / 2
+	var y = len(m.Tiles) / 2
 	pj := &player{
 		components.Position{
 			Current: components.Point{

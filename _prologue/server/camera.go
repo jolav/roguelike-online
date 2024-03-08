@@ -9,28 +9,28 @@ import (
 type camera struct {
 	//pos Point
 	components.Point
-	cols int
-	rows int
+	Cols int
+	Rows int
 }
 
 func (cam camera) updateCam(r run) camera {
 	m := r.zoneMap
 	pj := r.pj
-	rows := len(m.tiles)
-	cols := len(m.tiles[0])
+	Rows := len(m.Tiles)
+	Cols := len(m.Tiles[0])
 
-	cam.X = pj.Current.X - (cam.cols / 2)
-	cam.Y = pj.Current.Y - (cam.rows / 2)
+	cam.X = pj.Current.X - (cam.Cols / 2)
+	cam.Y = pj.Current.Y - (cam.Rows / 2)
 
-	if cam.X+cam.cols > cols {
-		cam.X = cols - cam.cols
+	if cam.X+cam.Cols > Cols {
+		cam.X = Cols - cam.Cols
 	}
 	if cam.X < 0 {
 		cam.X = 0
 	}
 
-	if cam.Y+cam.rows > rows {
-		cam.Y = rows - cam.rows
+	if cam.Y+cam.Rows > Rows {
+		cam.Y = Rows - cam.Rows
 	}
 	if cam.Y < 0 {
 		cam.Y = 0
@@ -38,7 +38,7 @@ func (cam camera) updateCam(r run) camera {
 	return cam
 }
 
-func newCamera(cols, rows int) *camera {
+func newCamera(Cols, Rows int) *camera {
 	cam := &camera{
 		/*pos: components.Point{
 			X: 0,
@@ -48,8 +48,8 @@ func newCamera(cols, rows int) *camera {
 			X: 0,
 			Y: 0,
 		},
-		cols: cols,
-		rows: rows,
+		Cols: Cols,
+		Rows: Rows,
 	}
 	return cam
 }

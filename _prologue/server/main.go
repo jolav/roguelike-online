@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	version        = "0.8.1"
+	version        = "0.8.2"
 	releaseDate    = "undefined"
 	iLog           *log.Logger
 	configJSONFile = "./private.json"

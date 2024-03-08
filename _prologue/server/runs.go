@@ -53,3 +53,31 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 	//prettyPrintStruct(r)
 	return r
 }
+
+func (rs runs) loadRun(c config, camCols, camRows int, token string) *run {
+	r2 := &runSave{}
+	err := Load("./saves/file.json", r2)
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	fmt.Println(r2.Nick, r2.Seed, r2.Token)
+	r := &run{
+		nick:        r2.Nick,
+		token:       r2.Token,
+		turn:        r2.Turn,
+		seed:        r2.Seed,
+		rnd:         rand.New(rand.NewSource(r2.Seed)),
+		counter:     r2.Counter,
+		gameOver:    false,
+		validAction: true,
+		cam:         *newCamera(camCols, camRows),
+		pj:          r2.Pj,
+		zoneMap:     r2.ZoneMap,
+		fov:         fiedOfVision{}.initFOV(),
+	}
+	//r.zoneMap = newGameMap(*r.rnd, r.cam)
+	//r.pj = *newPlayer(r.zoneMap)
+	r.fov.rayCast(*r)
+	//prettyPrintStruct(r)
+	return r
+}

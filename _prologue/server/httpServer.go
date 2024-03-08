@@ -14,7 +14,7 @@ func (a *app) httpServerUP() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/new", a.newGame)
-	mux.HandleFunc("/load", a.loadGame)
+	mux.HandleFunc("/save", a.saveGame)
 	mux.HandleFunc("/action", a.checkValid(
 		func(w http.ResponseWriter, r *http.Request) {
 			a.action(w, r)
@@ -38,13 +38,18 @@ func (a *app) httpServerUP() {
 }
 
 func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		errorResponse(w, "Bad Request!")
+		return
+	}
 	r.ParseForm()
 	d := r.Form.Get("cam")
+	t := r.Form.Get("token")
 	newRunChannelParams := make(chan string)
 	newRunChannel := make(chan run)
 	defer close(newRunChannelParams)
 	defer close(newRunChannel)
-	a.Ch.askGameParams <- d
+	a.Ch.askGameParams <- d + "-" + t
 	a.Ch.askGame <- newRunChannel
 	var runData run
 	runData = <-newRunChannel
@@ -52,6 +57,10 @@ func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *app) action(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		errorResponse(w, "Bad Request!")
+		return
+	}
 	r.ParseForm()
 	t := turn{
 		token:  r.Form.Get("token"),
@@ -65,15 +74,24 @@ func (a *app) action(w http.ResponseWriter, r *http.Request) {
 	sendJSONToClient(w, processTurn(runData), 200)
 }
 
-func (a *app) loadGame(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("LOADING GAME")
-	type loadGame struct {
+func (a *app) saveGame(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		errorResponse(w, "Bad Request!")
+		return
+	}
+	r.ParseForm()
+	t := turn{
+		token: r.Form.Get("token"),
+	}
+	fmt.Println("TOKEN", t.token)
+	a.Runs[t.token].save()
+	type saveGame struct {
 		Status string `json:"status"`
 	}
-	lg := loadGame{
-		"loading",
+	sg := saveGame{
+		"saved",
 	}
-	sendJSONToClient(w, lg, http.StatusOK)
+	sendJSONToClient(w, sg, http.StatusOK)
 }
 
 func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
@@ -91,6 +109,10 @@ func (a *app) checkValid(next http.HandlerFunc) http.HandlerFunc {
 func (a *app) ping(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	elapsed := time.Since(start).Milliseconds()
+	if r.Method != "GET" {
+		errorResponse(w, "Bad Request!")
+		return
+	}
 	re := responses{
 		Message: int(elapsed),
 		Version: version,

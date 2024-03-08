@@ -22,13 +22,13 @@ type zoneConf struct {
 }
 
 type zoneMap struct {
-	id  int
-	k   zoneConf
+	ID  int
+	K   zoneConf
 	rnd rand.Rand
-	tiles
+	Tiles
 }
 
-type tiles [][]tile
+type Tiles [][]tile
 
 type tile struct {
 	Terrain  string `json:"terrain"`
@@ -54,17 +54,17 @@ func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 	zones := make(map[string]zoneConf)
 	loadJSONFile("./shelter.json", &zones)
 	m := zoneMap{
-		id:    1,
-		k:     zones["1"],
+		ID:    1,
+		K:     zones["1"],
 		rnd:   rnd,
-		tiles: [][]tile{},
+		Tiles: [][]tile{},
 	}
-	m.k.TRIES = 9999
+	m.K.TRIES = 9999
 	var option = 1 // 0 => adjust map to screen for testing
 	if option == 0 {
-		m.k.COLS = cam.cols
-		m.k.ROWS = cam.rows
+		m.K.COLS = cam.Cols
+		m.K.ROWS = cam.Rows
 	}
-	m.tiles = m.generateShelter()
+	m.Tiles = m.generateShelter()
 	return m
 }

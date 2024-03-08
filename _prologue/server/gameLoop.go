@@ -12,15 +12,23 @@ func (a *app) gameLoop() {
 	var rs = a.Runs
 	var camCols int
 	var camRows int
+	var loadToken string
 	for {
 		select {
 
 		case askGameParams := <-a.Ch.askGameParams:
-			camCols, camRows = paramCamValues(askGameParams)
+			camCols, camRows, loadToken = paramsValues(askGameParams)
 
 		case askRun := <-a.Ch.askGame:
-			fmt.Println("##### Asking for a New Game")
-			r := rs.newRun(a.Cnf, camCols, camRows)
+			fmt.Println("##### Asking for ... ")
+			r := &run{}
+			if loadToken == "" {
+				fmt.Println("a New Game")
+				r = rs.newRun(a.Cnf, camCols, camRows)
+			} else {
+				fmt.Println("Loading Game")
+				r = rs.loadRun(a.Cnf, camCols, camRows, loadToken)
+			}
 			rs[r.token] = r
 			askRun <- *r
 
@@ -38,6 +46,24 @@ func (a *app) gameLoop() {
 		}
 	}
 	// UNREACHABLE CODE
+}
+
+func paramsValues(params string) (int, int, string) {
+	paramsFull := strings.Split(params, "-")
+	camParams := paramsFull[0]
+	token := paramsFull[1]
+	camCols := 0
+	camRows := 0
+	camCols, err := strconv.Atoi((strings.Split(camParams, "_")[0]))
+	if err != nil {
+		camCols = 0
+	}
+	camRows, err = strconv.Atoi((strings.Split(camParams, "_")[1]))
+	if err != nil {
+		camRows = 0
+	}
+	return camCols, camRows, token
+
 }
 
 func paramCamValues(params string) (int, int) {

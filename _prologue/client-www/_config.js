@@ -7,6 +7,7 @@ const c = {
   PING_ENDPOINT: "/ping",
   ACTION_ENDPOINT: "/action",
   NEW_GAME_ENDPOINT: "/new",
+  SAVE_ENDPOINT: "/save",
   PROTOTYPE_URL: "https://jolav.github.io/betazone/roguelike/index.html",
   // Render
   RENDER_TYPE: 0, // 0 = ASCII
@@ -40,6 +41,12 @@ const lib = {
   currentDate: function (turn) {
     return new Date(c.INIT_DATE.getTime() + c.MS_PER_TURN * turn);
   },
+  realDate: function () {
+    const d = new Date();
+    let aa = d.toTimeString().split(" ")[0];
+    let bb = d.toISOString().split("T")[0];
+    return aa + "_" + bb;
+  }
 };
 
 export {

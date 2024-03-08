@@ -10,7 +10,7 @@ type clientDataTurn struct {
 	ValidAction bool   `json:"validAction"`
 	PJ          player `json:"pj"`
 	Cam         camera `json:"cam"`
-	View        tiles  `json:"view"`
+	View        Tiles  `json:"view"`
 }
 
 func processTurn(r run) clientDataTurn {
@@ -33,7 +33,7 @@ type clientDataNewGame struct {
 	GameOver bool   `json:"gameOver"`
 	PJ       player `json:"pj"`
 	Cam      camera `json:"cam"`
-	View     tiles  `json:"view"`
+	View     Tiles  `json:"view"`
 }
 
 func processNewGame(r run) clientDataNewGame {
@@ -59,33 +59,33 @@ func updatePjView(r run) components.Point {
 }
 
 func fromMapToView(r run) [][]tile {
-	var cols = r.cam.cols
-	var rows = r.cam.rows
-	if r.cam.cols > r.zoneMap.k.COLS {
-		cols = r.zoneMap.k.COLS
+	var cols = r.cam.Cols
+	var rows = r.cam.Rows
+	if r.cam.Cols > r.zoneMap.K.COLS {
+		cols = r.zoneMap.K.COLS
 	}
-	if r.cam.rows > r.zoneMap.k.ROWS {
-		rows = r.zoneMap.k.ROWS
+	if r.cam.Rows > r.zoneMap.K.ROWS {
+		rows = r.zoneMap.K.ROWS
 	}
 	res := createMapAndfillWith(cols, rows, "unknown")
 
 	for y := 0; y < rows; y++ {
 		for x := 0; x < cols; x++ {
-			res[y][x] = r.zoneMap.tiles[y+r.cam.Y][x+r.cam.X]
+			res[y][x] = r.zoneMap.Tiles[y+r.cam.Y][x+r.cam.X]
 		}
 	}
 	return res
 }
 
 func createMapAndfillWith(cols, rows int, fill string) [][]tile {
-	tiles := make([][]tile, rows)
-	for i := range tiles {
-		tiles[i] = make([]tile, cols)
+	Tiles := make([][]tile, rows)
+	for i := range Tiles {
+		Tiles[i] = make([]tile, cols)
 	}
 	for y := 0; y < rows; y++ {
 		for x := 0; x < cols; x++ {
-			tiles[y][x] = tile{}.create(fill)
+			Tiles[y][x] = tile{}.create(fill)
 		}
 	}
-	return tiles
+	return Tiles
 }

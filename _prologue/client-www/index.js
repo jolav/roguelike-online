@@ -25,7 +25,15 @@ const init = {
     document.getElementById("ping").style.color = "#61868d";
     document.getElementById("newGame").addEventListener("click", function () {
       clearTimeout(pinger);
-      init.play();
+      init.play("");
+    });
+    document.getElementById("loadGame").addEventListener("change", function (e) {
+      let fr = new FileReader();
+      fr.onload = function () {
+        clearTimeout(pinger);
+        init.play(fr.result);
+      };
+      fr.readAsText(e.target.files[0]);
     });
     document.getElementById("prototype").addEventListener("click", function () {
       window.location.href = c.PROTOTYPE_URL;
@@ -33,11 +41,11 @@ const init = {
     const pinger = setInterval(this.ping, 1000);
     if (init.mode === "dev") { // auto start in dev mode
       clearTimeout(pinger);
-      init.play();
+      //init.play("");
     }
   },
-  play: function () {
-    ask.game();
+  play: function (token) {
+    ask.game(token);
     document.getElementById("landingPage").style.display = "none";
     document.getElementById("playZone").style.display = "block";
     document.getElementById("versionPanel").innerHTML = c.VERSION;
@@ -48,6 +56,10 @@ const init = {
       }
       const action = actionKey(e);
       if (action !== undefined) {
+        if (action === "SAVE") {
+          ask.save();
+          return;
+        }
         ask.turn(action);
       }
     });

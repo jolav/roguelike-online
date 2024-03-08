@@ -1,6 +1,6 @@
 /* */
 
-import { c } from "./_config.js";
+import { c, lib } from "./_config.js";
 import * as render from "./render_ascii.js";
 
 let t;
@@ -9,8 +9,8 @@ const ask = {
   ping: function () {
     return fetchAPI.ping();
   },
-  game: async function () {
-    t = await fetchAPI.game(c.CAM_COLS + "_" + c.CAM_ROWS);
+  game: async function (token) {
+    t = await fetchAPI.game(token, c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
     c.VIEW_COLS = t.view[0].length;
@@ -27,6 +27,16 @@ const ask = {
     //console.log('TURN,', t);
     render.ascii();
   },
+  save: async function () {
+    saveGame();
+    const resp = await fetchAPI.save();
+    console.log(resp);
+    if (resp.status === "saved") {
+      alert("SAVED");
+    } else {
+      alert("ERROR SAVING");
+    }
+  },
 };
 
 const fetchAPI = {
@@ -42,14 +52,18 @@ const fetchAPI = {
     }
     return [data.version, data.lag];
   },
-  game: async function (cam) {
+  game: async function (token, cam) {
     const start = Date.now();
     let data = {};
     try {
-      data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT + "?" +
-        new URLSearchParams({
-          cam: cam,
-        }));
+      const params = {
+        token: token,
+        cam: cam,
+      };
+      data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT, {
+        method: 'POST',
+        body: new URLSearchParams(params),
+      });
       data = await data.json();
       data.lag = Date.now() - start;
     } catch (err) {
@@ -73,11 +87,44 @@ const fetchAPI = {
       data = await data.json();
       data.lag = Date.now() - start;
     } catch (err) {
-      console.error("ERROR FETCHING NEW TURN => ", err);
+      console.error("ERROR fetchAPI NewTurn => ", err);
     }
     return data;
   },
+  save: async function () {
+    const start = Date.now();
+    let data = {};
+    try {
+      const params = {
+        token: t.token,
+      };
+      data = await fetch(c.API_URL + c.SAVE_ENDPOINT, {
+        method: 'POST',
+        body: new URLSearchParams(params),
+      }); data = await data.json();
+      data.lag = Date.now() - start;
+    } catch (err) {
+      console.error("ERROR fetchAPI Save => ", err);
+    }
+    return data;
+  }
 };
+
+function saveGame() {
+  console.log('SAVING GAME');
+  const data = c.TOKEN;
+  const filename = c.NICK + "_" + t.turn + ".txt";
+  const type = "text/plain";
+  const file = new Blob([data], { type: type });
+  const a = document.createElement("a");
+  const url = URL.createObjectURL(file);
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+}
 
 export {
   ask,

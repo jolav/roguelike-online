@@ -3,8 +3,8 @@
 package components
 
 type Position struct {
-	Current Point `json:"-"`
-	Target  Point `json:"-"`
+	Current Point `json:"current"`
+	Target  Point `json:"target"`
 	View    Point `json:"view"`
 }
 

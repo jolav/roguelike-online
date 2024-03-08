@@ -2,6 +2,7 @@
 _aux/
 _data/
 tmp/
+saves/
 
 #Ignore these files
 .env
