@@ -1,9 +1,34 @@
-![Game](https://img.shields.io/badge/Prologue-0.8.2-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.9.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
 
-## CONTROLS 
+## CONTROLS  
+
+NUMPAD  
+"1" -> DOWNLEFT  
+"2" -> DOWN  
+"3" -> DOWNRIGHT  
+"4" -> LEFT  
+"5" -> SKIP  
+"6" -> RIGHT  
+"7" -> UPLEFT  
+"8" -> UP  
+"9" -> UPRIGHT  
+
+KEYBOARD  
+"b" -> DOWNLEFT  
+"j" -> DOWN  
+"n" -> DOWNRIGHT  
+"h" -> LEFT  
+"t" -> SKIP  
+"l" -> RIGHT  
+"y" -> UPLEFT  
+"k" -> UP  
+"u" -> UPRIGHT  
+  
+CONTROL +  
+"s" -> SAVE GAME  
 
 ## PROLOGUE 1.0.0 MILESTONE 
 
@@ -19,7 +44,7 @@
 - [X] **Prologue.0.7.0 Field of View**  
 - [X] **Prologue.0.8.0 Generating Shelter**  
 - [X] **Prologue.0.8.1 bug init ping never ends**  
-- [ ] **Prologue.0.9.0 Saving/Loading Runs**  
+- [X] **Prologue.0.9.0 Saving/Loading Runs**  
 - [ ] **Prologue.0.10.0 Placing and Moving Enemies**  
 - [ ] **Prologue.0.11.0 Turn Time System**  
 - [ ] **Prologue.0.12.0 Melee**  

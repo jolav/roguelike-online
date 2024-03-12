@@ -56,11 +56,13 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 
 func (rs runs) loadRun(c config, camCols, camRows int, token string) *run {
 	r2 := &runSave{}
-	err := Load("./saves/file.json", r2)
+	err := LoadJSON("./saves/"+token+".json", r2)
 	if err != nil {
-		fmt.Println("Error", err)
+		fmt.Println("Error, Saved game doesnt exist")
+		return &run{
+			issue: "There is no such saved game",
+		}
 	}
-	fmt.Println(r2.Nick, r2.Seed, r2.Token)
 	r := &run{
 		nick:        r2.Nick,
 		token:       r2.Token,

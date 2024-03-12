@@ -13,6 +13,7 @@ type run struct {
 	token       string
 	turn        int
 	seed        int64
+	issue       string
 	rnd         *rand.Rand
 	counter     int
 	gameOver    bool
@@ -53,26 +54,9 @@ func (r run) save() {
 		ZoneMap:     r.zoneMap,
 		//fov:         r.fov,
 	}
-	fmt.Sprintln(r2)
-	err := Save("./saves/file.json", r2)
+	savePath := "./saves/" + r2.Token
+	err := SaveJSON(savePath+".json", r2)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	err = SaveGob("./saves/file.bin", r2)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func load() {
-	var r2 runSave
-	err := Load("./saves/file.bin", r2)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	r := &run{
-		nick: r2.Nick,
-	}
-	fmt.Println("LOAD GAME FROM ...", r.nick)
-
 }

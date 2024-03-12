@@ -22,7 +22,7 @@ func (a *app) httpServerUP() {
 	mux.HandleFunc("/ping", a.ping)
 	mux.HandleFunc("/",
 		func(w http.ResponseWriter, r *http.Request) {
-			errorResponse(w, "Bad Request !")
+			errorResponse(w, http.StatusBadRequest, "Bad Request !")
 		})
 
 	server := &http.Server{
@@ -39,7 +39,7 @@ func (a *app) httpServerUP() {
 
 func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		errorResponse(w, "Bad Request!")
+		errorResponse(w, http.StatusBadRequest, "Bad Request!")
 		return
 	}
 	r.ParseForm()
@@ -53,12 +53,16 @@ func (a *app) newGame(w http.ResponseWriter, r *http.Request) {
 	a.Ch.askGame <- newRunChannel
 	var runData run
 	runData = <-newRunChannel
-	sendJSONToClient(w, processNewGame(runData), http.StatusOK)
+	if runData.issue == "" {
+		sendJSONToClient(w, processNewGame(runData), http.StatusOK)
+	} else {
+		errorResponse(w, http.StatusExpectationFailed, runData.issue)
+	}
 }
 
 func (a *app) action(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		errorResponse(w, "Bad Request!")
+		errorResponse(w, http.StatusBadRequest, "Bad Request!")
 		return
 	}
 	r.ParseForm()
@@ -71,12 +75,12 @@ func (a *app) action(w http.ResponseWriter, r *http.Request) {
 	defer close(t.comm)
 	a.Ch.askTurn <- t
 	runData := <-t.comm
-	sendJSONToClient(w, processTurn(runData), 200)
+	sendJSONToClient(w, processTurn(runData), http.StatusOK)
 }
 
 func (a *app) saveGame(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		errorResponse(w, "Bad Request!")
+		errorResponse(w, http.StatusBadRequest, "Bad Request!")
 		return
 	}
 	r.ParseForm()
@@ -110,7 +114,7 @@ func (a *app) ping(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	elapsed := time.Since(start).Milliseconds()
 	if r.Method != "GET" {
-		errorResponse(w, "Bad Request!")
+		errorResponse(w, http.StatusBadRequest, "Bad Request!")
 		return
 	}
 	re := responses{
@@ -130,10 +134,10 @@ type requestError struct {
 	StatusCode int    `json:"statusCode"`
 }
 
-func errorResponse(w http.ResponseWriter, msg string) {
+func errorResponse(w http.ResponseWriter, statusCode int, msg string) {
 	re := &requestError{
 		Message:    msg,
-		StatusCode: http.StatusBadRequest,
+		StatusCode: statusCode,
 	}
 	log.Printf("ERROR %d - %s\n", re.StatusCode, msg)
 	sendJSONToClient(w, re, re.StatusCode)

@@ -1,6 +1,6 @@
 /* */
 
-import { c, lib } from "./_config.js";
+import { c } from "./_config.js";
 import * as render from "./render_ascii.js";
 
 let t;
@@ -11,11 +11,16 @@ const ask = {
   },
   game: async function (token) {
     t = await fetchAPI.game(token, c.CAM_COLS + "_" + c.CAM_ROWS);
+    if (t.error !== undefined) {
+      alert(t.error);
+      window.location.reload();
+      return;
+    }
     c.NICK = t.nick;
     c.TOKEN = t.token;
     c.VIEW_COLS = t.view[0].length;
     c.VIEW_ROWS = t.view.length;
-    //console.log('GAME,', t);
+    console.log('GAME,', t);
     render.ascii();
   },
   turn: async function (action) {
@@ -32,7 +37,7 @@ const ask = {
     const resp = await fetchAPI.save();
     console.log(resp);
     if (resp.status === "saved") {
-      alert("SAVED");
+      alert("GAME SAVED");
     } else {
       alert("ERROR SAVING");
     }
@@ -112,10 +117,11 @@ const fetchAPI = {
 
 function saveGame() {
   console.log('SAVING GAME');
-  const data = c.TOKEN;
-  const filename = c.NICK + "_" + t.turn + ".txt";
-  const type = "text/plain";
-  const file = new Blob([data], { type: type });
+  const filename = c.NICK.split("_")[1] + "_" + t.turn + ".txt";
+  const file = new Blob(
+    [c.TOKEN],
+    { type: "text/plain" }
+  );
   const a = document.createElement("a");
   const url = URL.createObjectURL(file);
   a.href = url;

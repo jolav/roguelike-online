@@ -28,9 +28,14 @@ func (a *app) gameLoop() {
 			} else {
 				fmt.Println("Loading Game")
 				r = rs.loadRun(a.Cnf, camCols, camRows, loadToken)
+
 			}
-			rs[r.token] = r
-			askRun <- *r
+			if r.issue != "" {
+				askRun <- *r
+			} else {
+				rs[r.token] = r
+				askRun <- *r
+			}
 
 		case askTurn := <-a.Ch.askTurn:
 			camCols, camRows = paramCamValues(askTurn.cam)
