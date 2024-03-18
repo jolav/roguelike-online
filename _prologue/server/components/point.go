@@ -7,7 +7,7 @@ type Point struct {
 	Y int `json:"y"`
 }
 
-/*func newPoint(x, y int) Point {
+func NewPoint(x, y int) Point {
 	p := Point{x, y}
 	return p
-}*/
+}

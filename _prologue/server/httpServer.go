@@ -88,7 +88,7 @@ func (a *app) saveGame(w http.ResponseWriter, r *http.Request) {
 		token: r.Form.Get("token"),
 	}
 	fmt.Println("TOKEN", t.token)
-	a.Runs[t.token].save()
+	a.Runs.saveRun(*a.Runs[t.token])
 	type saveGame struct {
 		Status string `json:"status"`
 	}

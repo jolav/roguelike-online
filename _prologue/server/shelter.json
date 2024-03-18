@@ -7,8 +7,7 @@
     "corridor_max_length": 10,
     "corridor_odds": 0,
     "cols": 120,
-    "rows": 70,
-    "npcs": 60
+    "rows": 70
   },
   "2": {
     "rooms": 0,
@@ -18,7 +17,6 @@
     "corridor_max_length": 0,
     "corridor_odds": 0,
     "cols": 59,
-    "rows": 40,
-    "npcs": 0
+    "rows": 40
   }
 }

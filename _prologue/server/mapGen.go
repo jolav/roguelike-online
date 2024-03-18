@@ -4,18 +4,17 @@ package main
 
 import (
 	"math/rand"
+	"roguelike-online/_prologue/server/components"
 )
 
 type room struct {
-	X      int
-	Y      int
+	components.Point
 	Width  int
 	Height int
 }
 
 type wall struct {
-	X   int
-	Y   int
+	components.Point
 	Nei int
 	Dir string
 }
@@ -30,7 +29,7 @@ type feature struct {
 /////////////////////////////////////////////////////////////////////////
 
 func (m zoneMap) generateShelter() [][]tile {
-	//return m.testRoom()
+	return m.testRoom()
 	m.Tiles = m.fillMapBlockedTiles(m.K.ROWS, m.K.COLS)
 	//m.fillAllExceptBordersWithFloor()
 	m.createSingleRoomInCenter()
@@ -60,7 +59,7 @@ func (m zoneMap) pickRandomWallFromAnyRoom() (w wall) {
 	for !found && limit < m.K.TRIES {
 		w.X = randomInt(0, m.K.COLS-1, m.rnd)
 		w.Y = randomInt(0, m.K.ROWS-1, m.rnd)
-		if !m.Tiles[w.Y][w.X].Walkable && !m.istileInTheBoardEdge(w.X, w.Y) {
+		if !m.isWalkable(w.X, w.Y) && !m.istileInTheBoardEdge(w.X, w.Y) {
 			w.Nei, w.Dir = m.getClearNeighbours(w.X, w.Y)
 			if w.Nei == 1 {
 				found = true
@@ -71,25 +70,25 @@ func (m zoneMap) pickRandomWallFromAnyRoom() (w wall) {
 	if found {
 		return w
 	}
-	return wall{0, 0, 0, ""}
+	return wall{components.Point{X: 0, Y: 0}, 0, ""}
 }
 
 func (m zoneMap) getClearNeighbours(x, y int) (int, string) {
 	var nei int = 0
 	var dir = "Zero"
-	if m.Tiles[y+1][x].Walkable {
+	if m.isWalkable(x, y+1) {
 		nei++
 		dir = "N"
 	}
-	if m.Tiles[y-1][x].Walkable {
+	if m.isWalkable(x, y-1) {
 		nei++
 		dir = "S"
 	}
-	if m.Tiles[y][x+1].Walkable {
+	if m.isWalkable(x+1, y) {
 		nei++
 		dir = "W"
 	}
-	if m.Tiles[y][x-1].Walkable {
+	if m.isWalkable(x-1, y) {
 		nei++
 		dir = "E"
 	}
@@ -114,8 +113,10 @@ func (m zoneMap) createSingleRoomInCenter() {
 	width := randomInt(m.K.ROOM_MIN_SIZE, m.K.ROOM_MAX_SIZE, m.rnd)
 	height := randomInt(m.K.ROOM_MIN_SIZE, m.K.ROOM_MAX_SIZE, m.rnd)
 	r := room{
-		X:      (m.K.COLS - width) / 2,
-		Y:      (m.K.ROWS - height) / 2,
+		Point: components.Point{
+			X: (m.K.COLS - width) / 2,
+			Y: (m.K.ROWS - height) / 2,
+		},
 		Width:  width,
 		Height: height,
 	}
@@ -123,7 +124,7 @@ func (m zoneMap) createSingleRoomInCenter() {
 }
 
 func (m zoneMap) convertFeatureToRoom(w wall, f feature) (r room) {
-	r = room{0, 0, 0, 0}
+	r = room{components.NewPoint(0, 0), 0, 0}
 	r.Width = f.Width
 	r.Height = f.Height
 	switch {
@@ -158,7 +159,7 @@ func (m zoneMap) checkIsRoomForFeature(r room) bool {
 	originY := r.Y // (m.Height - r.Height) / 2
 	for y := 0; y < r.Height; y++ {
 		for x := 0; x < r.Width; x++ {
-			if m.Tiles[originY+y][originX+x].Walkable {
+			if m.isWalkable(originX+x, originY+y) {
 				return false
 			}
 		}
@@ -226,7 +227,7 @@ func (m zoneMap) putColumnsTestRoom(many int, rnd rand.Rand) {
 	for c := 0; c < many; c++ {
 		x := randomInt(1, m.K.COLS-1, rnd)
 		y := randomInt(1, m.K.ROWS-1, rnd)
-		if m.Tiles[y][x].Walkable == true {
+		if m.isWalkable(x, y) {
 			m.Tiles[y][x] = tile{}.create("wall")
 		}
 	}

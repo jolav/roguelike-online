@@ -39,22 +39,24 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 		turn:        0,
 		seed:        seed,
 		rnd:         rand.New(rand.NewSource(seed)),
-		counter:     0,
+		counter:     1,
 		gameOver:    false,
 		validAction: true,
 		cam:         *newCamera(camCols, camRows),
 		pj:          player{},
+		entities:    entities{},
 		zoneMap:     zoneMap{},
 		fov:         fiedOfVision{}.initFOV(),
 	}
 	r.zoneMap = newGameMap(*r.rnd, r.cam)
 	r.pj = *newPlayer(r.zoneMap)
+	r.populateMap()
 	r.fov.rayCast(*r)
 	//prettyPrintStruct(r)
 	return r
 }
 
-func (rs runs) loadRun(c config, camCols, camRows int, token string) *run {
+func (rs runs) loadRun(_ config, camCols, camRows int, token string) *run {
 	r2 := &runSave{}
 	err := LoadJSON("./saves/"+token+".json", r2)
 	if err != nil {
@@ -74,6 +76,7 @@ func (rs runs) loadRun(c config, camCols, camRows int, token string) *run {
 		validAction: true,
 		cam:         *newCamera(camCols, camRows),
 		pj:          r2.Pj,
+		entities:    r2.Entities,
 		zoneMap:     r2.ZoneMap,
 		fov:         fiedOfVision{}.initFOV(),
 	}
@@ -82,4 +85,27 @@ func (rs runs) loadRun(c config, camCols, camRows int, token string) *run {
 	r.fov.rayCast(*r)
 	//prettyPrintStruct(r)
 	return r
+}
+
+func (rs runs) saveRun(r run) {
+	fmt.Println("saving run ...", r.token)
+	r2 := &runSave{
+		Nick:        r.nick,
+		Token:       r.token,
+		Turn:        r.turn,
+		Seed:        r.seed,
+		Counter:     r.counter,
+		GameOver:    r.gameOver,
+		validAction: r.validAction,
+		Cam:         r.cam,
+		Pj:          r.pj,
+		Entities:    r.entities,
+		ZoneMap:     r.zoneMap,
+		//fov:         r.fov,
+	}
+	savePath := "./saves/" + r2.Token
+	err := SaveJSON(savePath+".json", r2)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }

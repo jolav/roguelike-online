@@ -17,7 +17,6 @@ type zoneConf struct {
 	CORRIDOR_ODDS       int `json:"corridor_odds"`
 	COLS                int `json:"cols"`
 	ROWS                int `json:"rows"`
-	NPCS                int `json:"pcs"`
 	TRIES               int `json:"-"`
 }
 
@@ -50,6 +49,38 @@ func (t tile) create(terrain string) tile {
 	return tile{}
 }
 
+func (m zoneMap) isWalkable(x, y int) bool {
+	if m.Tiles[y][x].Walkable {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (m zoneMap) isBlockingLOS(x, y int) bool {
+	if m.Tiles[y][x].BlockLOS {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (m zoneMap) isExplored(x, y int) bool {
+	if m.Tiles[y][x].Explored {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (m zoneMap) isVisible(x, y int) bool {
+	if m.Tiles[y][x].Visible {
+		return true
+	} else {
+		return false
+	}
+}
+
 func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 	zones := make(map[string]zoneConf)
 	loadJSONFile("./shelter.json", &zones)
@@ -60,7 +91,7 @@ func newGameMap(rnd rand.Rand, cam camera) zoneMap {
 		Tiles: [][]tile{},
 	}
 	m.K.TRIES = 9999
-	var option = 1 // 0 => adjust map to screen for testing
+	var option = 0 // 0 => adjust map to screen for testing
 	if option == 0 {
 		m.K.COLS = cam.Cols
 		m.K.ROWS = cam.Rows

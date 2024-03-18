@@ -41,7 +41,7 @@ const init = {
     const pinger = setInterval(this.ping, 1000);
     if (init.mode === "dev") { // auto start in dev mode
       clearTimeout(pinger);
-      //init.play("");
+      init.play("");
     }
   },
   play: function (token) {
