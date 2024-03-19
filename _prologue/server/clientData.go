@@ -2,15 +2,18 @@
 
 package main
 
-import "roguelike-online/_prologue/server/components"
+import (
+	"roguelike-online/_prologue/server/components"
+)
 
 type clientDataTurn struct {
-	Turn        int    `json:"turn"`
-	GameOver    bool   `json:"gameOver"`
-	ValidAction bool   `json:"validAction"`
-	PJ          player `json:"pj"`
-	Cam         camera `json:"cam"`
-	View        Tiles  `json:"view"`
+	Turn        int      `json:"turn"`
+	GameOver    bool     `json:"gameOver"`
+	ValidAction bool     `json:"validAction"`
+	PJ          player   `json:"pj"`
+	Entities    []entity `json:"entities"`
+	Cam         camera   `json:"cam"`
+	View        Tiles    `json:"view"`
 }
 
 func processTurn(r run) clientDataTurn {
@@ -20,6 +23,7 @@ func processTurn(r run) clientDataTurn {
 		Turn:     r.turn,
 		GameOver: r.gameOver,
 		PJ:       r.pj,
+		Entities: showEntitiesOnSight(r),
 		Cam:      r.cam,
 		View:     fromMapToView(r),
 	}
@@ -27,13 +31,14 @@ func processTurn(r run) clientDataTurn {
 }
 
 type clientDataNewGame struct {
-	Nick     string `json:"nick"`
-	Token    string `json:"token"`
-	Turn     int    `json:"turn"`
-	GameOver bool   `json:"gameOver"`
-	PJ       player `json:"pj"`
-	Cam      camera `json:"cam"`
-	View     Tiles  `json:"view"`
+	Nick     string   `json:"nick"`
+	Token    string   `json:"token"`
+	Turn     int      `json:"turn"`
+	GameOver bool     `json:"gameOver"`
+	PJ       player   `json:"pj"`
+	Entities []entity `json:"entities"`
+	Cam      camera   `json:"cam"`
+	View     Tiles    `json:"view"`
 }
 
 func processNewGame(r run) clientDataNewGame {
@@ -45,10 +50,29 @@ func processNewGame(r run) clientDataNewGame {
 		Turn:     r.turn,
 		GameOver: r.gameOver,
 		PJ:       r.pj,
+		Entities: showEntitiesOnSight(r),
 		Cam:      r.cam,
 		View:     fromMapToView(r),
 	}
 	return cd
+}
+
+func showEntitiesOnSight(r run) []entity {
+	var es []entity
+	for k, e := range r.entities {
+		if r.zoneMap.isVisible(e.Current.X, e.Current.Y) {
+			r.entities[k].View = updateEntityView(r, k)
+			es = append(es, *e)
+		}
+	}
+	return es
+}
+
+func updateEntityView(r run, k int) components.Point {
+	var p = r.entities[k].View
+	p.X = r.entities[k].Current.X - r.cam.X
+	p.Y = r.entities[k].Current.Y - r.cam.Y
+	return p
 }
 
 func updatePjView(r run) components.Point {

@@ -22,6 +22,7 @@ function ascii() {
   draw.clearAll();
   draw.grid();
   draw.view();
+  draw.entities();
   draw.player();
   panel.update();
 }
@@ -72,10 +73,22 @@ const draw = {
     const y = t.pj.pos.view.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
-    ctx.fillText("@",
+    ctx.fillText(aux.mapSymbol("player"),
       ((x + offsetX) * c.PPP) + (c.PPP / 2) + pH,
       ((y + offsetY) * c.PPP) + pV);//,
-    //  c.PPP); // Fourth Argument max width to render the string.
+    //c.PPP); // Fourth Argument max width to render the string.
+  },
+  entities: function () {
+    for (let i = 0; i < t.entities.length; i++) {
+      const x = t.entities[i].pos.view.x;
+      const y = t.entities[i].pos.view.y;
+      this.clearTile(x, y);
+      ctx.fillStyle = aux.colorOfEntity(t.entities[i].kind);
+      ctx.fillText(
+        aux.mapSymbol(t.entities[i].kind),
+        ((x + offsetX) * c.PPP) + (c.PPP / 2) + pH,
+        ((y + offsetY) * c.PPP) + pV);//,
+    }
   },
   grid: function () {
     const pH = c.CAM_DELTA_X; // padding vertical

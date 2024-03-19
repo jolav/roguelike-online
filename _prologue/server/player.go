@@ -27,15 +27,15 @@ type player struct {
 	components.Position `json:"pos"`
 }
 
-func (pj *player) action(action string, m zoneMap) bool {
+func (pj *player) action(action string, m zoneMap, es entities) bool {
 	isAMovement := sliceContainsString(action, movements)
 	if isAMovement {
-		return pj.move(action, m)
+		return pj.move(action, m, es)
 	}
 	return false
 }
 
-func (pj *player) move(action string, m zoneMap) bool {
+func (pj *player) move(action string, m zoneMap, es entities) bool {
 	switch action {
 	case "UP":
 		pj.Target.Y--
@@ -58,12 +58,16 @@ func (pj *player) move(action string, m zoneMap) bool {
 		pj.Target.X--
 		pj.Target.Y--
 	}
+	if !es.isPointEmpty(pj.Target) {
+		pj.Target = pj.Current
+		return false
+	}
 	isDiagonal := sliceContainsString(action, diagonalMovements)
-	if pj.isTargetWalkable(m) && !isDiagonal {
+	if m.isWalkableP(pj.Target) && !isDiagonal {
 		pj.Current = pj.Target
 		return true
 	}
-	if isDiagonal && pj.canMoveDiagonal(action, m) && pj.isTargetWalkable(m) {
+	if isDiagonal && pj.canMoveDiagonal(action, m) && m.isWalkableP(pj.Target) {
 		pj.Current = pj.Target
 		return true
 	}
@@ -71,42 +75,34 @@ func (pj *player) move(action string, m zoneMap) bool {
 	return false
 }
 
-func (pj *player) isTargetWalkable(m zoneMap) bool {
-	can := false
-	if m.Tiles[pj.Target.Y][pj.Target.X].Walkable {
-		can = true
-	}
-	return can
-}
-
 func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 	switch action {
 	case "UPRIGHT":
-		if !m.Tiles[pj.Current.Y-1][pj.Current.X].Walkable {
+		if !m.isWalkable(pj.Current.X, pj.Current.Y-1) {
 			return false
 		}
-		if !m.Tiles[pj.Current.Y][pj.Current.X+1].Walkable {
+		if !m.isWalkable(pj.Current.X+1, pj.Current.Y) {
 			return false
 		}
 	case "DOWNRIGHT":
-		if !m.Tiles[pj.Current.Y+1][pj.Current.X].Walkable {
+		if !m.isWalkable(pj.Current.X, pj.Current.Y+1) {
 			return false
 		}
-		if !m.Tiles[pj.Current.Y][pj.Current.X+1].Walkable {
+		if !m.isWalkable(pj.Current.X+1, pj.Current.Y) {
 			return false
 		}
 	case "DOWNLEFT":
-		if !m.Tiles[pj.Current.Y+1][pj.Current.X].Walkable {
+		if !m.isWalkable(pj.Current.X, pj.Current.Y+1) {
 			return false
 		}
-		if !m.Tiles[pj.Current.Y][pj.Current.X-1].Walkable {
+		if !m.isWalkable(pj.Current.X-1, pj.Current.Y) {
 			return false
 		}
 	case "UPLEFT":
-		if !m.Tiles[pj.Current.Y-1][pj.Current.X].Walkable {
+		if !m.isWalkable(pj.Current.X, pj.Current.Y-1) {
 			return false
 		}
-		if !m.Tiles[pj.Current.Y][pj.Current.X-1].Walkable {
+		if !m.isWalkable(pj.Current.X-1, pj.Current.Y) {
 			return false
 		}
 	}

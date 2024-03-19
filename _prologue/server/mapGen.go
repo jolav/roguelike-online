@@ -59,7 +59,7 @@ func (m zoneMap) pickRandomWallFromAnyRoom() (w wall) {
 	for !found && limit < m.K.TRIES {
 		w.X = randomInt(0, m.K.COLS-1, m.rnd)
 		w.Y = randomInt(0, m.K.ROWS-1, m.rnd)
-		if !m.isWalkable(w.X, w.Y) && !m.istileInTheBoardEdge(w.X, w.Y) {
+		if !m.isWalkableP(w.Point) && !m.istileInTheBoardEdge(w.X, w.Y) {
 			w.Nei, w.Dir = m.getClearNeighbours(w.X, w.Y)
 			if w.Nei == 1 {
 				found = true

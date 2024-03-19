@@ -50,9 +50,11 @@ func (rs runs) newRun(c config, camCols, camRows int) *run {
 	}
 	r.zoneMap = newGameMap(*r.rnd, r.cam)
 	r.pj = *newPlayer(r.zoneMap)
-	r.populateMap()
+	r.counter = r.populateMap()
 	r.fov.rayCast(*r)
 	//prettyPrintStruct(r)
+	//fmt.Println(len(r.entities), r.counter)
+	//prettyPrintStructExported(r.entities)
 	return r
 }
 

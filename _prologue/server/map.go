@@ -4,6 +4,7 @@ package main
 
 import (
 	"math/rand"
+	"roguelike-online/_prologue/server/components"
 )
 
 type zonesConf []zoneConf
@@ -51,6 +52,14 @@ func (t tile) create(terrain string) tile {
 
 func (m zoneMap) isWalkable(x, y int) bool {
 	if m.Tiles[y][x].Walkable {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (m zoneMap) isWalkableP(p components.Point) bool {
+	if m.Tiles[p.Y][p.X].Walkable {
 		return true
 	} else {
 		return false

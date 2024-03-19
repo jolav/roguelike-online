@@ -42,7 +42,7 @@ func (a *app) gameLoop() {
 			r := rs[askTurn.token]
 			action := askTurn.action
 			fmt.Printf("##### Turn %d , action %s\n", r.turn, action)
-			r.validAction = r.pj.action(action, r.zoneMap)
+			r.validAction = r.pj.action(action, r.zoneMap, r.entities)
 			if r.validAction {
 				r.fov.rayCast(*r)
 				r.turn++
