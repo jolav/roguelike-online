@@ -3,12 +3,13 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"roguelike-online/_prologue/server/components"
 )
 
 const (
-	maxNPC   int = 10
+	maxNPC   int = 1
 	maxTRIES int = 5000
 )
 
@@ -81,4 +82,32 @@ func (r run) randomEmptyPoint() components.Point {
 		tries++
 	}
 	return p
+}
+
+func (r run) entitiesTurn() {
+	randomAction := [8]string{
+		"UPLEFT", "UP", "UPRIGHT,",
+		"LEFT", "RIGHT",
+		"DOWNLEFT", "DOWN", "DOWNRIGHT",
+	}
+	for _, e := range r.entities {
+		if e.isMobile() {
+			if r.zoneMap.isVisible(e.Current.X, e.Current.Y) {
+				path := pathFinding(e.Current, r.pj.Current)
+				fmt.Println("PATH", len(path), path)
+				if len(path) > 0 {
+					dx := path[1].X - path[0].X
+					dy := path[1].Y - path[0].Y
+					action := convertDeltaToAction(dx, dy)
+					e.move(action, r.zoneMap, r.entities)
+				}
+			} else { // Random move when not visible
+				odd := randomInt(0, 13, *r.rnd)
+				if odd < 8 {
+					action := randomAction[odd]
+					e.move(action, r.zoneMap, r.entities)
+				}
+			}
+		}
+	}
 }
