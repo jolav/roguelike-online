@@ -31,9 +31,9 @@ const draw = {
   view: function () {
     offsetX = Math.floor((c.CAM_COLS - c.VIEW_COLS) / 2);
     offsetY = Math.floor((c.CAM_ROWS - c.VIEW_ROWS) / 2);
-    for (let y = 0; y < c.VIEW_ROWS; y++) {
-      for (let x = 0; x < c.VIEW_COLS; x++) {
-        const tile = t.view[y][x];
+    for (let x = 0; x < c.VIEW_COLS; x++) {
+      for (let y = 0; y < c.VIEW_ROWS; y++) {
+        const tile = t.view[x][y];
         const char = aux.mapSymbol(tile.terrain);
         let color; //= "#fff";
         if (tile.visible) {

@@ -110,8 +110,8 @@ func (pj *player) canMoveDiagonal(action string, m zoneMap) bool {
 }
 
 func newPlayer(m zoneMap) *player {
-	var x = len(m.Tiles[0]) / 2
-	var y = len(m.Tiles) / 2
+	var x = len(m.Tiles) / 2
+	var y = len(m.Tiles[0]) / 2
 	pj := &player{
 		components.Position{
 			Current: components.Point{

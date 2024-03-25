@@ -93,22 +93,22 @@ func fromMapToView(r run) [][]tile {
 	}
 	res := createMapAndfillWith(cols, rows, "unknown")
 
-	for y := 0; y < rows; y++ {
-		for x := 0; x < cols; x++ {
-			res[y][x] = r.zoneMap.Tiles[y+r.cam.Y][x+r.cam.X]
+	for x := 0; x < cols; x++ {
+		for y := 0; y < rows; y++ {
+			res[x][y] = r.zoneMap.Tiles[x+r.cam.X][y+r.cam.Y]
 		}
 	}
 	return res
 }
 
 func createMapAndfillWith(cols, rows int, fill string) [][]tile {
-	Tiles := make([][]tile, rows)
+	Tiles := make([][]tile, cols)
 	for i := range Tiles {
-		Tiles[i] = make([]tile, cols)
+		Tiles[i] = make([]tile, rows)
 	}
-	for y := 0; y < rows; y++ {
-		for x := 0; x < cols; x++ {
-			Tiles[y][x] = tile{}.create(fill)
+	for x := 0; x < cols; x++ {
+		for y := 0; y < rows; y++ {
+			Tiles[x][y] = tile{}.create(fill)
 		}
 	}
 	return Tiles

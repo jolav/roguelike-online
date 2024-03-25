@@ -51,7 +51,7 @@ func (t tile) create(terrain string) tile {
 }
 
 func (m zoneMap) isWalkable(x, y int) bool {
-	if m.Tiles[y][x].Walkable {
+	if m.Tiles[x][y].Walkable {
 		return true
 	} else {
 		return false
@@ -59,7 +59,7 @@ func (m zoneMap) isWalkable(x, y int) bool {
 }
 
 func (m zoneMap) isWalkableP(p components.Point) bool {
-	if m.Tiles[p.Y][p.X].Walkable {
+	if m.Tiles[p.X][p.Y].Walkable {
 		return true
 	} else {
 		return false
@@ -67,7 +67,7 @@ func (m zoneMap) isWalkableP(p components.Point) bool {
 }
 
 func (m zoneMap) isBlockingLOS(x, y int) bool {
-	if m.Tiles[y][x].BlockLOS {
+	if m.Tiles[x][y].BlockLOS {
 		return true
 	} else {
 		return false
@@ -75,7 +75,7 @@ func (m zoneMap) isBlockingLOS(x, y int) bool {
 }
 
 func (m zoneMap) isExplored(x, y int) bool {
-	if m.Tiles[y][x].Explored {
+	if m.Tiles[x][y].Explored {
 		return true
 	} else {
 		return false
@@ -83,7 +83,7 @@ func (m zoneMap) isExplored(x, y int) bool {
 }
 
 func (m zoneMap) isVisible(x, y int) bool {
-	if m.Tiles[y][x].Visible {
+	if m.Tiles[x][y].Visible {
 		return true
 	} else {
 		return false

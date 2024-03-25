@@ -18,8 +18,8 @@ const ask = {
     }
     c.NICK = t.nick;
     c.TOKEN = t.token;
-    c.VIEW_COLS = t.view[0].length;
-    c.VIEW_ROWS = t.view.length;
+    c.VIEW_COLS = t.view.length;
+    c.VIEW_ROWS = t.view[0].length;
     console.log('GAME,', t);
     render.ascii();
   },
@@ -27,8 +27,8 @@ const ask = {
     t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
     t.nick = c.NICK;
     t.token = c.TOKEN;
-    c.VIEW_COLS = t.view[0].length;
-    c.VIEW_ROWS = t.view.length;
+    c.VIEW_COLS = t.view.length;
+    c.VIEW_ROWS = t.view[0].length;
     //console.log('TURN,', t);
     render.ascii();
   },

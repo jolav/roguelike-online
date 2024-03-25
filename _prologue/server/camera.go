@@ -16,8 +16,8 @@ type camera struct {
 func (cam camera) updateCam(r run) camera {
 	m := r.zoneMap
 	pj := r.pj
-	Rows := len(m.Tiles)
-	Cols := len(m.Tiles[0])
+	Cols := len(m.Tiles)
+	Rows := len(m.Tiles[0])
 
 	cam.X = pj.Current.X - (cam.Cols / 2)
 	cam.Y = pj.Current.Y - (cam.Rows / 2)

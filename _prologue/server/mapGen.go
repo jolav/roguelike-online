@@ -46,7 +46,7 @@ func (m zoneMap) generateShelter() [][]tile {
 				return m.Tiles
 			}
 		} else {
-			//m.Tiles[w.Y][w.X] = tile{}.create("wall") // clean randomWall
+			//m.Tiles[w.X][w.Y] = tile{}.create("wall") // clean randomWall
 		}
 	}
 
@@ -157,8 +157,8 @@ func (m zoneMap) checkIsRoomForFeature(r room) bool {
 	}
 	originX := r.X // (m.Width - r.Width) / 2
 	originY := r.Y // (m.Height - r.Height) / 2
-	for y := 0; y < r.Height; y++ {
-		for x := 0; x < r.Width; x++ {
+	for x := 0; x < r.Width; x++ {
+		for y := 0; y < r.Height; y++ {
 			if m.isWalkable(originX+x, originY+y) {
 				return false
 			}
@@ -170,22 +170,22 @@ func (m zoneMap) checkIsRoomForFeature(r room) bool {
 func (m zoneMap) fillRoom(r room) {
 	originX := r.X
 	originY := r.Y
-	for y := 0; y < r.Height; y++ {
-		for x := 0; x < r.Width; x++ {
-			m.Tiles[originY+y][originX+x] = tile{}.create("floor")
+	for x := 0; x < r.Width; x++ {
+		for y := 0; y < r.Height; y++ {
+			m.Tiles[originX+x][originY+y] = tile{}.create("floor")
 		}
 	}
 }
 
 func (m zoneMap) fillWall(w wall) {
-	m.Tiles[w.Y][w.X] = tile{}.create("floor")
+	m.Tiles[w.X][w.Y] = tile{}.create("floor")
 }
 
 func (m zoneMap) fillAllExceptBordersWithFloor() {
-	for y := 0; y < m.K.ROWS; y++ {
-		for x := 0; x < m.K.COLS; x++ {
+	for x := 0; x < m.K.COLS; x++ {
+		for y := 0; y < m.K.ROWS; y++ {
 			if !m.istileInTheBoardEdge(x, y) {
-				m.Tiles[y][x] = tile{}.create("floor")
+				m.Tiles[x][y] = tile{}.create("floor")
 			}
 		}
 	}
@@ -199,13 +199,13 @@ func (m zoneMap) istileInTheBoardEdge(x, y int) bool {
 }
 
 func (m zoneMap) fillMapBlockedTiles(rows, cols int) [][]tile {
-	Tiles := make([][]tile, rows)
+	Tiles := make([][]tile, cols)
 	for i := range Tiles {
-		Tiles[i] = make([]tile, cols)
+		Tiles[i] = make([]tile, rows)
 	}
-	for y := 0; y < rows; y++ {
-		for x := 0; x < cols; x++ {
-			Tiles[y][x] = tile{}.create("wall")
+	for x := 0; x < cols; x++ {
+		for y := 0; y < rows; y++ {
+			Tiles[x][y] = tile{}.create("wall")
 		}
 	}
 	return Tiles
@@ -219,7 +219,7 @@ func (m zoneMap) testRoom() [][]tile {
 	m.Tiles = m.createTestRoom()
 	m.fillTestRoomWith("floor")
 	m.cleanTestRoom("wall")
-	m.putColumnsTestRoom(100, m.rnd)
+	m.putColumnsTestRoom(50, m.rnd)
 	return m.Tiles
 }
 
@@ -228,37 +228,38 @@ func (m zoneMap) putColumnsTestRoom(many int, rnd rand.Rand) {
 		x := randomInt(1, m.K.COLS-1, rnd)
 		y := randomInt(1, m.K.ROWS-1, rnd)
 		if m.isWalkable(x, y) {
-			m.Tiles[y][x] = tile{}.create("wall")
+			m.Tiles[x][y] = tile{}.create("wall")
 		}
 	}
 }
 
 func (m zoneMap) cleanTestRoom(fill string) {
-	for y := 0; y < m.K.ROWS; y++ {
-		for x := 0; x < m.K.COLS; x++ {
+	for x := 0; x < m.K.COLS; x++ {
+		for y := 0; y < m.K.ROWS; y++ {
 			if y == 0 || x == 0 || x == m.K.COLS-1 || y == m.K.ROWS-1 {
-				m.Tiles[y][x] = tile{}.create(fill)
+				m.Tiles[x][y] = tile{}.create(fill)
 			}
 		}
 	}
 }
+
 func (m zoneMap) createTestRoom() [][]tile {
-	m.Tiles = make([][]tile, m.K.ROWS)
+	m.Tiles = make([][]tile, m.K.COLS)
 	for i := range m.Tiles {
-		m.Tiles[i] = make([]tile, m.K.COLS)
+		m.Tiles[i] = make([]tile, m.K.ROWS)
 	}
-	for y := 0; y < m.K.ROWS; y++ {
-		for x := 0; x < m.K.COLS; x++ {
-			m.Tiles[y][x] = tile{}
+	for x := 0; x < m.K.COLS; x++ {
+		for y := 0; y < m.K.ROWS; y++ {
+			m.Tiles[x][y] = tile{}
 		}
 	}
 	return m.Tiles
 }
 
 func (m zoneMap) fillTestRoomWith(fill string) {
-	for y := 0; y < m.K.ROWS; y++ {
-		for x := 0; x < m.K.COLS; x++ {
-			m.Tiles[y][x] = tile{}.create(fill)
+	for x := 0; x < m.K.COLS; x++ {
+		for y := 0; y < m.K.ROWS; y++ {
+			m.Tiles[x][y] = tile{}.create(fill)
 		}
 	}
 }
