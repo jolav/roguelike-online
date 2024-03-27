@@ -28,6 +28,9 @@ type player struct {
 }
 
 func (pj *player) action(action string, m zoneMap, es entities) bool {
+	if action == "SKIP" {
+		return true
+	}
 	isAMovement := sliceContainsString(action, movements)
 	if isAMovement {
 		return pj.move(action, m, es)

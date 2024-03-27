@@ -6,11 +6,28 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"math/rand"
 	"os"
 	"sync"
 )
 
 var lock sync.Mutex
+
+type runSave struct {
+	Nick        string
+	Token       string
+	Turn        int
+	Seed        int64
+	rnd         *rand.Rand // lowercase will no be exported/saved
+	Counter     int
+	GameOver    bool
+	validAction bool
+	Cam         camera
+	Pj          player
+	Entities    entities
+	ZoneMap     zoneMap
+	//fov         fiedOfVision
+}
 
 func SaveJSON(path string, rawData interface{}) error {
 	lock.Lock()

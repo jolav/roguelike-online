@@ -3,13 +3,12 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"roguelike-online/_prologue/server/components"
 )
 
 const (
-	maxNPC   int = 1
+	maxNPC   int = 10
 	maxTRIES int = 5000
 )
 
@@ -28,22 +27,6 @@ type run struct {
 	entities    entities
 	zoneMap     zoneMap
 	fov         fiedOfVision
-}
-
-type runSave struct {
-	Nick        string
-	Token       string
-	Turn        int
-	Seed        int64
-	rnd         *rand.Rand // lowercase will no be exported/saved
-	Counter     int
-	GameOver    bool
-	validAction bool
-	Cam         camera
-	Pj          player
-	Entities    entities
-	ZoneMap     zoneMap
-	//fov         fiedOfVision
 }
 
 func (r run) populateMap() int {
@@ -93,13 +76,17 @@ func (r run) entitiesTurn() {
 	for _, e := range r.entities {
 		if e.isMobile() {
 			if r.zoneMap.isVisible(e.Current.X, e.Current.Y) {
-				path := pathFinding(e.Current, r.pj.Current)
-				fmt.Println("PATH", len(path), path)
+				path := pathFinding(e, r)
+				//fmt.Println("PATH", len(path)) //, path)
 				if len(path) > 0 {
-					dx := path[1].X - path[0].X
-					dy := path[1].Y - path[0].Y
-					action := convertDeltaToAction(dx, dy)
-					e.move(action, r.zoneMap, r.entities)
+					if path[1] == r.pj.Current {
+						//fmt.Println("melee PJ")
+					} else {
+						dx := path[1].X - path[0].X
+						dy := path[1].Y - path[0].Y
+						action := convertDeltaToAction(dx, dy)
+						e.move(action, r.zoneMap, r.entities)
+					}
 				}
 			} else { // Random move when not visible
 				odd := randomInt(0, 13, *r.rnd)

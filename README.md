@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.9.4-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.10.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -44,7 +44,7 @@ CONTROL +
 - [X] **Prologue.0.7.0 Field of View**  
 - [X] **Prologue.0.8.0 Generating Shelter**  
 - [X] **Prologue.0.9.0 Saving/Loading Runs**  
-- [ ] **Prologue.0.10.0 Placing and Moving Enemies**  
+- [X] **Prologue.0.10.0 Placing and Moving Enemies**  
 - [ ] **Prologue.0.11.0 Turn Time System**  
 - [ ] **Prologue.0.12.0 Melee**  
 - [ ] **Prologue.0.13.0 Creating UI**  
