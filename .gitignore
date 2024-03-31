@@ -6,6 +6,7 @@ saves/
 
 #Ignore these files
 .env
+.gitignore
 _private.js
 _private.json
 private.js
