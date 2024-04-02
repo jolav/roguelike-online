@@ -4,6 +4,7 @@ console.log("Loading.....index.js");
 
 import { c } from "./_config.js";
 import { ask } from "./http.js";
+import { actionKey } from "./controls.js";
 
 const init = {
   mode: "online",
@@ -21,17 +22,43 @@ const init = {
     document.getElementById("playZone").style.display = "none";
     await init.ping(); // once at least to get version
     document.getElementById("ping").style.color = "#61868d";
-    const pinger = setInterval(this.ping, 1000);
+    document.getElementById("newGame").addEventListener("click", function () {
+      clearTimeout(pinger);
+      init.play();
+    });
+    const pinger = setInterval(init.ping, 1000);
     if (init.mode === "dev") { // auto start in dev mode
-      //clearTimeout(pinger);
-      //init.play("");
+      clearTimeout(pinger);
+      init.play();
     }
+  },
+  play: function () {
+    ask.turn("new");
+    document.getElementById("landingPage").style.display = "none";
+    document.getElementById("playZone").style.display = "block";
+    document.getElementById("versionPanel").innerHTML = c.VERSION;
+    document.getElementById("ping2").innerHTML = c.LAG;
+    document.body.style.overflow = "hidden";
+    this.listenKeyboard();
   },
   ping: async function () {
     [c.VERSION, c.LAG] = await ask.ping();
     document.getElementById("versionIntro").innerHTML = c.VERSION;
     document.getElementById("ping").innerHTML = c.LAG;
+  },
+  listenKeyboard: function () {
+    window.addEventListener('keydown', function (e) {
+      if (e.repeat) {
+        //console.log('HI');
+        return;
+      }
+      const action = actionKey(e);
+      if (action !== undefined) {
+        ask.turn(action);
+      }
+    });
   }
 };
 
 window.addEventListener("load", init.init);
+
