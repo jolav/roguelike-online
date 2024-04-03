@@ -7,7 +7,8 @@ const c = {
   // API
   API_BASE_URL: "https://p.roguelike.online",
   PING_ENDPOINT: "/ping",
-  TEST_ENDPOINT: "/test",
+  TEST_ENDPOINT: "/test", // download webpage, slow
+  OK_ENDPOINT: "/ok", // normal ping
   // Render
   RENDER_TYPE: 0, // 0 = ASCII
   CANVAS_NAME: "canvas",
@@ -26,7 +27,7 @@ const c = {
   NICK: "",
   TOKEN: "",
   INIT_DATE: new Date("2097-08-29 02:14:00"),
-  MS_PER_TURN: 1000 * 10,
+  MS_PER_TURN: 1000 * 20,
 };
 
 (function autoUpdateC() {

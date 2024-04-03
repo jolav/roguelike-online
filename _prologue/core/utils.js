@@ -1,11 +1,8 @@
 /* */
 
-const utils = {
-  Point: function (x, y) {
-    this.x = x;
-    this.y = y;
-  },
+console.log('Loading...../core/utils.js');
 
+const utils = {
   randomNick: async function () {
     let nick = this.randomNick2(5, 2);
     const resp = await fetch("./../assets/surname.txt");
@@ -41,8 +38,20 @@ const utils = {
     }
     return randomString;
   },
+  Point: function (x, y) {
+    this.x = x;
+    this.y = y;
+  },
 };
+
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
 
 export {
   utils,
+  Point,
 };

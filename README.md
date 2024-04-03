@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.2-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.3-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -32,7 +32,7 @@ KEYBOARD
 - [X] **Prologue.0.0.0 Start**  
 - [X] **Prologue.0.0.1 Setting Up Client-Core Relation**  
 - [X] **Prologue.0.0.2 Moving around @**  
-- [ ] **Prologue.0.0.3 Basic Map**   
+- [X] **Prologue.0.0.3 Basic Map**   
 - [ ] **Prologue.0.0.4 Camera**  
 - [ ] **Prologue.0.0.5 Field of View**  
 - [ ] **Prologue.0.0.6 Generating Shelter**  
@@ -49,7 +49,7 @@ KEYBOARD
 
 - **CLIENT**  
 - [ ] **Sound effects**  
-- [ ] **Turn counter into datetime**  
+- [X] **Turn counter into datetime**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-items-foes-player**  
@@ -58,7 +58,7 @@ KEYBOARD
 - [ ] **Each input movement is queued and previewed on client**   
 - [ ] **on key pressed down ,movement at constant speed**  
 - [ ] **lights, ilumination**  
-- [ ] **Simulate Ping to server**  
+- [X] **Simulate Ping to server**  
 - **CLIENT MOUSE**  
 - [ ] **move support**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
@@ -76,7 +76,7 @@ KEYBOARD
 - [ ] **markers where noise is heard**  
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **dummy items**  
-- [ ] **One turn equals 1/2 or 1 min**  
+- [X] **One turn equals 10,15,30 or 60 seg**  
 - **MAPS**  
 - [ ] **random pj start point**  
 - [ ] **Remove dead end corridors ??**  
@@ -97,6 +97,7 @@ KEYBOARD
 - [ ] **Tilesets as well as ascii**  
 - [ ] **two letter names on ascii**  
 - [ ] **Map Prefabs**  
+- [ ] **Autoexplore**  
 - **DISCARDED IDEAS**  
 - [ ] **Directional FOV**  
 - **SERVER Planned for a later release**  

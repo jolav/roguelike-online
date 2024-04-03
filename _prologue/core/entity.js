@@ -1,7 +1,11 @@
 /* */
 
+console.log('Loading...../core/entity.js');
+
 import { K } from "./_konfig.js";
 import { utils as u } from "./utils.js";
+import { Point } from "./utils.js";
+import { r } from "./run.js";
 
 function createEntity(id) {
   return new Entity(id);
@@ -12,45 +16,56 @@ class Entity {
     this.id = id;
     const x = Math.floor(K.CAM_COLS / 2);
     const y = Math.floor(K.CAM_ROWS / 2);
-    this.pos = {
-      current: new u.Point(x, y),
-      target: new u.Point(x, y),
-      view: new u.Point(x, y),
-    };
+    this.pos = new Point(x, y);
+    this.view = new Point(x, y);
   }
   move(action) {
+    const target = new Point(this.pos.x, this.pos.y);
     switch (action) {
       case "UPLEFT":
-        this.pos.target.x -= 1;
-        this.pos.target.y -= 1;
+        target.x -= 1;
+        target.y -= 1;
         break;
       case "UP":
-        this.pos.target.y -= 1;
+        target.y -= 1;
         break;
       case "UPRIGHT":
-        this.pos.target.x += 1;
-        this.pos.target.y -= 1;
+        target.x += 1;
+        target.y -= 1;
         break;
       case "RIGHT":
-        this.pos.target.x += 1;
+        target.x += 1;
         break;
       case "DOWNRIGHT":
-        this.pos.target.x += 1;
-        this.pos.target.y += 1;
+        target.x += 1;
+        target.y += 1;
         break;
       case "DOWN":
-        this.pos.target.y += 1;
+        target.y += 1;
         break;
       case "DOWNLEFT":
-        this.pos.target.x -= 1;
-        this.pos.target.y += 1;
+        target.x -= 1;
+        target.y += 1;
         break;
       case "LEFT":
-        this.pos.target.x -= 1;
+        target.x -= 1;
         break;
       default:
         break;
     }
+
+    if (this.canMove(target)) {
+      this.pos = target;
+      return true;
+    }
+    return false;
+  }
+  canMove(p) {
+    const tile = r.map[p.x][p.y];
+    if (tile.walkable) {
+      return true;
+    }
+    return false;
   }
 }
 

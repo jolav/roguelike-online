@@ -16,9 +16,9 @@ const ask = {
     t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
-    c.VIEW_COLS = c.CAM_COLS;
-    c.VIEW_ROWS = c.CAM_ROWS;
-    //console.log(t);
+    //c.VIEW_COLS = c.CAM_COLS;
+    //c.VIEW_ROWS = c.CAM_ROWS;
+    //console.log(t.view.length, t.view[0].length);
     //t.view.length = c.CAM_COLS;
     //t.view[0].length = c.CAM_ROWS;
     //console.log(JSON.stringify(t, null, 2));
@@ -56,7 +56,14 @@ const fetchAPI = {
         token: c.TOKEN,
         cam: cam,
       };
-      await aux.sleep();
+      switch (c.NETWORK) {
+        case 0:
+          await aux.sleep();
+          break;
+        case 1:
+          await fetch(c.API_BASE_URL + c.TEST_ENDPOINT);
+      }
+      //await aux.sleep();
       data = api.turn(params);
     } catch (err) {
       console.error("ERROR fetchAPI NewTurn => ", err);

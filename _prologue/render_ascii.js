@@ -46,16 +46,21 @@ const draw = {
     ctx.stroke();
   },
   map: function () {
-    for (let x = 0; x < t.CAM_COLS; x++) {
-      for (let y = 0; y < t.CAM_ROWS; y++) {
+    for (let x = 0; x < t.view.length; x++) {
+      for (let y = 0; y < t.view[0].length; y++) {
         const tile = t.view[x][y];
         const char = aux.mapSymbol(tile.terrain);
         let color;
-        if (tile.visible) {
+        //console.log(tile);
+        color = aux.colorOfEntity("visible");
+        if (tile.terrain === "wall") {
+          this.tile(x, y, "#", color);
+        }
+        /*if (tile.visible) {
           color = aux.colorOfEntity("visible");
         } else if (tile.explored) {
           color = aux.colorOfEntity("explored");
-        }
+        }*/
         if (color) {
           this.tile(x, y, char, color);
         }
@@ -71,11 +76,11 @@ const draw = {
     ctx.beginPath();
   },
   player: function () {
-    const x = t.pj.pos.current.x; //- t.cam.x;
-    const y = t.pj.pos.current.y; //- t.cam.y;
+    const x = t.pj.pos.x; //- t.cam.x;
+    const y = t.pj.pos.y; //- t.cam.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
-    ctx.fillText("@", (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
+    ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
   },
 };
 
@@ -96,9 +101,9 @@ const aux = {
 
 const legend = new Map([
   ["floor", 183],   // middleDot 183 or normal point 46
-  ["wall", 35],     // #
+  ["wall", 35],     // #35
   ["-", 0],
-  ["player", 64],   // @
+  ["player", 64],   // @64
   ["rat", 114],     // r
   ["mole rat", 82], // R
   ["corpse of", 37],    // %
