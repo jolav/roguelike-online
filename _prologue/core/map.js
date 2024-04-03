@@ -8,9 +8,9 @@ import { utils as u } from "./utils.js";
 function create(option) {
   switch (option) {
     case 0:
-      return testRoom.create();
+      return testRoom.create(K.CAM_COLS, K.CAM_ROWS);
     case 1:
-      return shelter.create();
+      return shelter.create(K.MAP_COLS, K.MAP_ROWS);
   }
 }
 
@@ -67,7 +67,13 @@ class Tile {
   }
 }
 
-const shelter = {};
+const shelter = {
+  map: [],
+  create: function (cols, rows) {
+    console.log('INDIRECTA');
+    return testRoom.create(cols, rows);
+  }
+};
 
 ///////////////////////////////
 ////////// TEST ROOM //////////
@@ -75,18 +81,16 @@ const shelter = {};
 
 const testRoom = {
   map: [],
-  create: function name() {
-    K.MAP_COLS = K.CAM_COLS;
-    K.MAP_ROWS = K.CAM_ROWS;
-    this.fillMapWithWalls();
-    this.cleanRoom();
-    this.putColumns(20);
+  create: function (cols, rows) {
+    this.fillMapWithWalls(cols, rows);
+    this.cleanRoom(cols, rows);
+    this.putColumns(20, cols, rows);
     return this.map;
   },
-  fillMapWithWalls: function () {
-    for (let x = 0; x < K.MAP_COLS; x++) {
+  fillMapWithWalls: function (cols, rows) {
+    for (let x = 0; x < cols; x++) {
       this.map[x] = [];
-      for (let y = 0; y < K.MAP_ROWS; y++) {
+      for (let y = 0; y < rows; y++) {
         const terrain = "wall";
         this.map[x].push(
           new Tile(terrain)
@@ -94,19 +98,19 @@ const testRoom = {
       }
     }
   },
-  cleanRoom: function () {
-    for (let x = 0; x < K.MAP_COLS; x++) {
-      for (let y = 0; y < K.MAP_ROWS; y++) {
-        if (x !== 0 && y !== 0 && x !== K.MAP_COLS - 1 && y !== K.MAP_ROWS - 1) {
+  cleanRoom: function (cols, rows) {
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        if (x !== 0 && y !== 0 && x !== cols - 1 && y !== rows - 1) {
           this.map[x][y] = new Tile("floor");
         }
       }
     }
   },
-  putColumns: function (many) {
+  putColumns: function (many, cols, rows) {
     for (let c = 0; c < many; c++) {
-      const a = u.randomInt(1, K.MAP_COLS - 1);
-      const b = u.randomInt(1, K.MAP_ROWS - 1);
+      const a = u.randomInt(1, cols - 1);
+      const b = u.randomInt(1, rows - 1);
       if (this.map[a][b].walkable) {
         this.map[a][b] = new Tile("wall");
       }

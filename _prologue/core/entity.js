@@ -14,14 +14,16 @@ function createEntity(id) {
 class Entity {
   constructor(id) {
     this.id = id;
-    const x = Math.floor(K.CAM_COLS / 2);
-    const y = Math.floor(K.CAM_ROWS / 2);
+    const x = Math.floor(r.map.length / 2);
+    const y = Math.floor(r.map[0].length / 2);
     this.pos = new Point(x, y);
     this.view = new Point(x, y);
   }
   move(action) {
     const target = new Point(this.pos.x, this.pos.y);
     switch (action) {
+      case "SKIP":
+        return false;
       case "UPLEFT":
         target.x -= 1;
         target.y -= 1;

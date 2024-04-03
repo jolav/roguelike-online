@@ -50,7 +50,7 @@ const init = {
     window.addEventListener('keydown', function (e) {
       if (e.repeat) {
         //console.log('HI');
-        return;
+        //return;
       }
       const action = actionKey(e);
       if (action !== undefined) {

@@ -17,10 +17,13 @@ ctx.textAlign = "center";
 ctx.font = c.PPP + "px " + c.FONT[1];
 
 function ascii() {
+  const oX = Math.floor((c.CAM_COLS - t.view.length) / 2);
+  const oY = Math.floor((c.CAM_ROWS - t.view[0].length) / 2);
+  //console.log(oX, oY);
   draw.clearAll();
   draw.grid();
-  draw.map();
-  draw.player();
+  draw.map(oX, oY);
+  draw.player(oX, oY);
   panel.update();
 }
 
@@ -45,16 +48,17 @@ const draw = {
     //ctx.strokeStyle = "#fff";
     ctx.stroke();
   },
-  map: function () {
+  map: function (oX, oY) {
     for (let x = 0; x < t.view.length; x++) {
       for (let y = 0; y < t.view[0].length; y++) {
         const tile = t.view[x][y];
+        //console.log(x, y, tile);
         const char = aux.mapSymbol(tile.terrain);
         let color;
         //console.log(tile);
         color = aux.colorOfEntity("visible");
         if (tile.terrain === "wall") {
-          this.tile(x, y, "#", color);
+          this.tile(x + oX, y + oY, "#", color);
         }
         /*if (tile.visible) {
           color = aux.colorOfEntity("visible");
@@ -62,7 +66,7 @@ const draw = {
           color = aux.colorOfEntity("explored");
         }*/
         if (color) {
-          this.tile(x, y, char, color);
+          this.tile(x + oX, y + oY, char, color);
         }
       }
     }
@@ -75,9 +79,9 @@ const draw = {
     ctx.clearRect(x * c.PPP, y * c.PPP + pV, c.PPP, c.PPP);
     ctx.beginPath();
   },
-  player: function () {
-    const x = t.pj.pos.x; //- t.cam.x;
-    const y = t.pj.pos.y; //- t.cam.y;
+  player: function (oX, oY) {
+    const x = t.pj.view.x + oX; //- t.cam.x;
+    const y = t.pj.view.y + oY; //- t.cam.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
     ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);

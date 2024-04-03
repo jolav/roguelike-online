@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.3-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.4-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -33,7 +33,7 @@ KEYBOARD
 - [X] **Prologue.0.0.1 Setting Up Client-Core Relation**  
 - [X] **Prologue.0.0.2 Moving around @**  
 - [X] **Prologue.0.0.3 Basic Map**   
-- [ ] **Prologue.0.0.4 Camera**  
+- [X] **Prologue.0.0.4 Camera**  
 - [ ] **Prologue.0.0.5 Field of View**  
 - [ ] **Prologue.0.0.6 Generating Shelter**  
 - [ ] **Prologue.0.0.7 Placing Enemies**  
