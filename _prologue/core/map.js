@@ -84,7 +84,7 @@ const testRoom = {
   create: function (cols, rows) {
     this.fillMapWithWalls(cols, rows);
     this.cleanRoom(cols, rows);
-    this.putColumns(20, cols, rows);
+    this.putColumns(50, cols, rows);
     return this.map;
   },
   fillMapWithWalls: function (cols, rows) {

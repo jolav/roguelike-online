@@ -6,6 +6,7 @@ import { utils as u } from "./utils.js";
 import { createEntity } from "./entity.js";
 import * as map from "./map.js";
 import { K } from "./_konfig.js";
+import * as fov from "./fov.js";
 
 const r = {
   nick: "",
@@ -21,13 +22,17 @@ const r = {
     r.pj = createEntity(r.counter);
     r.cam = aux.updateCam();
     r.counter++;
+    fov.get();
     //console.log(JSON.stringify(r, null, 2));
   },
   oneMoreTurn: function (action) {
-    if (r.pj.move(action)) {
-      r.cam = aux.updateCam();
-      r.turn++;
+    if (!r.pj.move(action)) {
+      return;
     }
+    r.cam = aux.updateCam();
+    fov.get();
+    r.turn++;
+
   },
 };
 

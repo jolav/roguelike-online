@@ -55,16 +55,27 @@ const draw = {
         //console.log(x, y, tile);
         const char = aux.mapSymbol(tile.terrain);
         let color;
-        //console.log(tile);
+        if (tile.visible) {
+          color = aux.colorOfEntity("visible");
+        } else if (tile.explored) {
+          color = aux.colorOfEntity("explored");
+        }
+        if (color) {
+          this.tile(x + oX, y + oY, char, color);
+        }
+      }
+    }
+  },
+  mapOLD: function (oX, oY) {
+    for (let x = 0; x < t.view.length; x++) {
+      for (let y = 0; y < t.view[0].length; y++) {
+        const tile = t.view[x][y];
+        const char = aux.mapSymbol(tile.terrain);
+        let color;
         color = aux.colorOfEntity("visible");
         if (tile.terrain === "wall") {
           this.tile(x + oX, y + oY, "#", color);
         }
-        /*if (tile.visible) {
-          color = aux.colorOfEntity("visible");
-        } else if (tile.explored) {
-          color = aux.colorOfEntity("explored");
-        }*/
         if (color) {
           this.tile(x + oX, y + oY, char, color);
         }
