@@ -2,7 +2,7 @@
 
 console.log('Loading...../core/map.js');
 
-import { K, lib } from "./_konfig.js";
+import { K } from "./_konfig.js";
 import { utils as u } from "./utils.js";
 
 function create(option) {
@@ -96,8 +96,8 @@ const shelter = {
     return this.map;
   },
   createRoomInCenter: function () {
-    const width = lib.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
-    const height = lib.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
+    const width = u.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
+    const height = u.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
     const x = Math.floor((K.MAP_COLS - width) / 2);
     const y = Math.floor((K.MAP_ROWS - height) / 2);
     const rm = new Room(x, y, width, height);
@@ -108,8 +108,8 @@ const shelter = {
     let limit = 0;
     const w = new Wall(0, 0, 0, "");
     while (!found && limit < K.TRIES) {
-      w.x = lib.randomInt(4, K.MAP_COLS - 5);
-      w.y = lib.randomInt(4, K.MAP_ROWS - 5);
+      w.x = u.randomInt(4, K.MAP_COLS - 5);
+      w.y = u.randomInt(4, K.MAP_ROWS - 5);
       if (!this.map[w.x][w.y].walkable) {
         this.getClearNeighbours(w);
         if (w.nei === 1) {
@@ -144,17 +144,17 @@ const shelter = {
     }
   },
   pickRandomFeature: function () {
-    const rnd = lib.randomInt(1, 100);
+    const rnd = u.randomInt(1, 100);
     const f = new Feature(0, 0, "");
     switch (rnd < K.CORRIDOR_ODDS) {
       case true:
         f.width = 1;
-        f.height = lib.randomInt(K.MIN_LENGTH_CORRIDOR, K.MAX_LENGTH_CORRIDOR);
+        f.height = u.randomInt(K.MIN_LENGTH_CORRIDOR, K.MAX_LENGTH_CORRIDOR);
         f.type = "corridor";
         break;
       case false:
-        f.width = lib.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
-        f.height = lib.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
+        f.width = u.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
+        f.height = u.randomInt(K.MIN_SIZE_ROOM, K.MAX_SIZE_ROOM);
         f.type = "room";
     }
     return f;
@@ -240,7 +240,7 @@ const testRoom = {
   create: function (cols, rows) {
     this.fillMapWithWalls(cols, rows);
     this.cleanRoom(cols, rows);
-    this.putColumns(50, cols, rows);
+    this.putColumns(K.TESTROOM_COLUMNS, cols, rows);
     return this.map;
   },
   fillMapWithWalls: function (cols, rows) {

@@ -3,8 +3,9 @@
 console.log('Loading...../core/fov.js');
 
 import { r } from "./run.js";
-import { K, lib } from "./_konfig.js";
+import { K } from "./_konfig.js";
 import { Point } from "./utils.js";
+import { utils as u } from "./utils.js";
 
 function get() {
   from.player();
@@ -18,10 +19,10 @@ const from = {
         const tile = r.map[r.cam.x + col][r.cam.y + row];
         const p2 = { x: r.cam.x + col, y: r.cam.y + row };
         tile.visible = false;
-        if (lib.euclideanDistance(p1, p2) <= K.LOS_RANGE) {
+        if (u.euclideanDistance(p1, p2) <= K.FOV_PJ_RANGE) {
           const option =
             [line(p1, p2), walkGrid(p1, p2), supercoverLine(p1, p2)];
-          const path = option[2];
+          const path = option[K.FOV_TYPE];
           tile.visible = true;
           for (let z = 1; z < path.length; z++) {
             const routeTile = r.map[path[z].x][path[z].y];
@@ -50,7 +51,7 @@ const from = {
 // linear interpolation
 function line(p0, p1) {
   let points = [];
-  let N = lib.diagonalDistance(p0, p1);
+  let N = u.diagonalDistance(p0, p1);
   for (let step = 0; step <= N; step++) {
     let t = N === 0 ? 0.0 : step / N;
     points.push(roundPoint(lerpPoint(p0, p1, t)));

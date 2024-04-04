@@ -3,8 +3,10 @@
 console.log('Loading...../core/_konfig.js');
 
 const K = {
-  VERSION: "0.0.6",
+  VERSION: "0.0.6a",
   TRIES: 50000,
+  SURNAME_TXT: "./../assets/surname.txt",
+  TOKEN_LENGTH: 50,
   // Options
   TYPE_OF_MAP: 1, // 0 => TESTROOM , 1 => SHELTER
   // Render
@@ -19,38 +21,13 @@ const K = {
   CORRIDOR_ODDS: 0,
   MAP_COLS: 116,//39, 48
   MAP_ROWS: 72,//24, 32
-  // Player
-  LOS_RANGE: 15,
+  TESTROOM_COLUMNS: 50,
+  // Fov
+  FOV_PJ_RANGE: 15,
+  FOV_TYPE: 2,// 0 = line, 1 = walkGrid, 2 = supercoverLine
 
-};
-
-const lib = {
-  randomInt: function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  },
-  initializeMultiArray: function (cols, rows, value) {
-    let array = [];
-    for (let i = 0; i < cols; i++) {
-      array[i] = [];
-      for (let j = 0; j < rows; j++) {
-        array[i][j] = value;
-      }
-    }
-    return array;
-  },
-  euclideanDistance: function (p1, p2) {
-    const dx = p1.x - p2.x;
-    const dy = p1.y - p2.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  },
-  diagonalDistance: function (p1, p2) {
-    const dx = p2.x - p1.x;
-    const dy = p2.y - p1.y;
-    return Math.max(Math.abs(dx), Math.abs(dy));
-  },
 };
 
 export {
   K,
-  lib,
 };

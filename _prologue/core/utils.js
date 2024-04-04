@@ -2,10 +2,12 @@
 
 console.log('Loading...../core/utils.js');
 
+import { K } from "./_konfig.js";
+
 const utils = {
   randomNick: async function () {
     let nick = this.randomNick2(5, 2);
-    const resp = await fetch("./../assets/surname.txt");
+    const resp = await fetch(K.SURNAME_TXT);
     if (!resp.ok) {
       return nick;
     }
@@ -41,6 +43,26 @@ const utils = {
   Point: function (x, y) {
     this.x = x;
     this.y = y;
+  },
+  initializeMultiArray: function (cols, rows, value) {
+    let array = [];
+    for (let i = 0; i < cols; i++) {
+      array[i] = [];
+      for (let j = 0; j < rows; j++) {
+        array[i][j] = value;
+      }
+    }
+    return array;
+  },
+  euclideanDistance: function (p1, p2) {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  },
+  diagonalDistance: function (p1, p2) {
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    return Math.max(Math.abs(dx), Math.abs(dy));
   },
 };
 

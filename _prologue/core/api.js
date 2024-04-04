@@ -2,13 +2,14 @@
 
 console.log('Loading...../core/api.js');
 
-import { K, lib } from "./_konfig.js";
+import { K } from "./_konfig.js";
 import { r } from "./run.js";
 import { Point } from "./utils.js";
+import { utils as u } from "./utils.js";
 
 const api = {
   version: function () {
-    const version = { version: dataRun.version };
+    const version = { version: K.VERSION };
     return version;
   },
   turn: async function (params) {
@@ -27,48 +28,36 @@ const api = {
     } else {
       r.oneMoreTurn(params.action);
     }
-    prepareDataForClient();
-    return dataRun;
+    return aux.prepareDataForClient();
   }
 };
 
-let dataRun = {
-  version: K.VERSION,
-  nick: r.nick,
-  token: r.token,
-};
-
-function prepareDataForClient() {
-  dataRun = {
-    version: K.VERSION,
-    nick: r.nick,
-    token: r.token,
-    counter: r.counter,
-    turn: r.turn,
-    cam: r.cam,
-    pj: aux.updatePJ(),
-    view: aux.updateView(),
-  };
-}
-
 const aux = {
-  updateView: function () {
-    const view = lib.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
-    //console.log(K.CAM_COLS, K.CAM_ROWS);
+  prepareDataForClient: function () {
+    let data = {
+      version: K.VERSION,
+      nick: r.nick,
+      token: r.token,
+      counter: r.counter,
+      turn: r.turn,
+      cam: r.cam,
+      pj: this.updatePJ(r.pj, r.cam),
+      view: this.updateView(r.map, r.cam),
+    };
+    return data;
+  },
+  updateView: function (map, cam) {
+    const view = u.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
     for (let col = 0; col < K.CAM_COLS; col++) {
       for (let row = 0; row < K.CAM_ROWS; row++) {
-        //try {
-        view[col][row] = r.map[r.cam.x + col][r.cam.y + row];
-        //} catch (err) {
-        //console.log('Error =>', col, row);
-        //}
+        view[col][row] = map[cam.x + col][cam.y + row];
       }
     }
     return view;
   },
-  updatePJ: function () {
-    r.pj.view = new Point(r.pj.pos.x - r.cam.x, r.pj.pos.y - r.cam.y);
-    return r.pj;
+  updatePJ: function (pj, cam) {
+    pj.view = new Point(pj.pos.x - cam.x, pj.pos.y - cam.y);
+    return pj;
   }
 };
 

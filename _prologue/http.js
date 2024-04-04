@@ -17,7 +17,7 @@ const ask = {
     c.NICK = t.nick;
     c.TOKEN = t.token;
     //console.log(JSON.stringify(t, null, 2));
-    //console.log(t.pj);
+    //console.log(t.token);
     render.ascii();
   }
 };

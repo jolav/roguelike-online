@@ -12,7 +12,7 @@ const c = {
   // Render
   RENDER_TYPE: 0, // 0 = ASCII
   CANVAS_NAME: "canvas",
-  PPP: 8,
+  PPP: 20,
   FONT: ["sans-serif", "IBM"],
   // Camera dimensions
   CAM_PIXELS_X: window.innerWidth - 300,
