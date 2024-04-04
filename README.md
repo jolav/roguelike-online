@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.5-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.6-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -35,7 +35,7 @@ KEYBOARD
 - [X] **Prologue.0.0.3 Basic Map**   
 - [X] **Prologue.0.0.4 Camera**  
 - [X] **Prologue.0.0.5 Field of View**  
-- [ ] **Prologue.0.0.6 Generating Shelter**  
+- [X] **Prologue.0.0.6 Generating Shelter**  
 - [ ] **Prologue.0.0.7 Placing Enemies**  
 - [ ] **Prologue.0.0.8 Moving Enemies**  
 - [ ] **Prologue.0.0.9 Turn Time System**  
@@ -53,7 +53,7 @@ KEYBOARD
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-items-foes-player**  
-- [ ] **only pass turn if action is really done, no effect actions**  
+- [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
 - [ ] **Each input movement is queued and previewed on client**   
 - [ ] **on key pressed down ,movement at constant speed**  
@@ -78,7 +78,7 @@ KEYBOARD
 - [ ] **dummy items**  
 - [X] **One turn equals 10,15,30 or 60 seg**  
 - **MAPS**  
-- [ ] **random pj start point**  
+- [ ] **random pj start point instead center**  
 - [ ] **Remove dead end corridors ??**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  

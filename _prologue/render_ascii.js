@@ -66,22 +66,6 @@ const draw = {
       }
     }
   },
-  mapOLD: function (oX, oY) {
-    for (let x = 0; x < t.view.length; x++) {
-      for (let y = 0; y < t.view[0].length; y++) {
-        const tile = t.view[x][y];
-        const char = aux.mapSymbol(tile.terrain);
-        let color;
-        color = aux.colorOfEntity("visible");
-        if (tile.terrain === "wall") {
-          this.tile(x + oX, y + oY, "#", color);
-        }
-        if (color) {
-          this.tile(x + oX, y + oY, char, color);
-        }
-      }
-    }
-  },
   tile: function (x, y, char, color) {
     ctx.fillStyle = color;
     ctx.fillText(char, (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);

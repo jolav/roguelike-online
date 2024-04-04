@@ -36,7 +36,7 @@ const from = {
           }
         }
         // UNCOMMENT THIS FOR WATCH ALL THE MAP
-        //tile.visible = true;
+        tile.visible = true;
       }
     }
   }
