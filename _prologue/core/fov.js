@@ -8,12 +8,12 @@ import { Point } from "./utils.js";
 import { utils as u } from "./utils.js";
 
 function get() {
-  from.player();
+  from.player(r.entities[0]);
 }
 
 const from = {
-  player: function () {
-    const p1 = { x: r.pj.pos.x, y: r.pj.pos.y };
+  player: function (pj) {
+    const p1 = { x: pj.pos.x, y: pj.pos.y };
     for (let col = 0; col < K.CAM_COLS; col++) {
       for (let row = 0; row < K.CAM_ROWS; row++) {
         const tile = r.map[r.cam.x + col][r.cam.y + row];
@@ -37,7 +37,7 @@ const from = {
           }
         }
         // UNCOMMENT THIS FOR WATCH ALL THE MAP
-        tile.visible = true;
+        //tile.visible = true;
       }
     }
   }

@@ -23,7 +23,8 @@ function ascii() {
   draw.clearAll();
   draw.grid();
   draw.map(oX, oY);
-  draw.player(oX, oY);
+  //draw.player(oX, oY);
+  draw.entities(oX, oY);
   panel.update();
 }
 
@@ -81,6 +82,17 @@ const draw = {
     ctx.fillStyle = "orange";
     ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
   },
+  entities: function (oX, oY) {
+    for (let e of t.entities) {
+      //console.log(JSON.stringify(e, null, " "));
+      const x = e.view.x + oX;
+      const y = e.view.y + oY;
+      const char = aux.mapSymbol(e.type);
+      const color = aux.colorOfEntity(e.type);
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
+  }
 };
 
 const aux = {

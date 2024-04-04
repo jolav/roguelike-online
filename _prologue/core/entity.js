@@ -6,24 +6,28 @@ import { K } from "./_konfig.js";
 import { utils as u } from "./utils.js";
 import { Point } from "./utils.js";
 import { r } from "./run.js";
+import { entities } from "./entities.js";
 
-function createEntity(id) {
-  return new Entity(id);
+function createEntity(id, type, pos) {
+  return new Entity(id, type, pos);
 }
 
 class Entity {
-  constructor(id) {
+  constructor(id, type, pos) {
     this.id = id;
-    const x = Math.floor(r.map.length / 2);
-    const y = Math.floor(r.map[0].length / 2);
-    this.pos = new Point(x, y);
-    this.view = new Point(x, y);
+    this.name = type + "_" + id;
+    this.type = type;
+    this.start(pos);
+  }
+  start(pos) {
+    this.pos = pos;// new Point(pos.x, pos.y);
+    this.view = pos; //new Point(x, y);
   }
   move(action) {
     const target = new Point(this.pos.x, this.pos.y);
     switch (action) {
       case "SKIP":
-        return false;
+        return true;
       case "UPLEFT":
         target.x -= 1;
         target.y -= 1;
@@ -64,10 +68,13 @@ class Entity {
   }
   canMove(p) {
     const tile = r.map[p.x][p.y];
-    if (tile.walkable) {
-      return true;
+    if (!tile.walkable) {
+      return false;
     }
-    return false;
+    if (!entities.isEmptyPoint(p, r.entities)) {
+      return false;
+    }
+    return true;
   }
 }
 

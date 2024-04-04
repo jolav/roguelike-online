@@ -3,10 +3,10 @@
 console.log('Loading...../core/run.js');
 
 import { utils as u } from "./utils.js";
-import { createEntity } from "./entity.js";
 import * as map from "./map.js";
 import { K } from "./_konfig.js";
 import * as fov from "./fov.js";
+import { populateMap } from "./entities.js";
 
 const r = {
   nick: "",
@@ -14,25 +14,25 @@ const r = {
   counter: 0,
   turn: 0,
   cam: new u.Point(0, 0),
-  pj: {},
+  entities: [],
   map: [],
   start: async function () {
     r.nick = await u.randomNick();
     r.map = map.create(K.TYPE_OF_MAP);
-    r.pj = createEntity(r.counter);
-    r.cam = aux.updateCam(r.pj.pos);
-    r.counter++;
+    r.entities = populateMap(0);
+    r.counter += this.entities.length;
+    r.cam = aux.updateCam(r.entities[0].pos);
     fov.get();
-    //console.log(JSON.stringify(r, null, 2));
+    //console.log('POPULATION=> ', r.counter, r.entities.length);
   },
   oneMoreTurn: function (action) {
-    if (!r.pj.move(action)) {
+    //const pj = r.entities[0];
+    if (!r.entities[0].move(action)) {
       return;
     }
-    r.cam = aux.updateCam(r.pj.pos);
+    r.cam = aux.updateCam(r.entities[0].pos);
     fov.get();
     r.turn++;
-
   },
 };
 

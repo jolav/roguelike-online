@@ -3,12 +3,12 @@
 console.log('Loading...../core/_konfig.js');
 
 const K = {
-  VERSION: "0.0.6a",
-  TRIES: 50000,
+  VERSION: "0.0.7",
+  TRIES: 5000,
   SURNAME_TXT: "./../assets/surname.txt",
   TOKEN_LENGTH: 50,
   // Options
-  TYPE_OF_MAP: 1, // 0 => TESTROOM , 1 => SHELTER
+  TYPE_OF_MAP: 0, // 0 => TESTROOM , 1 => SHELTER
   // Render
   CAM_COLS: undefined,
   CAM_ROWS: undefined,
@@ -23,9 +23,12 @@ const K = {
   MAP_ROWS: 72,//24, 32
   TESTROOM_COLUMNS: 50,
   // Fov
-  FOV_PJ_RANGE: 15,
+  FOV_PJ_RANGE: 30,
   FOV_TYPE: 2,// 0 = line, 1 = walkGrid, 2 = supercoverLine
-
+  // Populate
+  // Npc
+  MAX_NPCS: 50,
+  MAX_ITEMS: 50,
 };
 
 export {

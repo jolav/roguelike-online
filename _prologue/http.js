@@ -58,7 +58,9 @@ const fetchAPI = {
         case 1:
           await fetch(c.API_BASE_URL + c.TEST_ENDPOINT);
       }
+      const startTurn = Date.now();
       data = api.turn(params);
+      c.LAG2 = Date.now() - startTurn;
     } catch (err) {
       console.error("ERROR fetchAPI NewTurn => ", err);
     }

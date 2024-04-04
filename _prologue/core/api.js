@@ -41,10 +41,20 @@ const aux = {
       counter: r.counter,
       turn: r.turn,
       cam: r.cam,
-      pj: this.updatePJ(r.pj, r.cam),
+      entities: this.updateEntities(r.entities, r.map, r.cam),
       view: this.updateView(r.map, r.cam),
     };
     return data;
+  },
+  updateEntities: function (es, map, cam) {
+    const result = [];
+    for (let e of es) {
+      if (map[e.pos.x][e.pos.y].visible) {
+        e.view = new Point(e.pos.x - cam.x, e.pos.y - cam.y);
+        result.push(e);
+      }
+    }
+    return result;
   },
   updateView: function (map, cam) {
     const view = u.initializeMultiArray(K.CAM_COLS, K.CAM_ROWS, {});
@@ -55,10 +65,6 @@ const aux = {
     }
     return view;
   },
-  updatePJ: function (pj, cam) {
-    pj.view = new Point(pj.pos.x - cam.x, pj.pos.y - cam.y);
-    return pj;
-  }
 };
 
 export {

@@ -15,7 +15,7 @@ const panel = {
   version: function () {
     document.getElementById("versionPanel").innerHTML = c.VERSION;
     document.getElementById("versionPanel").style.color = "#2cc0b4";
-    document.getElementById("ping2").innerHTML = c.LAG;
+    document.getElementById("ping2").innerHTML = c.LAG + "_" + c.LAG2;
   },
   stats: function () {
     document.getElementById("nick").innerHTML = t.nick;
