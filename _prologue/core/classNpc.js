@@ -13,89 +13,36 @@ class Npc extends Entity {
   }
   assaultMove() {
     const pj = r.entities[0];
-    if (u.euclideanDistance(pj.pos, this.pos) === 1) {
+    if (u.euclideanDistance(pj.pos, this.pos) < 1.5) {
       this.melee(pj);
       return;
     }
-    const ops = new Map();
+    const options = [];
     const p = this.pos;
-    const init = u.euclideanDistance(pj.pos, p);
-    let options = [];
-    let options2 = [];
+
     const left = u.euclideanDistance(pj.pos, { x: p.x - 1, y: p.y });
-    if (left <= init) {
-      options.push("LEFT");
-    } else {
-      options2.push("LEFT");
-      ops.set("LEFT", left);
-    }
+    options.push(["LEFT", left]);
     const right = u.euclideanDistance(pj.pos, { x: p.x + 1, y: p.y });
-    if (right <= init) {
-      options.push("RIGHT");
-    } else {
-      options2.push("RIGHT");
-      ops.set("RIGHT", right);
-    }
+    options.push(["RIGHT", right]);
     const up = u.euclideanDistance(pj.pos, { x: p.x, y: p.y - 1 });
-    if (up <= init) {
-      options.push("UP");
-    } else {
-      options2.push("UP");
-      ops.set("UP", up);
-    }
+    options.push(["UP", up]);
     const down = u.euclideanDistance(pj.pos, { x: p.x, y: p.y + 1 });
-    if (down <= init) {
-      options.push("DOWN");
-    } else {
-      options2.push("DOWN");
-      ops.set("DOWN", down);
-    }
-
+    options.push(["DOWN", down]);
     const downLeft = u.euclideanDistance(pj.pos, { x: p.x - 1, y: p.y + 1 });
-    if (downLeft <= init) {
-      options.push("DOWNLEFT");
-    } else {
-      options2.push("DOWNLEFT");
-      ops.set("DOWNLEFT", downLeft);
-    }
-
+    options.push(["DOWNLEFT", downLeft]);
     const downRight = u.euclideanDistance(pj.pos, { x: p.x + 1, y: p.y + 1 });
-    if (downRight <= init) {
-      options.push("DOWNRIGHT");
-    } else {
-      options2.push("DOWNRIGHT");
-      ops.set("DOWNRIGHT", downRight);
-    }
-
+    options.push(["DOWNRIGHT", downRight]);
     const upLeft = u.euclideanDistance(pj.pos, { x: p.x - 1, y: p.y - 1 });
-    if (upLeft <= init) {
-      options.push("UPLEFT");
-    } else {
-      options2.push("UPLEFT");
-      ops.set("UPLEFT", upLeft);
-    }
-
+    options.push(["UPLEFT", upLeft]);
     const upRight = u.euclideanDistance(pj.pos, { x: p.x + 1, y: p.y - 1 });
-    if (upRight <= init) {
-      options.push("UPRIGHT");
-    } else {
-      options2.push("UPRIGHT");
-      ops.set("UPRIGHT", upRight);
-    }
+    options.push(["UPRIGHT", upRight]);
 
-    u.shuffleArray(options);
-    for (let o of options) {
-      this.wantMove(o);
-      if (this.actionDone) {
-        return;
-      }
-    }
-    // if cant move and not adjacent player, shorter path !NOT WORKING
-    options2.sort(function (a, b) {
-      return a - b;
+    options.sort(function (a, b) {
+      return a[1] - b[1];
     });
-    for (let o of options2) {
-      this.wantMove(o);
+
+    for (let o of options) {
+      this.takeAction(o[0]);
       if (this.actionDone) {
         return;
       }
@@ -120,7 +67,8 @@ const npcs = {
           e.assaultMove();
         } else {
           const action = u.randomAction();
-          e.wantMove(action);
+          //e.wantMove(action);
+          e.takeAction(action);
         }
       }
     }

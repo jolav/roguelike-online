@@ -92,7 +92,6 @@ class Entity {
   move(target) {
     this.last = this.pos;
     this.pos = target;
-    this.actionDone = true;
   }
   melee(e) {
     //console.log('Melee', this.name, " attacks on ", e.name);
