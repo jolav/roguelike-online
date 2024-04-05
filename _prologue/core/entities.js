@@ -4,12 +4,21 @@ console.log('Loading...../core/entities.js');
 
 import { K } from "./_konfig.js";
 import { r } from "./run.js";
-import { createEntity } from "./entity.js";
 import { Point } from "./utils.js";
 import { utils as u } from "./utils.js";
+import { Entity } from "./classEntity.js";
+import { Player } from "./classPlayer.js";
+import { Npc } from "./classNpc.js";
 
 function populateMap(counter) {
   return populate.map(counter);
+}
+
+function createEntity(who, id, type, pos, blocks, mobile, combat) {
+  if (who === 0) {
+    return new Npc(id, type, pos, blocks, mobile, combat);
+  }
+  return new Player(id, type, pos, blocks, mobile, combat);
 }
 
 const populate = {
@@ -17,12 +26,18 @@ const populate = {
     let result = [];
     let npcs = 0;
     for (let tries = 0; tries < K.TRIES; tries++) {
+      let who = 0;
       let pos = entities.randomEmptyPoint(result);
+      if (npcs === 0) who = 1; // create player
       if (pos !== undefined) {
         const e = createEntity(
+          who,
           id,
           populate.npcType(npcs),
           pos,
+          true,
+          true,
+          true,
         );
         result.push(e);
         id++;

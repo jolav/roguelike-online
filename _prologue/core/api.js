@@ -49,6 +49,7 @@ const aux = {
   updateEntities: function (es, map, cam) {
     const result = [];
     for (let e of es) {
+      //console.log(e);
       if (map[e.pos.x][e.pos.y].visible) {
         e.view = new Point(e.pos.x - cam.x, e.pos.y - cam.y);
         result.push(e);

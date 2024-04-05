@@ -7,6 +7,7 @@ import * as map from "./map.js";
 import { K } from "./_konfig.js";
 import * as fov from "./fov.js";
 import { populateMap } from "./entities.js";
+import { npcs } from "./classNpc.js";
 
 const r = {
   nick: "",
@@ -23,14 +24,19 @@ const r = {
     r.counter += this.entities.length;
     r.cam = aux.updateCam(r.entities[0].pos);
     fov.get();
-    //console.log('POPULATION=> ', r.counter, r.entities.length);
+    console.log('POPULATION=> ', r.counter, r.entities.length);
+    console.log(r.entities[0].constructor.name);
+    console.log(r.entities[1].constructor.name);
   },
   oneMoreTurn: function (action) {
-    //const pj = r.entities[0];
-    if (!r.entities[0].move(action)) {
+    const pj = r.entities[0];
+    pj.actionDone = false;
+    pj.takeAction(action);
+    if (!pj.actionDone) {
       return;
     }
-    r.cam = aux.updateCam(r.entities[0].pos);
+    npcs.turn();
+    r.cam = aux.updateCam(pj.pos);
     fov.get();
     r.turn++;
   },

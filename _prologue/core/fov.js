@@ -37,7 +37,7 @@ const from = {
           }
         }
         // UNCOMMENT THIS FOR WATCH ALL THE MAP
-        //tile.visible = true;
+        tile.visible = true;
       }
     }
   }
@@ -51,7 +51,7 @@ const from = {
 // linear interpolation
 function line(p0, p1) {
   let points = [];
-  let N = u.diagonalDistance(p0, p1);
+  let N = u.manhattanDistance(p0, p1);
   for (let step = 0; step <= N; step++) {
     let t = N === 0 ? 0.0 : step / N;
     points.push(roundPoint(lerpPoint(p0, p1, t)));
