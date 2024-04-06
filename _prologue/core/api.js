@@ -6,6 +6,7 @@ import { K } from "./_konfig.js";
 import { r } from "./run.js";
 import { Point } from "./utils.js";
 import { utils as u } from "./utils.js";
+import { Entity } from "./classEntity.js";
 
 const api = {
   version: function () {
@@ -26,7 +27,8 @@ const api = {
     if (params.action === "new") {
       await r.start();
     } else {
-      r.oneMoreTurn(params.action);
+      //r.oneMoreTurn(params.action);
+      r.manageQueue(params.action);
     }
     return aux.prepareDataForClient();
   }

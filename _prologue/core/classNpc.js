@@ -56,6 +56,17 @@ class Npc extends Entity {
     const distanceToPlayer = u.euclideanDistance(this.pos, r.entities[0].pos);
     return distanceToPlayer <= K.FOV_PJ_RANGE - 2;//this.combat.los;
   }
+  turn() {
+    this.actionDone = false;
+    if (this.is.mobile) {// && e.constructor.name !== "Player") {
+      if (this.isInPlayerLOS()) {
+        this.assaultMove();
+      } else {
+        const action = u.randomAction();
+        this.takeAction(action);
+      }
+    }
+  }
 }
 
 const npcs = {

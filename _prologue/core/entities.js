@@ -49,7 +49,7 @@ const populate = {
     }
     return result;
   },
-  npcType: function name(id) {
+  npcType: function (id) {
     if (id === 0) return "player";
     let type;
     switch (u.randomInt(1, 10)) {
