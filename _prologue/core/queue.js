@@ -52,7 +52,7 @@ const queue = {
     }
     this.add(100, -1); // add turn
     this.sort();
-    console.log("NEW TURN => ", JSON.stringify(queue.list));
+    //console.log("NEW TURN => ", JSON.stringify(queue.list));
   },
   show: function () {
     for (let w of this.list) {

@@ -42,7 +42,7 @@ const r = {
     r.turn++;
   },
   manageQueue: function (action) {
-    console.log('###### TURN ', r.turn, ' #######');
+    //console.log('###### TURN ', r.turn, ' #######');
     //console.log(JSON.stringify(queue.list));
     // pj action
     const pj = r.entities[0];
@@ -52,10 +52,9 @@ const r = {
       return;
     }
     //queue.update(actionCost.get(action), 0); // add player
-    queue.update(40, 0);
+    queue.update(50, 0);
     // end pj action
-    console.log(JSON.stringify(queue.list));
-    //queue.show();
+    //console.log(JSON.stringify(queue.list));
     let stop = false;
     let sec = 0;
     while (!stop && sec < 10) {//K.TRIES}
@@ -66,6 +65,11 @@ const r = {
       if (w.id === -1) { // new turn
         r.turn++;
         queue.newTurn(w.wait);
+      }
+      if (w.id > 0) {
+        //console.log("Moves =>", w.id);
+        r.entities[w.id].turn();
+        queue.update(100, w.id);
       }
       sec++;
     }

@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.8b-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.9-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -38,7 +38,7 @@ KEYBOARD
 - [X] **Prologue.0.0.6 Generating Shelter**  
 - [X] **Prologue.0.0.7 Placing Enemies**  
 - [X] **Prologue.0.0.8 Moving Enemies**  
-- [ ] **Prologue.0.0.9 Turn Time System**  
+- [X] **Prologue.0.0.9 Turn Time System**  
 - [ ] **Prologue.0.0.10 Melee**  
 - [ ] **Prologue.0.0.11 Creating UI**  
 - [ ] **Prologue.0.0.12 Inventory and items**  
