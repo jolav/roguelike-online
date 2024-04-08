@@ -23,8 +23,8 @@ function ascii() {
   draw.clearAll();
   draw.grid();
   draw.map(oX, oY);
-  //draw.player(oX, oY);
   draw.entities(oX, oY);
+  draw.player(oX, oY); // ensure player is up and visible
   panel.update();
 }
 
@@ -76,8 +76,8 @@ const draw = {
     ctx.beginPath();
   },
   player: function (oX, oY) {
-    const x = t.pj.view.x + oX; //- t.cam.x;
-    const y = t.pj.view.y + oY; //- t.cam.y;
+    const x = t.entities[0].view.x + oX; //- t.cam.x;
+    const y = t.entities[0].view.y + oY; //- t.cam.y;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
     ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);

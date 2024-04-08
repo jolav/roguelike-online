@@ -77,9 +77,7 @@ const entities = {
   isEmptyPoint: function (p, es) {
     for (let e of es) {
       if (e.pos.x === p.x && e.pos.y === p.y) {
-        //if (e.is.blocking) {
         return false;
-        //}
       }
     }
     return true;

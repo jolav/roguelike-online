@@ -27,7 +27,6 @@ const api = {
     if (params.action === "new") {
       await r.start();
     } else {
-      //r.oneMoreTurn(params.action);
       r.manageQueue(params.action);
     }
     return aux.prepareDataForClient();

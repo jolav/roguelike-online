@@ -7,12 +7,16 @@ import * as map from "./map.js";
 import { K } from "./_konfig.js";
 import * as fov from "./fov.js";
 import { populateMap } from "./entities.js";
-import { npcs } from "./classNpc.js";
+//import { npcs } from "./classNpc.js";
 import { queue } from "./queue.js";
 
 const r = {
   nick: "",
   token: u.randomString(K.TOKEN_LENGTH),
+  gameOver: {
+    status: false,
+    win: false,
+  },
   counter: 0,
   turn: 0,
   cam: new u.Point(0, 0),
@@ -28,18 +32,7 @@ const r = {
     queue.create();
     //console.log(queue.list);
     fov.get();
-  },
-  oneMoreTurn: function (action) {
-    const pj = r.entities[0];
-    pj.actionDone = false;
-    pj.takeAction(action);
-    if (!pj.actionDone) {
-      return;
-    }
-    npcs.turn();
-    r.cam = aux.updateCam(pj.pos);
-    fov.get();
-    r.turn++;
+    console.log(r.entities);
   },
   manageQueue: function (action) {
     //console.log('###### TURN ', r.turn, ' #######');
@@ -47,12 +40,14 @@ const r = {
     // pj action
     const pj = r.entities[0];
     pj.actionDone = false;
+    pj.realAction = "";
     pj.takeAction(action);
     if (!pj.actionDone) {
       return;
     }
-    //queue.update(actionCost.get(action), 0); // add player
-    queue.update(50, 0);
+    //console.log('PJ=', actionCost.get(pj.realAction));
+    queue.update(actionCost.get(pj.realAction), 0); // add player
+    //queue.update(50, 0);
     // end pj action
     //console.log(JSON.stringify(queue.list));
     let stop = false;
@@ -68,10 +63,18 @@ const r = {
       }
       if (w.id > 0) {
         //console.log("Moves =>", w.id);
-        r.entities[w.id].turn();
-        queue.update(100, w.id);
+        const npc = r.entities[w.id];
+        if (npc.is.mobile) {
+          npc.turn();
+          //console.log(npc.name, '=', actionCost.get(npc.realAction));
+          queue.update(actionCost.get(npc.realAction), w.id);
+          //queue.update(100, w.id);
+        }
       }
       sec++;
+    }
+    if (this.gameOver.status) {
+      aux.gameOver();
     }
     r.cam = aux.updateCam(pj.pos);
     fov.get();
@@ -97,6 +100,17 @@ const aux = {
     }
     return { x, y };
   },
+  gameOver: function () {
+    if (r.gameOver.win) {
+      console.log('THIS IS A VICTORY');
+      alert('YOU LEAVE THE VAULT');
+    }
+    if (!r.gameOver.win) {
+      console.log('THIS IS THE END');
+      alert('YOU LOSE');
+    }
+    location.reload();
+  }
 };
 
 const actionCost = new Map([
@@ -108,6 +122,8 @@ const actionCost = new Map([
   ["UPLEFT", 100],
   ["DOWNRIGHT", 100],
   ["DOWNLEFT", 100],
+  ["MELEE", 100],
+  ["SKIP", 100],
 ]);
 
 export {

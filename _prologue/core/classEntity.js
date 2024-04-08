@@ -7,13 +7,13 @@ import { utils as u } from "./utils.js";
 import { Point } from "./utils.js";
 import { r } from "./run.js";
 import { entities } from "./entities.js";
+import { data } from "./dataFile.js";
 
 class Entity {
   constructor(id, type, pos, blocks, mobile, combat) {
     this.id = id;
     this.name = type + "_" + id;
     this.type = type;
-    this.actionDone = false;
     this.pos = pos;
     this.last = this.pos;
     this.view = pos;
@@ -22,8 +22,26 @@ class Entity {
       mobile: mobile,
       combatant: combat,
     };
+    this.more();
   }
-  takeAction(action) {
+  more() {
+    if (!this.is.combatant) {
+      return;
+    }
+    this.actionDone = false;
+    this.realAction = "";
+    const stats = data.combat.get(this.type);
+    this.combat = {
+      hp: stats[0],
+      maxHp: stats[1],
+      melee: stats[2],
+      range: stats[3],
+      defence: stats[4],
+    };
+    this.losRange = data.losRange.get(this.type);
+
+  }
+  takeAction(action, target) {
     let done = false;
     switch (action) {
       case "SKIP":
@@ -38,6 +56,9 @@ class Entity {
       case "DOWNLEFT":
       case "LEFT":
         done = this.wantMove(action);
+        break;
+      case "MELEE":
+        done = this.melee(target);
         break;
       /*case "HEAL":
         done = this.heal();
@@ -54,6 +75,7 @@ class Entity {
     }
     if (done) {
       this.actionDone = true;
+      this.realAction = action;
     }
   }
   wantMove(action) {
@@ -71,23 +93,20 @@ class Entity {
       this.move(target);
       return true;
     }
-    let empty = true;
+
     for (let e of es) {
-      if (e.is.combatant && e.type !== this.type) {
-        empty = false;
-        this.melee(e);
-        return true;
-      } else {
-        empty = false;
-        return false; // avoid stacking 
+      if (e.is.combatant) {
+        if (e.type !== this.type) {
+          this.takeAction("MELEE", e);
+          //this.melee(e)
+          return true;
+        } else {
+          return false; //avoid stacking
+        }
       }
     }
-    if (empty) { // move over corpses
-      this.move(target);
-      return true;
-    }
-
-    return false;
+    this.move(target); // over corpses
+    return true;
   }
   move(target) {
     this.last = this.pos;
@@ -95,6 +114,35 @@ class Entity {
   }
   melee(e) {
     //console.log('Melee', this.name, " attacks on ", e.name);
+    const att = this.combat.melee + u.randomInt(1, 5);
+    const def = e.combat.defence;
+    let damage = att - def;
+    if (damage > 0) {
+      e.combat.hp -= damage;
+    } else {
+      damage = 0;
+    }
+    const h = "+ " + this.type + " deals " + damage + " damage to " + e.name + "\n";
+    //console.log(h);
+    //console.log(e.combat.hp);
+    if (e.combat.hp <= 0) {
+      //console.log('Killed ', e.name);
+      this.kill(e);
+    }
+  }
+  kill(e) {
+    if (e.id === 0) {
+      r.gameOver.status = true;
+      return;
+    }
+    delete e.combat;
+    delete e.actionDone;
+    delete e.realAction;
+    delete e.losRange;
+    e.is.blocking = false;
+    e.is.mobile = false;
+    e.is.combatant = false;
+    e.type = "corpse of " + e.type;
   }
 }
 

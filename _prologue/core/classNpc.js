@@ -14,7 +14,8 @@ class Npc extends Entity {
   assaultMove() {
     const pj = r.entities[0];
     if (u.euclideanDistance(pj.pos, this.pos) < 1.5) {
-      this.melee(pj);
+      //this.melee(pj);
+      this.takeAction("MELEE", pj);
       return;
     }
     const options = [];
@@ -58,6 +59,7 @@ class Npc extends Entity {
   }
   turn() {
     this.actionDone = false;
+    this.realAction = "SKIP"; // default action = SKIP
     if (this.is.mobile) {// && e.constructor.name !== "Player") {
       if (this.isInPlayerLOS()) {
         this.assaultMove();
@@ -69,24 +71,6 @@ class Npc extends Entity {
   }
 }
 
-const npcs = {
-  turn: function () {
-    for (let e of r.entities) {
-      e.actionDone = false;
-      if (e.is.mobile && e.constructor.name !== "Player") {
-        if (e.isInPlayerLOS()) {
-          e.assaultMove();
-        } else {
-          const action = u.randomAction();
-          //e.wantMove(action);
-          e.takeAction(action);
-        }
-      }
-    }
-  }
-};
-
 export {
   Npc,
-  npcs,
 };

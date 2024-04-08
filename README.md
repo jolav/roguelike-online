@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.9-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.10-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -39,7 +39,7 @@ KEYBOARD
 - [X] **Prologue.0.0.7 Placing Enemies**  
 - [X] **Prologue.0.0.8 Moving Enemies**  
 - [X] **Prologue.0.0.9 Turn Time System**  
-- [ ] **Prologue.0.0.10 Melee**  
+- [X] **Prologue.0.0.10 Melee**  
 - [ ] **Prologue.0.0.11 Creating UI**  
 - [ ] **Prologue.0.0.12 Inventory and items**  
 - [ ] **Prologue.0.0.13 Ranged Combat**  
@@ -52,7 +52,7 @@ KEYBOARD
 - [X] **Turn counter into datetime**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
-- [ ] **render order, tiles-items-foes-player**  
+- [ ] **render order, tiles-corpses-items-foes-player**  
 - [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
 - [ ] **Each input movement is queued and previewed on client**   
