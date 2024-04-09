@@ -27,6 +27,8 @@ const c = {
   // Game
   NICK: "",
   TOKEN: "",
+  HISTORY: [],
+  HISTORY_LINES: 15, // max 15
   INIT_DATE: new Date("2097-08-29 02:14:00"),
   MS_PER_TURN: 1000 * 20,
 };

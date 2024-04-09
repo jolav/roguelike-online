@@ -95,9 +95,24 @@ section#playZone .right .loot {
 
 section#playZone .right .history {
   text-align: left;
-  font-size: 0.80em;
+  font-size: 0.90em;
+  /*0.80em;*/
   position: fixed;
   padding: 5px;
   bottom: 2em;
   width: 100%;
+}
+
+
+/* PANEL ZONE */
+
+section#playZone #panel .inventoryDuo {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#playZone #panel #i-food, #i-medical, #i-head, #i-body, #i-supply {
+  display: inline-block;
+  text-align: center;
+  width: 3em;
 }

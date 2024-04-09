@@ -122,11 +122,12 @@ class Entity {
     } else {
       damage = 0;
     }
-    const h = "+ " + this.type + " deals " + damage + " damage to " + e.name + "\n";
-    //console.log(h);
-    //console.log(e.combat.hp);
+    const h = this.type + " deals " + damage + " damage to " + e.name;
+    r.history.push(h);
     if (e.combat.hp <= 0) {
       //console.log('Killed ', e.name);
+      const h = "-" + e.name + " dies";
+      r.history.push(h);
       this.kill(e);
     }
   }

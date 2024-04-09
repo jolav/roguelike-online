@@ -42,6 +42,7 @@ const aux = {
       counter: r.counter,
       turn: r.turn,
       cam: r.cam,
+      history: r.history,
       entities: this.updateEntities(r.entities, r.map, r.cam),
       view: this.updateView(r.map, r.cam),
     };

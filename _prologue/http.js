@@ -16,8 +16,9 @@ const ask = {
     t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
+    c.HISTORY = c.HISTORY.concat(t.history);
     //console.log(JSON.stringify(t, null, 2));
-    //console.log(t.token);
+    //console.log(t);
     render.ascii();
   }
 };
