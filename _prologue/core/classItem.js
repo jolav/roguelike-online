@@ -25,6 +25,8 @@ class Item {
 const items = {
   create: function (counter) {
     let result = [];
+    result.push(this.exit(counter));
+    counter++;
     if (K.MAX_ITEMS === 0) { return result; }
     let items = 0;
     for (let tries = 0; tries < K.TRIES; tries++) {
@@ -108,6 +110,28 @@ const items = {
         item.is.equippable = true;
     }
   },
+  exit: function (counter) {
+    for (let tries = 0; tries < K.TRIES; tries++) {
+      let pos = entities.randomEmptyPoint([]);
+      if (pos !== undefined) {
+        const item = new Item(
+          counter,
+          "exit",
+          pos,
+          false,
+          false,
+        );
+        item.is = {
+          lootable: false,
+          consumable: false,
+          equippable: false,
+          equipped: false,
+        };
+        counter++;
+        return item;
+      }
+    }
+  }
 };
 
 const aux = {

@@ -38,6 +38,7 @@ const aux = {
       version: K.VERSION,
       nick: r.nick,
       token: r.token,
+      gameOver: r.gameOver,
       counter: r.counter,
       turn: r.turn,
       cam: r.cam,

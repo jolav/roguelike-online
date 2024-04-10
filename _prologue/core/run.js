@@ -51,6 +51,9 @@ const r = {
     if (!pj.actionDone) {
       return;
     }
+    if (this.gameOver.status) {
+      aux.gameOver();
+    }
     //console.log('PJ=', actionCost.get(pj.realAction));
     queue.update(actionCost.get(pj.realAction), 0); // add player
     // end pj action

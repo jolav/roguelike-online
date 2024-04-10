@@ -24,6 +24,9 @@ const ask = {
       }
     }
     t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
+    if (t.gameOver.status) {
+      aux.gameOver();
+    }
     c.NICK = t.nick;
     c.TOKEN = t.token;
     c.HISTORY = c.HISTORY.concat(t.history);
@@ -140,4 +143,15 @@ const aux = {
       setTimeout(resolve, delay);
     });
   },
+  gameOver: function () {
+    if (t.gameOver.win) {
+      //console.log('THIS IS A VICTORY');
+      alert('YOU LEAVE THE VAULT');
+    }
+    if (!t.gameOver.win) {
+      //console.log('THIS IS THE END');
+      alert('YOU LOSE');
+    }
+    location.reload();
+  }
 };

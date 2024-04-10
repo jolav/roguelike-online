@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.13-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.14-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -27,13 +27,13 @@ KEYBOARD
 "k" -> UP  
 "u" -> UPRIGHT
 
-"q" -> LOOT
-"1" -> EAT
-"3" -> HEAL
-"f" -> FIRE
-"r" -> SELECT
+"q" -> LOOT  
+"1" -> EAT  
+"3" -> HEAL  
+"f" -> FIRE  
+"r" -> SELECT  
   
-## PROLOGUE 0.1.0 MILESTONE 
+## PROLOGUE 1.0.0 MILESTONE 
 
 - [X] **Prologue.0.0.0 Start**  
 - [X] **Prologue.0.0.1 Setting Up Client-Core Relation**  
@@ -49,9 +49,8 @@ KEYBOARD
 - [X] **Prologue.0.0.11 Creating UI**  
 - [X] **Prologue.0.0.12 Inventory and items**  
 - [X] **Prologue.0.0.13 Ranged Combat**  
-- [ ] **Prologue.0.1.0 Leaving the Shelter**  
-
-## PROLOGUE 1.0.0 MILESTONE
+- [X] **Prologue.0.0.14 Leaving The Shelter**
+- [ ] **Prologue.0.1.0 Minimal full playable version**   
 
 - **CLIENT**  
 - [ ] **use colors palette**  
