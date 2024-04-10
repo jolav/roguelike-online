@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.12-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.13-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -25,7 +25,13 @@ KEYBOARD
 "l" -> RIGHT  
 "y" -> UPLEFT  
 "k" -> UP  
-"u" -> UPRIGHT  
+"u" -> UPRIGHT
+
+"q" -> LOOT
+"1" -> EAT
+"3" -> HEAL
+"f" -> FIRE
+"r" -> SELECT
   
 ## PROLOGUE 0.1.0 MILESTONE 
 
@@ -42,8 +48,8 @@ KEYBOARD
 - [X] **Prologue.0.0.10 Melee**  
 - [X] **Prologue.0.0.11 Creating UI**  
 - [X] **Prologue.0.0.12 Inventory and items**  
-- [ ] **Prologue.0.0.13 Ranged Combat**  
-- [ ] **Prologue.0.0.14 Leaving the Shelter**  
+- [X] **Prologue.0.0.13 Ranged Combat**  
+- [ ] **Prologue.0.1.0 Leaving the Shelter**  
 
 ## PROLOGUE 1.0.0 MILESTONE
 
@@ -51,6 +57,7 @@ KEYBOARD
 - [ ] **use colors palette**  
 - [ ] **Sound effects**  
 - [X] **Turn counter into datetime**  
+- [ ] **change alert for modal**  
 - [ ] **Zoom map**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-corpses-items-foes-player**  
@@ -60,6 +67,7 @@ KEYBOARD
 - [ ] **on key pressed down ,movement at constant speed**  
 - [ ] **lights, ilumination**  
 - [X] **Simulate Ping to server**  
+- [ ] **array with npcs movements/actions for slow animation**  
 - **CLIENT MOUSE**  
 - [ ] **move support**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
@@ -112,6 +120,8 @@ KEYBOARD
 - [ ] **websockets instead API ?**  
 - [ ] **Turn Based Multi Player Combat Arena Test**    
 - **BUGS**  
+- [ ] **npcs attack each other if they are of different types or feature??**  
+
 
 ## **Acknowledgment**
 

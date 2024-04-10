@@ -12,6 +12,7 @@ function update() {
   panel.inventory();
   panel.loot();
   panel.history();
+  panel.selected();
 }
 
 const panel = {
@@ -115,6 +116,13 @@ const panel = {
       text.innerHTML = c.HISTORY[line];
       index++;
     }
+  },
+  selected: function () {
+    let text = "(F)ire: ";
+    if (c.INDEX_SELECTED !== undefined) {
+      text += c.NPC_SELECTED.type;
+    }
+    document.getElementById("target").innerHTML = text;
   },
 };
 

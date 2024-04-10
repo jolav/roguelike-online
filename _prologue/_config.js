@@ -32,6 +32,9 @@ const c = {
   LOOT_LINES: 5,
   INIT_DATE: new Date("2097-08-29 02:14:00"),
   MS_PER_TURN: 1000 * 20,
+  INDEX_SELECTED: undefined,
+  ID_SELECTED: undefined,
+  NPC_SELECTED: undefined,
 };
 
 (function autoUpdateC() {

@@ -26,6 +26,9 @@ function ascii() {
   draw.items(oX, oY);
   draw.entities(oX, oY);
   draw.player(oX, oY); // ensure player is up and visible
+  if (c.INDEX_SELECTED !== undefined) {
+    draw.tileSelected();
+  }
   panel.update();
 }
 
@@ -74,6 +77,17 @@ const draw = {
   clearTile: function (x, y) {
     ctx.clearRect(x * c.PPP, y * c.PPP + pV, c.PPP, c.PPP);
     ctx.beginPath();
+  },
+  tileSelected: function (x, y) {
+    x = c.NPC_SELECTED.pos.x;
+    y = c.NPC_SELECTED.pos.y;
+    ctx.strokeStyle = "lightgreen";
+    ctx.strokeRect(
+      (x - t.cam.x) * c.PPP + pH,
+      (y - t.cam.y) * c.PPP + pV,
+      c.PPP,
+      c.PPP
+    );
   },
   player: function (oX, oY) {
     const x = t.entities[0].view.x + oX;

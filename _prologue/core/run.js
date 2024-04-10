@@ -38,7 +38,8 @@ const r = {
     fov.get();
     //console.log(r.entities);
   },
-  manageQueue: function (action) {
+  manageQueue: function (params) {
+    const action = params.action;
     //console.log('###### TURN ', r.turn, ' #######');
     //console.log(JSON.stringify(queue.list));
     // pj action
@@ -46,7 +47,7 @@ const r = {
     const pj = r.entities[0];
     pj.actionDone = false;
     pj.realAction = "";
-    pj.takeAction(action);
+    pj.takeAction(action, params.selected);
     if (!pj.actionDone) {
       return;
     }

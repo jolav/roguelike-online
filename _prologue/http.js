@@ -13,6 +13,16 @@ const ask = {
     return fetchAPI.ping();
   },
   turn: async function (action) {
+    if (action === "SELECT") {
+      select.action();
+      render.ascii();
+      return;
+    }
+    if (action === "FIRE") {
+      if (c.ID_SELECTED === undefined) {
+        return;
+      }
+    }
     t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
     c.NICK = t.nick;
     c.TOKEN = t.token;
@@ -51,6 +61,7 @@ const fetchAPI = {
         action: action,
         token: c.TOKEN,
         cam: cam,
+        selected: c.ID_SELECTED,
       };
       switch (c.NETWORK) {
         case 0:
@@ -73,6 +84,53 @@ const fetchAPI = {
 export {
   ask,
   t,
+};
+
+const select = {
+  selectables: [],//this.getSelectables(),
+  action: function () {
+    this.getSelectables();
+    if (this.selectables.length === 0) {
+      c.INDEX_SELECTED = undefined;
+    } else if (c.INDEX_SELECTED === undefined) {
+      c.INDEX_SELECTED = 0;
+    } else {
+      if (c.INDEX_SELECTED >= this.selectables.length - 1) {
+        c.INDEX_SELECTED = 0;
+      } else {
+        c.INDEX_SELECTED++;
+      }
+    }
+    if (c.INDEX_SELECTED !== undefined) {
+      c.ID_SELECTED = select.selectables[c.INDEX_SELECTED].id;
+      c.NPC_SELECTED = select.selectables[c.INDEX_SELECTED];
+    }
+  },
+  update: function () {
+    this.getSelectables();
+    if (c.INDEX_SELECTED === undefined) {
+      return;
+    }
+    if (!this.isSelectedStillAlive()) {
+      c.INDEX_SELECTED = undefined;
+      c.ID_SELECTED = undefined;
+    }
+  },
+  isSelectedStillAlive: function () {
+    const indexTarget = this.selectables.findIndex(function (e) {
+      return e.id === c.ID_SELECTED;
+    });
+    const target = this.selectables[indexTarget];
+    return target;
+  },
+  getSelectables: function name() {
+    this.selectables = [];
+    for (let e of t.entities) {
+      if (e.is.combatant && e.id !== 0) { // exclude player
+        this.selectables.push(e);
+      }
+    }
+  }
 };
 
 const aux = {

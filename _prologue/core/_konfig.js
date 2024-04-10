@@ -3,7 +3,7 @@
 console.log('Loading...../core/_konfig.js');
 
 const K = {
-  VERSION: "0.0.12",
+  VERSION: "0.0.13",
   TRIES: 5000,
   SURNAME_TXT: "./../assets/surname.txt",
   TOKEN_LENGTH: 50,
@@ -25,9 +25,8 @@ const K = {
   // Fov
   FOV_PJ_RANGE: 30,
   FOV_TYPE: 2,// 0 = line, 1 = walkGrid, 2 = supercoverLine
-  // Populate
   // Npc
-  MAX_NPCS: 5,
+  MAX_NPCS: 2,
   MAX_ITEMS: 10,
 };
 

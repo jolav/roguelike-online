@@ -2,6 +2,7 @@
 
 console.log('Loading...../core/classActor.js');
 
+import { K } from "./_konfig.js";
 import { Entity } from "./classEntity.js";
 import { utils as u } from "./utils.js";
 import { Point } from "./utils.js";
@@ -69,9 +70,9 @@ class Actor extends Entity {
       case "LOOT":
         done = this.loot();
         break;
-      /*case "FIRE":
-        done = this.fire();
-        break;*/
+      case "FIRE":
+        done = this.fire(target);
+        break;
     }
     if (done) {
       this.actionDone = true;
@@ -203,7 +204,36 @@ class Actor extends Entity {
     });
     r.items.splice(index, 1);
   }
-
+  fire(id) {
+    let done = false;
+    const indexTarget = r.entities.findIndex(function (e) {
+      return e.id === id;
+    });
+    const target = r.entities[indexTarget];
+    if (this.inventory.supply < 1) {
+      return done;
+    }
+    if (target === undefined || target.combat === undefined) {
+      return false; // avoid fire without valid target
+    }
+    this.inventory.supply--;
+    this.actionDone = true;
+    const att = this.combat.range + u.randomInt(1, 5);
+    const def = target.combat.defence;
+    let damage = att - def;
+    if (damage > 0) {
+      target.combat.hp -= damage;
+    } else {
+      damage = 0;
+    }
+    const h = "+ " + this.type + " deals " + damage + " damage to " + target.type + "\n";
+    r.history.push(h);
+    if (target.combat.hp <= 0) {
+      this.kill(target);
+    }
+    done = true;
+    return done;
+  }
 }
 
 export {
