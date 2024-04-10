@@ -51,6 +51,11 @@ const standard = new Map([
   ["y", "UPLEFT"],
   ["k", "UP"],
   ["u", "UPRIGHT"],
+  ["q", "LOOT"],
+  ["1", "EAT"],
+  ["3", "HEAL"],
+  ["f", "FIRE"],
+  ["r", "SELECT"],
 ]);
 
 const leftLoc = new Map([

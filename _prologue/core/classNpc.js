@@ -3,18 +3,17 @@
 console.log('Loading...../core/classNpc.js');
 
 import { K } from "./_konfig.js";
-import { Entity } from "./classEntity.js";
+import { Actor } from "./classActor.js";
 import { r } from "./run.js";
 import { utils as u } from "./utils.js";
 
-class Npc extends Entity {
-  constructor(id, type, pos, blocks, mobile, combat) {
-    super(id, type, pos, blocks, mobile, combat);
+class Npc extends Actor {
+  constructor(id, type, pos, blocks, mobile, combat, item) {
+    super(id, type, pos, blocks, mobile, combat, item);
   }
   assaultMove() {
     const pj = r.entities[0];
     if (u.euclideanDistance(pj.pos, this.pos) < 1.5) {
-      //this.melee(pj);
       this.takeAction("MELEE", pj);
       return;
     }

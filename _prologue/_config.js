@@ -29,6 +29,7 @@ const c = {
   TOKEN: "",
   HISTORY: [],
   HISTORY_LINES: 15, // max 15
+  LOOT_LINES: 5,
   INIT_DATE: new Date("2097-08-29 02:14:00"),
   MS_PER_TURN: 1000 * 20,
 };
@@ -52,7 +53,16 @@ const lib = {
     let aa = d.toTimeString().split(" ")[0];
     let bb = d.toISOString().split("T")[0];
     return aa + "_" + bb;
-  }
+  },
+  atPoint: function (p, es) {
+    let resp = [];
+    for (let e of es) {
+      if (e.pos.x === p.x && e.pos.y === p.y) {
+        resp.push(e);
+      }
+    }
+    return resp;
+  },
 };
 
 export {

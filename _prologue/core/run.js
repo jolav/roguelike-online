@@ -7,7 +7,7 @@ import * as map from "./map.js";
 import { K } from "./_konfig.js";
 import * as fov from "./fov.js";
 import { populateMap } from "./entities.js";
-//import { npcs } from "./classNpc.js";
+import * as items from "./classItem.js";
 import { queue } from "./queue.js";
 
 const r = {
@@ -22,18 +22,21 @@ const r = {
   history: getInitialHistory(),
   cam: new u.Point(0, 0),
   entities: [],
+  items: [],
   map: [],
   start: async function () {
     r.nick = await u.randomNick();
     r.map = map.create(K.TYPE_OF_MAP);
-    r.entities = populateMap(0);
+    r.entities = populateMap(r.counter);
+    r.items = items.populate(r.counter);
     r.counter += this.entities.length;
     r.cam = aux.updateCam(r.entities[0].pos);
     console.log('POPULATION CREATED => ', r.counter, r.entities.length);
+    console.log('ITEMS CREATED =>', r.items.length);
     queue.create();
     //console.log(queue.list);
     fov.get();
-    console.log(r.entities);
+    //console.log(r.entities);
   },
   manageQueue: function (action) {
     //console.log('###### TURN ', r.turn, ' #######');
@@ -49,7 +52,6 @@ const r = {
     }
     //console.log('PJ=', actionCost.get(pj.realAction));
     queue.update(actionCost.get(pj.realAction), 0); // add player
-    //queue.update(50, 0);
     // end pj action
     //console.log(JSON.stringify(queue.list));
     let stop = false;
@@ -68,9 +70,9 @@ const r = {
         const npc = r.entities[w.id];
         if (npc.is.mobile) {
           npc.turn();
-          //console.log(npc.name, '=', actionCost.get(npc.realAction));
-          queue.update(actionCost.get(npc.realAction), w.id);
-          //queue.update(100, w.id);
+          queue.update(u.randomInt(95, 105), w.id);
+        } else {
+          queue.remove(w.id);
         }
       }
       sec++;
@@ -80,6 +82,7 @@ const r = {
     }
     r.cam = aux.updateCam(pj.pos);
     fov.get();
+    //console.log(JSON.stringify(queue.list));
   }
 };
 
@@ -131,6 +134,11 @@ const actionCost = new Map([
   ["DOWNLEFT", 100],
   ["MELEE", 100],
   ["SKIP", 100],
+  ["LOOT", 200],
+  ["HEAL", 200],
+  ["EAT", 200],
+  ["FIRE", 100],
+
 ]);
 
 export {

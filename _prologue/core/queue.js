@@ -21,7 +21,9 @@ const queue = {
         this.add(0, 0); // add Player
         continue;
       }
-      this.add(u.randomInt(95, 105), e.id);
+      if (e.is.mobile) {
+        this.add(u.randomInt(95, 105), e.id);
+      }
     }
   },
   sort: function () {
@@ -30,9 +32,10 @@ const queue = {
     });
   },
   remove: function (id) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.list.length; i++) {
       if (this.list[i].id === id) {
-        this.list.splice(id, 1);
+        this.list.splice(i, 1);
+        break;
       }
     }
   },
@@ -46,13 +49,16 @@ const queue = {
     this.sort();
   },
   newTurn: function (base) {
+    //console.log('NEW TURN FUNCTION');
+    //console.log(JSON.stringify(queue.list));
     this.list.shift();
     for (let i = 0; i < this.list.length; i++) {
       this.list[i].wait -= base;
     }
     this.add(100, -1); // add turn
     this.sort();
-    //console.log("NEW TURN => ", JSON.stringify(queue.list));
+    //console.log(JSON.stringify(queue.list));
+
   },
   show: function () {
     for (let w of this.list) {

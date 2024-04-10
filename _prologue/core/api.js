@@ -6,7 +6,6 @@ import { K } from "./_konfig.js";
 import { r } from "./run.js";
 import { Point } from "./utils.js";
 import { utils as u } from "./utils.js";
-import { Entity } from "./classEntity.js";
 
 const api = {
   version: function () {
@@ -44,6 +43,7 @@ const aux = {
       cam: r.cam,
       history: r.history,
       entities: this.updateEntities(r.entities, r.map, r.cam),
+      items: this.updateItems(r.items, r.map, r.cam),
       view: this.updateView(r.map, r.cam),
     };
     return data;
@@ -52,6 +52,16 @@ const aux = {
     const result = [];
     for (let e of es) {
       //console.log(e);
+      if (map[e.pos.x][e.pos.y].visible) {
+        e.view = new Point(e.pos.x - cam.x, e.pos.y - cam.y);
+        result.push(e);
+      }
+    }
+    return result;
+  },
+  updateItems: function (es, map, cam) {
+    const result = [];
+    for (let e of es) {
       if (map[e.pos.x][e.pos.y].visible) {
         e.view = new Point(e.pos.x - cam.x, e.pos.y - cam.y);
         result.push(e);

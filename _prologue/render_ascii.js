@@ -2,7 +2,7 @@
 
 console.log('Loading.....render_ascii.js');
 
-import { c, lib } from "./_config.js";
+import { c } from "./_config.js";
 import { t } from "./http.js";
 import * as panel from "./panel.js";
 
@@ -23,6 +23,7 @@ function ascii() {
   draw.clearAll();
   draw.grid();
   draw.map(oX, oY);
+  draw.items(oX, oY);
   draw.entities(oX, oY);
   draw.player(oX, oY); // ensure player is up and visible
   panel.update();
@@ -46,7 +47,6 @@ const draw = {
     }
 
     ctx.strokeStyle = "#27292d";
-    //ctx.strokeStyle = "#fff";
     ctx.stroke();
   },
   map: function (oX, oY) {
@@ -76,11 +76,21 @@ const draw = {
     ctx.beginPath();
   },
   player: function (oX, oY) {
-    const x = t.entities[0].view.x + oX; //- t.cam.x;
-    const y = t.entities[0].view.y + oY; //- t.cam.y;
+    const x = t.entities[0].view.x + oX;
+    const y = t.entities[0].view.y + oY;
     this.clearTile(x, y);
     ctx.fillStyle = "orange";
     ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
+  },
+  items: function (oX, oY) {
+    for (let item of t.items) {
+      const x = item.pos.x + oX;
+      const y = item.pos.y + oY;
+      const char = aux.mapSymbol("item");
+      const color = aux.colorOfEntity("item");
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
   },
   entities: function (oX, oY) {
     for (let e of t.entities) {

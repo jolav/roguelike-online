@@ -6,7 +6,6 @@ import { K } from "./_konfig.js";
 import { r } from "./run.js";
 import { Point } from "./utils.js";
 import { utils as u } from "./utils.js";
-import { Entity } from "./classEntity.js";
 import { Player } from "./classPlayer.js";
 import { Npc } from "./classNpc.js";
 
@@ -14,11 +13,15 @@ function populateMap(counter) {
   return populate.map(counter);
 }
 
-function createEntity(who, id, type, pos, blocks, mobile, combat) {
-  if (who === 0) {
-    return new Npc(id, type, pos, blocks, mobile, combat);
+function createEntity(who, id, type, pos) {
+  switch (who) {
+    case 0:
+      return new Npc(id, type, pos, true, true, true, false);
+    case 1:
+      return new Player(id, type, pos, true, true, true, false);
+    default:
+      console.log('if you see this there is a bug');
   }
-  return new Player(id, type, pos, blocks, mobile, combat);
 }
 
 const populate = {
@@ -35,9 +38,6 @@ const populate = {
           id,
           populate.npcType(npcs),
           pos,
-          true,
-          true,
-          true,
         );
         result.push(e);
         id++;
@@ -97,10 +97,10 @@ const entities = {
         }
       }
       /*} catch (err) {
-        console.log('FAIL =>', x, y);
-        console.log(err);
-        break;
-      }*/
+          console.log('FAIL =>', x, y);
+          console.log(err);
+          break;
+        }*/
       tries++;
     }
     if (p.x === 0) {
