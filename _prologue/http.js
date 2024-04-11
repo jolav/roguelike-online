@@ -8,6 +8,10 @@ import * as render from "./render_ascii.js";
 
 let t;
 
+const endpoints = [
+  c.PING_ENDPOINT, c.TEST_ENDPOINT, c.OK_ENDPOINT,
+];
+
 const ask = {
   ping: function () {
     return fetchAPI.ping();
@@ -46,7 +50,7 @@ const fetchAPI = {
           await aux.sleep();
           break;
         case 1:
-          await fetch(c.API_BASE_URL + c.TEST_ENDPOINT);
+          await fetch(c.API_BASE_URL + endpoints[1]);
       }
       data = api.version();
       //
@@ -71,7 +75,7 @@ const fetchAPI = {
           await aux.sleep();
           break;
         case 1:
-          await fetch(c.API_BASE_URL + c.TEST_ENDPOINT);
+          await fetch(c.API_BASE_URL + endpoints[1]);
       }
       const startTurn = Date.now();
       data = api.turn(params);

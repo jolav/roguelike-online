@@ -60,7 +60,7 @@ const r = {
     //console.log(JSON.stringify(queue.list));
     let stop = false;
     let sec = 0;
-    while (!stop && sec < 10) {//K.TRIES}
+    while (!stop && sec < K.TRIES) {
       const w = queue.list[0];
       if (w.id === 0) { // control returns to client
         stop = true;

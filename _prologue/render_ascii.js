@@ -98,8 +98,8 @@ const draw = {
   },
   items: function (oX, oY) {
     for (let item of t.items) {
-      const x = item.pos.x + oX;
-      const y = item.pos.y + oY;
+      const x = item.view.x + oX;
+      const y = item.view.y + oY;
       let char = aux.mapSymbol("item");
       let color = aux.colorOfEntity("item");
       if (item.type === "exit") {
