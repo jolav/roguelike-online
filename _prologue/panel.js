@@ -4,6 +4,7 @@ console.log('Loading.....panel.js');
 
 import { c, lib } from "./_config.js";
 import { t } from "./http.js";
+import { dawnBringer as col } from "./render_ascii.js";
 
 function update() {
   panel.version();
@@ -18,21 +19,22 @@ function update() {
 const panel = {
   version: function () {
     document.getElementById("versionPanel").innerHTML = c.VERSION;
-    document.getElementById("versionPanel").style.color = "#2cc0b4";
+    document.getElementById("versionPanel").style.color = col.get("Christi");
     document.getElementById("ping2").innerHTML = c.LAG + "_" + c.LAG2;
   },
   stats: function () {
+    document.getElementById("nick").style.color = col.get("Tahiti Gold");
     document.getElementById("nick").innerHTML = t.nick;
     const pj = t.entities[0];
     const coords = pj.pos.x + "," + pj.pos.y;
     document.getElementById("coords").innerHTML = coords;
     document.getElementById("hp").innerHTML = pj.combat.hp;
-    document.getElementById("maxHp").style.color = "#38c02c";
+    document.getElementById("maxHp").style.color = col.get("Christi");
     document.getElementById("maxHp").innerHTML = pj.combat.maxHp;
     if (pj.combat.hp < pj.combat.maxHp) {
       //document.getElementById("hp").style.color = "#c02c38";
     } else {
-      document.getElementById("hp").style.color = "#38c02c";
+      document.getElementById("hp").style.color = col.get("Christi");
     }
     document.getElementById("melee").innerHTML = pj.combat.melee;
     document.getElementById("range").innerHTML = pj.combat.range;
@@ -105,13 +107,13 @@ const panel = {
       const text = document.getElementById("h" + index);
       switch (begin) {
         case "+":
-          text.style.color = "#38c02c"; // green
+          text.style.color = col.get("Christi"); // green
           break;
         case "-":
-          text.style.color = "#c02c38"; // red
+          text.style.color = col.get("Mandy"); // red
           break;
         default:
-          text.style.color = "#fff";
+          text.style.color = col.get("Light Steel Blue");
       }
       text.innerHTML = c.HISTORY[line];
       index++;

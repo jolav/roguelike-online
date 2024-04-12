@@ -64,8 +64,8 @@ section#playZone {
 }
 
 section#playZone #canvas {
-  border: 1px solid #464646;
-  border: 1px solid #ffffff;
+  border: 1px solid #293133;
+  /*border: 1px solid #ffffff;*/
 }
 
 section#playZone #panel .panelTitle {

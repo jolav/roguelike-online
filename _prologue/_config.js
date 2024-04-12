@@ -11,7 +11,7 @@ const c = {
   TEST_ENDPOINT: "/test", // download webpage, slow
   OK_ENDPOINT: "/ok", // normal ping
   // Render
-  RENDER_TYPE: 0, // 0 = ASCII
+  RENDER_TYPE: 1, // 0 = ASCII  1 = UNICODE
   CANVAS_NAME: "canvas",
   PPP: 20,
   FONT: ["sans-serif", "IBM"],

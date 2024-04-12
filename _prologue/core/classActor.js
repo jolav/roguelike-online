@@ -150,6 +150,8 @@ class Actor extends Entity {
     if (this.combat.hp < this.combat.maxHp && this.inventory.food > 0) {
       this.combat.hp++;
       this.inventory.food--;
+      const h = this.type + " eat and heals ";
+      r.history.push(h);
       return true;
     }
   }
@@ -160,6 +162,8 @@ class Actor extends Entity {
       if (this.combat.hp > this.combat.maxHp) {
         this.combat.hp = this.combat.maxHp;
       }
+      const h = this.type + " use medical";
+      r.history.push(h);
       return true;
     }
   }
@@ -192,6 +196,8 @@ class Actor extends Entity {
           e.is.lootable = false;
           e.pos = this.pos; // player carries item
         }
+        const h = r.nick + " loots " + (e.data.qty || "") + " " + e.type;
+        r.history.push(h);
         this.deleteItem(e.id);
         done = true;
       }

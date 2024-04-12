@@ -19,13 +19,17 @@ ctx.font = c.PPP + "px " + c.FONT[1];
 function ascii() {
   const oX = Math.floor((c.CAM_COLS - t.view.length) / 2);
   const oY = Math.floor((c.CAM_ROWS - t.view[0].length) / 2);
-  //console.log(oX, oY);
+  const pj = t.entities[0];
+  let dead = [];
+  let active = [];
+  [dead, active] = aux.separateEntities(t.entities);
   draw.clearAll();
-  draw.grid();
+  //draw.grid();
   draw.map(oX, oY);
+  draw.entities(oX, oY, dead);
   draw.items(oX, oY);
-  draw.entities(oX, oY);
-  draw.player(oX, oY); // ensure player is up and visible
+  draw.entities(oX, oY, active);
+  draw.player(oX, oY, pj);
   if (c.INDEX_SELECTED !== undefined) {
     draw.tileSelected();
   }
@@ -49,14 +53,13 @@ const draw = {
       ctx.lineTo(canvas.width - pH, y);
     }
 
-    ctx.strokeStyle = "#27292d";
+    ctx.strokeStyle = dawnBringer.get(colors.get("grid"));
     ctx.stroke();
   },
   map: function (oX, oY) {
     for (let x = 0; x < t.view.length; x++) {
       for (let y = 0; y < t.view[0].length; y++) {
         const tile = t.view[x][y];
-        //console.log(x, y, tile);
         const char = aux.mapSymbol(tile.terrain);
         let color;
         if (tile.visible) {
@@ -71,8 +74,8 @@ const draw = {
     }
   },
   tile: function (x, y, char, color) {
-    ctx.fillStyle = color;
-    ctx.fillText(char, (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
+    ctx.fillStyle = dawnBringer.get(color);
+    ctx.fillText(char, (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV, c.PPP);
   },
   clearTile: function (x, y) {
     ctx.clearRect(x * c.PPP, y * c.PPP + pV, c.PPP, c.PPP);
@@ -81,7 +84,7 @@ const draw = {
   tileSelected: function (x, y) {
     x = c.NPC_SELECTED.pos.x;
     y = c.NPC_SELECTED.pos.y;
-    ctx.strokeStyle = "lightgreen";
+    ctx.strokeStyle = dawnBringer.get(colors.get("tileSelected"));
     ctx.strokeRect(
       (x - t.cam.x) * c.PPP + pH,
       (y - t.cam.y) * c.PPP + pV,
@@ -89,12 +92,14 @@ const draw = {
       c.PPP
     );
   },
-  player: function (oX, oY) {
-    const x = t.entities[0].view.x + oX;
-    const y = t.entities[0].view.y + oY;
+  player: function (oX, oY, pj) {
+    const x = pj.view.x + oX;
+    const y = pj.view.y + oY;
     this.clearTile(x, y);
-    ctx.fillStyle = "orange";
+    ctx.fillStyle = dawnBringer.get(colors.get("player"));
     ctx.fillText(/*"pj"*/aux.mapSymbol("player"), (x * c.PPP) + (c.PPP / 2) + pH, (y * c.PPP) + pV);
+    //c.PPP); // Fourth Argument max width to render the string.
+
   },
   items: function (oX, oY) {
     for (let item of t.items) {
@@ -110,8 +115,8 @@ const draw = {
       this.tile(x, y, char, color);
     }
   },
-  entities: function (oX, oY) {
-    for (let e of t.entities) {
+  entities: function (oX, oY, es) {
+    for (let e of es) {
       //console.log(JSON.stringify(e, null, " "));
       const x = e.view.x + oX;
       const y = e.view.y + oY;
@@ -125,10 +130,18 @@ const draw = {
 
 const aux = {
   mapSymbol: function (symbol) {
-    if (symbol.slice(0, 9) === "corpse of") {
-      return String.fromCharCode(legend.get(symbol.slice(0, 9)));
+    switch (c.RENDER_TYPE) {
+      case 0:
+        if (symbol.slice(0, 9) === "corpse of") {
+          return String.fromCharCode(legend.get(symbol.slice(0, 9)));
+        }
+        return String.fromCharCode(legend.get(symbol));
+      case 1:
+        if (symbol.slice(0, 9) === "corpse of") {
+          return unicode.get(symbol.slice(0, 9));
+        }
+        return unicode.get(symbol);
     }
-    return String.fromCharCode(legend.get(symbol));
   },
   colorOfEntity: function (entity) {
     if (entity.slice(0, 9) === "corpse of") {
@@ -136,30 +149,110 @@ const aux = {
     }
     return colors.get(entity);
   },
+  separateEntities: function (es) {
+    let dead = [];
+    let active = [];
+    for (let e of es) {
+      if (e.id === 0) {
+        continue;
+      }
+      if (e.is.combatant) {
+        active.push(e);
+      } else {
+        dead.push(e);
+      }
+    }
+    return [dead, active];
+  },
 };
+
+// https://en.wikipedia.org/wiki/Code_page_437  
+// https://en.wikipedia.org/wiki/List_of_Unicode_characters
+// https://russellcottrell.com/greek/utilities/SurrogatePairCalculator.htm
+
+const unicode = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", 'Mr'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "rt"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
+
+const unicodeGlyphs = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", '\ud83d\udc00'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "\ud83d\udc01"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
 
 const legend = new Map([
   ["floor", 183],   // middleDot 183 or normal point 46
   ["wall", 35],     // #35
   ["-", 0],
   ["player", 64],   // @64
-  ["rat", 114],     // r
-  ["mole rat", 82], // R
+  ["rat", 114],     // r 114
+  ["mole rat", 82], // R 82
   ["corpse of", 37],    // %
   ["item", 63],    // ?
   ["exit", 60], // <
 ]);
 
 const colors = new Map([
-  ["player", "burlywood"],
-  ["visible", "#fff"],
-  ["explored", "#454545"],
-  ["rat", "DeepPink"],
-  ["mole rat", "DeepPink"],
-  ["item", "orange"],
-  ["exit", "yellow"],
+  ["player", "Tahiti Gold"],
+  ["visible", "Light Steel Blue"],
+  ["explored", "Smokey Ash"],
+  ["rat", "Brown"],
+  ["mole rat", "Brown"],
+  ["item", "Pancho"],
+  ["exit", "Golden Fizz"],
+  ["grid", "grid"],
+  ["tileSelected", "Tahiti Gold"],
+]);
+
+const dawnBringer = new Map([
+  ["Black", "#000000"],
+  ["Valhalla", "#222034"],
+  ["Loulou", "#45283C"],
+  ["Oiled Cedar", "#663931"],
+  ["Rope", "#8F563B"],
+  ["Tahiti Gold", "#DF7126"],
+  ["Twine", "#D9A066"],
+  ["Pancho", "#EEC39A"],
+  ["Golden Fizz", "#FBF236"],
+  ["Atlantis", "#99E550"],
+  ["Christi", "#6ABE30"],
+  ["Elf Green", "#37946E"],
+  ["Dell", "#4B692F"],
+  ["Verdigris", "#524B24"],
+  ["Opal", "#323C39"],
+  ["Deep Koamaru", "#3F3F74"],
+  ["Venice Blue", "#306082"],
+  ["Royal Blue", "#5B6EE1"],
+  ["Cornflower", "#639BFF"],
+  ["Viking", "#5FCDE4"],
+  ["Light Steel Blue", "#CBDBFC"],
+  ["White", "#FFFFFF"],
+  ["Heather", "#9BADB7"],
+  ["Topaz", "#847E87"],
+  ["Dim Gray", "#696A6A"],
+  ["Smokey Ash", "#595652"],
+  ["Clairvoyant", "#76428A"],
+  ["Brown", "#AC3232"],
+  ["Mandy", "#D95763"],
+  ["Plum", "#D77BBA"],
+  ["Rainforest", "#8F974A"],
+  ["Stinger", "#8A6F30"],
+  ["grid", "#27292d"],
 ]);
 
 export {
   ascii,
+  dawnBringer,
 };
