@@ -238,6 +238,9 @@ const shelter = {
 const testRoom = {
   map: [],
   create: function (cols, rows) {
+    K.MAX_NPCS = 1;
+    K.MAX_ITEMS = 10;
+    K.FOV_PJ_RANGE = 50;
     this.fillMapWithWalls(cols, rows);
     this.cleanRoom(cols, rows);
     this.putColumns(K.TESTROOM_COLUMNS, cols, rows);

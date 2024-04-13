@@ -36,6 +36,7 @@ const ask = {
     c.HISTORY = c.HISTORY.concat(t.history);
     //console.log(JSON.stringify(t, null, 2));
     //console.log(t);
+    select.update();
     render.ascii();
   }
 };
@@ -50,7 +51,7 @@ const fetchAPI = {
           await aux.sleep();
           break;
         case 1:
-          await fetch(c.API_BASE_URL + endpoints[1]);
+          await fetch(c.API_BASE_URL + endpoints[c.ENDPOINTS]);
       }
       data = api.version();
       //

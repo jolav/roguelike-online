@@ -14,7 +14,7 @@ const pV = c.CAM_DELTA_Y;
 const ctx = canvas.getContext("2d");
 ctx.textBaseline = "top";
 ctx.textAlign = "center";
-ctx.font = c.PPP + "px " + c.FONT[1];
+ctx.font = c.PPP + "px " + c.FONT[c.FONT_SELECTED];
 
 function ascii() {
   const oX = Math.floor((c.CAM_COLS - t.view.length) / 2);
@@ -174,8 +174,8 @@ const unicode = new Map([
   ["floor", "\u00b7"],   // middleDot 
   ["wall", "\u25a0"],     // \u25a0 
   ["player", "\u0040"],   // @ \u0040
-  ["mole rat", 'Mr'],     // ra \u1f400 o \ud83d\ude00
-  ["rat", "rt"], // Mr
+  ["mole rat", 'R1'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "r1"], // Mr
   ["corpse of", "\u0025"],    // %
   ["item", "\u003f"],    // ?
   ["exit", "\u2302"], // <

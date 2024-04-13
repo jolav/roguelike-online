@@ -10,11 +10,13 @@ const c = {
   PING_ENDPOINT: "/ping",
   TEST_ENDPOINT: "/test", // download webpage, slow
   OK_ENDPOINT: "/ok", // normal ping
+  ENDPOINTS: 2, // 0 => PING 1 => TEST  2 => OK 
   // Render
   RENDER_TYPE: 1, // 0 = ASCII  1 = UNICODE
   CANVAS_NAME: "canvas",
   PPP: 20,
-  FONT: ["sans-serif", "IBM"],
+  FONT: ["sans-serif", "arial", "IBM"],
+  FONT_SELECTED: 2,
   // Camera dimensions
   CAM_PIXELS_X: window.innerWidth - 300,
   CAM_PIXELS_Y: window.innerHeight - 15,

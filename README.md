@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.1-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.2-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -35,7 +35,8 @@ KEYBOARD
   
 ## PROLOGUE 1.0.0 MILESTONE 
 
-- [ ] **Prologue.0.1.1 Colors Palette + History improved + ensure render order + unicode use**  
+- [X] **Prologue.0.1.2 Auto unselect targets**  
+- [X] **Prologue.0.1.1 Colors Palette + History improved + ensure render order + unicode use**  
 - [X] **Prologue.0.1.0 Minimal full playable version**   
 - [X] **Prologue.0.0.14 Leaving The Shelter**
 - [X] **Prologue.0.0.13 Ranged Combat**  
@@ -66,7 +67,7 @@ KEYBOARD
 - [ ] **damage tooltips**  
 - [ ] **on key pressed down ,movement at constant speed**  
 - [X] **Simulate Ping to server**  
-- [ ] **unselect targets dead or not in LOS**  
+- [X] **unselect targets dead or not in LOS**  
 - [ ] **array with npcs movements/actions for slow animation**  
 - [ ] **convert prologue landing page into a modal once game is started**  
 - **CLIENT MOUSE**  
