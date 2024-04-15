@@ -3,7 +3,7 @@
 console.log('Loading...../core/_konfig.js');
 
 const K = {
-  VERSION: "0.1.3",
+  VERSION: "0.1.4",
   TRIES: 5000,
   SURNAME_TXT: "./../assets/surname.txt",
   TOKEN_LENGTH: 50,

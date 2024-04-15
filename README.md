@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.3-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.4-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -35,6 +35,8 @@ KEYBOARD
   
 ## PROLOGUE 1.0.0 MILESTONE 
 
+- [ ] **Prologue.0.1.5 Array with turn actions for slow animation**  
+- [X] **Prologue.0.1.4 Refactoring: history has its own class/object**  
 - [X] **Prologue.0.1.3 movement at constant speed keeping key pressed down**  
 - [X] **Prologue.0.1.2 Auto unselect targets**  
 - [X] **Prologue.0.1.1 Colors Palette + History improved + ensure render order + unicode use**  
@@ -61,16 +63,15 @@ KEYBOARD
 - [ ] **Sound effects**  
 - [X] **Turn counter into datetime**  
 - [ ] **change alert for modal**  
-- [ ] **Zoom map**  
 - [X] **Center camera if is greater than map**  
 - [X] **render order, tiles-corpses-items-foes-player**  
 - [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
+- [ ] **melee animations**  
 - [X] **on key pressed down ,movement at constant speed**  
 - [X] **Simulate Ping to server**  
 - [X] **unselect targets dead or not in LOS**  
 - [ ] **array with npcs movements/actions for slow animation**  
-- [ ] **convert prologue landing page into a modal once game is started**  
 - **CLIENT MOUSE**  
 - [ ] **move support**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
@@ -99,10 +100,9 @@ KEYBOARD
 - [ ] **open/close doors**  
 - [ ] **lights, ilumination**  
 - **REFACTORING**  
-- [ ] **move history into its own class/object**  
+- [X] **move history into its own class/object**  
 - [ ] **remove hardcoded data for external files**  
 - **OPTIONALS**   
-- [ ] **Each input movement is queued and previewed on client**   
 - [ ] **mark visited items like visited ??**   
 - [ ] **Show PJ position- maybe as a skill**  
 - [ ] **move, melee and ranged combat animations**  
@@ -111,14 +111,17 @@ KEYBOARD
 - [ ] **minigames open lock, sudoku, hacking, brute force**  
 - [ ] **mini screen for shooting from far distance**  
 - [ ] **Grid centered on x,y instead of x+0.5,y+0.5 avoiding offsets**  
-- [ ] **Tilesets as well as ascii**  
-- [ ] **two letter names on ascii**  
+- [X] **two letter names on ascii**  
 - [ ] **Map Prefabs**  
 - [ ] **Autoexplore**  
 - [ ] **Stats**  
 - [ ] **Experience and levels**  
-- **DISCARDED IDEAS**  
+- **DISCARDED IDEAS AT THE MOMENT**  
 - [ ] **Directional FOV**  
+- [ ] **Client mini Zoom map**  
+- [ ] **Each input movement is queued and previewed on client**   
+- [ ] **convert prologue landing page into a modal once game is started**  
+- [ ] **Tilesets as well as ascii**  
 - **SERVER Planned for a later release**  
 - [ ] **Authentication**  
 - [ ] **Save/Load runs**  

@@ -9,6 +9,7 @@ import { Point } from "./utils.js";
 import { r } from "./run.js";
 import { entities } from "./entities.js";
 import { data } from "./dataFile.js";
+import { history } from "./history.js";
 
 class Actor extends Entity {
   constructor(id, type, pos, blocks, mobile, combat, item) {
@@ -123,16 +124,13 @@ class Actor extends Entity {
     } else {
       damage = 0;
     }
-    const h = this.type + " deals " + damage + " damage to " + e.name;
-    r.history.push(h);
+    history.melee(this, damage, e);
     if (e.combat.hp <= 0) {
-      //console.log('Killed ', e.name);
-      const h = "-" + e.name + " dies";
-      r.history.push(h);
       this.kill(e);
     }
   }
   kill(e) {
+    history.kill(e);
     if (e.id === 0) {
       r.gameOver.status = true;
       return;
@@ -150,20 +148,19 @@ class Actor extends Entity {
     if (this.combat.hp < this.combat.maxHp && this.inventory.food > 0) {
       this.combat.hp++;
       this.inventory.food--;
-      const h = this.type + " eat and heals ";
-      r.history.push(h);
+      history.eat(this, 1);
       return true;
     }
   }
   heal() {
     if (this.combat.hp < this.combat.maxHp && this.inventory.medical > 0) {
-      this.combat.hp += 10;
-      this.inventory.medical--;
-      if (this.combat.hp > this.combat.maxHp) {
-        this.combat.hp = this.combat.maxHp;
+      let qty = 10;
+      if (this.combat.maxHp - this.combat.hp < qty) {
+        qty = this.combat.maxHp - this.combat.hp;
       }
-      const h = this.type + " use medical";
-      r.history.push(h);
+      this.combat.hp += qty;
+      this.inventory.medical--;
+      history.heal(this, qty);
       return true;
     }
   }
@@ -196,8 +193,7 @@ class Actor extends Entity {
           e.is.lootable = false;
           e.pos = this.pos; // player carries item
         }
-        const h = r.nick + " loots " + (e.data.qty || "") + " " + e.type;
-        r.history.push(h);
+        history.loot(e);
         this.deleteItem(e.id);
         done = true;
       }
@@ -232,8 +228,7 @@ class Actor extends Entity {
     } else {
       damage = 0;
     }
-    const h = "+ " + this.type + " deals " + damage + " damage to " + target.type + "\n";
-    r.history.push(h);
+    history.fire(this, damage, target);
     if (target.combat.hp <= 0) {
       this.kill(target);
     }

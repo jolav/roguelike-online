@@ -9,6 +9,7 @@ import * as fov from "./fov.js";
 import { populateMap } from "./entities.js";
 import * as items from "./classItem.js";
 import { queue } from "./queue.js";
+import * as history from "./history.js";
 
 const r = {
   nick: "",
@@ -19,8 +20,9 @@ const r = {
   },
   counter: 0,
   turn: 0,
-  history: getInitialHistory(),
+  history: history.create(),
   cam: new u.Point(0, 0),
+  actions: [],
   entities: [],
   items: [],
   map: [],
@@ -44,6 +46,7 @@ const r = {
     //console.log(JSON.stringify(queue.list));
     // pj action
     r.history = [];
+    r.actions = [];
     const pj = r.entities[0];
     pj.actionDone = false;
     pj.realAction = "";
@@ -121,11 +124,6 @@ const aux = {
     //location.reload();
   }
 };
-
-function getInitialHistory() {
-  const historyPreSet = ["14", "13", "12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "Adventure begins..."];
-  return historyPreSet;
-}
 
 const actionCost = new Map([
   ["UP", 100],
