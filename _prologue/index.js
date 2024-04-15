@@ -4,7 +4,7 @@ console.log("Loading.....index.js");
 
 import { c } from "./_config.js";
 import { ask } from "./http.js";
-import { actionKey } from "./controls.js";
+import { listenKeyboard } from "./controls.js";
 
 const init = {
   mode: "online",
@@ -39,24 +39,12 @@ const init = {
     document.getElementById("versionPanel").innerHTML = c.VERSION;
     document.getElementById("ping2").innerHTML = c.LAG;
     document.body.style.overflow = "hidden";
-    this.listenKeyboard();
+    listenKeyboard();
   },
   ping: async function () {
     [c.VERSION, c.LAG] = await ask.ping();
     document.getElementById("versionIntro").innerHTML = c.VERSION;
     document.getElementById("ping").innerHTML = c.LAG;
-  },
-  listenKeyboard: function () {
-    window.addEventListener('keydown', function (e) {
-      if (e.repeat) {
-        //console.log('HI');
-        //return;
-      }
-      const action = actionKey(e);
-      if (action !== undefined) {
-        ask.turn(action);
-      }
-    });
   }
 };
 

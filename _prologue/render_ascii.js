@@ -174,7 +174,7 @@ const unicode = new Map([
   ["floor", "\u00b7"],   // middleDot 
   ["wall", "\u25a0"],     // \u25a0 
   ["player", "\u0040"],   // @ \u0040
-  ["mole rat", 'R1'],     // ra \u1f400 o \ud83d\ude00
+  ["mole rat", 'r6'],     // ra \u1f400 o \ud83d\ude00
   ["rat", "r1"], // Mr
   ["corpse of", "\u0025"],    // %
   ["item", "\u003f"],    // ?

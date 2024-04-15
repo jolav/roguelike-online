@@ -17,13 +17,16 @@ const ask = {
     return fetchAPI.ping();
   },
   turn: async function (action) {
+    c.IS_SERVER_TURN = true;
     if (action === "SELECT") {
       select.action();
       render.ascii();
+      c.IS_SERVER_TURN = false;
       return;
     }
     if (action === "FIRE") {
       if (c.ID_SELECTED === undefined) {
+        c.IS_SERVER_TURN = false;
         return;
       }
     }
@@ -38,6 +41,7 @@ const ask = {
     //console.log(t);
     select.update();
     render.ascii();
+    c.IS_SERVER_TURN = false;
   }
 };
 

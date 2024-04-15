@@ -2,24 +2,44 @@
 
 console.log('Loading.....controls.js');
 
-function actionKey(e) {
-  let action = undefined;
-  //console.log(e.key, e.code, e.location, e.metaKey);
-  if (e.location === 3) { // numpad
-    action = numPad.get(e.key);
-  }
-  if (e.location === 0) { // standard
-    if (e.ctrlKey === true) { // CTRL is pressed
-      e.preventDefault();
-      action = leftLoc.get(e.key);
-    } else {
-      action = standard.get(e.key);
+import { ask } from "./http.js";
+import { c } from "./_config.js";
+
+function listenKeyboard() {
+  window.addEventListener('keydown', function (e) {
+    const action = controls.actionKey(e);
+    if (action === undefined) {
+      return;
     }
-  }
-  if (action === "") action = undefined;
-  //console.log('ACTION = ', action);
-  return action;
+    /*if (e.repeat) {
+      return;
+    }*/
+    if (!c.IS_SERVER_TURN) {
+      ask.turn(action);
+    }
+  });
 }
+
+const controls = {
+  actionKey: function (e) {
+    let action = undefined;
+    //console.log(e.key, e.code, e.location, e.metaKey);
+    if (e.location === 3) { // numpad
+      action = numPad.get(e.key);
+    }
+    if (e.location === 0) { // standard
+      if (e.ctrlKey === true) { // CTRL is pressed
+        e.preventDefault();
+        action = leftLoc.get(e.key);
+      } else {
+        action = standard.get(e.key);
+      }
+    }
+    if (action === "") action = undefined;
+    //console.log('ACTION = ', action);
+    return action;
+  },
+};
 
 const numPad = new Map([
   ["0", ""],
@@ -63,6 +83,6 @@ const leftLoc = new Map([
 ]);
 
 export {
-  actionKey,
+  listenKeyboard,
 };
 

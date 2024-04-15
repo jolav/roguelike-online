@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.2-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.3-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -35,6 +35,7 @@ KEYBOARD
   
 ## PROLOGUE 1.0.0 MILESTONE 
 
+- [X] **Prologue.0.1.3 movement at constant speed keeping key pressed down**  
 - [X] **Prologue.0.1.2 Auto unselect targets**  
 - [X] **Prologue.0.1.1 Colors Palette + History improved + ensure render order + unicode use**  
 - [X] **Prologue.0.1.0 Minimal full playable version**   
@@ -65,7 +66,7 @@ KEYBOARD
 - [X] **render order, tiles-corpses-items-foes-player**  
 - [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
-- [ ] **on key pressed down ,movement at constant speed**  
+- [X] **on key pressed down ,movement at constant speed**  
 - [X] **Simulate Ping to server**  
 - [X] **unselect targets dead or not in LOS**  
 - [ ] **array with npcs movements/actions for slow animation**  

@@ -37,6 +37,7 @@ const c = {
   INDEX_SELECTED: undefined,
   ID_SELECTED: undefined,
   NPC_SELECTED: undefined,
+  IS_SERVER_TURN: false,
 };
 
 (function autoUpdateC() {
