@@ -115,7 +115,7 @@ const panel = {
         default:
           text.style.color = col.get("Light Steel Blue");
       }
-      text.innerHTML = c.HISTORY[line];
+      text.innerHTML = c.HISTORY[line].replace("player", c.NICK);
       index++;
     }
   },

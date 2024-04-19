@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.1.4-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.1.5-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## **[Play roguelike.online](https://roguelike.online)**  
@@ -35,7 +35,7 @@ KEYBOARD
   
 ## PROLOGUE 1.0.0 MILESTONE 
 
-- [ ] **Prologue.0.1.5 Array with turn actions for slow animation**  
+- [X] **Prologue.0.1.5 History minor change**  
 - [X] **Prologue.0.1.4 Refactoring: history has its own class/object**  
 - [X] **Prologue.0.1.3 movement at constant speed keeping key pressed down**  
 - [X] **Prologue.0.1.2 Auto unselect targets**  
@@ -71,7 +71,7 @@ KEYBOARD
 - [X] **on key pressed down ,movement at constant speed**  
 - [X] **Simulate Ping to server**  
 - [X] **unselect targets dead or not in LOS**  
-- [ ] **array with npcs movements/actions for slow animation**  
+- [ ] **array with npcs movements/actions for slow turn animation**  
 - **CLIENT MOUSE**  
 - [ ] **move support**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
@@ -83,7 +83,8 @@ KEYBOARD
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
 - **GAME FEATURES**  
-- [ ] **Multiple Shelter Levels**
+- [ ] **Restrict data to client**  
+- [ ] **Multiple Shelter Levels**  
 - [ ] **Choose/Random player name at start**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
@@ -134,9 +135,11 @@ KEYBOARD
 - [ ] **Turn Based Multi Player Combat Arena Test**    
 - **BUGS**  
 - [ ] **npcs attack each other if they are of different types or feature??**  
+- [ ] **some maps smaller than camera breaks**  
 
 
 ## **Acknowledgment**
 
 All the artwork is either public domain or released under a variety of Creative Commons licenses. To determine the copyright status of any of the artwork, consult the [Artwork Copyright File](https://github.com/jolav/roguelike-online/blob/main/artwork.txt)
+
 

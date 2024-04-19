@@ -95,8 +95,7 @@ section#playZone .right .loot {
 
 section#playZone .right .history {
   text-align: left;
-  font-size: 0.90em;
-  /*0.80em;*/
+  /*font-size: 0.90em;*/
   position: fixed;
   padding: 5px;
   bottom: 2em;
