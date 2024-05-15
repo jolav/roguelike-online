@@ -1,25 +1,99 @@
+![Game](https://img.shields.io/badge/Prologue-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
-- [ ] **Prologue.0.0.0 Start**  
-- [ ] **Prologue.0.1.0 Setting Up Client Server**  
-- [ ] **Prologue.0.2.0 Server runs/run loop**  
-- [ ] **Prologue.0.3.0 Basic Authentication**  
-- [ ] **Prologue.0.4.0 Moving around @**  
-- [ ] **Prologue.0.5.0 Basic Map**  
-- [ ] **Prologue.0.6.0 Camera**  
-- [ ] **Prologue.0.7.0 Field of View**  
-- [ ] **Prologue.0.8.0 Generating Shelter**  
-- [ ] **Prologue.0.9.0 Saving/Loading Runs**  
-- [ ] **Prologue.0.10.0 Placing and Moving Enemies**  
-- [ ] **Prologue.0.11.0 Turn Time System**  
-- [ ] **Prologue.0.12.0 Melee**  
-- [ ] **Prologue.0.13.0 Creating UI**  
-- [ ] **Prologue.0.14.0 Data Files**  
-- [ ] **Prologue.0.15.0 Inventory and items**  
-- [ ] **Prologue.0.16.0 Ranged Combat**  
-- [ ] **Prologue.0.17.0 Multiple Shelter Levels**  
+- [X] **Start**  
+- [ ] **Prologue Setting Up Client Server**  
+- [ ] **Prologue Server runs/run loop**  
+- [ ] **Prologue Basic Authentication**  
+- [ ] **Prologue Moving around @**  
+- [ ] **Prologue Basic Map**  
+- [ ] **Prologue Camera**  
+- [ ] **Prologue Field of View**  
+- [ ] **Prologue Generating Shelter**  
+- [ ] **Prologue Saving/Loading Runs**  
+- [ ] **Prologue Placing and Moving Enemies**  
+- [ ] **Prologue Turn Time System**  
+- [ ] **Prologue Melee**  
+- [ ] **Prologue Creating UI**  
+- [ ] **Prologue Data Files**  
+- [ ] **Prologue Inventory and items**  
+- [ ] **Prologue Ranged Combat**  
+- [ ] **Prologue Multiple Shelter Levels**  
 - [ ] **Prologue.0.1.0 Leaving the Shelter. Minimal Full Playable version**  
+
+- **CLIENT**  
+- [ ] **choose a colors palette**  
+- [ ] **history improved with loots**  
+- [ ] **Sound effects**  
+- [ ] **Turn counter into datetime**  
+- [ ] **Use modal for dialogs**  
+- [ ] **help modal showing controls settings and config**  
+- [ ] **Center camera if is greater than map**  
+- [ ] **render order, tiles-corpses-items-foes-player**  
+- [ ] **only pass turn if action is really done, no effect actions**  
+- [ ] **damage tooltips**  
+- [ ] **on key pressed down ,movement at constant speed**  
+- [ ] **unselect targets dead or not in LOS**  
+- [ ] **test non-square fonts**  
+- **CLIENT ANIMATIONS**  
+- [ ] **Movement**  
+- [ ] **Melee**  
+- [ ] **Ranged**  
+- [ ] **array with npcs movements/actions for slow turn animation**  
+- **CLIENT MOUSE**  
+- [ ] **move support**  
+- [ ] **Show tooltip with stats on mouse over map/entities**  
+- [ ] **Move long distance using mouse**   
+- [ ] **Select tile and foe with mouse**  
+- **CLIENT SETTINGS**  
+- [ ] **settings: resize window, custom controls, change scale...**  
+- [ ] **Player can modify ppp size 12/16/24...**  
+- [ ] **resize map on windows resize**  
+- **GAME FEATURES**  
+- [ ] **Restrict data to client**  
+- [ ] **Multiple Shelter Levels**  
+- [ ] **Choose/Random player name at start**  
+- [ ] **simulate nuclear shelter collapse**  
+- [ ] **markers where noise is heard**  
+- [ ] **markings on the edge of the map indicating quest directions**  
+- [ ] **dummy items**  
+- [ ] **One turn equals 10,15,30 or 60 seg**  
+- **MAPS**  
+- [ ] **random pj start point instead center**  
+- [ ] **check all map is connected**  
+- [ ] **wide corridors**  
+- [ ] **Put pillars in large rooms**  
+- [ ] **add furniture**  
+- [ ] **open/close doors**  
+- [ ] **lights, ilumination**  
+- **SERVER FEATURES**  
+- [ ] **Authentication - players account**  
+- [ ] **seeds for reproducible runs**  
+- [ ] **incremental views to reduce bandwith**  
+- [ ] **Manage Runs, delete old ones, limit active runs ...**  
+- **REFACTORING**  
+- **BUGS**  
+- **OPTIONALS**   
+- [ ] **mark visited items like visited ??**   
+- [ ] **Show PJ position- maybe as a skill**  
+- [ ] **info about criatures/npc must be unblocked**  
+- [ ] **R highligths all criatures/npcs same color except the one selected**  
+- [ ] **minigames open lock, sudoku, hacking, brute force**  
+- [ ] **mini screen for shooting from far distance**  
+- [ ] **Grid centered on x,y instead of x+0.5,y+0.5 avoiding offsets**  
+- [ ] **two letter names on ascii**  
+- [ ] **Map Prefabs**  
+- [ ] **Autoexplore**  
+- [ ] **Stats**  
+- [ ] **Experience and levels**  
+- **DISCARDED IDEAS AT THE MOMENT**  
+- [ ] **Directional FOV**  
+- [ ] **Client mini Zoom map**  
+- [ ] **Each input movement is queued and previewed on client**   
+- [ ] **Sprites in addition to ascii**  
+- [ ] **websockets instead API**  
+- [ ] **Turn Based Multi Player Combat Arena Test**    
 
 ## **Acknowledgment**
 
