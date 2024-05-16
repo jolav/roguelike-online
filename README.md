@@ -1,11 +1,11 @@
-![Game](https://img.shields.io/badge/Prologue-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.0-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
 - [X] **Start**  
-- [ ] **Prologue Setting Up Client Server**  
+- [X] **Prologue.0.0.0 Setting Up Client Server**  
+- [ ] **Prologue Basic Authentication Nick/Token**  
 - [ ] **Prologue Server runs/run loop**  
-- [ ] **Prologue Basic Authentication**  
 - [ ] **Prologue Moving around @**  
 - [ ] **Prologue Basic Map**  
 - [ ] **Prologue Camera**  
