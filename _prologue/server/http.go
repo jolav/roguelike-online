@@ -10,17 +10,17 @@ import (
 	"time"
 )
 
-func httpServerLaunch(c config) {
+func (a app) httpServerLaunch() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /ping", ping)
-	mux.HandleFunc("POST /run/new", runNew)
+	mux.HandleFunc("POST /run/new", a.runNew)
 	mux.HandleFunc("POST /run/save", runSave)
 	mux.HandleFunc("POST /run/action", runAction)
 	mux.HandleFunc("/", badRequest)
 
 	server := http.Server{
-		Addr:           fmt.Sprintf("localhost:%d", c.Port),
+		Addr:           fmt.Sprintf("localhost:%d", a.Cnf.Port),
 		Handler:        mux,
 		IdleTimeout:    time.Minute,
 		ReadTimeout:    5 * time.Second,
@@ -28,22 +28,34 @@ func httpServerLaunch(c config) {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Printf("INFO -> Server up listening %s in mode %s", server.Addr, c.Mode)
+	log.Printf("INFO -> Server up listening %s in mode %s",
+		server.Addr,
+		a.Cnf.Mode,
+	)
 	err := server.ListenAndServe()
 	log.Fatalf("ERROR Server cannot launch -> %s", err)
 }
 
 func ping(w http.ResponseWriter, r *http.Request) {
 	response := struct {
-		Message string `json:"statusText"`
+		Version string `json:"version"`
 	}{
-		Message: http.StatusText(http.StatusOK),
+		Version: version,
 	}
 	sendJSONToClient(w, response, http.StatusOK)
 }
 
-func runNew(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("new"))
+func (a app) runNew(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	cam := r.Form.Get("cam")
+	nick := r.Form.Get("nick")
+	if nick == "" {
+		nick = "PLAYER"
+	}
+	rn := newRun(nick, cam)
+	a.Runs[rn.token] = rn
+	fmt.Println("===>", rn)
+	sendJSONToClient(w, processNewRun(rn), http.StatusOK)
 }
 
 func runSave(w http.ResponseWriter, r *http.Request) {
@@ -64,8 +76,10 @@ func serverError(w http.ResponseWriter, r *http.Request, err error) {
 	log.Printf("ERROR serverError -> %s \n%s - %s\n", err, method, uri)
 	response := struct {
 		Message string `json:"statusText"`
+		Version string `json:"version"`
 	}{
 		Message: http.StatusText(http.StatusInternalServerError),
+		Version: version,
 	}
 	sendJSONToClient(w, response, http.StatusInternalServerError)
 }
@@ -76,8 +90,10 @@ func clientError(w http.ResponseWriter, r *http.Request, status int) {
 	log.Printf("INFO -> clientError %s %s\n", method, uri)
 	response := struct {
 		Message string `json:"statusText"`
+		Version string `json:"version"`
 	}{
 		Message: http.StatusText(status),
+		Version: version,
 	}
 	sendJSONToClient(w, response, status)
 }

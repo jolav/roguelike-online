@@ -1,14 +1,75 @@
 /* */
 
-.body, html {
-  height: 60%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body {
+  font-family: 'IBM2', sans-serif, arial;
+  background-color: #293133;
+  color: #ffffff;
+  font-size: 1em;
+  line-height: 1.2;
 }
 
-.text {
+
+@font-face {
+  font-family: 'IBM';
+  src: url(./assets/IBMPlexSans.ttf);
+}
+
+
+/* LANDING PAGE */
+
+section#landingPage {
+  max-width: 800px;
+  margin: 5em auto;
+  font-size: 1.2em;
+}
+
+section#landingPage header {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  /*background-color: #414141;*/
+}
+
+section#landingPage img {
+  vertical-align: middle;
+}
+
+section#landingPage header #ping {
+  margin-left: 2em;
+  text-align: left;
+  width: 6em;
+}
+
+section#landingPage header #logo {
+  margin-right: 0.5em;
+}
+
+section#landingPage .text {
+  text-align: justify;
+}
+
+section#landingPage .nick {
   text-align: center;
-  font-size: 2em;
+}
+
+section#landingPage #nick {
+  background-color: #293133;
+  text-align: center;
+  color: #f0f0f0;
+  /*border: 0;*/
+  font-size: 1em;
+  width: 10em;
+}
+
+section#landingPage .continue {
+  margin: 1em;
+  text-align: center;
+}
+
+section#landingPage .pressKey {
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 5px 20px;
 }

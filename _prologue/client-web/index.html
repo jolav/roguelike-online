@@ -19,12 +19,51 @@
 
 <body>
 
-  <div class="text">
-    <div id="nick">Nick: </div>
-    <div id="version">Version:</div>
-    <div id="token">Token:</div>
-    <div id="ping">Ping:</div>
-  </div>
+  <section id="landingPage">
+
+    <header>
+      <span id="logo">
+        <img src="./assets/favicon32.png" alt="roguelike.online logo">
+      </span>
+      <span id="version">Version:</span>
+      <span id="ping">Ping:</span>
+    </header>
+
+    <div class="text">
+      <p>
+        You wake up feeling dizzy and confused.
+      </p>
+      <p>
+        After a few seemingly endless seconds, you begin to feel better and regain your senses.
+      </p>
+      <p>
+        What is that alarm siren sound you hear? And why is there such a pungent smell of mustiness... and death?
+      </p>
+      <p>
+        You start to regain your vision. Let's see what the hell is going on.
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="nick">
+        <label for="nick">Name:</label>
+        <input type="text" id="nick" value="Texto por defecto">
+      </div>
+    </div>
+
+    <div class="continue">
+      <span class="pressKey">Press ESC to continue</span>
+    </div>
+
+  </section>
+
+  <section id="playingZone">
+    <div>Playing Zone</div>
+  </section>
+
+  <section id="modal">
+    <div>Modal</div>
+  </section>
 
   <script type="module" src="index.js"></script>
 

@@ -4,7 +4,7 @@ package main
 
 import "fmt"
 
-func gameLoop() {
+func (a app) gameLoop() {
 	fmt.Println("gameLoop")
 	select {}
 }

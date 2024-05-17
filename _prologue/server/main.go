@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-var version = "0.0.0"
+var version = "0.0.1"
 var releaseDate = "undefined"
 
 type config struct {
@@ -24,21 +24,28 @@ type config struct {
 	DevHosts []string
 }
 
+type app struct {
+	Cnf  config
+	Runs runs
+}
+
 func main() {
 	checkFlags()
 
-	c := setupConfig()
-	prettyPrintStruct(c)
-
+	a := &app{
+		Cnf:  setupConfig(),
+		Runs: make(map[string]run),
+	}
+	prettyPrintStruct(a)
 	// Custom Error Log File
 	var mylog *os.File
-	if c.Mode == "production" {
-		mylog = createCustomLogsFile(c.LogsFile)
+	if a.Cnf.Mode == "production" {
+		mylog = createCustomLogsFile(a.Cnf.LogsFile)
 	}
 	defer mylog.Close()
 
-	go httpServerLaunch(c)
-	gameLoop()
+	go a.httpServerLaunch()
+	a.gameLoop()
 	log.Print("Exit")
 }
 
