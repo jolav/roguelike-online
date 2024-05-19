@@ -29,7 +29,7 @@ const fetchAPI = {
     } catch (err) {
       console.log('ERROR fetchAPI Ping => ', err);
     }
-    return data;
+    return [data.version, data.lag];
   },
   game: async function (nick) {
     const start = Date.now();

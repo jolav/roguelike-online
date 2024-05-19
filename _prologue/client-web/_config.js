@@ -18,8 +18,8 @@ const c = {
   VIEW_ROWS: undefined,
   VIEW_DELTA_X: undefined,
   VIEW_DELTA_Y: undefined,
-  PANEL_WIDTH: 300,
-  VERTICAL_SAFETY_DISTANCE: 20,
+  PANEL_WIDTH: 250,
+  VERTICAL_SAFETY_DISTANCE: 10,
   // Api
   API_URL: "https://p.roguelike.online",
   PING_ENDPOINT: "/ping",
