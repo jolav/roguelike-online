@@ -12,6 +12,8 @@ import (
 type run struct {
 	nick  string
 	token string
+	x     int
+	y     int
 }
 
 func newRun(nick, cam string) run {
@@ -24,6 +26,8 @@ func newRun(nick, cam string) run {
 	r := run{
 		nick:  nick,
 		token: token,
+		x:     0,
+		y:     0,
 	}
 	return r
 }

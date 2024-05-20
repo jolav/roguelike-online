@@ -12,7 +12,9 @@ const c = {
   CANVAS_NAME: "canvas",
   FONTS: ["sans-serif", "arial", "IBM"],
   FONT_SELECTED: 2,
-  PPP: 20,
+  PPP_X: 20,
+  PPP_Y: 20,
+  FPS: 60,
   // view
   VIEW_COLS: undefined,
   VIEW_ROWS: undefined,
@@ -26,15 +28,17 @@ const c = {
   ACTION_ENDPOINT: "/run/action",
   NEW_GAME_ENDPOINT: "/run/new",
   SAVE_ENDPOINT: "/run/save",
+  // Game
+  IS_SERVER_TURN: false,
 };
 
 (function autoUpdateView() {
   const view_pixels_X = window.innerWidth - c.PANEL_WIDTH;
   const view_pixels_Y = window.innerHeight - c.VERTICAL_SAFETY_DISTANCE;
-  c.VIEW_COLS = Math.floor(view_pixels_X / c.PPP);
-  c.VIEW_ROWS = Math.floor(view_pixels_Y / c.PPP);
-  c.VIEW_DELTA_X = Math.floor((view_pixels_X - (c.VIEW_COLS * c.PPP)) / 2);
-  c.VIEW_DELTA_Y = Math.floor((view_pixels_Y - (c.VIEW_ROWS * c.PPP)) / 2);
+  c.VIEW_COLS = Math.floor(view_pixels_X / c.PPP_X);
+  c.VIEW_ROWS = Math.floor(view_pixels_Y / c.PPP_Y);
+  c.VIEW_DELTA_X = Math.floor((view_pixels_X - (c.VIEW_COLS * c.PPP_X)) / 2);
+  c.VIEW_DELTA_Y = Math.floor((view_pixels_Y - (c.VIEW_ROWS * c.PPP_Y)) / 2);
 })();
 
 const aux = {

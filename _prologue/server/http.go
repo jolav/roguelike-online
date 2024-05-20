@@ -16,7 +16,7 @@ func (a app) httpServerLaunch() {
 	mux.HandleFunc("GET /ping", ping)
 	mux.HandleFunc("POST /run/new", a.runNew)
 	mux.HandleFunc("POST /run/save", runSave)
-	mux.HandleFunc("POST /run/action", runAction)
+	mux.HandleFunc("POST /run/action", a.runAction)
 	mux.HandleFunc("/", badRequest)
 
 	server := http.Server{
@@ -54,7 +54,7 @@ func (a app) runNew(w http.ResponseWriter, r *http.Request) {
 	}
 	rn := newRun(nick, cam)
 	a.Runs[rn.token] = rn
-	fmt.Println("===>", rn)
+	//fmt.Println("===>", rn)
 	sendJSONToClient(w, processNewRun(rn), http.StatusOK)
 }
 
@@ -62,8 +62,13 @@ func runSave(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("save"))
 }
 
-func runAction(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("action"))
+func (a app) runAction(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	//cam := r.Form.Get("cam")
+	token := r.Form.Get("token")
+	action := r.Form.Get("action")
+	//fmt.Println(a.Runs[token])
+	sendJSONToClient(w, processNewTurn(a.Runs[token], action), http.StatusOK)
 }
 
 func badRequest(w http.ResponseWriter, r *http.Request) {

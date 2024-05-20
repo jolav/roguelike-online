@@ -4,6 +4,7 @@ console.log('Loading..... index.js');
 
 import { ask } from "./http.js";
 import { aux, c } from "./_config.js";
+import { listenKeyboard } from "./controls.js";
 
 const init = {
   mode: "online",
@@ -11,8 +12,8 @@ const init = {
   init: function () {
     // use localhost, with 127.0.0.1 cant see cookies value
     if (init.where === "localhost" || init.where === "127.0.0.1") {
-      //init.mode = "dev";
-      //c.API_URL = "http://localhost:3000";
+      init.mode = "dev";
+      c.API_URL = "http://localhost:3000";
     }
     init.landingPage();
   },
@@ -46,6 +47,7 @@ const init = {
     const nick = document.getElementById("nick").value.toUpperCase();
     ask.game(nick);
     init.showSection("playZone");
+    listenKeyboard();
   },
   showSection: function (section) {
     const section1 = document.getElementById("landingPage");
