@@ -11,14 +11,15 @@ const ask = {
   ping: function () {
     return fetchAPI.ping();
   },
-  game: async function (nick) {
-    t = await fetchAPI.game(nick);
+  game: async function () {
+    t = await fetchAPI.game();
+    c.TOKEN = t.token;
     //console.log('GAME ', t);
     render.ascii();
   },
   turn: async function (action) {
     c.IS_SERVER_TURN = true;
-    t = await fetchAPI.turn(action, c.CAM_COLS + "_" + c.CAM_ROWS);
+    t = await fetchAPI.turn(action);
     //console.log("GAME", t);
     render.ascii();
     c.IS_SERVER_TURN = false;
@@ -38,13 +39,14 @@ const fetchAPI = {
     }
     return [data.version, data.lag];
   },
-  game: async function (nick) {
+  game: async function () {
     const start = Date.now();
     let data = {};
     try {
       const params = {
-        cam: c.VIEW_COLS + "__" + c.VIEW_ROWS,
-        nick: nick,
+        nick: c.NICK,
+        cols: c.VIEW_COLS,
+        rows: c.VIEW_ROWS,
       };
       data = await fetch(c.API_URL + c.NEW_GAME_ENDPOINT, {
         method: 'POST',
@@ -63,9 +65,9 @@ const fetchAPI = {
     try {
       const params = {
         action: action,
-        nick: t.nick,
-        token: t.token,
-        cam: c.VIEW_COLS + "__" + c.VIEW_ROWS,
+        token: c.TOKEN,
+        cols: c.VIEW_COLS,
+        rows: c.VIEW_ROWS,
       };
       data = await fetch(c.API_URL + c.ACTION_ENDPOINT, {
         method: 'POST',

@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-var version = "0.0.3"
+var version = "0.0.3a"
 var releaseDate = "undefined"
 
 type config struct {

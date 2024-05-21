@@ -20,7 +20,7 @@ type clientDataNewTurn struct {
 	Y int `json:"y"`
 }
 
-func processNewTurn(r run, action string) clientDataNewTurn {
+func processNewTurn(r run, action string, cols, rows int) clientDataNewTurn {
 	//fmt.Println(r)
 	cd := clientDataNewTurn{
 		X: r.x,

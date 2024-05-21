@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 func prettyPrintStruct(s interface{}) {
@@ -20,4 +21,12 @@ func sliceContainsString(str string, slice []string) bool {
 		}
 	}
 	return false
+}
+
+func stringToInteger(s string, defaultValue int) int {
+	res, err := strconv.Atoi(s)
+	if err != nil {
+		return defaultValue
+	}
+	return res
 }

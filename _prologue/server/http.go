@@ -47,28 +47,37 @@ func ping(w http.ResponseWriter, r *http.Request) {
 
 func (a app) runNew(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	cam := r.Form.Get("cam")
+	cols := stringToInteger(r.Form.Get("cols"), 20)
+	rows := stringToInteger(r.Form.Get("rows"), 20)
 	nick := r.Form.Get("nick")
-	if nick == "" {
+	if nick == "" || nick == "undefined" {
 		nick = "PLAYER"
 	}
-	rn := newRun(nick, cam)
+	rn := newRun(nick, cols, rows)
 	a.Runs[rn.token] = rn
-	//fmt.Println("===>", rn)
 	sendJSONToClient(w, processNewRun(rn), http.StatusOK)
-}
-
-func runSave(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("save"))
 }
 
 func (a app) runAction(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//cam := r.Form.Get("cam")
+	cols := stringToInteger(r.Form.Get("cols"), 20)
+	rows := stringToInteger(r.Form.Get("rows"), 20)
 	token := r.Form.Get("token")
 	action := r.Form.Get("action")
-	//fmt.Println(a.Runs[token])
-	sendJSONToClient(w, processNewTurn(a.Runs[token], action), http.StatusOK)
+	rn := a.Runs[token]
+	if rn.nick == "" {
+		badRequest(w, r)
+		return
+	}
+	rn.turn(action)
+	sendJSONToClient(
+		w,
+		processNewTurn(a.Runs[token], action, cols, rows),
+		http.StatusOK)
+}
+
+func runSave(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("save"))
 }
 
 func badRequest(w http.ResponseWriter, r *http.Request) {

@@ -15,7 +15,6 @@ canvas.width = c.VIEW_COLS * c.PPP_X;
 canvas.height = c.VIEW_ROWS * c.PPP_Y;
 const ctx = canvas.getContext("2d");
 ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
-console.log(ctx.font);
 ctx.textBaseline = "middle"; //"top";
 ctx.textAlign = "center";
 
@@ -56,7 +55,7 @@ const draw = {
     ctx.font = "bold 1em " + c.FONTS[c.FONT_SELECTED];
     ctx.textAlign = "left";
     ctx.textBaseline = "bottom";
-    ctx.fillText(t.nick, c.PPP_X, c.PPP_Y);
+    ctx.fillText(c.NICK, c.PPP_X, c.PPP_Y);
     ctx.textAlign = "right";
     const text = "v." + c.VERSION + "     ping_" + t.lag;
     ctx.fillText(text, canvas.width - c.PPP_X, c.PPP_Y);

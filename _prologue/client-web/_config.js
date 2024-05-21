@@ -3,9 +3,9 @@
 console.log('Loading..... config.js');
 
 const c = {
-  //NICK: undefined,
-  //TOKEN: undefined,
-  //LAG: undefined,
+  NICK: undefined,
+  TOKEN: undefined,
+  LAG: undefined,
   VERSION: undefined,
   SURNAME_TXT: "./assets/surname.txt",
   // canvas

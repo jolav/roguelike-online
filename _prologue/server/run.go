@@ -5,7 +5,6 @@ package main
 import (
 	cryptoRand "crypto/rand"
 	"encoding/base32"
-	"fmt"
 	"log"
 )
 
@@ -14,20 +13,25 @@ type run struct {
 	token string
 	x     int
 	y     int
+	cam   camera
 }
 
-func newRun(nick, cam string) run {
+func (r run) turn(action string) {
+
+}
+
+func newRun(nick string, cols, rows int) run {
 	token, err := generateToken(50)
 	if err != nil {
 		log.Printf("ERROR generating Token -> %s\n", err)
 		// run cant be created because not having token, now manage it
 	}
-	fmt.Sprintln(cam)
 	r := run{
 		nick:  nick,
 		token: token,
 		x:     0,
 		y:     0,
+		cam:   newCamera(cols, rows),
 	}
 	return r
 }

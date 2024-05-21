@@ -21,8 +21,8 @@ const init = {
     console.log('##### INIT #####');
     init.showSection("landingPage");
     await init.ping(); // once at least to get version and ping
-    const nick = await aux.randomNick();
-    document.getElementById("nick").value = nick;
+    c.NICK = await aux.randomNick();
+    document.getElementById("nick").value = c.NICK;
     const pinger = setInterval(init.ping, 1000);
     if (this.mode === "dev") {
       clearTimeout(pinger);
@@ -44,8 +44,7 @@ const init = {
     document.getElementById("version").innerHTML = "Version: " + c.VERSION;
   },
   play: function () {
-    const nick = document.getElementById("nick").value.toUpperCase();
-    ask.game(nick);
+    ask.game();
     init.showSection("playZone");
     listenKeyboard();
   },
