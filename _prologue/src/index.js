@@ -2,7 +2,9 @@
 
 console.log('Loading..... index.js');
 
-import { aux, c } from "./_config.js";
+import { c, aux } from "./_config.js";
+import { ask } from "./ask.js";
+import { listenKeyboard } from "./controls.js";
 
 const init = {
   mode: "online",
@@ -19,16 +21,17 @@ const init = {
     console.log('##### INIT #####');
     init.showSection("landingPage");
     c.NICK = await aux.randomNick();
+    c.VERSION = ask.version();
     document.getElementById("nick").value = c.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     if (this.mode === "dev") {
-      //init.play();
-      //return;
+      init.play("new");
+      return;
     }
     window.addEventListener('keydown', function pressAnyKey(ev) {
       if (ev.key === "Escape" || ev.key === "Enter") {
         window.removeEventListener("keydown", pressAnyKey);
-        init.play();
+        init.play("new");
       }
     });
   },
@@ -52,9 +55,11 @@ const init = {
         break;
     }
   },
-  play: function name() {
-    console.log('LETS GO');
-  }
+  play: function () {
+    ask.turn("new");
+    init.showSection("playZone");
+    listenKeyboard();
+  },
 };
 
 window.addEventListener("load", init.init);

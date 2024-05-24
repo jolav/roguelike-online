@@ -2,10 +2,9 @@
 
 console.log('Loading..... config.js');
 
-import { ask } from "./ask.js";
-
 const c = {
   NICK: undefined,
+  LAG: undefined,
   TPT: undefined, // turn processing time
   VERSION: undefined,
   SURNAME_TXT: "./assets/surname.txt",
@@ -28,8 +27,6 @@ const c = {
 };
 
 (function autoUpdateView() {
-  c.VERSION = ask.version();
-
   const view_pixels_X = window.innerWidth - c.PANEL_WIDTH;
   const view_pixels_Y = window.innerHeight - c.VERTICAL_SAFETY_DISTANCE;
   c.VIEW_COLS = Math.floor(view_pixels_X / c.PPP_X);
