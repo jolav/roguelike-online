@@ -1,0 +1,121 @@
+/* */
+
+body {
+  font-family: 'IBM2', sans-serif, arial;
+  background-color: #293133;
+  color: #ffffff;
+  font-size: 1em;
+  line-height: 1.2;
+}
+
+
+@font-face {
+  font-family: 'IBM';
+  src: url(./assets/IBMPlexSans.ttf);
+}
+
+/* VISIBLE */
+
+section {
+  display: none;
+}
+
+section.visible {
+  display: block;
+}
+
+
+/* LANDING PAGE */
+
+section#landingPage {
+  max-width: 800px;
+  margin: 5em auto;
+  font-size: 1.2em;
+}
+
+section#landingPage header {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  /*background-color: #414141;*/
+}
+
+section#landingPage img {
+  vertical-align: middle;
+}
+
+/*section#landingPage header #tpt {
+  margin-left: 1em;
+  text-align: left;
+  width: 6em;
+}*/
+
+section#landingPage header #logo {
+  margin-right: 0.5em;
+}
+
+section#landingPage .text {
+  text-align: justify;
+}
+
+section#landingPage .nick {
+  text-align: center;
+}
+
+section#landingPage #nick {
+  background-color: #293133;
+  text-align: center;
+  color: #f0f0f0;
+  /*border: 0;*/
+  font-size: 1em;
+  width: 10em;
+}
+
+section#landingPage .continue {
+  margin: 1em;
+  text-align: center;
+}
+
+section#landingPage .pressKey {
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 5px 20px;
+}
+
+
+/*  PLAY ZONE */
+
+body {
+  margin: 5px;
+  overflow: hidden;
+  /* disable scrolling*/
+}
+
+section#playZone .container {
+  display: flex;
+  /*max-height: 100vh;*/
+  gap: 5px;
+}
+
+section#playZone .left-column {
+  flex: 1;
+  background-color: lightblue;
+  padding: 5px;
+  position: relative;
+}
+
+section#playZone .left-column canvas#canvas {
+  display: block;
+  margin: auto;
+  background-color: lightgreen;
+  border: 1px solid darkolivegreen;
+}
+
+section#playZone .right-column {
+  width: 100px;
+  /* changed from js */
+  background-color: lightcoral;
+  padding: 5px;
+}

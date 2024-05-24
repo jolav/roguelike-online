@@ -2,21 +2,16 @@
 _aux/
 _data/
 tmp/
-saves/
 
 #Ignore these files
 .env
-.gitignore
 .air.toml
 _private.js
 _private.json
 private.js
 private.json
-private.go
-a_private.go
 
 # binary
-prologueBin
 
 
 
