@@ -1,17 +1,15 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.3a-orange.svg)  
+<!--![Game](https://img.shields.io/badge/Prologue-0.0.0-orange.svg)  -->
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
-- [X] **Start**  
-- [X] **Prologue.0.0.0 Setting Up Client Server**  
-- [X] **Prologue.0.0.1 Basic Authentication Token + Server runs/run**  
-- [X] **Prologue.0.0.2 Drawing @**  
-- [X] **Prologue.0.0.3 Moving around @**  
+- [X] **Start**
+- [ ] **Prologue Setting Up**  
+- [ ] **Prologue Drawing @**  
+- [ ] **Prologue Moving around @**  
 - [ ] **Prologue Basic Map**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Generating Shelter**  
-- [ ] **Prologue Saving/Loading Runs**  
 - [ ] **Prologue Placing and Moving Enemies**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Melee**  
@@ -22,7 +20,7 @@
 - [ ] **Prologue Multiple Shelter Levels**  
 - [ ] **Prologue.0.1.0 Leaving the Shelter. Minimal Full Playable version**  
 
-- **CLIENT**  
+**CLIENT**  
 - [ ] **choose a colors palette**  
 - [ ] **history improved with loots**  
 - [ ] **Sound effects**  
@@ -36,22 +34,25 @@
 - [ ] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
-- **CLIENT ANIMATIONS**  
+
+**CLIENT ANIMATIONS**  
 - [ ] **Movement**  
 - [ ] **Melee**  
 - [ ] **Ranged**  
 - [ ] **array with npcs movements/actions for slow turn animation**  
-- **CLIENT MOUSE**  
+
+**CLIENT MOUSE**  
 - [ ] **move support**  
 - [ ] **Show tooltip with stats on mouse over map/entities**  
 - [ ] **Move long distance using mouse**   
 - [ ] **Select tile and foe with mouse**  
-- **CLIENT SETTINGS**  
+
+**CLIENT SETTINGS**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
-- **GAME FEATURES**  
-- [ ] **Restrict data to client**  
+
+**GAME FEATURES**  
 - [ ] **Multiple Shelter Levels**  
 - [ ] **Choose/Random player name at start**  
 - [ ] **simulate nuclear shelter collapse**  
@@ -59,7 +60,8 @@
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **dummy items**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
-- **MAPS**  
+
+**MAPS**  
 - [ ] **random pj start point instead center**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  
@@ -67,14 +69,9 @@
 - [ ] **add furniture**  
 - [ ] **open/close doors**  
 - [ ] **lights, ilumination**  
-- **SERVER FEATURES**  
-- [ ] **Authentication - players account**  
-- [ ] **seeds for reproducible runs**  
-- [ ] **incremental views to reduce bandwith**  
-- [ ] **Manage Runs, delete old ones, limit active runs ...**  
-- **REFACTORING**  
-- **BUGS**  
-- **OPTIONALS**   
+
+**OPTIONALS**   
+- [ ] **save/load run**  
 - [ ] **mark visited items like visited ??**   
 - [ ] **Show PJ position- maybe as a skill**  
 - [ ] **info about criatures/npc must be unblocked**  
@@ -87,13 +84,10 @@
 - [ ] **Autoexplore**  
 - [ ] **Stats**  
 - [ ] **Experience and levels**  
-- **DISCARDED IDEAS AT THE MOMENT**  
-- [ ] **Directional FOV**  
-- [ ] **Client mini Zoom map**  
-- [ ] **Each input movement is queued and previewed on client**   
-- [ ] **Sprites in addition to ascii**  
-- [ ] **websockets instead API**  
-- [ ] **Turn Based Multi Player Combat Arena Test**    
+- [ ] **seeds for reproducible runs**  
+
+**BUGS**  
+
 
 ## **Acknowledgment**
 
