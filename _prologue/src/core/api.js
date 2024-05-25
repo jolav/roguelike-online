@@ -4,17 +4,18 @@ console.log('Loading..... /core/api.js');
 
 import { K } from "./_konfig.js";
 import { r } from "./run.js";
+import { systems } from "./systems.js";
 
 const api = {
   version: function () {
     return K.VERSION;
   },
   turn: function (params) {
-    console.log('CORE => ', params);
+    console.log('TURN PARAMS => ', params);
     if (params.action === "new") {
       r.start(params);
     } else {
-      r.manageTurn(params);
+      r.turnLoop(params);
     }
     return clientData.prepare(r);
   }
@@ -26,8 +27,9 @@ export {
 
 const clientData = {
   prepare: function (r) {
+    const entities = systems.renderable(r.entities);
     const cd = {
-      entities: r.entities,
+      entities: entities,
     };
     return cd;
   },
