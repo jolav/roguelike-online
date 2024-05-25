@@ -5,11 +5,6 @@ console.log('Loading..... render_ascii.js');
 import { c } from "./_config.js";
 import { t } from "./ask.js";
 
-const pos = {
-  x: Math.floor(c.VIEW_COLS / 2),
-  y: Math.floor(c.VIEW_ROWS / 2),
-};
-
 const canvas = document.getElementById(c.CANVAS_NAME);
 canvas.width = c.VIEW_COLS * c.PPP_X;
 canvas.height = c.VIEW_ROWS * c.PPP_Y;
@@ -19,7 +14,6 @@ ctx.textBaseline = "middle"; //"top";
 ctx.textAlign = "center";
 
 function ascii() {
-  //console.log(pos);
   draw.clearAll();
   draw.grid();
   draw.info();
@@ -58,11 +52,13 @@ const draw = {
     ctx.textAlign = "center";
   },
   player: function () {
+    const x = t.entities[0].components.position.x;
+    const y = t.entities[0].components.position.y;
     ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
     ctx.fillStyle = "darkorange";
     ctx.fillText("@",
-      (pos.x * c.PPP_X) + (c.PPP_X / 2),
-      (pos.y * c.PPP_Y) + (c.PPP_Y / 2)
+      (x * c.PPP_X) + (c.PPP_X / 2),
+      (y * c.PPP_Y) + (c.PPP_Y / 2)
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },

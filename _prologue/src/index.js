@@ -56,6 +56,7 @@ const init = {
     }
   },
   play: function () {
+    c.NICK = document.getElementById("nick").value;
     ask.turn("new");
     init.showSection("playZone");
     listenKeyboard();
