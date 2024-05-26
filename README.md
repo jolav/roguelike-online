@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.2a-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.3-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -6,12 +6,12 @@
 - [X] **Prologue.0.0.0 Setting Up**  
 - [X] **Prologue.0.0.1 Drawing @**  
 - [X] **Prologue.0.0.2 Moving around @**  
-- [ ] **Prologue Basic Map**  
+- [X] **Prologue.0.0.3 Basic Map**  
 - [ ] **Prologue Camera**  
+- [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Placing and Moving Enemies**  
-- [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Data Files**  

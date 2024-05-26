@@ -2,6 +2,8 @@
 
 console.log('Loading..... /core/ecs_components.js');
 
+import { aux } from "../core/aux.js";
+
 class Player { }
 Player.prototype.name = 'player';
 
@@ -27,8 +29,8 @@ Movable.prototype.name = 'movable';
 
 class Position {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
+    this.old = aux.newPoint(x, y);
+    this.current = aux.newPoint(x, y);
   }
 }
 Position.prototype.name = 'position';

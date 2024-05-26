@@ -101,7 +101,7 @@ section#playZone .container {
 
 section#playZone .left-column {
   flex: 1;
-  background-color: lightblue;
+  /*background-color: lightblue;*/
   padding: 5px;
   position: relative;
 }
@@ -109,7 +109,7 @@ section#playZone .left-column {
 section#playZone .left-column canvas#canvas {
   display: block;
   margin: auto;
-  background-color: lightgreen;
+  /*background-color: lightgreen;*/
   border: 1px solid darkolivegreen;
 }
 

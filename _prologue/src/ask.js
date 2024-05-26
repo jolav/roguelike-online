@@ -15,7 +15,7 @@ const ask = {
   turn: async function (action) {
     c.IS_SERVER_TURN = true;
     t = await fetchAPI.turn(action);
-    console.log("CLIENT => ", t);
+    //console.log("CLIENT => ", t.view);
     render.ascii();
     c.IS_SERVER_TURN = false;
   }
@@ -54,7 +54,7 @@ export {
 
 const help = {
   sleep: function () {
-    const delay = aux.randomInt(100, 150);
+    const delay = aux.randomInt(30, 50);
     return new Promise(function (resolve) {
       setTimeout(resolve, delay);
     });

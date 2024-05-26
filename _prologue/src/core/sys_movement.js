@@ -2,10 +2,17 @@
 
 console.log('Loading..... /core/sys_movement.js');
 
-const movement = function (entities, action) {
-  entities.forEach(function (e) {
+import { aux } from "./aux.js";
+
+const movement = function (r, action) {
+  r.entities.forEach(function (e) {
     if (e.components.player && validMoves.includes(action)) {
-      playerMove(action, e.components.position);
+      const pos = e.components.position;
+      const target = getEntityTargetMove(action, pos);
+      if (r.map[target.x][target.y].walkable) {
+        pos.old = pos.current;
+        pos.current = target;
+      }
     }
   });
 };
@@ -14,36 +21,38 @@ export {
   movement,
 };
 
-function playerMove(action, pos) {
+function getEntityTargetMove(action, pos) {
+  const target = aux.newPoint(pos.current.x, pos.current.y);
   switch (action) {
     case "UPLEFT":
-      pos.x--;
-      pos.y--;
+      target.x--;
+      target.y--;
       break;
     case "UP":
-      pos.y--;
+      target.y--;
       break;
     case "UPRIGHT":
-      pos.x++;
-      pos.y--;
+      target.x++;
+      target.y--;
       break;
     case "RIGHT":
-      pos.x++;
+      target.x++;
       break;
     case "DOWNRIGHT":
-      pos.x++;
-      pos.y++;
+      target.x++;
+      target.y++;
       break;
     case "DOWN":
-      pos.y++;
+      target.y++;
       break;
     case "DOWNLEFT":
-      pos.x--;
-      pos.y++;
+      target.x--;
+      target.y++;
       break;
     case "LEFT":
-      pos.x--;
+      target.x--;
   }
+  return target;
 }
 
 const validMoves = [

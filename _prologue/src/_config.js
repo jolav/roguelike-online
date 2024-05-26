@@ -8,6 +8,8 @@ const c = {
   TPT: undefined, // turn processing time
   VERSION: undefined,
   SURNAME_TXT: "./assets/surname.txt",
+  // Render
+  RENDER_TYPE: 0, // 0 = ASCII  1 = UNICODE
   // canvas
   CANVAS_NAME: "canvas",
   FONTS: ["sans-serif", "arial", "IBM"],
@@ -63,6 +65,12 @@ const aux = {
   randomInt: function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
+  newPoint: function (x, y) {
+    return {
+      x: x,
+      y: y,
+    };
+  }
 };
 
 export {

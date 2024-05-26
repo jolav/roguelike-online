@@ -11,7 +11,7 @@ const api = {
     return K.VERSION;
   },
   turn: function (params) {
-    console.log('TURN PARAMS => ', params);
+    //console.log('TURN PARAMS => ', params);
     if (params.action === "new") {
       r.start(params);
     } else {
@@ -30,6 +30,7 @@ const clientData = {
     const entities = systems.renderable(r.entities);
     const cd = {
       entities: entities,
+      view: r.map,
     };
     return cd;
   },

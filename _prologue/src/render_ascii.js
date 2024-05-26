@@ -15,7 +15,8 @@ ctx.textAlign = "center";
 
 function ascii() {
   draw.clearAll();
-  draw.grid();
+  draw.map(0, 0);
+  //draw.grid();
   draw.info();
   draw.player();
 }
@@ -24,6 +25,32 @@ const draw = {
   clearAll: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+  },
+  map: function (oX, oY) {
+    for (let x = 0; x < t.view.length; x++) {
+      for (let y = 0; y < t.view[0].length; y++) {
+        const tile = t.view[x][y];
+        const char = aux.mapSymbol(tile.terrain);
+        let color;
+        //if (tile.visible) {
+        color = aux.colorOfEntity("visible");
+        /*} else if (tile.explored) {
+          color = aux.colorOfEntity("explored");
+        }*/
+        if (color) {
+          this.tile(x + oX, y + oY, char, color);
+        }
+      }
+    }
+  },
+  tile: function (x, y, char, color) {
+    ctx.fillStyle = dawnBringer.get(color);
+    ctx.fillText(
+      char,
+      (x * c.PPP_X) + (c.PPP_X / 2),
+      (y * c.PPP_Y) + (c.PPP_Y / 2),
+      //c.PPP_X); // Fourth Argument max width to render the string.
+    );
   },
   grid: function () {
     for (var x = 0; x < canvas.width; x += c.PPP_X) {
@@ -38,7 +65,7 @@ const draw = {
     ctx.stroke();
   },
   info: function () {
-    ctx.fillStyle = "darkolivegreen";
+    ctx.fillStyle = "lightcoral";
     ctx.font = "bold 1em " + c.FONTS[c.FONT_SELECTED];
     ctx.textAlign = "left";
     ctx.textBaseline = "bottom";
@@ -51,14 +78,19 @@ const draw = {
     ctx.textBaseline = "middle"; //"top";
     ctx.textAlign = "center";
   },
+  clearTile: function (x, y) {
+    ctx.clearRect(x * c.PPP_X, y * c.PPP_Y, c.PPP_X, c.PPP_Y);
+    ctx.beginPath();
+  },
   player: function () {
-    const x = t.entities[0].components.position.x;
-    const y = t.entities[0].components.position.y;
+    const x = t.entities[0].components.position.current.x;
+    const y = t.entities[0].components.position.current.y;
+    this.clearTile(x, y);
     ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
     ctx.fillStyle = "darkorange";
     ctx.fillText("@",
       (x * c.PPP_X) + (c.PPP_X / 2),
-      (y * c.PPP_Y) + (c.PPP_Y / 2)
+      (y * c.PPP_Y) + (c.PPP_Y / 2),
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },
@@ -68,3 +100,162 @@ export {
   ascii,
 };
 
+const aux = {
+  mapSymbol: function (symbol) {
+    switch (c.RENDER_TYPE) {
+      case 0:
+        if (symbol.slice(0, 9) === "corpse of") {
+          return String.fromCharCode(legend.get(symbol.slice(0, 9)));
+        }
+        return String.fromCharCode(legend.get(symbol));
+      case 1:
+        if (symbol.slice(0, 9) === "corpse of") {
+          return unicode.get(symbol.slice(0, 9));
+        }
+        return unicode.get(symbol);
+    }
+  },
+  colorOfEntity: function (entity) {
+    if (entity.slice(0, 9) === "corpse of") {
+      return colors.get(entity.slice(10, entity.length));
+    }
+    return colors.get(entity);
+  },
+  separateEntities: function (es) {
+    let dead = [];
+    let active = [];
+    for (let e of es) {
+      if (e.id === 0) {
+        continue;
+      }
+      if (e.is.combatant) {
+        active.push(e);
+      } else {
+        dead.push(e);
+      }
+    }
+    return [dead, active];
+  },
+};
+
+// https://en.wikipedia.org/wiki/Code_page_437  
+// https://en.wikipedia.org/wiki/List_of_Unicode_characters
+// https://russellcottrell.com/greek/utilities/SurrogatePairCalculator.htm
+
+const unicode = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", 'r6'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "r1"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
+
+const unicodeGlyphs = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", '\ud83d\udc00'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "\ud83d\udc01"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
+
+const legend = new Map([
+  ["floor", 183],   // middleDot 183 or normal point 46
+  ["wall", 35],     // #35
+  ["-", 0],
+  ["player", 64],   // @64
+  ["rat", 114],     // r 114
+  ["mole rat", 82], // R 82
+  ["corpse of", 37],    // %
+  ["item", 63],    // ?
+  ["exit", 60], // <
+]);
+
+const colors = new Map([
+  ["player", "Tahiti Gold"],
+  ["visible", "Light Steel Blue"],
+  ["explored", "Smokey Ash"],
+  ["rat", "Brown"],
+  ["mole rat", "Brown"],
+  ["item", "Pancho"],
+  ["exit", "Golden Fizz"],
+  ["grid", "grid"],
+  ["tileSelected", "Tahiti Gold"],
+]);
+
+const dawnBringer = new Map([
+  ["Black", "#000000"],
+  ["Valhalla", "#222034"],
+  ["Loulou", "#45283C"],
+  ["Oiled Cedar", "#663931"],
+  ["Rope", "#8F563B"],
+  ["Tahiti Gold", "#DF7126"],
+  ["Twine", "#D9A066"],
+  ["Pancho", "#EEC39A"],
+  ["Golden Fizz", "#FBF236"],
+  ["Atlantis", "#99E550"],
+  ["Christi", "#6ABE30"],
+  ["Elf Green", "#37946E"],
+  ["Dell", "#4B692F"],
+  ["Verdigris", "#524B24"],
+  ["Opal", "#323C39"],
+  ["Deep Koamaru", "#3F3F74"],
+  ["Venice Blue", "#306082"],
+  ["Royal Blue", "#5B6EE1"],
+  ["Cornflower", "#639BFF"],
+  ["Viking", "#5FCDE4"],
+  ["Light Steel Blue", "#CBDBFC"],
+  ["White", "#FFFFFF"],
+  ["Heather", "#9BADB7"],
+  ["Topaz", "#847E87"],
+  ["Dim Gray", "#696A6A"],
+  ["Smokey Ash", "#595652"],
+  ["Clairvoyant", "#76428A"],
+  ["Brown", "#AC3232"],
+  ["Mandy", "#D95763"],
+  ["Plum", "#D77BBA"],
+  ["Rainforest", "#8F974A"],
+  ["Stinger", "#8A6F30"],
+  ["grid", "#27292d"],
+]);
+
+/*
+// Obtener el contexto del canvas
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// Configurar el color de fondo del texto
+ctx.fillStyle = 'lightblue'; // Color de fondo del texto
+
+// Dibujar el texto
+const text = 'Hello, world!';
+const textWidth = ctx.measureText(text).width;
+const textHeight = 20; // Altura del texto, ajusta según necesites
+
+// Calcular la posición del texto
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const textX = (canvasWidth - textWidth) / 2; // Centrar horizontalmente
+const textY = (canvasHeight + textHeight) / 2; // Centrar verticalmente
+
+// Calcular las dimensiones del rectángulo de fondo
+const paddingX = 5; // Espacio adicional a cada lado del texto
+const paddingY = 2; // Espacio adicional arriba y abajo del texto
+const backgroundWidth = textWidth + 2 * paddingX;
+const backgroundHeight = textHeight + 2 * paddingY;
+
+// Dibujar el rectángulo de fondo
+ctx.fillRect(textX - paddingX, textY - textHeight - paddingY, backgroundWidth, backgroundHeight);
+
+// Configurar el color del texto
+ctx.fillStyle = 'black'; // Color del texto
+
+// Dibujar el texto
+ctx.fillText(text, textX, textY);
+
+*/
