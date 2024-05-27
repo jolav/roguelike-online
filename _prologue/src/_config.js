@@ -22,10 +22,12 @@ const c = {
   VIEW_ROWS: undefined,
   VIEW_DELTA_X: undefined,
   VIEW_DELTA_Y: undefined,
-  PANEL_WIDTH: 250,
+  PANEL_WIDTH: 300,
   VERTICAL_SAFETY_DISTANCE: 10,
   // Game
   IS_SERVER_TURN: false,
+  INIT_DATE: new Date("2097-08-29 02:14:00"),
+  MS_PER_TURN: 1000 * 20,
 };
 
 (function autoUpdateView() {
@@ -70,7 +72,10 @@ const aux = {
       x: x,
       y: y,
     };
-  }
+  },
+  currentDate: function (turn) {
+    return new Date(c.INIT_DATE.getTime() + c.MS_PER_TURN * turn);
+  },
 };
 
 export {

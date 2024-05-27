@@ -110,12 +110,51 @@ section#playZone .left-column canvas#canvas {
   display: block;
   margin: auto;
   /*background-color: lightgreen;*/
-  border: 1px solid darkolivegreen;
+  /*border: 1px solid darkolivegreen;*/
 }
 
 section#playZone .right-column {
+  font-size: 0.90em;
   width: 100px;
   /* changed from js */
-  background-color: lightcoral;
+  /*background-color: lightcoral;*/
   padding: 5px;
+}
+
+
+section#playZone .right-column {
+  font-size: 0.90em;
+  text-align: center;
+}
+
+section#playZone .right-column .player, .inventory, .loot, .selected {
+  text-align: left;
+  margin-left: 10px;
+}
+
+section#playZone .right-column .loot {
+  margin-top: 10px;
+  border: 1px solid rebeccapurple;
+}
+
+section#playZone .right-column .history {
+  text-align: left;
+  /*font-size: 0.90em;*/
+  position: fixed;
+  padding: 5px;
+  bottom: 2em;
+  width: 100%;
+}
+
+/* PANEL ZONE */
+
+section#playZone #panel .inventoryDuo {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#playZone #panel #i-food, #i-medical, #i-head, #i-body, #i-supply {
+  display: inline-block;
+  text-align: center;
+  width: 3em;
 }

@@ -4,47 +4,55 @@ console.log('Loading..... /core/ecs_components.js');
 
 import { aux } from "../core/aux.js";
 
-class Player { }
-Player.prototype.name = 'player';
+class Player {
+  name = "player";
+}
 
-class Creature { }
-Creature.prototype.name = 'creature';
+class Creature {
+  name = "creature";
+}
 
-class Item { }
-Item.prototype.name = 'item';
+class Item {
+  name = "item";
+}
 
 class Tags {
+  name = "tags";
   constructor(name, type) {
     this.Name = name;
     this.Type = type;
   }
 }
-Tags.prototype.name = 'name';
 
-class Renderable { }
-Renderable.prototype.name = 'renderable';
+class Renderable {
+  name = "renderable";
+}
+//Renderable.prototype.name = 'renderable';
 
-class Movable { }
+class Movable {
+  name = "movable";
+}
 Movable.prototype.name = 'movable';
 
 class Position {
+  name = "position";
   constructor(x, y) {
     this.old = aux.newPoint(x, y);
     this.current = aux.newPoint(x, y);
   }
 }
-Position.prototype.name = 'position';
 
 class Health {
+  name = "health";
   constructor(max, current) {
     this.Max = max;
     this.Current = current;
   }
 }
-Health.prototype.name = 'health';
 
-class Inventory { }
-Inventory.prototype.name = 'inventory';
+class Inventory {
+  name = "inventory";
+}
 
 const components = {
   Player,

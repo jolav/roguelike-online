@@ -1,20 +1,16 @@
 /* */
 
-console.log('Loading..... /core/sys_movement.js');
+console.log('Loading..... /core/action_move.js');
 
 import { aux } from "./aux.js";
 
-const movement = function (r, action) {
-  r.entities.forEach(function (e) {
-    if (e.components.player && validMoves.includes(action)) {
-      const pos = e.components.position;
-      const target = getEntityTargetMove(action, pos);
-      if (r.map[target.x][target.y].walkable) {
-        pos.old = pos.current;
-        pos.current = target;
-      }
-    }
-  });
+const movement = function (e, map, action) {
+  const pos = e.components.position;
+  const target = getEntityTargetMove(action, pos);
+  if (map[target.x][target.y].walkable) {
+    pos.old = pos.current;
+    pos.current = target;
+  }
 };
 
 export {
@@ -66,19 +62,3 @@ const validMoves = [
   "DOWNLEFT",
 ];
 
-const validActions = [
-  "UP",
-  "DOWN",
-  "LEFT",
-  "RIGHT",
-  "UPRIGHT",
-  "UPLEFT",
-  "DOWNRIGHT",
-  "DOWNLEFT",
-  "MELEE",
-  "SKIP",
-  "LOOT",
-  "HEAL",
-  "EAT",
-  "FIRE",
-];

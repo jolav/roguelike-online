@@ -29,6 +29,7 @@ const clientData = {
   prepare: function (r) {
     const entities = systems.renderable(r.entities);
     const cd = {
+      turn: r.turn,
       entities: entities,
       view: r.map,
     };

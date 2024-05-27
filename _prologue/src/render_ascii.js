@@ -4,6 +4,7 @@ console.log('Loading..... render_ascii.js');
 
 import { c } from "./_config.js";
 import { t } from "./ask.js";
+import * as panel from "./panel.js";
 
 const canvas = document.getElementById(c.CANVAS_NAME);
 canvas.width = c.VIEW_COLS * c.PPP_X;
@@ -17,8 +18,9 @@ function ascii() {
   draw.clearAll();
   draw.map(0, 0);
   //draw.grid();
-  draw.info();
+  //draw.info();
   draw.player();
+  panel.update();
 }
 
 const draw = {
