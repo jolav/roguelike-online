@@ -25,6 +25,7 @@ const populate = {
     e.addComponent(new components.Position(x, y));
     e.addComponent(new components.Health);
     e.addComponent(new components.Inventory);
+    e.addComponent(new components.Tags("player"));
     this.counter++;
     this.result.push(e);
   },
@@ -33,11 +34,12 @@ const populate = {
     const y = 10;
     const e = new Entity(this.counter);
     //e.addComponent(new components.Player);
-    e.addComponent(new components.Renderable);
+    //e.addComponent(new components.Renderable);
     e.addComponent(new components.Movable);
     e.addComponent(new components.Position(x, y));
     e.addComponent(new components.Health);
     e.addComponent(new components.Inventory);
+    e.addComponent(new components.Tags("rat"));
     this.counter++;
     this.result.push(e);
   },

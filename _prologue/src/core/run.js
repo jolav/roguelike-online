@@ -19,26 +19,34 @@ const r = {
     queue.create(r.entities);
   },
   turnLoop: function (params) {
+    // player action
     const actionType = actions.getType(params.action);
-    if (actionType === "none") return;
-    //actions[actionType](r.entities[0], r.map, params.action);
-    //queue.update(100, 0);
-    let stop = false;
+    if (actionType === "none") {
+      return;
+    }
+    const done = actions[actionType](r.entities[0], r.map, params.action);
+    if (!done) {
+      return;
+    }
+    const cost = actions.cost(params.action);
+    queue.update(cost, 0);
+
+    // computer turn
     let sec = 0;
-    while (!stop && sec < K.TRIES) {
+    while (sec < K.TRIES) {
       const active = queue.list[0];
-      if (active.id === 0) {
-        actions[actionType](r.entities[0], r.map, params.action);
-        queue.update(100, 0);
-        stop = true;
+      if (active.id >= 0) {
+        const e = r.entities[active.id];
+        if (e.components.player) {
+          return;
+        }
+        //console.log('turn => ', e.id);
+        queue.update(100, active.id);
       }
       if (active.id === -1) { // new turn
+        //console.log('New Turn');
         r.turn++;
         queue.newTurn(active.wait);
-      }
-      if (active.id > 0) {
-        //console.log('turn => ', r.entities[active.id]);
-        queue.update(100, active.id);
       }
       sec++;
     }

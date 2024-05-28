@@ -18,9 +18,8 @@ class Item {
 
 class Tags {
   name = "tags";
-  constructor(name, type) {
-    this.Name = name;
-    this.Type = type;
+  constructor(type) {
+    this.type = type;
   }
 }
 

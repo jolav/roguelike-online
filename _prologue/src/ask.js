@@ -15,7 +15,7 @@ const ask = {
   turn: async function (action) {
     c.IS_SERVER_TURN = true;
     t = await fetchAPI.turn(action);
-    //console.log("CLIENT => ", t.view);
+    //console.log("CLIENT => ", t);
     render.ascii();
     c.IS_SERVER_TURN = false;
   }

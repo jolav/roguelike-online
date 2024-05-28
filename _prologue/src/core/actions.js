@@ -23,6 +23,9 @@ const actions = {
         return "none";
     }
   },
+  cost: function (action) {
+    return actionCost.get(action);
+  },
   movement,
   skip,
 };
@@ -47,3 +50,21 @@ const validActions = [
   "EAT",
   "FIRE",
 ];
+
+const actionCost = new Map([
+  ["UP", 100],
+  ["DOWN", 100],
+  ["LEFT", 100],
+  ["RIGHT", 100],
+  ["UPRIGHT", 100],
+  ["UPLEFT", 100],
+  ["DOWNRIGHT", 100],
+  ["DOWNLEFT", 100],
+  ["MELEE", 100],
+  ["SKIP", 100],
+  ["LOOT", 200],
+  ["HEAL", 200],
+  ["EAT", 200],
+  ["FIRE", 100],
+
+]);

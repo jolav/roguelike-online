@@ -19,7 +19,8 @@ function ascii() {
   draw.map(0, 0);
   //draw.grid();
   //draw.info();
-  draw.player();
+  //draw.player(0);
+  draw.entities(t.entities);
   panel.update();
 }
 
@@ -84,18 +85,34 @@ const draw = {
     ctx.clearRect(x * c.PPP_X, y * c.PPP_Y, c.PPP_X, c.PPP_Y);
     ctx.beginPath();
   },
-  player: function () {
-    const x = t.entities[0].components.position.current.x;
-    const y = t.entities[0].components.position.current.y;
+  player: function (id) {
+    const x = t.entities[id].components.position.current.x;
+    const y = t.entities[id].components.position.current.y;
     this.clearTile(x, y);
     ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
     ctx.fillStyle = "darkorange";
-    ctx.fillText("@",
+    ctx.fillText(aux.mapSymbol("player"),//"@",
       (x * c.PPP_X) + (c.PPP_X / 2),
       (y * c.PPP_Y) + (c.PPP_Y / 2),
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },
+  entities: function (es) {
+    let playerID = undefined;
+    for (let e of es) {
+      if (e.components.player) {
+        playerID = e.id;
+      }
+      //console.log(JSON.stringify(e, null, " "));
+      const x = e.components.position.current.x;
+      const y = e.components.position.current.y;
+      const char = aux.mapSymbol(e.components.tags.type);
+      const color = aux.colorOfEntity(e.components.tags.type);
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
+    this.player(playerID);
+  }
 };
 
 export {
@@ -226,38 +243,3 @@ const dawnBringer = new Map([
   ["grid", "#27292d"],
 ]);
 
-/*
-// Obtener el contexto del canvas
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
-
-// Configurar el color de fondo del texto
-ctx.fillStyle = 'lightblue'; // Color de fondo del texto
-
-// Dibujar el texto
-const text = 'Hello, world!';
-const textWidth = ctx.measureText(text).width;
-const textHeight = 20; // Altura del texto, ajusta según necesites
-
-// Calcular la posición del texto
-const canvasWidth = canvas.width;
-const canvasHeight = canvas.height;
-const textX = (canvasWidth - textWidth) / 2; // Centrar horizontalmente
-const textY = (canvasHeight + textHeight) / 2; // Centrar verticalmente
-
-// Calcular las dimensiones del rectángulo de fondo
-const paddingX = 5; // Espacio adicional a cada lado del texto
-const paddingY = 2; // Espacio adicional arriba y abajo del texto
-const backgroundWidth = textWidth + 2 * paddingX;
-const backgroundHeight = textHeight + 2 * paddingY;
-
-// Dibujar el rectángulo de fondo
-ctx.fillRect(textX - paddingX, textY - textHeight - paddingY, backgroundWidth, backgroundHeight);
-
-// Configurar el color del texto
-ctx.fillStyle = 'black'; // Color del texto
-
-// Dibujar el texto
-ctx.fillText(text, textX, textY);
-
-*/

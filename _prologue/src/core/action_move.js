@@ -10,7 +10,9 @@ const movement = function (e, map, action) {
   if (map[target.x][target.y].walkable) {
     pos.old = pos.current;
     pos.current = target;
+    return true;
   }
+  return false;
 };
 
 export {
