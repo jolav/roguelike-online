@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.4a-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.5-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -8,8 +8,8 @@
 - [X] **Prologue.0.0.2 Moving around @**  
 - [X] **Prologue.0.0.3 Basic Map**  
 - [X] **Prologue.0.0.4 Turn Time System**  
+- [X] **Prologue.0.0.5 Camera**  
 - [ ] **Prologue Field of View**  
-- [ ] **Prologue Camera**  
 - [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Placing and Moving Enemies**  
 - [ ] **Prologue Melee**  
@@ -54,12 +54,12 @@
 
 **GAME FEATURES**  
 - [ ] **Multiple Shelter Levels**  
-- [ ] **Choose/Random player name at start**  
+- [X] **Choose/Random player name at start**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
 - [ ] **markings on the edge of the map indicating quest directions**  
 - [ ] **dummy items**  
-- [ ] **One turn equals 10,15,30 or 60 seg**  
+- [X] **One turn equals 10,15,30 or 60 seg**  
 
 **MAPS**  
 - [ ] **random pj start point instead center**  
@@ -71,6 +71,7 @@
 - [ ] **lights, ilumination**  
 
 **OPTIONALS**   
+- [ ] **bypassing columns increase movement cost**  
 - [ ] **save/load run**  
 - [ ] **mark visited items like visited ??**   
 - [ ] **Show PJ position- maybe as a skill**  

@@ -15,12 +15,14 @@ ctx.textBaseline = "middle"; //"top";
 ctx.textAlign = "center";
 
 function ascii() {
+  const oX = Math.floor((c.VIEW_COLS - t.view.length) / 2);
+  const oY = Math.floor((c.VIEW_ROWS - t.view[0].length) / 2);
   draw.clearAll();
-  draw.map(0, 0);
+  draw.map(oX, oY);
   //draw.grid();
   //draw.info();
-  //draw.player(0);
-  draw.entities(t.entities);
+  //draw.player(oX,oY,e);
+  draw.entities(oX, oY, t.entities);
   panel.update();
 }
 
@@ -30,9 +32,15 @@ const draw = {
     ctx.beginPath();
   },
   map: function (oX, oY) {
+    //console.log(t.view.length, t.view[0].length);
+    //console.log(c.VIEW_COLS, c.VIEW_ROWS);
     for (let x = 0; x < t.view.length; x++) {
       for (let y = 0; y < t.view[0].length; y++) {
         const tile = t.view[x][y];
+        if (tile === undefined) {
+          console.log('PROBLEM');
+          continue;
+        }
         const char = aux.mapSymbol(tile.terrain);
         let color;
         //if (tile.visible) {
@@ -85,9 +93,9 @@ const draw = {
     ctx.clearRect(x * c.PPP_X, y * c.PPP_Y, c.PPP_X, c.PPP_Y);
     ctx.beginPath();
   },
-  player: function (id) {
-    const x = t.entities[id].components.position.current.x;
-    const y = t.entities[id].components.position.current.y;
+  player: function (oX, oY, e) {
+    const x = e.view.x + oX;
+    const y = e.view.y + oY;
     this.clearTile(x, y);
     ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
     ctx.fillStyle = "darkorange";
@@ -97,21 +105,21 @@ const draw = {
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },
-  entities: function (es) {
-    let playerID = undefined;
+  entities: function (oX, oY, es) {
+    let playerEntity = undefined;
     for (let e of es) {
       if (e.components.player) {
-        playerID = e.id;
+        playerEntity = e;
       }
       //console.log(JSON.stringify(e, null, " "));
-      const x = e.components.position.current.x;
-      const y = e.components.position.current.y;
+      const x = e.view.x + oX;
+      const y = e.view.y + oY;
       const char = aux.mapSymbol(e.components.tags.type);
       const color = aux.colorOfEntity(e.components.tags.type);
       this.clearTile(x, y);
       this.tile(x, y, char, color);
     }
-    this.player(playerID);
+    this.player(oX, oY, playerEntity);
   }
 };
 

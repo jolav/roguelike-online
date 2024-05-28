@@ -5,8 +5,8 @@ console.log('Loading..... /core/entities.js');
 import { Entity } from "./ecs_entity.js";
 import { components } from "./ecs_components.js";
 
-function populateMap(counter, params) {
-  populate.player(counter, params);
+function populateMap(counter, pos) {
+  populate.player(counter, pos);
   populate.dummy();
   return populate.entities();
 }
@@ -14,15 +14,13 @@ function populateMap(counter, params) {
 const populate = {
   result: [],
   counter: 0,
-  player: function (counter, params) {
+  player: function (counter, pos) {
     this.counter = counter;
-    const x = Math.floor(params.cols / 2);
-    const y = Math.floor(params.rows / 2);
     const e = new Entity(this.counter);
     e.addComponent(new components.Player);
     e.addComponent(new components.Renderable);
     e.addComponent(new components.Movable);
-    e.addComponent(new components.Position(x, y));
+    e.addComponent(new components.Position(pos.x, pos.y));
     e.addComponent(new components.Health);
     e.addComponent(new components.Inventory);
     e.addComponent(new components.Tags("player"));

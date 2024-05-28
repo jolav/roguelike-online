@@ -5,12 +5,12 @@ console.log('Loading..... /core/mapGen.js');
 import { K } from "./_konfig.js";
 import { aux } from "./aux.js";
 
-function generate(cols, rows) {
+function generate() {
   switch (K.TYPE_OF_MAP) {
     case 0:
-      return basicRoom.create(cols, rows);
+      return basicRoom.create(K.VIEW_COLS, K.VIEW_ROWS);
     case 1:
-      return shelter.create(cols, rows);
+      return shelter.create(K.MAP_COLS, K.MAP_ROWS);
   }
 }
 
@@ -26,13 +26,13 @@ class Tile {
     let p = [];
     switch (terrain) {
       case "floor":
-        p = [terrain, true, false, false, false];
+        p = [terrain, true, false, false, true];
         break;
       case "wall":
-        p = [terrain, false, true, false, false];
+        p = [terrain, false, true, false, true];
         break;
       case "unknown":
-        p = [terrain, false, true, false, false];
+        p = [terrain, false, true, false, true];
         break;
       default:
         p = [];
@@ -51,7 +51,7 @@ class Tile {
 
 const shelter = {
   create: function name(cols, rows) {
-    return [];
+    return basicRoom.create(cols, rows);
   }
 };
 
@@ -63,18 +63,10 @@ const basicRoom = {
   map: [],
   create: function name(cols, rows) {
     const columns = Math.floor((cols * rows) / 30);
-    this.fill(cols, rows);
+    this.map = aux.initializeMultiArray(cols, rows, new Tile("wall"));
     this.clean(cols, rows);
     this.putColumns(cols, rows, columns);
     return this.map;
-  },
-  fill: function (cols, rows) {
-    for (let x = 0; x < cols; x++) {
-      this.map[x] = [];
-      for (let y = 0; y < rows; y++) {
-        this.map[x][y] = new Tile("wall");
-      }
-    }
   },
   clean: function (cols, rows) {
     for (let x = 0; x < cols; x++) {
@@ -97,3 +89,4 @@ const basicRoom = {
     }
   },
 };
+
