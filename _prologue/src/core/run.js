@@ -8,6 +8,7 @@ import { actions } from "./actions.js";
 import * as map from "./mapGen.js";
 import { queue } from "./queue.js";
 import { aux } from "./aux.js";
+import * as fov from "./fov.js";
 
 const r = {
   turn: 0,
@@ -23,6 +24,8 @@ const r = {
     [r.entities, r.counter] = populateMap(r.counter, pos);
     r.cam = updateCam(r.entities[0].components.position.current);
     queue.create(r.entities);
+    fov.init();
+    r.map = fov.get(r.entities[0], r.map);
   },
   turnLoop: function (params) {
     // player action
@@ -45,6 +48,7 @@ const r = {
         const e = r.entities[active.id];
         if (e.components.player) {
           r.cam = updateCam(r.entities[0].components.position.current);
+          r.map = fov.get(r.entities[0], r.map);
           //console.log('end turn', r.cam);
           return;
         }
@@ -59,7 +63,6 @@ const r = {
       sec++;
     }
     // end computer turn
-
   },
 };
 
@@ -69,7 +72,7 @@ export {
 
 function updateCam(pos) {
   if (K.TYPE_OF_MAP === 0) {
-    return aux.newPoint(0, 0); //{ x: 0, y: 0 };
+    return aux.newPoint(0, 0);
   }
   let x = pos.x - Math.floor(K.VIEW_COLS / 2);
   let y = pos.y - Math.floor(K.VIEW_ROWS / 2);
@@ -83,5 +86,5 @@ function updateCam(pos) {
   } else if (y > K.MAP_ROWS - K.VIEW_ROWS) {
     y = K.MAP_ROWS - K.VIEW_ROWS;
   }
-  return aux.newPoint(x, y); //{ x, y };
+  return aux.newPoint(x, y);
 }

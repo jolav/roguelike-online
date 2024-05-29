@@ -43,11 +43,11 @@ const draw = {
         }
         const char = aux.mapSymbol(tile.terrain);
         let color;
-        //if (tile.visible) {
-        color = aux.colorOfEntity("visible");
-        /*} else if (tile.explored) {
+        if (tile.visible) {
+          color = aux.colorOfEntity("visible");
+        } else if (tile.explored) {
           color = aux.colorOfEntity("explored");
-        }*/
+        }
         if (color) {
           this.tile(x + oX, y + oY, char, color);
         }

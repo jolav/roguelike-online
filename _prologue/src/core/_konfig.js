@@ -3,10 +3,10 @@
 console.log('Loading..... /core/_konfig.js');
 
 const K = {
-  VERSION: "0.0.5",
+  VERSION: "0.0.6",
   TRIES: 5000,
   // Options
-  TYPE_OF_MAP: 1, // 0 => BASICROOM , 1 => SHELTER
+  TYPE_OF_MAP: 0, // 0 => BASICROOM , 1 => SHELTER
   // Render
   VIEW_COLS: undefined,
   VIEW_ROWS: undefined,
