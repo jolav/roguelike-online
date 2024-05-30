@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.6-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.6a-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -10,13 +10,13 @@
 - [X] **Prologue.0.0.4 Turn Time System**  
 - [X] **Prologue.0.0.5 Camera**  
 - [X] **Prologue.0.0.6 Field of View**  
-- [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Placing and Moving Enemies**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Data Files**  
 - [ ] **Prologue Inventory and items**  
 - [ ] **Prologue Ranged Combat**  
+- [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Multiple Shelter Levels**  
 - [ ] **Prologue.0.1.0 Leaving the Shelter. Minimal Full Playable version**  
 

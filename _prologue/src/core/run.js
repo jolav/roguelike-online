@@ -25,7 +25,7 @@ const r = {
     r.cam = updateCam(r.entities[0].components.position.current);
     queue.create(r.entities);
     fov.init();
-    r.map = fov.get(r.entities[0], r.map);
+    fov.get(r.entities[0], r.map);
   },
   turnLoop: function (params) {
     // player action
@@ -48,7 +48,7 @@ const r = {
         const e = r.entities[active.id];
         if (e.components.player) {
           r.cam = updateCam(r.entities[0].components.position.current);
-          r.map = fov.get(r.entities[0], r.map);
+          fov.get(r.entities[0], r.map);
           //console.log('end turn', r.cam);
           return;
         }

@@ -63,7 +63,7 @@ const basicRoom = {
   map: [],
   create: function name(cols, rows) {
     const columns = Math.floor((cols * rows) / 30);
-    this.map = aux.initializeMultiArray(cols, rows, new Tile("wall"));
+    this.map = aux.initializeMultiArray(cols, rows, {});
     this.clean(cols, rows);
     this.putColumns(cols, rows, columns);
     return this.map;
@@ -71,16 +71,19 @@ const basicRoom = {
   clean: function (cols, rows) {
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
-        if (x !== 0 && x !== cols - 1 && y !== 0 && y !== rows - 1)
+        if (x !== 0 && x !== cols - 1 && y !== 0 && y !== rows - 1) {
           this.map[x][y] = new Tile("floor");
+        } else {
+          this.map[x][y] = new Tile("wall");
+        }
       }
     }
   },
   putColumns: function (cols, rows, columns) {
     let tries = 0;
     while (columns > 0 && tries < K.TRIES) {
-      const x = aux.randomInt(1, cols - 1);
-      const y = aux.randomInt(1, rows - 1);
+      const x = aux.randomInt(1, cols - 2);
+      const y = aux.randomInt(1, rows - 2);
       if (this.map[x][y].terrain === "floor") {
         this.map[x][y] = new Tile("wall");
         columns--;
