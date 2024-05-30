@@ -4,7 +4,7 @@ console.log('Loading..... /core/api.js');
 
 import { K } from "./_konfig.js";
 import { r } from "./run.js";
-import { systems } from "./systems.js";
+import { point } from "./point.js";
 import { aux } from "./aux.js";
 
 const api = {
@@ -43,10 +43,9 @@ function adjustViewToMap(params) {
 const clientData = {
   prepare: function (r) {
     //console.log(r.map.length, r.map[0].length);
-    const entities = systems.renderable(r.entities);
     const cd = {
       turn: r.turn,
-      entities: this.updateEntities(entities, r.map, r.cam),
+      entities: this.updateEntities(r.entities, r.map, r.cam),
       view: this.updateView(r.map, r.cam)
     };
     return cd;
@@ -54,9 +53,12 @@ const clientData = {
   updateEntities: function (es, map, cam) {
     const result = [];
     for (let e of es) {
+      if (!e.components.renderable) {
+        continue
+      }
       const pos = e.components.position.current;
       if (map[pos.x][pos.y].visible) {
-        e.view = aux.newPoint(pos.x - cam.x, pos.y - cam.y);
+        e.view = point.new(pos.x - cam.x, pos.y - cam.y);
         result.push(e);
       }
     }

@@ -18,7 +18,7 @@ const queue = {
         this.add(0, e.id); // add Player
         continue;
       }
-      if (e.components.movable) {
+      if (e.components.active) {
         this.add(50, e.id);
       }
     }

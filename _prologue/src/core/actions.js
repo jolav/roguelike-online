@@ -4,8 +4,17 @@ console.log('Loading..... /core/actions.js');
 
 import { movement } from "./action_move.js";
 import { skip } from "./action_skip.js";
+import { aux } from "./aux.js";
 
 const actions = {
+  ai: function (e, map) {
+    const action = validMoves[aux.randomInt(0, 7)]
+    const type = this.getType(action)
+    if (!e.components.movable) {
+      return ["skip", "skip"]
+    }
+    return [type, action]
+  },
   getType: function (action) {
     switch (action) {
       case "UP":
@@ -68,3 +77,15 @@ const actionCost = new Map([
   ["FIRE", 100],
 
 ]);
+
+const validMoves = [
+  "UP",
+  "DOWN",
+  "LEFT",
+  "RIGHT",
+  "UPRIGHT",
+  "UPLEFT",
+  "DOWNRIGHT",
+  "DOWNLEFT",
+];
+

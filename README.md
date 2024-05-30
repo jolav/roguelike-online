@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.6a-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.7-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -10,7 +10,7 @@
 - [X] **Prologue.0.0.4 Turn Time System**  
 - [X] **Prologue.0.0.5 Camera**  
 - [X] **Prologue.0.0.6 Field of View**  
-- [ ] **Prologue Placing and Moving Enemies**  
+- [X] **Prologue.0.0.7 Placing and Moving Enemies**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Data Files**  
@@ -62,7 +62,7 @@
 - [X] **One turn equals 10,15,30 or 60 seg**  
 
 **MAPS**  
-- [ ] **random pj start point instead center**  
+- [X] **random pj start point instead center**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  

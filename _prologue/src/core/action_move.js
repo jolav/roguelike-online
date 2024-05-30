@@ -2,15 +2,18 @@
 
 console.log('Loading..... /core/action_move.js');
 
-import { aux } from "./aux.js";
+import { point } from "./point.js";
 
-const movement = function (e, map, action) {
+const movement = function (e, es, map, action) {
   const pos = e.components.position;
-  const target = getEntityTargetMove(action, pos);
+  const target = getTargetMove(action, pos);
   if (map[target.x][target.y].walkable) {
-    pos.old = pos.current;
-    pos.current = target;
-    return true;
+    const p = point.new(target.x, target.y)
+    if (point.canEnter(p, es)) {
+      pos.old = pos.current;
+      pos.current = target;
+      return true;
+    }
   }
   return false;
 };
@@ -19,8 +22,8 @@ export {
   movement,
 };
 
-function getEntityTargetMove(action, pos) {
-  const target = aux.newPoint(pos.current.x, pos.current.y);
+function getTargetMove(action, pos) {
+  const target = point.new(pos.current.x, pos.current.y);
   switch (action) {
     case "UPLEFT":
       target.x--;

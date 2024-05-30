@@ -7,25 +7,23 @@ import { populateMap } from "./entities.js";
 import { actions } from "./actions.js";
 import * as map from "./mapGen.js";
 import { queue } from "./queue.js";
-import { aux } from "./aux.js";
 import * as fov from "./fov.js";
+import { point } from "./point.js";
 
 const r = {
   turn: 0,
   counter: 0,
-  cam: aux.newPoint(0, 0),
+  pID: undefined,
+  cam: point.new(0, 0),
   map: [],
   entities: [],
   start: async function () {
     r.map = map.generate();
-    const x = Math.floor(r.map.length / 2);
-    const y = Math.floor(r.map[0].length / 2);
-    const pos = aux.newPoint(x, y);
-    [r.entities, r.counter] = populateMap(r.counter, pos);
-    r.cam = updateCam(r.entities[0].components.position.current);
+    [r.entities, r.counter, r.pID] = populateMap(r.counter, r.map);
+    r.cam = updateCam(r.entities[r.pID].components.position.current);
     queue.create(r.entities);
     fov.init();
-    fov.get(r.entities[0], r.map);
+    fov.get(r.entities[r.pID], r.map);
   },
   turnLoop: function (params) {
     // player action
@@ -33,7 +31,12 @@ const r = {
     if (actionType === "none") {
       return;
     }
-    const done = actions[actionType](r.entities[0], r.map, params.action);
+    const done = actions[actionType](
+      r.entities[r.pID],
+      r.entities,
+      r.map,
+      params.action
+    );
     if (!done) {
       return;
     }
@@ -47,13 +50,20 @@ const r = {
       if (active.id >= 0) {
         const e = r.entities[active.id];
         if (e.components.player) {
-          r.cam = updateCam(r.entities[0].components.position.current);
-          fov.get(r.entities[0], r.map);
+          r.cam = updateCam(r.entities[r.pID].components.position.current);
+          fov.get(r.entities[r.pID], r.map);
           //console.log('end turn', r.cam);
           return;
         }
-        //console.log('turn => ', e.id);
-        queue.update(100, active.id);
+        // active entities turn
+        const [actionType, action] = actions.ai(e, r.map)
+        const done = actions[actionType](e, r.entities, r.map, action)
+        if (done) {
+          const cost = actions.cost(action);
+          queue.update(cost, active.id);
+        } else {
+          queue.update(50, active.id)
+        }
       }
       if (active.id === -1) { // new turn
         //console.log('New Turn');
@@ -72,7 +82,7 @@ export {
 
 function updateCam(pos) {
   if (K.TYPE_OF_MAP === 0) {
-    return aux.newPoint(0, 0);
+    return point.new(0, 0);
   }
   let x = pos.x - Math.floor(K.VIEW_COLS / 2);
   let y = pos.y - Math.floor(K.VIEW_ROWS / 2);
@@ -86,5 +96,7 @@ function updateCam(pos) {
   } else if (y > K.MAP_ROWS - K.VIEW_ROWS) {
     y = K.MAP_ROWS - K.VIEW_ROWS;
   }
-  return aux.newPoint(x, y);
+  return point.new(x, y);
 }
+
+

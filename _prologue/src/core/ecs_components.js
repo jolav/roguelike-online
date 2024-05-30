@@ -2,7 +2,7 @@
 
 console.log('Loading..... /core/ecs_components.js');
 
-import { aux } from "../core/aux.js";
+import { point } from "../core/point.js";
 
 class Player {
   name = "player";
@@ -23,6 +23,10 @@ class Tags {
   }
 }
 
+class Active {
+  name = "active";
+}
+
 class Renderable {
   name = "renderable";
 }
@@ -33,11 +37,15 @@ class Movable {
 }
 Movable.prototype.name = 'movable';
 
+class BlocksMov {
+  name = "blocksMov"
+}
+
 class Position {
   name = "position";
   constructor(x, y) {
-    this.old = aux.newPoint(x, y);
-    this.current = aux.newPoint(x, y);
+    this.old = point.new(x, y);
+    this.current = point.new(x, y);
   }
 }
 
@@ -58,8 +66,10 @@ const components = {
   Creature,
   Item,
   Tags,
+  Active,
   Renderable,
   Movable,
+  BlocksMov,
   Position,
   Health,
   Inventory,

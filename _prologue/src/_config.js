@@ -67,12 +67,6 @@ const aux = {
   randomInt: function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
-  newPoint: function (x, y) {
-    return {
-      x: x,
-      y: y,
-    };
-  },
   currentDate: function (turn) {
     return new Date(c.INIT_DATE.getTime() + c.MS_PER_TURN * turn);
   },

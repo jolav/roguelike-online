@@ -33,6 +33,8 @@ const fov = {
     for (let x = 0; x < map.length; x++) {
       for (let y = 0; y < map[0].length; y++) {
         map[x][y].visible = false;
+        // UNCOMMENT THIS FOR WATCH ALL THE MAP    
+        //map[x][y].visible = true;
       }
     }
     // Mark player
@@ -58,7 +60,7 @@ const fov = {
         map[roundedX][roundedY].explored = true;
         map[roundedX][roundedY].visible = true;
         if (map[roundedX][roundedY].blockLOS) {
-          // COMMENT THIS FOR WATCH ALL THE MAP       
+          // COMMENT THIS FOR WATCH ALL THE MAP INSIDE YOUR RADIUS SIGHT    
           break;
         }
       }
