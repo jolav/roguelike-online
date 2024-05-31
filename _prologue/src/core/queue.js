@@ -18,7 +18,7 @@ const queue = {
         this.add(0, e.id); // add Player
         continue;
       }
-      if (e.components.active) {
+      if (e.components.queueable) {
         this.add(50, e.id);
       }
     }
@@ -57,6 +57,7 @@ const queue = {
     for (let w of this.list) {
       console.log(w.wait, " --> ", w.id, "\n");
     }
+    console.log('##################');
   }
 };
 export {

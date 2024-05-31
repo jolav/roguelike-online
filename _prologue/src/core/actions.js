@@ -2,18 +2,75 @@
 
 console.log('Loading..... /core/actions.js');
 
+import { melee } from "./action_melee.js";
 import { movement } from "./action_move.js";
 import { skip } from "./action_skip.js";
 import { aux } from "./aux.js";
 
 const actions = {
-  ai: function (e, map) {
-    const action = validMoves[aux.randomInt(0, 7)]
-    const type = this.getType(action)
-    if (!e.components.movable) {
-      return ["skip", "skip"]
+  ai: function (e, es, map, playerID) {
+    const pj = es[playerID];
+    // default action skip
+    if (!inPlayerLOS(map, e, pj)) {
+      if (!e.components.movable) {
+        return 50; //actionCost.get(action);
+      }
+      const action = validActions[aux.randomInt(0, 7)];
+      const done = this.movement(e, es, map, action);
+      if (done) {
+        return actionCost.get(action);
+      }
+      return 50; // skip cost
     }
-    return [type, action]
+    return this.assaultMove(e, es, map, pj);
+  },
+  assaultMove: function (e, es, map, pj) {
+    pj.pos = pj.components.position.current;
+    e.pos = e.components.position.current;
+
+    if (aux.euclideanDistance(pj.pos, e.pos) < 1.5) {
+      //console.log('Melee ', e.id, " -> ", pj.id);
+      return 100;
+    }
+    const options = [];
+
+    const left =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x - 1, y: e.pos.y });
+    options.push(["LEFT", left]);
+    const right =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x + 1, y: e.pos.y });
+    options.push(["RIGHT", right]);
+    const up =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x, y: e.pos.y - 1 });
+    options.push(["UP", up]);
+    const down =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x, y: e.pos.y + 1 });
+    options.push(["DOWN", down]);
+    const downLeft =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x - 1, y: e.pos.y + 1 });
+    options.push(["DOWNLEFT", downLeft]);
+    const downRight =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x + 1, y: e.pos.y + 1 });
+    options.push(["DOWNRIGHT", downRight]);
+    const upLeft =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x - 1, y: e.pos.y - 1 });
+    options.push(["UPLEFT", upLeft]);
+    const upRight =
+      aux.euclideanDistance(pj.pos, { x: e.pos.x + 1, y: e.pos.y - 1 });
+    options.push(["UPRIGHT", upRight]);
+
+    options.sort(function (a, b) {
+      return a[1] - b[1];
+    });
+
+    for (let o of options) {
+      const done = this.movement(e, es, map, o[0]);
+      if (done) {
+        return actionCost.get(o[0]);
+      }
+    }
+    return 50; // skip cost
+
   },
   getType: function (action) {
     switch (action) {
@@ -28,16 +85,29 @@ const actions = {
         return "movement";
       case "SKIP":
         return "skip";
+      case "MELEE":
+        return "melee";
       default:
-        return "none";
+        return undefined;
     }
   },
   cost: function (action) {
     return actionCost.get(action);
   },
-  movement,
   skip,
+  movement,
+  melee,
 };
+
+function inPlayerLOS(map, e, pj) {
+  const ePos = e.components.position.current;
+  const pjPos = pj.components.position.current;
+  if (!map[ePos.x][ePos.y].visible) {
+    return false;
+  }
+  const distanceToPlayer = aux.euclideanDistance(ePos, pjPos);
+  return distanceToPlayer <= 20 - 2;//this.combat.los;
+}
 
 export {
   actions
@@ -88,4 +158,3 @@ const validMoves = [
   "DOWNRIGHT",
   "DOWNLEFT",
 ];
-

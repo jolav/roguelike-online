@@ -21,4 +21,3 @@ class Entity {
 export {
   Entity,
 };
-

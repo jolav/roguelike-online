@@ -54,7 +54,7 @@ const clientData = {
     const result = [];
     for (let e of es) {
       if (!e.components.renderable) {
-        continue
+        continue;
       }
       const pos = e.components.position.current;
       if (map[pos.x][pos.y].visible) {

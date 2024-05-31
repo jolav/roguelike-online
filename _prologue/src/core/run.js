@@ -27,11 +27,7 @@ const r = {
   },
   turnLoop: function (params) {
     // player action
-    const actionType = actions.getType(params.action);
-    if (actionType === "none") {
-      return;
-    }
-    const done = actions[actionType](
+    const done = actions[actions.getType(params.action)](
       r.entities[r.pID],
       r.entities,
       r.map,
@@ -50,25 +46,18 @@ const r = {
       if (active.id >= 0) {
         const e = r.entities[active.id];
         if (e.components.player) {
-          r.cam = updateCam(r.entities[r.pID].components.position.current);
-          fov.get(r.entities[r.pID], r.map);
-          //console.log('end turn', r.cam);
+          r.cam = updateCam(e.components.position.current);
+          fov.get(e, r.map);
           return;
         }
         // active entities turn
-        const [actionType, action] = actions.ai(e, r.map)
-        const done = actions[actionType](e, r.entities, r.map, action)
-        if (done) {
-          const cost = actions.cost(action);
-          queue.update(cost, active.id);
-        } else {
-          queue.update(50, active.id)
-        }
+        const cost = actions.ai(e, r.entities, r.map, r.pID);
+        queue.update(cost, active.id);
       }
       if (active.id === -1) { // new turn
-        //console.log('New Turn');
         r.turn++;
         queue.newTurn(active.wait);
+        //queue.show();
       }
       sec++;
     }
@@ -98,5 +87,3 @@ function updateCam(pos) {
   }
   return point.new(x, y);
 }
-
-

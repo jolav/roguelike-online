@@ -23,8 +23,8 @@ class Tags {
   }
 }
 
-class Active {
-  name = "active";
+class Queueable {
+  name = "queueable";
 }
 
 class Renderable {
@@ -38,7 +38,7 @@ class Movable {
 Movable.prototype.name = 'movable';
 
 class BlocksMov {
-  name = "blocksMov"
+  name = "blocksMov";
 }
 
 class Position {
@@ -66,7 +66,7 @@ const components = {
   Creature,
   Item,
   Tags,
-  Active,
+  Queueable,
   Renderable,
   Movable,
   BlocksMov,
@@ -78,4 +78,3 @@ const components = {
 export {
   components,
 };
-

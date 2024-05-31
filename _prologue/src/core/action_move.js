@@ -8,7 +8,7 @@ const movement = function (e, es, map, action) {
   const pos = e.components.position;
   const target = getTargetMove(action, pos);
   if (map[target.x][target.y].walkable) {
-    const p = point.new(target.x, target.y)
+    const p = point.new(target.x, target.y);
     if (point.canEnter(p, es)) {
       pos.old = pos.current;
       pos.current = target;
@@ -66,4 +66,3 @@ const validMoves = [
   "DOWNRIGHT",
   "DOWNLEFT",
 ];
-

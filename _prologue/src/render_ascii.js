@@ -250,4 +250,3 @@ const dawnBringer = new Map([
   ["Stinger", "#8A6F30"],
   ["grid", "#27292d"],
 ]);
-

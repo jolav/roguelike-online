@@ -14,24 +14,24 @@ const point = {
   },
   isEmpty: function (p, es) {
     for (let e of es) {
-      const pos = e.components.position.current
+      const pos = e.components.position.current;
       if (pos.x === p.x && pos.y === p.y) {
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   },
   canEnter: function (p, es) {
     for (let e of es) {
       if (!e.components.blocksMov) {
-        continue
+        continue;
       }
-      const pos = e.components.position.current
+      const pos = e.components.position.current;
       if (pos.x === p.x && pos.y === p.y) {
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   },
   getEntities: function (p, es) {
     let resp = [];
@@ -40,7 +40,7 @@ const point = {
         console.log('Hola');
         //continue
       }
-      const pos = e.components.position.current
+      const pos = e.components.position.current;
       if (pos.x === p.x && pos.y === p.y) {
         resp.push(e);
       }
@@ -56,12 +56,14 @@ const point = {
       if (map[x][y].walkable) {
         if (this.isEmpty({ x, y }, es)) {
           p = { x, y };
-          return p
+          return p;
         }
       }
       tries++;
     }
+
     return undefined;
+
   },
 };
 

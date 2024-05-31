@@ -31,4 +31,3 @@ const panel = {
 export {
   update,
 };
-
