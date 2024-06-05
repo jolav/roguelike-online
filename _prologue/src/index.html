@@ -67,7 +67,7 @@
       </div>
 
       <div class="right-column" id="panel">
-        <div class="inventoryDuo">
+        <div class="duo">
           <div>
             <span>PROLOGUE
               <strong><label id="versionPanel"></label></strong>
@@ -82,28 +82,74 @@
           <label id="time">02:14:00</label>
           <small><label id="date">29th Aug 2097</label></small>
         </div>
-        <br>
+        <!--<br>-->
 
-        <!--<div class="player">
-          <div class="inventoryDuo">
-            <div class="nick" id="nick">Nick</div>
+        <div class="player">
+
+          <div class="duo name">
+            <div class="nick" id="nick2">nick</div>
             <div class="coords">Coords : [<label id="coords">0</label>]
             </div>
           </div>
-          <div class="health">Health : <label id="hp">0</label>/<label id="maxHp">0</label>
+
+          <div class="duo xp">
+            <div class="level">Level : <label id="level">1</label>
+            </div>
+            <div class="experience">XP : <label id="xp">0/1000</label>
+            </div>
           </div>
-          <div class="melee">Melee &nbsp;: <label id="melee">Unarmed</label>
+
+          <div class="stats">
+            <div class="stat">END <label id="s-end">+0</label>
+            </div>
+            <div class="stat">AGI <label id="s-agi">+0</label>
+            </div>
+            <div class="stat">PER <label id="s-per">+0</label>
+            </div>
+            <div class="stat">INT <label id="s-int">+0</label>
+            </div>
+            <div class="stat">WIL <label id="s-wil">+0</label>
+            </div>
           </div>
-          <div class="range">Range &nbsp;: <label id="range">-</label>
+
+          <div class="duo hp">
+            <div class="bar">HP: <label id="bar">====================</label>
+            </div>
+            <div class="numbers">
+              <label id="hp">2</label> / <label id="maxHp">20</label>
+            </div>
           </div>
-          <div class="defence">Defence: <label id="defence">200</label>
+
+          <div class="duo ratings">
+            <div>
+              Armor(AR) : <label id="ar">0</label>
+            </div>
+            <div>
+              Evasion(ER) : <label id="er">8</label>
+            </div>
           </div>
+
+          <div class="duo melee">
+            <div>
+              <label id="m-weapon">Unarmed</label>
+            </div>
+            <div>
+              toHit <label id="m-toHit">+0</label>
+            </div>
+            <div>
+              AP <label id="m-ap">+0</label>
+            </div>
+            <div>
+              Dam <label id="m-dam">d2</label>
+            </div>
+          </div>
+
         </div>
         <br>
 
-        <div class="inventory">
+        <!--<div class="inventory">
           <div class="title">INVENTARY</div>
-          <div class="inventoryDuo">
+          <div class="duo">
             <div class="i1">(1)Food &nbsp;&nbsp;:
               <label id="i-food">0</label>
             </div>
@@ -120,7 +166,7 @@
           <div class="i1">(R)Range:
             <label id="i-range">-</label>
           </div>
-          <div class="inventoryDuo">
+          <div class="duo">
             <div class="i1">(-)Head&nbsp;:
               <label id="i-head">-</label>
             </div>

@@ -125,6 +125,7 @@ const draw = {
 
 export {
   ascii,
+  dawnBringer,
 };
 
 const aux = {

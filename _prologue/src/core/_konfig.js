@@ -3,7 +3,7 @@
 console.log('Loading..... /core/_konfig.js');
 
 const K = {
-  VERSION: "0.0.7a",
+  VERSION: "0.0.8",
   TRIES: 100,
   // Options
   TYPE_OF_MAP: 0, // 0 => BASICROOM , 1 => SHELTER

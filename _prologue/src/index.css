@@ -118,18 +118,13 @@ section#playZone .right-column {
   width: 100px;
   /* changed from js */
   /*background-color: lightcoral;*/
-  padding: 5px;
-}
-
-
-section#playZone .right-column {
-  font-size: 0.90em;
   text-align: center;
+  padding: 5px;
 }
 
 section#playZone .right-column .player, .inventory, .loot, .selected {
   text-align: left;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 section#playZone .right-column .loot {
@@ -148,13 +143,39 @@ section#playZone .right-column .history {
 
 /* PANEL ZONE */
 
-section#playZone #panel .inventoryDuo {
+section#playZone #panel .duo {
   display: flex;
   justify-content: space-between;
 }
 
-section#playZone #panel #i-food, #i-medical, #i-head, #i-body, #i-supply {
+section#playZone #panel .stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#playZone #panel .stats>.stat {
+  flex: 1;
+  margin: 0 0px;
+}
+
+section#playZone #panel .stats>.stat:first-child {
+  margin-left: 0;
+  text-align: left
+}
+
+section#playZone #panel .stats>.stat:nth-child(2),
+.stats>.stat:nth-child(3),
+.stats>.stat:nth-child(4) {
+  text-align: center;
+}
+
+section#playZone #panel .stats>.stat:last-child {
+  text-align: right;
+  margin-right: 0;
+}
+
+/*section#playZone #panel #i-food, #i-medical, #i-head, #i-body, #i-supply {
   display: inline-block;
   text-align: center;
   width: 3em;
-}
+}*/

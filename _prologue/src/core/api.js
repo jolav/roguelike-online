@@ -45,6 +45,7 @@ const clientData = {
     //console.log(r.map.length, r.map[0].length);
     const cd = {
       turn: r.turn,
+      pID: r.pID,
       entities: this.updateEntities(r.entities, r.map, r.cam),
       view: this.updateView(r.map, r.cam)
     };

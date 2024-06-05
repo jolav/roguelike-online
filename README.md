@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.7a-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.8-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -11,8 +11,8 @@
 - [X] **Prologue.0.0.5 Camera**  
 - [X] **Prologue.0.0.6 Field of View**  
 - [X] **Prologue.0.0.7 Placing and Moving Enemies**  
+- [X] **Prologue.0.0.8 Creating UI**  
 - [ ] **Prologue Melee**  
-- [ ] **Prologue Creating UI**  
 - [ ] **Prologue Data Files**  
 - [ ] **Prologue Inventory and items**  
 - [ ] **Prologue Ranged Combat**  
