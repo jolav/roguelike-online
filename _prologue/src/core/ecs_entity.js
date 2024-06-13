@@ -16,6 +16,16 @@ class Entity {
   log() {
     console.log(JSON.stringify(this, null, 2));
   }
+  die() {
+    this.removeComponent("queueable");
+    this.removeComponent("movable");
+    this.removeComponent("blocksMov");
+    this.removeComponent("stats");
+    this.removeComponent("melee");
+    this.removeComponent("health");
+    this.components.tags.type = "corpse of " + this.components.tags.type;
+    //this.removeComponent();
+  }
 }
 
 export {

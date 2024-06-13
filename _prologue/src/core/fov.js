@@ -34,7 +34,7 @@ const fov = {
       for (let y = 0; y < map[0].length; y++) {
         map[x][y].visible = false;
         // UNCOMMENT THIS FOR WATCH ALL THE MAP    
-        //map[x][y].visible = true;
+        map[x][y].visible = true;
       }
     }
     // Mark player

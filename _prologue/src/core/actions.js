@@ -9,6 +9,9 @@ import { aux } from "./aux.js";
 
 const actions = {
   ai: function (e, es, map, playerID) {
+    if (!e.components.movable) {
+      return 50; //actionCost.get(action);
+    }
     const pj = es[playerID];
     // default action skip
     if (!inPlayerLOS(map, e, pj)) {
@@ -30,6 +33,7 @@ const actions = {
 
     if (aux.euclideanDistance(pj.pos, e.pos) < 1.5) {
       //console.log('Melee ', e.id, " -> ", pj.id);
+      actions.melee(e, pj);
       return 100;
     }
     const options = [];

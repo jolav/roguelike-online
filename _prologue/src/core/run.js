@@ -9,6 +9,7 @@ import * as map from "./mapGen.js";
 import { queue } from "./queue.js";
 import * as fov from "./fov.js";
 import { point } from "./point.js";
+import { aux } from "./aux.js";
 
 const r = {
   turn: 0,
@@ -26,6 +27,7 @@ const r = {
     fov.get(r.entities[r.pID], r.map);
   },
   turnLoop: function (params) {
+    //console.log(params.action);
     // player action
     const done = actions[actions.getType(params.action)](
       r.entities[r.pID],
@@ -34,8 +36,16 @@ const r = {
       params.action
     );
     if (!done) {
-      return;
+      const pos = r.entities[r.pID].components.position;
+      const target = aux.getTargetMove(params.action, pos);
+      const es = point.getEntities(target, r.entities);
+      if (es.length > 0) {
+        actions.melee(r.entities[r.pID], es[0]);
+      } else {
+        return;
+      }
     }
+
     const cost = actions.cost(params.action);
     queue.update(cost, 0); // change this 0 for entityPlayer.id
 

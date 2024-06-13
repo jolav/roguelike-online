@@ -27,24 +27,42 @@ const panel = {
   },
   pjStats: function () {
     const pj = t.entities[t.pID];
+    //console.log(pj);
+    // name
     document.getElementById("nick2").style.color = col.get("Tahiti Gold");
     document.getElementById("nick2").innerHTML = c.NICK;
+    // position
     const pos = pj.components.position.current;
     const coords = pos.x + "," + pos.y;
     document.getElementById("coords").innerHTML = coords;
-    document.getElementById("hp").innerHTML = 20;// pj.combat.hp;
+    // stats
+    const stats = pj.components.stats;
+    document.getElementById("level").innerHTML = stats.xp.level;
+    document.getElementById("xp").innerHTML = stats.xp.qty;
+    document.getElementById("s-end").innerHTML = showSymbol(stats.end);
+    document.getElementById("s-agi").innerHTML = showSymbol(stats.agi);
+    document.getElementById("s-per").innerHTML = showSymbol(stats.per);
+    document.getElementById("s-int").innerHTML = showSymbol(stats.int);
+    document.getElementById("s-wil").innerHTML = showSymbol(stats.wil);
+    // health
+    const health = pj.components.health;
+    document.getElementById("hp").innerHTML = health.real;
     document.getElementById("maxHp").style.color = col.get("Elf Green");
-    document.getElementById("maxHp").innerHTML = 20;// pj.combat.maxHp;
-    document.getElementById("bar").innerHTML = lifeBar(20, 20);
+    document.getElementById("maxHp").innerHTML = health.max;
+    document.getElementById("bar").innerHTML = lifeBar(health.real, health.max);
     document.getElementById("bar").style.color = col.get("Elf Green");
-    /*if (pj.combat.hp < pj.combat.maxHp) {
-      //document.getElementById("hp").style.color = "#c02c38";
-    } else {
-      document.getElementById("hp").style.color = col.get("Christi");
-    }*/
-    //document.getElementById("melee").innerHTML = 0; //pj.combat.melee;
-    //document.getElementById("range").innerHTML = 0; //pj.combat.range;
-    //document.getElementById("defence").innerHTML = 0;// pj.combat.defence;
+    // defense
+    document.getElementById("ar").innerHTML = stats.combat.ar;
+    document.getElementById("er").innerHTML = stats.combat.er;
+    // weapons
+    const base = pj.components.melee.base;
+    const wp = pj.components.melee.slots[0];
+    document.getElementById("m1-weapon").innerHTML = wp.type.toUpperCase();
+    const totalToHit = base.toHit + wp.toHit; //+ stats.agi;
+    document.getElementById("m1-toHit").innerHTML = showSymbol(totalToHit);
+    document.getElementById("m1-ap").innerHTML = wp.ap + stats.end;
+    document.getElementById("m1-dmg").innerHTML = wp.dmg;
+
   },
 };
 
@@ -53,11 +71,23 @@ export {
 };
 
 function lifeBar(life, maxlife) {
-  let chars = Math.round(life / (maxlife / 20));
+  const maxSpaces = 25;
+  let chars = Math.round(life / (maxlife / maxSpaces));
   if (chars === 0 && life > 0) chars = 1;
   let bar = "";
-  for (let i = 0; i < chars; i++) {
-    bar += "\u2550";
+  for (let i = 0; i < maxSpaces; i++) {
+    if (i < chars) {
+      bar += "\u00bb"; //"\u2592";
+    } else {
+      bar += " ";
+    }
   }
   return bar;
+}
+
+function showSymbol(value) {
+  if (value > 0) {
+    return "+" + value;
+  }
+  return value;
 }

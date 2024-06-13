@@ -10,7 +10,7 @@ import { K } from "./_konfig.js";
 function populateMap(counter, map) {
   populate.player(counter, map);
   populate.dummy(map);
-  const creaturesQty = Math.floor(map.length * map[0].length / 50);
+  const creaturesQty = Math.floor(map.length * map[0].length / 300);
   populate.creatures(map, creaturesQty);
   return populate.entities();
 }
@@ -21,7 +21,6 @@ const populate = {
   pID: undefined,
   player: function (counter, map) {
     this.counter = counter;
-    const p = point.randomEmptyWalkable(this.result, map);
     const e = new Entity(this.counter);
     this.pID = this.counter;
     e.addComponent(new components.Player);
@@ -29,8 +28,17 @@ const populate = {
     e.addComponent(new components.Movable);
     e.addComponent(new components.Queueable);
     e.addComponent(new components.BlocksMov);
+    const stats = [];
+    stats.push([10, 12, 10, 10, 10]);
+    stats.push([1, 0]);
+    stats.push([0, 0]);
+    e.addComponent(new components.Stats(stats));
+    const melee = [[1, 0, e.components.stats.end, 0]];
+    melee.push(["unarmed", 0, 3, "1d2-1"]);
+    e.addComponent(new components.Melee(melee));
+    const p = point.randomEmptyWalkable(this.result, map);
     e.addComponent(new components.Position(p.x, p.y));
-    e.addComponent(new components.Health);
+    e.addComponent(new components.Health(20, 19)); // max, partial
     e.addComponent(new components.Inventory);
     e.addComponent(new components.Tags("player"));
     this.counter++;
@@ -64,8 +72,16 @@ const populate = {
       e.addComponent(new components.Queueable);
       e.addComponent(new components.Movable);
       e.addComponent(new components.BlocksMov);
+      const stats = [];
+      stats.push([6, 8, 6, 4, 6]);
+      stats.push([1, 0]); // level ,xp
+      stats.push([0, 2]); // AR, ER 2 per small size
+      e.addComponent(new components.Stats(stats));
+      const melee = [[1, 0, e.components.stats.end, 0]];
+      melee.push(["bite", 0, 3, "1d2-1"]);
+      e.addComponent(new components.Melee(melee));
       e.addComponent(new components.Position(p.x, p.y));
-      e.addComponent(new components.Health);
+      e.addComponent(new components.Health(3, 3));
       e.addComponent(new components.Tags("rat"));
       this.counter++;
       this.result.push(e);

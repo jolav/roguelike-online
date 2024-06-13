@@ -12,7 +12,7 @@
 - [X] **Prologue.0.0.6 Field of View**  
 - [X] **Prologue.0.0.7 Placing and Moving Enemies**  
 - [X] **Prologue.0.0.8 Creating UI**  
-- [ ] **Prologue Melee**  
+- [X] **Prologue.0.0.9 Melee**  
 - [ ] **Prologue Data Files**  
 - [ ] **Prologue Inventory and items**  
 - [ ] **Prologue Ranged Combat**  
