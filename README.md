@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.9a-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.9b-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -24,14 +24,14 @@
 - [ ] **choose a colors palette**  
 - [ ] **history improved with loots**  
 - [ ] **Sound effects**  
-- [ ] **Turn counter into datetime**  
+- [X] **Turn counter into datetime**  
 - [ ] **Use modal for dialogs**  
 - [ ] **help modal showing controls settings and config**  
-- [ ] **Center camera if is greater than map**  
+- [X] **Center camera if is greater than map**  
 - [ ] **render order, tiles-corpses-items-foes-player**  
-- [ ] **only pass turn if action is really done, no effect actions**  
+- [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
-- [ ] **on key pressed down ,movement at constant speed**  
+- [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
 

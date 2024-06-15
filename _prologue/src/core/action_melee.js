@@ -79,10 +79,15 @@ const piercingTest = function (APBase, AR, times) {
   const mod = 2 * (times + 1);
   let success = 0;
   for (let i = 0; i < 3; i++) {
-    if (aux.diceRoll("2d6") + APBase - AR - mod > 0) {
+    let total = 0;
+    let roll = 0;
+    do {
+      roll = aux.diceRoll("2d6");
+      total += roll;
+    } while (roll > 10);
+    if (total + APBase - AR - mod > 0) {
       success++;
     }
   }
   return success;
-
 };
