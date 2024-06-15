@@ -21,8 +21,8 @@ function ascii() {
   draw.map(oX, oY);
   //draw.grid();
   //draw.info();
-  //draw.player(oX,oY,e);
-  draw.entities(oX, oY, t.entities);
+  draw.entities(oX, oY, t.entities, "renderable"); // draw all
+  draw.entities(oX, oY, t.entities, "health"); // redraw live to appear above
   panel.update();
 }
 
@@ -105,9 +105,12 @@ const draw = {
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },
-  entities: function (oX, oY, es) {
+  entities: function (oX, oY, es, component) {
     let playerEntity = undefined;
     for (let e of es) {
+      if (!e.components[component]) {
+        continue;
+      }
       if (e.components.player) {
         playerEntity = e;
       }
