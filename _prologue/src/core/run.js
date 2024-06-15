@@ -40,7 +40,12 @@ const r = {
       const target = aux.getTargetMove(params.action, pos);
       const es = point.getEntities(target, r.entities);
       if (es.length > 0) {
-        actions.melee(r.entities[r.pID], es[0]);
+        for (let e of es) {
+          if (e.components.queueable) {
+            actions.melee(r.entities[r.pID], e);
+            break;
+          }
+        }
       } else {
         return;
       }
