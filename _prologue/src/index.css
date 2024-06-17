@@ -122,7 +122,7 @@ section#playZone .right-column {
   padding: 5px;
 }
 
-section#playZone .right-column .player, .inventory, .loot, .selected {
+section#playZone .right-column .player, .loot, .selected {
   text-align: left;
   margin-left: 5px;
 }
@@ -134,10 +134,10 @@ section#playZone .right-column .loot {
 
 section#playZone .right-column .history {
   text-align: left;
-  /*font-size: 0.90em;*/
+  font-size: 0.90em;
   position: fixed;
   padding: 5px;
-  bottom: 2em;
+  bottom: 0.5em;
   width: 100%;
 }
 

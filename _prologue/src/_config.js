@@ -9,7 +9,7 @@ const c = {
   VERSION: undefined,
   SURNAME_TXT: "./assets/surname.txt",
   // Render
-  RENDER_TYPE: 0, // 0 = ASCII  1 = UNICODE
+  RENDER_TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
   // canvas
   CANVAS_NAME: "canvas",
   FONTS: ["sans-serif", "arial", "IBM"],
@@ -25,6 +25,9 @@ const c = {
   PANEL_WIDTH: 300,
   VERTICAL_SAFETY_DISTANCE: 10,
   // Game
+  HISTORY: [],
+  HISTORY_CHARS: 43,
+  HISTORY_LINES: 18, //max 20
   IS_SERVER_TURN: false,
   INIT_DATE: new Date("2097-08-29 02:14:00"),
   MS_PER_TURN: 1000 * 20,

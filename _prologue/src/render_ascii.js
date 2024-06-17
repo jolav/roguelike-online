@@ -144,6 +144,11 @@ const aux = {
           return unicode.get(symbol.slice(0, 9));
         }
         return unicode.get(symbol);
+      case 2:
+        if (symbol.slice(0, 9) === "corpse of") {
+          return unicodeGlyphs.get(symbol.slice(0, 9));
+        }
+        return unicodeGlyphs.get(symbol);
     }
   },
   colorOfEntity: function (entity) {

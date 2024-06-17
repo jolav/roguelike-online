@@ -10,6 +10,7 @@ import { queue } from "./queue.js";
 import * as fov from "./fov.js";
 import { point } from "./point.js";
 import { aux } from "./aux.js";
+import * as history from "./history.js";
 
 const r = {
   turn: 0,
@@ -18,6 +19,8 @@ const r = {
   cam: point.new(0, 0),
   map: [],
   entities: [],
+  actions: [],
+  history: history.create(),
   start: async function () {
     r.map = map.generate();
     [r.entities, r.counter, r.pID] = populateMap(r.counter, r.map);
@@ -27,6 +30,8 @@ const r = {
     fov.get(r.entities[r.pID], r.map);
   },
   turnLoop: function (params) {
+    r.actions = [];
+    r.history = [];
     //console.log(params.action);
     // player action
     const done = actions[actions.getType(params.action)](
@@ -47,6 +52,7 @@ const r = {
           }
         }
       } else {
+        history.history.cantMove();
         return;
       }
     }

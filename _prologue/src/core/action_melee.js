@@ -3,6 +3,7 @@
 console.log('Loading..... /core/action_melee.js');
 
 import { aux } from "./aux.js";
+import { history } from "./history.js";
 
 const melee = function (a, d) {
   //console.log('Melee ', a.id, " -> ", d.id);
@@ -28,7 +29,9 @@ const sequence = {
     const dice = aux.diceRoll("2d6");
     if (dice + toHit >= need) {
       this.piercing(att, def);
+      return;
     }
+    history.meleeHit(att, def);
   },
   piercing: function (att, def) {
     const APBase = 0 +
@@ -61,6 +64,7 @@ const sequence = {
       }
     }
     def.health.real -= dmg;
+    history.meleeDmg(att, dmg, dice, def);
     if (def.health.real <= 0) {
       if (def.player) {
         alert("You Lost");

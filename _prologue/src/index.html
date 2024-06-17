@@ -78,152 +78,109 @@
           </div>
         </div>
 
-        <div class="time">
-          <label id="time">02:14:00</label>
-          <small><label id="date">29th Aug 2097</label></small>
+        <div class="duo time">
+          <div>
+            <label id="time">02:14:00</label>
+            <label id="date">29th Aug 2097</label>
+          </div>
+          <div class="coords">Pos:[<label id="coords">0</label>]
+          </div>
         </div>
         <!--<br>-->
 
-        <div class="player">
-
-          <div class="duo name">
-            <div class="nick" id="nick2">nick</div>
-            <div class="coords">Coords : [<label id="coords">0</label>]
-            </div>
+        <div class="duo name xp">
+          <div class="nick" id="nick2">nick</div>
+          <div class="level">Level : <label id="level">1</label>
           </div>
-
-          <div class="duo xp">
-            <div class="level">Level : <label id="level">1</label>
-            </div>
-            <div class="experience">XP : <label id="xp">0/1000</label>
-            </div>
-          </div>
-
-          <div class="stats">
-            <div class="stat">END <label id="s-end">+0</label>
-            </div>
-            <div class="stat">AGI <label id="s-agi">+0</label>
-            </div>
-            <div class="stat">PER <label id="s-per">+0</label>
-            </div>
-            <div class="stat">INT <label id="s-int">+0</label>
-            </div>
-            <div class="stat">WIL <label id="s-wil">+0</label>
-            </div>
-          </div>
-
-          <div class="duo hp">
-            <div class="bar">HP: <label id="bar">====================</label>
-            </div>
-            <div class="numbers">
-              <label id="hp">2</label> / <label id="maxHp">20</label>
-            </div>
-          </div>
-
-          <div class="duo ratings">
-            <div>
-              Armor(AR) : <label id="ar">0</label>
-            </div>
-            <div>
-              Evasion(ER) : <label id="er">8</label>
-            </div>
-          </div>
-
-          <div class="duo melee1">
-            <div>
-              <label id="m1-weapon">Fist </label>
-            </div>
-            <div>
-              &#x25d8<label id="m1-toHit">0</label>&nbsp;&nbsp;
-              &#x25ba<label id="m1-ap">3</label>&nbsp;&nbsp;
-              &#x2665<label id="m1-dmg">d2</label>
-            </div>
-          </div>
-
-          <!--<div class="duo melee2">
-            <div>
-              <label id="m2-weapon">Unarmed </label>
-            </div>
-            <div>
-              &#x25d8 <label id="m2-toHit">+0</label>
-            </div>
-            <div>
-              &#x25ba <label id="m2-ap">0</label>
-            </div>
-            <div>
-              &#x2665 <label id="m2-dmg">d2</label>
-            </div>
-          </div>-->
-
-          <!--<div class="duo thrown">
-            <div>
-              <label id="t-weapon">Debris</label>
-            </div>
-            <div>
-              &#x25d8<label id="t-toHit">0</label>&nbsp;&nbsp;
-              &#x25ba<label id="t-ap">3</label>&nbsp;&nbsp;
-              &#x2665<label id="t-dmg">d2</label>
-            </div>
-          </div>
-
-          <div class="duo range1">
-            <div>
-              <label id="r1-weapon">N/A</label>
-            </div>
-            <div>
-              &#x25d8<label id="r1-toHit">0</label>&nbsp;&nbsp;
-              &#x25ba<label id="r1-ap">0</label>&nbsp;&nbsp;
-              &#x2665<label id="r1-dmg">0</label>
-            </div>
-          </div>-->
-
-          <!--<div class="duo range2">
-            <div>
-              <label id="r2-weapon">Disarmed </label>
-            </div>
-            <div>
-              &#x25d8 <label id="r2-toHit">+0</label>
-            </div>
-            <div>
-              &#x25ba <label id="r2-ap">0</label>
-            </div>
-            <div>
-              &#x2665 <label id="r2-dmg">d6</label>
-            </div>
-          </div>-->
-
-
-        </div>
-        <br>
-
-        <!--<div class="inventory">
-          <div class="title">INVENTARY</div>
-          <div class="duo">
-            <div class="i1">(1)Food &nbsp;&nbsp;:
-              <label id="i-food">0</label>
-            </div>
-            <div class="i1">(3)Medical:
-              <label id="i-medical">0</label>
-            </div>
-          </div>
-          <div class="i1">(-)Supply :
-            <label id="i-supply">0</label>
-          </div>
-          <div class="i1">(-)Melee:
-            <label id="i-melee">Unarmed</label>
-          </div>
-          <div class="i1">(R)Range:
-            <label id="i-range">-</label>
-          </div>
-          <div class="duo">
-            <div class="i1">(-)Head&nbsp;:
-              <label id="i-head">-</label>
-            </div>
-            <div class="i1">(-)Body&nbsp;:
-              <label id="i-body">-</label>
-            </div>
+          <div class="experience">XP : <label id="xp">0/1000</label>
           </div>
         </div>
+
+        <div class="stats">
+          <div class="stat">END <label id="s-end">+0</label>
+          </div>
+          <div class="stat">AGI <label id="s-agi">+0</label>
+          </div>
+          <div class="stat">PER <label id="s-per">+0</label>
+          </div>
+          <div class="stat">INT <label id="s-int">+0</label>
+          </div>
+          <div class="stat">WIL <label id="s-wil">+0</label>
+          </div>
+        </div>
+
+        <div class="duo hp">
+          <div class="bar">HP: <label id="bar">====================</label>
+          </div>
+          <div class="numbers">
+            <label id="hp">2</label> / <label id="maxHp">20</label>
+          </div>
+        </div>
+
+        <div class="duo ratings">
+          <div>
+            Armor(AR) : <label id="ar">0</label>
+          </div>
+          <div>
+            Evasion(ER) : <label id="er">8</label>
+          </div>
+        </div>
+
+        <div class="duo melee1">
+          <div>
+            <label id="m1-weapon">Fist </label>
+          </div>
+          <div>
+            &#x25d8<label id="m1-toHit">0</label>&nbsp;&nbsp;
+            &#x25ba<label id="m1-ap">3</label>&nbsp;&nbsp;
+            &#x2665<label id="m1-dmg">d2</label>
+          </div>
+        </div>
+
+        <div class="duo melee2">
+          <div>
+            <label id="m2-weapon"><s>Melee2</s></label>
+          </div>
+          <div>
+            &#x25d8<label id="m2-toHit"></label>&nbsp;&nbsp;
+            &#x25ba<label id="m2-ap"></label>&nbsp;&nbsp;
+            &#x2665<label id="m2-dmg"></label>
+          </div>
+        </div>
+
+        <div class="duo thrown">
+          <div>
+            <label id="t-weapon"><s>Throw</s></label>
+          </div>
+          <div>
+            &#x25d8<label id="t-toHit"></label>&nbsp;&nbsp;
+            &#x25ba<label id="t-ap"></label>&nbsp;&nbsp;
+            &#x2665<label id="t-dmg"></label>
+          </div>
+        </div>
+
+        <div class="duo range1">
+          <div>
+            <label id="r1-weapon"><s>Range1</s></label>
+          </div>
+          <div>
+            &#x25d8<label id="r1-toHit"></label>&nbsp;&nbsp;
+            &#x25ba<label id="r1-ap"></label>&nbsp;&nbsp;
+            &#x2665<label id="r1-dmg"></label>
+          </div>
+        </div>
+
+        <div class="duo range2">
+          <div>
+            <label id="r2-weapon"><s>Range2</s></label>
+          </div>
+          <div>
+            &#x25d8<label id="r2-toHit"></label>&nbsp;&nbsp;
+            &#x25ba<label id="r2-ap"></label>&nbsp;&nbsp;
+            &#x2665<label id="r2-dmg"></label>
+          </div>
+        </div>
+
         <br>
 
         <div class="selected">
@@ -231,12 +188,12 @@
         </div>
 
         <div class="loot">
-          <div id="l0">&nbsp;</div>
-          <div id="l1">&nbsp;</div>
-          <div id="l2">&nbsp;</div>
-          <div id="l3">&nbsp;</div>
-          <div id="l4">&nbsp;</div>
-          <div id="l5">&nbsp;</div>
+          <div id="l0">&nbsp;1</div>
+          <div id="l1">&nbsp;2</div>
+          <div id="l2">&nbsp;3</div>
+          <div id="l3">&nbsp;4</div>
+          <div id="l4">&nbsp;5</div>
+          <div id="l5">&nbsp;6</div>
         </div>
 
         <div class="history">
@@ -255,7 +212,12 @@
           <div id="h13"></div>
           <div id="h14"></div>
           <div id="h15"></div>
-        </div>-->
+          <div id="h16"></div>
+          <div id="h17"></div>
+          <div id="h18"></div>
+          <div id="h19"></div>
+          <div id="h20"></div>
+        </div>
 
       </div>
 
