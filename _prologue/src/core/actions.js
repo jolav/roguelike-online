@@ -10,20 +10,20 @@ import { aux } from "./aux.js";
 const actions = {
   ai: function (e, es, map, playerID) {
     if (!e.components.movable) {
-      return 50; //actionCost.get(action);
+      return "SKIP"; //actionCost.get(action);
     }
     const pj = es[playerID];
     // default action skip
     if (!inPlayerLOS(map, e, pj)) {
       if (!e.components.movable) {
-        return 50; //actionCost.get(action);
+        return "SKIP"; //actionCost.get(action);
       }
       const action = validActions[aux.randomInt(0, 7)];
       const done = this.movement(e, es, map, action);
       if (done) {
-        return actionCost.get(action);
+        return action; //actionCost.get(action);
       }
-      return 50; // skip cost
+      return "SKIP"; // skip cost
     }
     return this.assaultMove(e, es, map, pj);
   },
@@ -34,7 +34,7 @@ const actions = {
     if (aux.euclideanDistance(pj.pos, e.pos) < 1.5) {
       //console.log('Melee ', e.id, " -> ", pj.id);
       actions.melee(e, pj);
-      return 100;
+      return "MELEE";
     }
     const options = [];
 
@@ -70,10 +70,10 @@ const actions = {
     for (let o of options) {
       const done = this.movement(e, es, map, o[0]);
       if (done) {
-        return actionCost.get(o[0]);
+        return o[0]; //actionCost.get(o[0]);
       }
     }
-    return 50; // skip cost
+    return "SKIP"; // skip cost
 
   },
   getType: function (action) {

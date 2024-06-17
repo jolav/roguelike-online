@@ -58,7 +58,7 @@ const r = {
     }
 
     const cost = actions.cost(params.action);
-    queue.update(cost, 0); // change this 0 for entityPlayer.id
+    queue.update(cost, r.pID); // change this 0 for entityPlayer.id
 
     // computer turn
     let sec = 0;
@@ -72,7 +72,9 @@ const r = {
           return;
         }
         // active entities turn
-        const cost = actions.ai(e, r.entities, r.map, r.pID);
+        const action = actions.ai(e, r.entities, r.map, r.pID);
+        const cost = actions.cost(action);
+        //console.log(e.id, action, " = ", cost);
         queue.update(cost, active.id);
       }
       if (active.id === -1) { // new turn

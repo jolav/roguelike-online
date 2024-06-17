@@ -2,6 +2,8 @@
 
 console.log('Loading..... /core/ecs_entity.js');
 
+import { queue } from "./queue.js";
+
 class Entity {
   constructor(id) {
     this.id = id;
@@ -24,6 +26,7 @@ class Entity {
     this.removeComponent("melee");
     this.removeComponent("health");
     this.components.tags.type = "corpse of " + this.components.tags.type;
+    queue.remove(this.id);
     //this.removeComponent();
   }
 }
