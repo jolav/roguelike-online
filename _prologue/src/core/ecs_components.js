@@ -27,10 +27,20 @@ class Queueable {
   name = "queueable";
 }
 
-class Renderable {
-  name = "renderable";
+class View {
+  name = "view";
+  pos = point.new(0, 0);
+  dx = 0;
+  dy = 0;
+  action = undefined;
+  update(p, dx, dy, action) {
+    this.pos = point.new(p.x, p.y);
+    this.dx = dx;
+    this.dy = dy;
+    this.action = action;
+  }
 }
-//Renderable.prototype.name = 'renderable';
+//View.prototype.name = 'view';
 
 class Movable {
   name = "movable";
@@ -98,8 +108,8 @@ class Melee {
 class Position {
   name = "position";
   constructor(x, y) {
-    this.old = point.new(x, y);
     this.current = point.new(x, y);
+    //this.end = point.new(x, y);
   }
 }
 
@@ -121,7 +131,7 @@ const components = {
   Item,
   Tags,
   Queueable,
-  Renderable,
+  View,
   Movable,
   BlocksMov,
   Stats,

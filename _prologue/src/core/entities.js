@@ -24,7 +24,7 @@ const populate = {
     const e = new Entity(this.counter);
     this.pID = this.counter;
     e.addComponent(new components.Player);
-    e.addComponent(new components.Renderable);
+    e.addComponent(new components.View);
     e.addComponent(new components.Movable);
     e.addComponent(new components.Queueable);
     e.addComponent(new components.BlocksMov);
@@ -48,7 +48,7 @@ const populate = {
     const p = point.randomEmptyWalkable(this.result, map);
     const e = new Entity(this.counter);
     //e.addComponent(new components.Player);
-    e.addComponent(new components.Renderable);
+    e.addComponent(new components.View);
     //e.addComponent(new components.Queueable);
     //e.addComponent(new components.Movable);
     //e.addComponent(new components.BlocksMov)
@@ -68,7 +68,7 @@ const populate = {
         continue;
       }
       const e = new Entity(this.counter);
-      e.addComponent(new components.Renderable);
+      e.addComponent(new components.View);
       e.addComponent(new components.Queueable);
       e.addComponent(new components.Movable);
       e.addComponent(new components.BlocksMov);

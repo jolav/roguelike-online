@@ -6,24 +6,25 @@ import { melee } from "./action_melee.js";
 import { movement } from "./action_move.js";
 import { skip } from "./action_skip.js";
 import { aux } from "./aux.js";
+import { point } from "./point.js";
 
 const actions = {
   ai: function (e, es, map, playerID) {
     if (!e.components.movable) {
-      return "SKIP"; //actionCost.get(action);
+      return "SKIP";
     }
     const pj = es[playerID];
     // default action skip
     if (!inPlayerLOS(map, e, pj)) {
       if (!e.components.movable) {
-        return "SKIP"; //actionCost.get(action);
+        return "SKIP";
       }
       const action = validActions[aux.randomInt(0, 7)];
-      const done = this.movement(e, es, map, action);
-      if (done) {
-        return action; //actionCost.get(action);
+      if (point.canMove(e, es, map, action)) {
+        this.movement(e, action);
+        return action;
       }
-      return "SKIP"; // skip cost
+      return "SKIP";
     }
     return this.assaultMove(e, es, map, pj);
   },
@@ -67,10 +68,11 @@ const actions = {
       return a[1] - b[1];
     });
 
+    //console.log(options);
     for (let o of options) {
-      const done = this.movement(e, es, map, o[0]);
-      if (done) {
-        return o[0]; //actionCost.get(o[0]);
+      if (point.canMove(e, es, map, o[0])) {
+        this.movement(e, o[0]);
+        return o[0];
       }
     }
     return "SKIP"; // skip cost
@@ -143,6 +145,7 @@ const actionCost = new Map([
   ["UPLEFT", 100],
   ["DOWNRIGHT", 100],
   ["DOWNLEFT", 100],
+  ["MOVEMENT", 100],
   ["MELEE", 100],
   ["SKIP", 100],
   ["LOOT", 200],

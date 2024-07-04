@@ -46,6 +46,10 @@ const history = {
       + damage + " damage to " + t.tags.type;
     r.history.push(h);
   },
+  skip: function () {
+    const h = "player skip turn";
+    r.history.push(h);
+  },
   cantMove: function () {
     const h = "player can't move there";
     r.history.push(h);

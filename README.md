@@ -1,4 +1,4 @@
-![Game](https://img.shields.io/badge/Prologue-0.0.9e-orange.svg)  
+![Game](https://img.shields.io/badge/Prologue-0.0.9f-orange.svg)  
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
 
 ## PROLOGUE MILESTONE 
@@ -34,12 +34,13 @@
 - [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
+- [ ] **cumulative history, instead of x lines, (x) action**  
 
 **CLIENT ANIMATIONS**  
 - [ ] **Movement**  
 - [ ] **Melee**  
 - [ ] **Ranged**  
-- [ ] **array with npcs movements/actions for slow turn animation**  
+- [X] **array and component with npcs actions animations**  
 
 **CLIENT MOUSE**  
 - [ ] **move support**  

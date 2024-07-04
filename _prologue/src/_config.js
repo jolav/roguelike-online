@@ -5,11 +5,13 @@ console.log('Loading..... config.js');
 const c = {
   NICK: undefined,
   LAG: undefined,
+  LAG_2: undefined,
   TPT: undefined, // turn processing time
   VERSION: undefined,
   SURNAME_TXT: "./assets/surname.txt",
   // Render
   RENDER_TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
+  ANIMATIONS: false, // false - true
   // canvas
   CANVAS_NAME: "canvas",
   FONTS: ["sans-serif", "arial", "IBM"],

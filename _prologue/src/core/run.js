@@ -19,7 +19,7 @@ const r = {
   cam: point.new(0, 0),
   map: [],
   entities: [],
-  actions: [],
+  animations: [],
   history: history.create(),
   start: async function () {
     r.map = map.generate();
@@ -30,34 +30,57 @@ const r = {
     fov.get(r.entities[r.pID], r.map);
   },
   turnLoop: function (params) {
-    r.actions = [];
+    r.animations = [];
     r.history = [];
-    //console.log(params.action);
+    const pj = r.entities[r.pID];
     // player action
-    const done = actions[actions.getType(params.action)](
-      r.entities[r.pID],
-      r.entities,
-      r.map,
-      params.action
-    );
-    if (!done) {
-      const pos = r.entities[r.pID].components.position;
-      const target = aux.getTargetMove(params.action, pos);
-      const es = point.getEntities(target, r.entities);
-      if (es.length > 0) {
-        for (let e of es) {
-          if (e.components.queueable) {
-            actions.melee(r.entities[r.pID], e);
-            break;
+    const actionType = actions.getType(params.action);
+    const pos = pj.components.position;
+    const view = pj.components.view;
+    const target = aux.getTargetMove(params.action, pos);
+    switch (actionType) {
+      case "skip": {
+        actions[actionType](pj, params.action);
+        view.update(pos.current, 0, 0, "skip");
+        r.animations.push(r.pID);
+        history.history.skip();
+        break;
+      }
+      case "movement": {
+        if (!r.map[target.x][target.y].walkable) {
+          //console.log('CANT PASS');
+          view.update(pos.current, 0, 0, "illegal move");
+          r.animations.push(r.pID);
+          history.history.cantMove();
+          return;
+        }
+        if (point.canEnter(target, r.entities)) {
+          //console.log('MOVING');
+          actions[actionType](pj, params.action);
+          const dx = target.x - pos.current.x;
+          const dy = target.y - pos.current.y;
+          view.update(pos.current, dx, dy, "movement");
+          r.animations.push(r.pID);
+        } else {
+          //console.log('MELEE');
+          const es = point.getEntities(target, r.entities);
+          if (es.length > 0) {
+            for (let e of es) {
+              if (e.components.queueable) {
+                actions.melee(pj, e);
+                const dx = target.x - pos.current.x;
+                const dy = target.y - pos.current.y;
+                //console.log('MELEE', dx, dy, pos.current);
+                view.update(pos.current, dx, dy, "melee");
+                r.animations.push(r.pID);
+                break;
+              }
+            }
           }
         }
-      } else {
-        history.history.cantMove();
-        return;
       }
     }
-
-    const cost = actions.cost(params.action);
+    const cost = actions.cost(actionType.toUpperCase());
     queue.update(cost, r.pID); // change this 0 for entityPlayer.id
 
     // computer turn
@@ -66,7 +89,9 @@ const r = {
       const active = queue.list[0];
       if (active.id >= 0) {
         const e = r.entities[active.id];
-        if (e.components.player) {
+        const view = e.components.view;
+        const pos = e.components.position;
+        if (e.components.player) { // player turn
           r.cam = updateCam(e.components.position.current);
           fov.get(e, r.map);
           return;
@@ -74,7 +99,16 @@ const r = {
         // active entities turn
         const action = actions.ai(e, r.entities, r.map, r.pID);
         const cost = actions.cost(action);
-        //console.log(e.id, action, " = ", cost);
+        let p = pos.current;
+        let dx = 0;
+        let dy = 0;
+        if (action === "MELEE") {
+          const target = aux.getTargetMove(action, pos);
+          dx = target.x - pos.current.x;
+          dy = target.y - pos.current.y;
+        }
+        view.update(p, dx, dy, actions.getType(action));
+        r.animations.push(active.id);
         queue.update(cost, active.id);
       }
       if (active.id === -1) { // new turn

@@ -15,16 +15,42 @@ ctx.textBaseline = "middle"; //"top";
 ctx.textAlign = "center";
 
 function ascii() {
+  const start = Date.now();
   const oX = Math.floor((c.VIEW_COLS - t.view.length) / 2);
   const oY = Math.floor((c.VIEW_ROWS - t.view[0].length) / 2);
-  draw.clearAll();
-  draw.map(oX, oY);
-  //draw.grid();
-  //draw.info();
-  draw.entities(oX, oY, t.entities, "renderable"); // draw all
-  draw.entities(oX, oY, t.entities, "health"); // redraw live to appear above
+  if (c.ANIMATIONS) {
+    animations.on(oX, oY);
+  } else {
+    animations.off(oX, oY);
+  }
+  c.LAG_2 = Date.now() - start;
   panel.update();
 }
+
+const animations = {
+  on: function () {
+    // not yet
+  },
+  off: function (oX, oY) {
+    this.doActions(oX, oY);
+    draw.clearAll();
+    draw.map(oX, oY);
+    //draw.grid();
+    //draw.info();
+    draw.deadEntities(oX, oY, t.entities);
+    draw.liveEntities(oX, oY, t.entities);
+    //draw.entitiesMinusOne(oX, oY, t.entities, -1);
+  },
+  doActions: function () {
+    for (let a of t.animations) {
+      const view = t.entities[a].components.view;
+      if (view.action === "movement") {
+        view.pos.x += view.dx;
+        view.pos.y += view.dy;
+      }
+    }
+  },
+};
 
 const draw = {
   clearAll: function () {
@@ -94,8 +120,9 @@ const draw = {
     ctx.beginPath();
   },
   player: function (oX, oY, e) {
-    const x = e.view.x + oX;
-    const y = e.view.y + oY;
+    //console.log("player");
+    const x = e.components.view.pos.x + oX;
+    const y = e.components.view.pos.y + oY;
     this.clearTile(x, y);
     ctx.font = c.PPP_X + "px " + c.FONTS[c.FONT_SELECTED];
     ctx.fillStyle = "darkorange";
@@ -105,24 +132,57 @@ const draw = {
       //c.PPP_X); // Fourth Argument max width to render the string.
     );
   },
-  entities: function (oX, oY, es, component) {
-    let playerEntity = undefined;
+  deadEntities: function (oX, oY, es) {
     for (let e of es) {
-      if (!e.components[component]) {
+      if (e.components["health"]) {
         continue;
       }
-      if (e.components.player) {
-        playerEntity = e;
-      }
       //console.log(JSON.stringify(e, null, " "));
-      const x = e.view.x + oX;
-      const y = e.view.y + oY;
+      //console.log(e.id, e.components.tags.type);
+      const x = e.components.view.pos.x + oX;
+      const y = e.components.view.pos.y + oY;
       const char = aux.mapSymbol(e.components.tags.type);
       const color = aux.colorOfEntity(e.components.tags.type);
       this.clearTile(x, y);
       this.tile(x, y, char, color);
     }
-    this.player(oX, oY, playerEntity);
+  },
+  liveEntities: function (oX, oY, es) {
+    let playerEntity = undefined;
+    for (let e of es) {
+      if (!e.components["health"]) {
+        continue;
+      }
+      if (e.components.player) {
+        playerEntity = e;
+        continue;
+      }
+      //console.log(JSON.stringify(e, null, " "));
+      //console.log(e.id, e.components.tags.type);
+      const x = e.components.view.pos.x + oX;
+      const y = e.components.view.pos.y + oY;
+      const char = aux.mapSymbol(e.components.tags.type);
+      const color = aux.colorOfEntity(e.components.tags.type);
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
+    if (playerEntity) this.player(oX, oY, playerEntity);
+  },
+  entitiesMinusOne: function (oX, oY, es, id) {
+    for (let e of es) {
+      if (e.id === id) {
+        //console.log('Ignorring===', e);
+        continue;
+      }
+      if (e.id === 0) console.log('TROLEADA');
+      //console.log(JSON.stringify(e, null, " "));
+      const x = e.components.view.pos.x + oX;
+      const y = e.components.view.pos.y + oY;
+      const char = aux.mapSymbol(e.components.tags.type);
+      const color = aux.colorOfEntity(e.components.tags.type);
+      this.clearTile(x, y);
+      this.tile(x, y, char, color);
+    }
   }
 };
 

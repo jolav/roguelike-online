@@ -46,9 +46,9 @@ const clientData = {
     const cd = {
       turn: r.turn,
       pID: r.pID,
-      entities: this.updateEntities(r.entities, r.map, r.cam),
+      animations: r.animations,
+      entities: this.updateEntities(r.entities, r.map, r.cam, r.actions),
       view: this.updateView(r.map, r.cam),
-      actions: r.actions,
       history: r.history,
     };
     return cd;
@@ -56,13 +56,15 @@ const clientData = {
   updateEntities: function (es, map, cam) {
     const result = [];
     for (let e of es) {
-      if (!e.components.renderable) {
+      if (!e.components.view) {
         continue;
       }
-      const pos = e.components.position.current;
-      if (map[pos.x][pos.y].visible) {
-        e.view = point.new(pos.x - cam.x, pos.y - cam.y);
+      const view = e.components.view;
+      const pos = e.components.position;
+      if (map[view.pos.x][view.pos.y].visible) {
+        view.pos = point.new(pos.current.x - cam.x, pos.current.y - cam.y);
         result.push(e);
+        //console.log(e);
       }
     }
     return result;

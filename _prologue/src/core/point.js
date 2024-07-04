@@ -33,6 +33,17 @@ const point = {
     }
     return true;
   },
+  canMove: function (e, es, map, action) {
+    const pos = e.components.position;
+    const target = aux.getTargetMove(action, pos);
+    if (map[target.x][target.y].walkable) {
+      const p = point.new(target.x, target.y);
+      if (point.canEnter(p, es)) {
+        return true;
+      }
+    }
+    return false;
+  },
   getEntities: function (p, es) {
     let resp = [];
     for (let e of es) {

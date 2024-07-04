@@ -18,7 +18,7 @@ const panel = {
     document.getElementById("versionPanel").innerHTML = c.VERSION;
     document.getElementById("versionPanel").style.color = col.get("Tahiti Gold");
 
-    document.getElementById("ping").innerHTML = c.LAG + "_" + c.TPT;
+    document.getElementById("ping").innerHTML = c.LAG + "_" + c.TPT + " Render: " + c.LAG_2;
   },
   currentTime: function () {
     let aa = aux.currentDate(t.turn).toDateString().slice(4);
@@ -106,9 +106,9 @@ function lifeBar(life, maxlife) {
   let bar = "";
   for (let i = 0; i < maxSpaces; i++) {
     if (i < chars) {
-      bar += "\u00bb"; //"\u2592";
+      bar += `<span>${"\u00bb"}</span>`;
     } else {
-      bar += " ";
+      bar += `<span style="color: red;">${"\u00bb"}</span>`; // "\u2592"
     }
   }
   return bar;
