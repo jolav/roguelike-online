@@ -2,6 +2,7 @@
 _aux/
 _data/
 tmp/
+node_modules
 
 #Ignore these files
 .env
