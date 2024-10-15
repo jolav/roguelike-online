@@ -8,7 +8,7 @@
 ## MILESTONE 
 - [X] **Start**  
 - [X] **Prologue.0.0.1 Setting Up Server**  
-- [ ] **Prologue Setting Up Client**  
+- [X] **Prologue Setting Up Client**  
 - [ ] **Prologue Setting Up Client-Server**  
 - [ ] **Prologue Drawing @**  
 - [ ] **Prologue Moving around @**  
