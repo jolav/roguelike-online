@@ -1,15 +1,15 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.0.1-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.2-orange.svg)  
 
 ## PROLOGUE
 
 ## MILESTONE 
 - [X] **Start**  
-- [X] **Prologue.0.0.1 Setting Up Server**  
-- [X] **Prologue Setting Up Client**  
-- [ ] **Prologue Setting Up Client-Server**  
+- [X] **Prologue.0.1 Setting Up Server**  
+- [X] **Prologue.0.1 Setting Up Client**  
+- [X] **Prologue.0.2 Setting Up Client-Server Comm**  
 - [ ] **Prologue Drawing @**  
 - [ ] **Prologue Moving around @**  
 - [ ] **Prologue Basic Map**  
@@ -27,7 +27,7 @@
 - [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Ilumination**  
 - [ ] **Prologue Multiple Shelter Levels**  
-- [ ] **Prologue.1.0.0 Leaving the Shelter. Minimal Full Playable version**  
+- [ ] **Prologue.1.0 Leaving the Shelter. Minimal Full Playable version**  
 
 **CLIENT**  
 - [ ] **choose a colors palette**  

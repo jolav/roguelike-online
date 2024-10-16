@@ -9,7 +9,8 @@ const mw = {
       host: network.Host(req),
       resource: req.url,
     };
-    console.log(info);
+    //console.log(info);
+    console.log(info.ip, info.host, info.resource);
     next();
   },
 

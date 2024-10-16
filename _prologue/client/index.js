@@ -10,7 +10,9 @@ const index = {
     const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
-      c.mode = "dev";
+      c.MODE = "dev";
+    } else {
+      c.API.used = 0;
     }
     this.landingPage();
   },
@@ -18,12 +20,12 @@ const index = {
     console.log('##### INIT #####');
     this.showSection("landingPage");
     c.NICK = await ask.nick();
-    c.VERSION = await ask.version();
-    c.LAG = await ask.ping();
+    pinger.init();
+    [c.VERSION, c.LAG] = await ask.version();
     document.getElementById("nick").value = c.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
-    if (c.mode === "dev") {
+    if (c.MODE === "dev") {
       //this.play();
       //return;
     }
@@ -61,3 +63,23 @@ const index = {
 };
 
 window.addEventListener("load", index.init.bind(index));
+
+const pinger = {
+  init: async function () {
+    try {
+      let b = "";
+      [, b] = await ask.version();
+      document.getElementById("lag").innerHTML = b;
+      await this.sleep(c.PINGER_DELAY);
+    } catch (error) {
+      return;
+    } finally {
+      this.init();
+    }
+  },
+  sleep: function (sleepTime) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, sleepTime);
+    });
+  }
+};

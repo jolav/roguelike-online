@@ -5,22 +5,17 @@ console.log('Loading..... http.js');
 import { config as c } from "./_config.js";
 
 const ask = {
-  version: async function () {
-    const path = c.API.url + c.API.version;
-    const data = await fetchData(path, {});
-    return data.version;
-  },
   nick: async function () {
     const path = c.NICK_API;
     const data = await fetchData(path, {});
     return data.name;
   },
-  ping: async function () {
+  version: async function () {
     const start = performance.now();
-    const path = c.API.url + c.API.ping;
-    await fetchData(path, {});
+    const path = c.API.url[c.API.used] + c.API.version;
+    const data = await fetchData(path, {});
     const lag = (performance.now() - start);
-    return lag;
+    return [data.version, lag];
   },
 };
 
