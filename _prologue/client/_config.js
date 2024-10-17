@@ -1,8 +1,9 @@
 /* */
 
+console.log('Loading..... config.js');
+
 const config = {
   MODE: "production",
-  NICK: "n",
   VERSION: "x",
   LAG: 0,
   API: {
@@ -12,7 +13,9 @@ const config = {
       "http://localhost:3000"
     ],
     version: "/version/v1",
-    ping: "/ping"
+    ping: "/ping",
+    run: "/run",
+    turn: "/turn",
   },
   NICK_API: "https://m.d100.top/a/random/name",
   PINGER_DELAY: 500,

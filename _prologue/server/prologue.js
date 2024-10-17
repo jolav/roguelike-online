@@ -6,8 +6,11 @@ import bodyParser from "body-parser";
 
 import { config } from "./_config.js";
 import { AppError } from "./a_lib/system.js";
-import { send } from "./a_lib/network.js";
+import { send, network } from "./a_lib/network.js";
 import { mw } from "./middlewares.js";
+import { aux } from "./a_lib/aux.js";
+import { Run } from "./run.js";
+import { Runs } from "./runs.js";
 
 const app = express();
 app.use(helmet());
@@ -23,6 +26,35 @@ app.get("/version/v1", function (req, res) {
 });
 
 app.use(mw.logger.bind(mw)); // avoid this undefined inside mw
+
+app.get("/run", function (req, res) {
+  const info = {
+    nick: req.query.nick,
+    id: aux.generateUUID(),
+    created: Date.now(),
+    ip: network.IP(req),
+    turn: 0,
+    lastTurn: Date.now()
+  };
+  const r = new Run(info);
+  send.JSONResult(res, 200, r.prepareDataNew(), false);
+});
+
+app.get("/turn", async function (req, res) {
+  const r = Runs.get(req.headers.authorization);
+  if (r === undefined) {
+    send.JSONResult(res, 400, {}, false);
+    return;
+  }
+  const now = Date.now();
+  if (now - r.info.lastTurn < config.tick) {
+    send.JSONResult(res, 425, {}, false);
+    return;
+  }
+  r.info.lastTurn = now;
+  r.info.turn++;
+  send.JSONResult(res, 200, r.prepareDataTurn(), false);
+});
 
 app.use(function notFound(req, res, next) {
   next(new AppError(404, "Route Not Found"));

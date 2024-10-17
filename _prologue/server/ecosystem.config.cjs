@@ -6,7 +6,7 @@
 module.exports = {
   apps: [{
     name: "prologue",
-    script: 'a_prologue.js',
+    script: 'prologue.js',
     env: {
       NODE_ENV: "production",
     },

@@ -3,7 +3,7 @@
 console.log('Loading..... controls.js');
 
 import { ask } from "./http.js";
-import { config as c } from "./_config.js";
+import { g } from "./game.js";
 
 function listenKeyboard() {
   window.addEventListener('keydown', function (e) {
@@ -14,7 +14,7 @@ function listenKeyboard() {
     /*if (e.repeat) {
       return;
     }*/
-    if (!c.IS_SERVER_TURN) {
+    if (!g.IS_SERVER_TURN) {
       //console.log(action);
       ask.turn(action);
     }
@@ -24,7 +24,7 @@ function listenKeyboard() {
 const controls = {
   actionKey: function (e) {
     let action = undefined;
-    console.log(e.key, e.code, e.location, e.metaKey);
+    //console.log(e.key, e.code, e.location, e.metaKey);
     if (e.location === 3) { // numpad
       action = numPad.get(e.key);
     }
@@ -37,7 +37,7 @@ const controls = {
       }
     }
     if (action === "") action = undefined;
-    console.log('ACTION = ', action);
+    //console.log('ACTION = ', action);
     return action;
   },
 };

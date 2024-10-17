@@ -3,6 +3,7 @@
 console.log('Loading..... http.js');
 
 import { config as c } from "./_config.js";
+import { g } from "./game.js";
 
 const ask = {
   nick: async function () {
@@ -17,6 +18,33 @@ const ask = {
     const lag = (performance.now() - start);
     return [data.version, lag];
   },
+  run: async function () {
+    const path = c.API.url[c.API.used] + c.API.run + "?nick=" + g.NICK;
+    const run = await fetchData(path, {});
+    if (run === undefined) {
+      return;
+    }
+    g.ID = run.id;
+    g.turn = 0;
+    document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
+  },
+  turn: async function (action) {
+    const path = c.API.url[c.API.used] + c.API.turn + "?action=" + action;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: g.ID,
+      }
+    };
+    g.IS_SERVER_TURN = true;
+    const turn = await fetchData(path, options);
+    g.IS_SERVER_TURN = false;
+    if (turn === undefined) {
+      return;
+    }
+    g.turn = turn.turn;
+    document.getElementById("action").innerHTML = g.turn + " " + action;
+  }
 };
 
 export {

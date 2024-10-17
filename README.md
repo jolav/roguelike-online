@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.2-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.2a-orange.svg)  
 
 ## PROLOGUE
 

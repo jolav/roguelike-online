@@ -12,6 +12,7 @@ const config = {
   "name": packageJSON.name,
   "mode": "dev",
   "port": 3000,
+  "tick": 600,
 };
 
 function checkMode() {
@@ -21,6 +22,7 @@ function checkMode() {
     config.mode = _config.mode;
     config.port = _config.port;
   }
+  config.tick = _config.tick;
 }
 
 checkMode();
