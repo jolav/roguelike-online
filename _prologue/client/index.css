@@ -1,5 +1,19 @@
 /* */
 
+/*
+https://stackoverflow.com/questions/44645465/when-using-height-100vh-for-the-container-vertical-scrollbar-appears
+*/
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* */
+
 body {
   font-family: 'IBM', arial, sans-serif;
   background-color: #293133;
@@ -13,6 +27,7 @@ body {
   font-family: 'IBM';
   src: url(./assets/IBMPlexSans.ttf);
 }
+
 
 /* VISIBLE */
 
@@ -90,4 +105,35 @@ section#landingPage .pressKey {
   border-radius: 10px;
   color: #ffffff;
   padding: 5px 20px;
+}
+
+/* PLAY ZONE */
+
+section#playZone {}
+
+section#playZone .container {
+  font-family: 'IBM', arial, sans-serif;
+  background-color: #293133;
+  color: #ffffff;
+  font-size: 0.9em;
+  display: flex;
+}
+
+section#playZone .container .map {
+  flex: 1;
+  /*border: 1px solid greenyellow;*/
+  /*margin: auto;*/
+}
+
+section#playZone .container .map canvas#myCanvas {
+  display: block;
+  background-color: lightgreen;
+  /*border: 1px solid darkolivegreen;*/
+}
+
+section#playZone .container .panel {
+  margin: 5px;
+  border: 2px solid greenyellow;
+  width: 300px;
+  padding: 5px;
 }

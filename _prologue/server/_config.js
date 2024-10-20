@@ -7,29 +7,30 @@ import os from "os";
 import { readFileSync } from "fs";
 const packageJSON = JSON.parse(readFileSync("./package.json"));
 
-const config = {
+const K = {
   "version": packageJSON.version,
   "name": packageJSON.name,
   "mode": "dev",
   "port": 3000,
   "tick": 600,
+  "tries": 1000,
 };
 
 function checkMode() {
   const serverName = os.hostname().toLowerCase();
 
   if (!_config.devHosts.includes(serverName)) {
-    config.mode = _config.mode;
-    config.port = _config.port;
+    K.mode = _config.mode;
+    K.port = _config.port;
   }
-  config.tick = _config.tick;
+  K.tick = _config.tick;
 }
 
 checkMode();
-if (config.mode === "dev") {
-  console.log(config);
+if (K.mode === "dev") {
+  console.log(K);
 }
 
 export {
-  config
+  K
 };

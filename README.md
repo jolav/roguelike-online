@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.2a-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.3-orange.svg)  
 
 ## PROLOGUE
 
@@ -10,9 +10,8 @@
 - [X] **Prologue.0.1 Setting Up Server**  
 - [X] **Prologue.0.1 Setting Up Client**  
 - [X] **Prologue.0.2 Setting Up Client-Server Comm**  
-- [ ] **Prologue Drawing @**  
-- [ ] **Prologue Moving around @**  
-- [ ] **Prologue Basic Map**  
+- [X] **Prologue 0.3 Generate and Draw Basic Map**  
+- [ ] **Prologue Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
@@ -40,11 +39,11 @@
 - [ ] **render order, tiles-corpses-items-foes-player**  
 - [ ] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
-- [ ] **on key pressed down ,movement at constant speed**  
+- [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
 - [ ] **cumulative history, instead of x lines, (x) action**  
-- [ ] **fetch version from server**  
+- [X] **fetch version from server**  
 - [ ] **client version**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
@@ -81,7 +80,7 @@
 
 **SERVER**  
 - [ ] **multiple games management**  
-- [ ] **Check client is not flooding server with commands.min each 400ms?**  
+- [X] **Check client is not flooding server with commands.min each Xms?**  
 - [ ] **seeds for reproducible runs**  
 - [ ] **Server Side Events for non players watching runs**  
 - [ ] **API vs SSE vs websockets for players**  

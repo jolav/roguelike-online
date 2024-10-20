@@ -27,8 +27,8 @@ const index = {
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
     if (c.MODE === "dev") {
-      //this.play();
-      //return;
+      this.play();
+      return;
     } else {
       pinger.init();
     }
@@ -62,10 +62,11 @@ const index = {
   },
   play: async function () {
     console.log('PLAY');
-    await ask.run();
-    console.log(g);
+    //console.log(g);
     listenKeyboard();
     this.showSection("playZone");
+    await ask.run();
+
   },
 };
 

@@ -7,6 +7,7 @@ const g = {
   ID: "",
   turn: 0,
   IS_SERVER_TURN: false,
+  map: []
 };
 
 export {

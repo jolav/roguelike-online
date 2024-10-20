@@ -4,9 +4,9 @@ import express from "express";
 import helmet from 'helmet';
 import bodyParser from "body-parser";
 
-import { config } from "./_config.js";
+import { K } from "./_config.js";
 import { AppError } from "./a_lib/system.js";
-import { send, network } from "./a_lib/network.js";
+import { send } from "./a_lib/network.js";
 import { mw } from "./middlewares.js";
 import { aux } from "./a_lib/aux.js";
 import { Run } from "./run.js";
@@ -22,21 +22,13 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 
 // routes
 app.get("/version/v1", function (req, res) {
-  res.status(200).json({ version: config.version });
+  res.status(200).json({ version: K.version });
 });
 
 app.use(mw.logger.bind(mw)); // avoid this undefined inside mw
 
 app.get("/run", function (req, res) {
-  const info = {
-    nick: req.query.nick,
-    id: aux.generateUUID(),
-    created: Date.now(),
-    ip: network.IP(req),
-    turn: 0,
-    lastTurn: Date.now()
-  };
-  const r = new Run(info);
+  const r = new Run(req);
   send.JSONResult(res, 200, r.prepareDataNew(), false);
 });
 
@@ -47,10 +39,11 @@ app.get("/turn", async function (req, res) {
     return;
   }
   const now = Date.now();
-  if (now - r.info.lastTurn < config.tick) {
+  if (now - r.info.lastTurn < K.tick) {
     send.JSONResult(res, 425, {}, false);
     return;
   }
+  // do action
   r.info.lastTurn = now;
   r.info.turn++;
   send.JSONResult(res, 200, r.prepareDataTurn(), false);
@@ -72,14 +65,14 @@ app.use(function errorHandler(err, req, res, next) {
   send.JSONResult(res, status, { "Error": message }, false);
 });
 
-app.listen(config.port, function () {
+app.listen(K.port, function () {
   console.log(
     '\n*****************************************************\n',
     'process.env.pm.id => ', process.env.pm_id + "\n",
     'process.pid => ', process.pid + "\n",
-    'Server', config.name.toUpperCase(),
-    "version", config.version,
-    "running on port", config.port, "\n" +
+    'Server', K.name.toUpperCase(),
+    "version", K.version,
+    "running on port", K.port, "\n" +
   '*****************************************************'
   );
 });
