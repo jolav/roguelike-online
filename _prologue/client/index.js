@@ -21,9 +21,9 @@ const index = {
   landingPage: async function () {
     console.log('##### INIT #####');
     this.showSection("landingPage");
-    g.NICK = await ask.nick();
+    g.info.NICK = await ask.nick();
     [c.VERSION, c.LAG] = await ask.version();
-    document.getElementById("nick").value = g.NICK;
+    document.getElementById("nick").value = g.info.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
     if (c.MODE === "dev") {

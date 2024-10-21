@@ -21,15 +21,22 @@ const ask = {
   },
   run: async function () {
     let path = c.API.url[c.API.used] + c.API.run;
-    path += "?nick=" + g.NICK + "&cols=" + c.VIEW.COLS + "&rows=" + c.VIEW.ROWS;
+    path = path
+      + "?nick=" + g.info.NICK
+      + "&cols=" + c.VIEW.COLS
+      + "&rows=" + c.VIEW.ROWS;
+    g.is_server_turn = true;
     const run = await fetchData(path, {});
+    g.is_server_turn = false;
     if (run === undefined) {
       return;
     }
-    g.ID = run.id;
+    g.info.ID = run.id;
+    g.info.SEED = run.seed;
     g.map = run.map;
     g.turn = 0;
-    console.log(g);
+    //console.log('##### NEW GAME #####');
+    //console.log(g, run);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
@@ -38,12 +45,12 @@ const ask = {
     const options = {
       method: "GET",
       headers: {
-        Authorization: g.ID,
+        Authorization: g.info.ID,
       }
     };
-    g.IS_SERVER_TURN = true;
+    g.is_server_turn = true;
     const turn = await fetchData(path, options);
-    g.IS_SERVER_TURN = false;
+    g.is_server_turn = false;
     if (turn === undefined) {
       return;
     }

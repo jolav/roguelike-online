@@ -14,7 +14,7 @@ function listenKeyboard() {
     /*if (e.repeat) {
       return;
     }*/
-    if (!g.IS_SERVER_TURN) {
+    if (!g.is_server_turn) {
       //console.log(action);
       ask.turn(action);
     }

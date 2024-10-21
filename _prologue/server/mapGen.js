@@ -3,10 +3,10 @@
 import { aux } from "./a_lib/aux.js";
 import { K } from "./_config.js";
 
-function generate(typeOfMap, cols, rows) {
+function generate(typeOfMap, cols, rows, rnd) {
   switch (typeOfMap) { // outdoors,indoors
     case "basicRoom":
-      return basicRoom.create(cols, rows);
+      return basicRoom.create(cols, rows, rnd);
     case "shelter":
       return shelter.create();
   }
@@ -61,11 +61,11 @@ const shelter = {
 
 const basicRoom = {
   map: [],
-  create: function name(cols, rows) {
+  create: function name(cols, rows, rnd) {
     const columns = Math.floor((cols * rows) / 30);
     this.map = aux.InitializeMultiArray(cols, rows, {});
     this.clean(cols, rows);
-    this.putColumns(cols, rows, columns);
+    this.putColumns(cols, rows, columns, rnd);
     return this.map;
   },
   clean: function (cols, rows) {
@@ -79,11 +79,11 @@ const basicRoom = {
       }
     }
   },
-  putColumns: function (cols, rows, columns) {
+  putColumns: function (cols, rows, columns, rnd) {
     let tries = 0;
     while (columns > 0 && tries < K.tries) {
-      const x = aux.RandomInt(1, cols - 2);
-      const y = aux.RandomInt(1, rows - 2);
+      const x = rnd.int(1, cols - 2);
+      const y = rnd.int(1, rows - 2);
       if (this.map[x][y].terrain === "floor") {
         this.map[x][y] = new Tile("wall");
         columns--;

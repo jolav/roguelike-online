@@ -3,10 +3,13 @@
 console.log('Loading..... game.js');
 
 const g = {
-  NICK: "",
-  ID: "",
+  info: {
+    NICK: "",
+    ID: "",
+    SEED: 0,
+  },
   turn: 0,
-  IS_SERVER_TURN: false,
+  is_server_turn: false,
   map: []
 };
 

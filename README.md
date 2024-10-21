@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.3-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.3a-orange.svg)  
 
 ## PROLOGUE
 
@@ -81,10 +81,11 @@
 **SERVER**  
 - [ ] **multiple games management**  
 - [X] **Check client is not flooding server with commands.min each Xms?**  
-- [ ] **seeds for reproducible runs**  
+- [X] **seeds for reproducible runs**  
 - [ ] **Server Side Events for non players watching runs**  
 - [ ] **API vs SSE vs websockets for players**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
+- [ ] **Validate all client data, nick, views, actions...**  
 
 **OPTIONALS**   
 - [ ] **bypassing columns increase movement cost**  

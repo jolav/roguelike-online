@@ -117,6 +117,7 @@ section#playZone .container {
   color: #ffffff;
   font-size: 0.9em;
   display: flex;
+  height: 100vh;
 }
 
 section#playZone .container .map {
@@ -126,9 +127,7 @@ section#playZone .container .map {
 }
 
 section#playZone .container .map canvas#myCanvas {
-  display: block;
   background-color: lightgreen;
-  /*border: 1px solid darkolivegreen;*/
 }
 
 section#playZone .container .panel {
@@ -136,4 +135,5 @@ section#playZone .container .panel {
   border: 2px solid greenyellow;
   width: 300px;
   padding: 5px;
+
 }

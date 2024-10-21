@@ -4,14 +4,18 @@ import { config as c } from "./_config.js";
 import { g } from "./game.js";
 
 const canvas = document.getElementById(c.CANVAS.NAME);
-canvas.width = window.innerWidth - c.VIEW.PANEL_WIDTH;
-canvas.height = window.innerHeight;
+canvas.width = c.VIEW.COLS * c.VIEW.PPP_X;
+canvas.height = c.VIEW.ROWS * c.VIEW.PPP_Y;
+canvas.style.position = 'absolute';
+canvas.style.left = `${c.VIEW.DELTA_X}px`;
+canvas.style.top = `${c.VIEW.DELTA_Y}px`;
 const ctx = canvas.getContext("2d");
 ctx.font = c.VIEW.PPP_Y + "px " + c.CANVAS.FONTS[c.CANVAS.FONT_SELECTED];
 ctx.textBaseline = "middle";//"middle"; //"top";
 ctx.textAlign = "center";
 
 function ascii() {
+
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   draw.grid();
@@ -25,13 +29,13 @@ const draw = {
     ctx.beginPath();
   },
   grid: function () {
-    for (let x = c.VIEW.DELTA_X; x < canvas.width; x += c.VIEW.PPP_X) {
-      ctx.moveTo(x, c.VIEW.DELTA_Y);
-      ctx.lineTo(x, canvas.height - c.VIEW.DELTA_Y);
+    for (let x = 0; x < canvas.width; x += c.VIEW.PPP_X) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height - 0);
     }
-    for (let y = c.VIEW.DELTA_Y; y < canvas.height; y += c.VIEW.PPP_Y) {
-      ctx.moveTo(c.VIEW.DELTA_X, y);
-      ctx.lineTo(canvas.width - c.VIEW.DELTA_X, y);
+    for (let y = 0; y < canvas.height; y += c.VIEW.PPP_Y) {
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width - 0, y);
     }
     ctx.strokeStyle = "#555555";//"#323535";
     ctx.stroke();
@@ -53,8 +57,8 @@ const draw = {
     ctx.fillStyle = dawnBringer.get(color);
     ctx.fillText(
       char,
-      ((x + 1) * c.VIEW.PPP_X),//+ (c.VIEW.PPP_X / 2),
-      ((y + 1) * c.VIEW.PPP_Y) + (c.VIEW.PPP_Y / 8)//+ (c.VIEW.PPP_Y / 2),
+      (x * c.VIEW.PPP_X) + (c.VIEW.PPP_X / 2),
+      (y * c.VIEW.PPP_Y) + (c.VIEW.PPP_Y / 2),
       //c.VIEW.PPP_X); // Fourth Argument max width to render the string.
     );
   },

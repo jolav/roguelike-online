@@ -35,17 +35,17 @@ app.get("/run", function (req, res) {
 app.get("/turn", async function (req, res) {
   const r = Runs.get(req.headers.authorization);
   if (r === undefined) {
-    send.JSONResult(res, 400, {}, false);
+    send.JSONResult(res, 403, {}, false);
     return;
   }
   const now = Date.now();
-  if (now - r.info.lastTurn < K.tick) {
+  if (now - r.lastTurn < K.tick) {
     send.JSONResult(res, 425, {}, false);
     return;
   }
   // do action
-  r.info.lastTurn = now;
-  r.info.turn++;
+  r.lastTurn = now;
+  r.turn++;
   send.JSONResult(res, 200, r.prepareDataTurn(), false);
 });
 

@@ -39,19 +39,11 @@ const config = {
   const c = config.VIEW;
   const w = window.innerWidth - c.PANEL_WIDTH;
   const h = window.innerHeight;
-  c.COLS = Math.floor(w / c.PPP_X);
-  c.ROWS = Math.floor(h / c.PPP_Y);
-  c.DELTA_X = Math.ceil((w % c.PPP_X) / 2);
-  if (c.DELTA_X < c.PPP_X / 2) {
-    c.COLS--;
-    c.DELTA_X += c.PPP_X / 2;
-  }
-  c.DELTA_Y = Math.ceil((h % c.PPP_Y) / 2);
-  if (c.DELTA_Y < c.PPP_Y / 2) {
-    c.ROWS--;
-    c.DELTA_Y += c.PPP_Y / 2;
-  }
-  console.log(w, h, c.COLS, c.ROWS, c.DELTA_X, c.DELTA_Y);
+  c.COLS = Math.floor(w / c.PPP_X) - 1;
+  c.ROWS = Math.floor(h / c.PPP_Y) - 1;
+  c.DELTA_X = Math.floor((w - (c.COLS * c.PPP_X)) / 2);
+  c.DELTA_Y = Math.floor((h - (c.ROWS * c.PPP_Y)) / 2);
+  console.log(c.COLS, c.ROWS, c.DELTA_X, c.DELTA_Y);
 }());
 
 export {
