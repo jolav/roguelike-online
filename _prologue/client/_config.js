@@ -7,17 +7,10 @@ const config = {
   VERSION: "x",
   LAG: 0,
   API: {
-    used: 1,// 0 real API, 1 local dev API
-    url: [
-      "https://m.d100.top/p",
-      "http://localhost:3000"
-    ],
-    version: "/version/v1",
-    ping: "/ping",
-    run: "/run",
-    turn: "/turn",
+    NICK: "https://m.d100.top/a/random/name",
+    PING: "https://m.d100.top/a/ping?min=0&max=1",
+    TIMEOUT: 250,
   },
-  NICK_API: "https://m.d100.top/a/random/name",
   PINGER_DELAY: 500,
   CANVAS: {
     NAME: "myCanvas",
@@ -43,7 +36,7 @@ const config = {
   c.ROWS = Math.floor(h / c.PPP_Y) - 1;
   c.DELTA_X = Math.floor((w - (c.COLS * c.PPP_X)) / 2);
   c.DELTA_Y = Math.floor((h - (c.ROWS * c.PPP_Y)) / 2);
-  console.log(c.COLS, c.ROWS, c.DELTA_X, c.DELTA_Y);
+  //console.log(c.COLS, c.ROWS, c.DELTA_X, c.DELTA_Y);
 }());
 
 export {

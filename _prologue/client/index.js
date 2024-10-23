@@ -13,8 +13,6 @@ const index = {
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
       c.MODE = "dev";
-    } else {
-      c.API.used = 0;
     }
     this.landingPage();
   },
@@ -29,8 +27,6 @@ const index = {
     if (c.MODE === "dev") {
       this.play();
       return;
-    } else {
-      pinger.init();
     }
     window.addEventListener('keydown', function pressAnyKey(ev) {
       if (ev.key === "Escape" || ev.key === "Enter") {
@@ -39,6 +35,8 @@ const index = {
         index.play();
       }
     });
+    pinger.init();
+
   },
   showSection: function (section) {
     const section1 = document.getElementById("landingPage");

@@ -1,3 +1,5 @@
+/* */
+
 console.log('Loading..... render_ascii.js');
 
 import { config as c } from "./_config.js";
@@ -7,15 +9,14 @@ const canvas = document.getElementById(c.CANVAS.NAME);
 canvas.width = c.VIEW.COLS * c.VIEW.PPP_X;
 canvas.height = c.VIEW.ROWS * c.VIEW.PPP_Y;
 canvas.style.position = 'absolute';
-canvas.style.left = `${c.VIEW.DELTA_X}px`;
-canvas.style.top = `${c.VIEW.DELTA_Y}px`;
+canvas.style.left = c.VIEW.DELTA_X + "px";
+canvas.style.top = c.VIEW.DELTA_Y + "px";
 const ctx = canvas.getContext("2d");
 ctx.font = c.VIEW.PPP_Y + "px " + c.CANVAS.FONTS[c.CANVAS.FONT_SELECTED];
 ctx.textBaseline = "middle";//"middle"; //"top";
 ctx.textAlign = "center";
 
 function ascii() {
-
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   draw.grid();

@@ -5,28 +5,33 @@ console.log('Loading..... http.js');
 import { config as c } from "./_config.js";
 import { g } from "./game.js";
 import * as render from "./render_ascii.js";
+import { router } from "../core/server.js";
 
 const ask = {
   nick: async function () {
-    const path = c.NICK_API;
+    const path = c.API.NICK;
     const data = await fetchData(path, {});
     return data.name;
   },
   version: async function () {
     const start = performance.now();
-    const path = c.API.url[c.API.used] + c.API.version;
-    const data = await fetchData(path, {});
-    const lag = (performance.now() - start);
+    const signal = AbortSignal.timeout(c.API.TIMEOUT);
+    await fetchData(c.API.PING, { signal });
+    const data = router.version();
+    const lag = Math.trunc(performance.now() - start);
     return [data.version, lag];
   },
   run: async function () {
-    let path = c.API.url[c.API.used] + c.API.run;
-    path = path
-      + "?nick=" + g.info.NICK
-      + "&cols=" + c.VIEW.COLS
-      + "&rows=" + c.VIEW.ROWS;
+    const params = {
+      nick: g.info.NICK,
+      cols: c.VIEW.COLS,
+      rows: c.VIEW.ROWS,
+      mode: c.MODE,
+    };
     g.is_server_turn = true;
-    const run = await fetchData(path, {});
+    const signal = AbortSignal.timeout(c.API.TIMEOUT);
+    await fetchData(c.API.PING, { signal });
+    const run = router.run(params);
     g.is_server_turn = false;
     if (run === undefined) {
       return;
@@ -41,15 +46,13 @@ const ask = {
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {
-    const path = c.API.url[c.API.used] + c.API.turn + "?action=" + action;
-    const options = {
-      method: "GET",
-      headers: {
-        Authorization: g.info.ID,
-      }
+    const params = {
+      action: action
     };
     g.is_server_turn = true;
-    const turn = await fetchData(path, options);
+    const signal = AbortSignal.timeout(c.API.TIMEOUT);
+    await fetchData(c.API.PING, { signal });
+    const turn = router.turn(params);
     g.is_server_turn = false;
     if (turn === undefined) {
       return;
@@ -75,6 +78,10 @@ async function fetchData(path, options) {
       return undefined;
     }
   } catch (err) {
+    const msg = "The operation timed out.";
+    if (err instanceof DOMException && err.message === msg) {
+      return undefined;
+    }
     console.log('ERROR 2 fetchData => ', err);
     return undefined;
   }

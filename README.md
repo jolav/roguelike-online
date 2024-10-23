@@ -1,17 +1,16 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.3a-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.3b-orange.svg)  
 
 ## PROLOGUE
 
 ## MILESTONE 
 - [X] **Start**  
-- [X] **Prologue.0.1 Setting Up Server**  
 - [X] **Prologue.0.1 Setting Up Client**  
-- [X] **Prologue.0.2 Setting Up Client-Server Comm**  
+- [X] **Prologue.0.2 Setting Up Client-Core Comm**  
 - [X] **Prologue 0.3 Generate and Draw Basic Map**  
-- [ ] **Prologue Drawing and Moving around @**  
+- [ ] **Prologue 0.4 Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
@@ -43,8 +42,6 @@
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
 - [ ] **cumulative history, instead of x lines, (x) action**  
-- [X] **fetch version from server**  
-- [ ] **client version**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
 - [ ] **markings on the edge of the map indicating quest directions**  
@@ -63,8 +60,8 @@
 - [ ] **Select tile and foe with mouse**  
 
 **CLIENT SETTINGS**  
-- [ ] **Choose/Random player name at start**  
-- [ ] **Check client is not flooding server with commands.one each 400ms?**  
+- [X] **Choose/Random player name at start**  
+- [X] **Check client is not flooding core with commands.one each 400ms?**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
@@ -78,14 +75,10 @@
 - [ ] **open/close doors**  
 - [ ] **lights, ilumination**  
 
-**SERVER**  
-- [ ] **multiple games management**  
-- [X] **Check client is not flooding server with commands.min each Xms?**  
+**CORE**  
+- [X] **Check client is not flooding core with commands.min each Xms?**  
 - [X] **seeds for reproducible runs**  
-- [ ] **Server Side Events for non players watching runs**  
-- [ ] **API vs SSE vs websockets for players**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
-- [ ] **Validate all client data, nick, views, actions...**  
 
 **OPTIONALS**   
 - [ ] **bypassing columns increase movement cost**  
