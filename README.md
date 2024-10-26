@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.3b-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.4-orange.svg)  
 
 ## PROLOGUE
 
@@ -10,7 +10,7 @@
 - [X] **Prologue.0.1 Setting Up Client**  
 - [X] **Prologue.0.2 Setting Up Client-Core Comm**  
 - [X] **Prologue 0.3 Generate and Draw Basic Map**  
-- [ ] **Prologue 0.4 Drawing and Moving around @**  
+- [X] **Prologue 0.4 Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
@@ -101,5 +101,4 @@
 ## **Acknowledgment**
 
 All the artwork is either public domain or released under a variety of Creative Commons licenses. To determine the copyright status of any of the artwork, consult the [Artwork Copyright File](https://github.com/jolav/roguelike-online/blob/main/artwork.txt)
-
 

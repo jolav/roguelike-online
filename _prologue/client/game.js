@@ -10,7 +10,8 @@ const g = {
   },
   turn: 0,
   is_server_turn: false,
-  map: []
+  map: [],
+  entities: new Map()
 };
 
 export {

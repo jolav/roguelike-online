@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... core/server.js');
+console.log('Loading..... core/router.js');
 
 import { K } from "./_konfig.js";
 import { run } from "./run.js";
@@ -20,9 +20,11 @@ const router = {
     if (now - run.lastTurn < K.TICK) {
       return undefined;
     }
-    // do action req.action
+    const done = run.doTurn(req);
+    if (!done) {
+      return undefined;
+    }
     run.lastTurn = now;
-    run.turn++;
     return run.prepareDataTurn();
   },
 };

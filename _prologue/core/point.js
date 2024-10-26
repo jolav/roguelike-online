@@ -2,7 +2,9 @@
 
 console.log('Loading..... core/point.js');
 
+import { myRandom } from "../aux/random.js";
 import { K } from "./_konfig.js";
+import { components } from "./ecs_components.js";
 
 const point = {
   new: function (x, y) {
@@ -11,39 +13,24 @@ const point = {
       y: y,
     };
   },
-  /*isEmpty: function (p, es) {
-    for (let e of es) {
-      const pos = e.components.position.current;
-      if (pos.x === p.x && pos.y === p.y) {
-        return false;
+  isEmpty: function (p, es) {
+    for (const [_, e] of es) {
+      if (e.hasComponent(components.Position)) {
+        const pos = e.components.Position.current;
+        if (pos.x === p.x && pos.y === p.y) {
+          return false;
+        }
       }
     }
     return true;
   },
-  canEnter: function (p, es) {
-    for (let e of es) {
-      if (!e.components.blocksMov) {
-        continue;
-      }
-      const pos = e.components.position.current;
-      if (pos.x === p.x && pos.y === p.y) {
-        return false;
-      }
-    }
-    return true;
-  },
-  canMove: function (e, es, map, action) {
-    const pos = e.components.position;
-    const target = aux.getTargetMove(action, pos);
-    if (map[target.x][target.y].walkable) {
-      const p = point.new(target.x, target.y);
-      if (point.canEnter(p, es)) {
-        return true;
-      }
+  isWalkable: function (p, map) {
+    if (map[p.x][p.y].walkable) {
+      return true;
     }
     return false;
   },
-  getEntities: function (p, es) {
+  /*getEntities: function (p, es) {
     let resp = [];
     for (let e of es) {
       if (!e.components.position) {
@@ -56,25 +43,22 @@ const point = {
       }
     }
     return resp;
-  },
+  },*/
   randomEmptyWalkable: function (es, map) {
     let p = this.new(0, 0);
     let tries = 0;
     while (tries < K.TRIES) {
-      let x = aux.randomInt(1, map.length - 2);
-      let y = aux.randomInt(1, map[0].length - 2);
-      if (map[x][y].walkable) {
-        if (this.isEmpty({ x, y }, es)) {
-          p = { x, y };
+      p.x = myRandom.int(1, map.length - 2);
+      p.y = myRandom.int(1, map[0].length - 2);
+      if (this.isWalkable(p, map)) {
+        if (this.isEmpty(p, es)) {
           return p;
         }
       }
       tries++;
     }
-
     return undefined;
-
-  },*/
+  },
 };
 
 export {

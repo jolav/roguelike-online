@@ -5,12 +5,17 @@ console.log('Loading..... http.js');
 import { config as c } from "./_config.js";
 import { g } from "./game.js";
 import * as render from "./render_ascii.js";
-import { router } from "../core/server.js";
+import { router } from "../core/router.js";
+import { aux } from "../aux/aux.js";
 
 const ask = {
   nick: async function () {
     const path = c.API.NICK;
-    const data = await fetchData(path, {});
+    const signal = AbortSignal.timeout(c.API.NICK_TIMEOUT);
+    const data = await fetchData(path, { signal });
+    if (data === undefined) {
+      return "guest-" + aux.RandomInt(1, 10000);
+    }
     return data.name;
   },
   version: async function () {
@@ -22,6 +27,7 @@ const ask = {
     return [data.version, lag];
   },
   run: async function () {
+    const start = performance.now();
     const params = {
       nick: g.info.NICK,
       cols: c.VIEW.COLS,
@@ -33,31 +39,36 @@ const ask = {
     await fetchData(c.API.PING, { signal });
     const run = router.run(params);
     g.is_server_turn = false;
-    if (run === undefined) {
-      return;
-    }
-    g.info.ID = run.id;
-    g.info.SEED = run.seed;
+    g.info.ID = run.info.ID;
+    g.info.SEED = run.info.SEED;
     g.map = run.map;
+    g.entities = run.entities;
+    //console.log('Entities =>', g.entities.size);
     g.turn = 0;
     //console.log('##### NEW GAME #####');
     //console.log(g, run);
+    c.LAG = Math.trunc(performance.now() - start);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {
+    const start = performance.now();
     const params = {
       action: action
     };
     g.is_server_turn = true;
     const signal = AbortSignal.timeout(c.API.TIMEOUT);
     await fetchData(c.API.PING, { signal });
-    const turn = router.turn(params);
+    const t = router.turn(params);
     g.is_server_turn = false;
-    if (turn === undefined) {
-      return;
+    if (t === undefined) {
+      return; // too early pressed key or invalid action
     }
-    g.turn = turn.turn;
+    //g.map = t.map;
+    //g.entities = t.entities;
+    g.turn = t.turn;
+    c.LAG = Math.trunc(performance.now() - start);
+    render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + action;
   }
 };

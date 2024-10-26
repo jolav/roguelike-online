@@ -59,8 +59,8 @@ const index = {
     }
   },
   play: async function () {
-    console.log('PLAY');
-    //console.log(g);
+    //console.log('PLAY');
+    pinger.stop();
     listenKeyboard();
     this.showSection("playZone");
     await ask.run();
@@ -71,16 +71,21 @@ const index = {
 window.addEventListener("load", index.init.bind(index));
 
 const pinger = {
+  working: false,
   init: async function () {
+    this.working = true;
     try {
-      const [, b] = await ask.version();
-      document.getElementById("lag").innerHTML = b;
-      await this.sleep(c.PINGER_DELAY);
+      while (this.working) {
+        const [, b] = await ask.version();
+        document.getElementById("lag").innerHTML = b;
+        await this.sleep(c.PINGER_DELAY);
+      }
     } catch (error) {
       return;
-    } finally {
-      this.init();
     }
+  },
+  stop: function () {
+    this.working = false;
   },
   sleep: function (sleepTime) {
     return new Promise(function (resolve) {

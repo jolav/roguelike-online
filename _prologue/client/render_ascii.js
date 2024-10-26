@@ -19,9 +19,12 @@ ctx.textAlign = "center";
 function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
+  draw.clearAll();
   draw.grid();
   draw.map();
-  console.log("Time =>", performance.now() - start, "ms");
+  draw.entities();
+  const perf = performance.now() - start;
+  console.log(`${g.info.NICK}, LAG__ ${c.LAG}   Render__ ${perf}`);
 }
 
 const draw = {
@@ -53,6 +56,15 @@ const draw = {
       }
     }
   },
+  entities: function () {
+    for (const [_, e] of g.entities) {
+      const x = e.components.Position.current.x;
+      const y = e.components.Position.current.y;
+      const char = e.components.Render.char;
+      const color = e.components.Render.color;
+      this.tile(x, y, char, color);
+    }
+  },
   tile: function (x, y, char, color) {
     //console.log(x, y, char, color);
     ctx.fillStyle = dawnBringer.get(color);
@@ -60,8 +72,8 @@ const draw = {
       char,
       (x * c.VIEW.PPP_X) + (c.VIEW.PPP_X / 2),
       (y * c.VIEW.PPP_Y) + (c.VIEW.PPP_Y / 2),
-      //c.VIEW.PPP_X); // Fourth Argument max width to render the string.
-    );
+      c.VIEW.PPP_X); // Fourth Argument max width to render string.
+    //);
   },
 };
 

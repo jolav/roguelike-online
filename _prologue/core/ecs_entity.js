@@ -1,4 +1,5 @@
 /* */
+
 console.log('Loading..... core/ecs_entity.js');
 
 class Entity {
