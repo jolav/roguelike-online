@@ -8,8 +8,8 @@ import { move } from "./action_move.js";
 const actions = {
   skip,
   move,
-  getType: function (action) {
-    switch (action) {
+  getType: function (entityAction) {
+    switch (entityAction) {
       case "UP":
       case "DOWN":
       case "LEFT":

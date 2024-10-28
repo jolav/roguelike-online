@@ -43,6 +43,7 @@ const ask = {
     g.info.SEED = run.info.SEED;
     g.map = run.map;
     g.entities = run.entities;
+    g.actions = run.actions;
     //console.log('Entities =>', g.entities.size);
     g.turn = 0;
     //console.log('##### NEW GAME #####');
@@ -51,10 +52,10 @@ const ask = {
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
-  turn: async function (action) {
+  turn: async function (playerAction) {
     const start = performance.now();
     const params = {
-      action: action
+      playerAction: playerAction
     };
     g.is_server_turn = true;
     const signal = AbortSignal.timeout(c.API.TIMEOUT);
@@ -62,14 +63,15 @@ const ask = {
     const t = router.turn(params);
     g.is_server_turn = false;
     if (t === undefined) {
-      return; // too early pressed key or invalid action
+      return; // too early pressed key or invalid playerAction
     }
-    //g.map = t.map;
-    //g.entities = t.entities;
     g.turn = t.turn;
+    g.entities = t.entities;
+    g.actions = t.actions;
+    console.log(g.actions);
     c.LAG = Math.trunc(performance.now() - start);
     render.ascii();
-    document.getElementById("action").innerHTML = g.turn + " " + action;
+    document.getElementById("action").innerHTML = g.turn + " " + playerAction;
   }
 };
 

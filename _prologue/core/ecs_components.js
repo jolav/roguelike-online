@@ -5,7 +5,7 @@ console.log('Loading..... core/ecs_components.js');
 class Position {
   constructor(p) {
     this.current = p; //point.new(x, y);
-    //this.end = point.new(x, y);
+    this.onMap = p;
   }
 }
 

@@ -35,12 +35,13 @@ const run = {
     this.actions = [];
   },
   doTurn: function (req) {
+    this.actions = [];
     // players turn
-    const action = req.action;
-    const actionType = actions.getType(action);
+    const playerAction = req.playerAction;
+    const actionType = actions.getType(playerAction);
     for (const [_, e] of this.entities) {
       if (e.hasTag("player")) {
-        const done = actions[actionType](e, action);
+        const done = actions[actionType](e, playerAction);
         if (!done) { // player turn has not been done
           return done;
         }
@@ -59,12 +60,15 @@ const run = {
       },
       map: this.map,
       entities: getVisibleEntities(this.entities),
+      actions: this.actions,
     };
     return r;
   },
   prepareDataTurn: function () {
     const r = {
-      turn: this.turn
+      turn: this.turn,
+      entities: getVisibleEntities(this.entities),
+      actions: this.actions,
     };
     return r;
   }

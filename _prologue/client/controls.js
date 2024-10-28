@@ -7,38 +7,38 @@ import { g } from "./game.js";
 
 function listenKeyboard() {
   window.addEventListener('keydown', function (e) {
-    const action = controls.actionKey(e);
-    if (action === undefined) {
+    const playerAction = controls.actionKey(e);
+    if (playerAction === undefined) {
       return;
     }
     /*if (e.repeat) {
       return;
     }*/
     if (!g.is_server_turn) {
-      //console.log(action);
-      ask.turn(action);
+      //console.log(playerAction);
+      ask.turn(playerAction);
     }
   });
 }
 
 const controls = {
   actionKey: function (e) {
-    let action = undefined;
+    let playerAction = undefined;
     //console.log(e.key, e.code, e.location, e.metaKey);
     if (e.location === 3) { // numpad
-      action = numPad.get(e.key);
+      playerAction = numPad.get(e.key);
     }
     if (e.location === 0) { // standard
       if (e.ctrlKey === true) { // CTRL is pressed
         e.preventDefault();
-        action = leftLoc.get(e.key);
+        playerAction = leftLoc.get(e.key);
       } else {
-        action = standard.get(e.key);
+        playerAction = standard.get(e.key);
       }
     }
-    if (action === "") action = undefined;
-    //console.log('ACTION = ', action);
-    return action;
+    if (playerAction === "") playerAction = undefined;
+    //console.log('ACTION = ', playerAction);
+    return playerAction;
   },
 };
 

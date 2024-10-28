@@ -18,6 +18,9 @@ const config = {
     FONTS: ["sans-serif", "arial", "IBM"],
     FONT_SELECTED: 2,
   },
+  RENDER: {
+    STEPS: 10,
+  },
   VIEW: {
     PANEL_WIDTH: 300,
     PPP_X: 16,

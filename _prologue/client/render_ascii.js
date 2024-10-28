@@ -23,6 +23,7 @@ function ascii() {
   draw.grid();
   draw.map();
   draw.entities();
+  draw.actions();
   const perf = performance.now() - start;
   console.log(`${g.info.NICK}, LAG__ ${c.LAG}   Render__ ${perf}`);
 }
@@ -57,13 +58,47 @@ const draw = {
     }
   },
   entities: function () {
+    //console.log(g.entities.size + " Entities");
     for (const [_, e] of g.entities) {
-      const x = e.components.Position.current.x;
-      const y = e.components.Position.current.y;
+      const x = e.components.Position.onMap.x;//current.x;
+      const y = e.components.Position.onMap.y;//current.y;
+      //const x = e.components.Position.current.x;
+      //const y = e.components.Position.current.y;
       const char = e.components.Render.char;
       const color = e.components.Render.color;
       this.tile(x, y, char, color);
     }
+  },
+  actions: function () {
+    for (const a of g.actions) {
+      const e = g.entities.get(a.id);
+      const start = e.components.Position.onMap;
+      const end = e.components.Position.current;
+      //const char = e.components.Render.char;
+      //const color = e.components.Render.color;
+      //this.tile(x, y, char, color);
+      this.animate(e, start, end, c.RENDER.STEPS);
+    }
+  },
+  animate: function (e, start, end, steps) {
+    let step = 0;
+    const animateStep = () => {
+      this.clearAll();
+      this.grid();
+      this.map();
+      //this.entities();
+      //this.actions();
+      const currentX = start.x + (end.x - start.x) * (step / steps);
+      const currentY = start.y + (end.y - start.y) * (step / steps);
+      const char = e.components.Render.char;
+      const color = e.components.Render.color;
+      this.tile(currentX, currentY, char, color);
+      step++;
+      if (step <= steps) {
+        requestAnimationFrame(animateStep);
+      }
+    };
+    animateStep();
   },
   tile: function (x, y, char, color) {
     //console.log(x, y, char, color);

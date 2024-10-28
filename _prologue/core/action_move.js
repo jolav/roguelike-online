@@ -5,14 +5,21 @@ console.log('Loading..... core/action_move.js');
 import { point } from "./point.js";
 import { run } from "./run.js";
 
-const move = function (e, action) {
+const move = function (e, entityAction) {
   const pos = e.components.Position;
-  const target = getTargetMove(action, pos.current);
+  const target = getTargetMove(entityAction, pos.current);
   if (!canMove(e, target)) {
     return false;
   }
-  console.log(`Entitie ${e.id} moving`);
+  //console.log(`Entitie ${e.id} moving`);
+  pos.onMap = pos.current;
   pos.current = target;
+  const action = {
+    id: e.id,
+    target: target,
+  };
+  run.actions.push(action);
+  //console.log(action);
   return true;
 };
 
@@ -31,9 +38,9 @@ function canMove(e, target) {
   return false;
 }
 
-function getTargetMove(action, pos) {
+function getTargetMove(entityAction, pos) {
   const target = point.new(pos.x, pos.y);
-  switch (action) {
+  switch (entityAction) {
     case "UPLEFT":
       target.x--;
       target.y--;
