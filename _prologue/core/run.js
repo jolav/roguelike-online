@@ -9,6 +9,7 @@ import { K } from "./_konfig.js";
 import { myRandom } from "../aux/random.js";
 import { components } from "./ecs_components.js";
 import { actions } from "./actions.js";
+import { queue } from "./queue.js";
 
 const run = {
   create: function (req) {
@@ -33,8 +34,9 @@ const run = {
     this.map = generate("basicRoom", this.view.cols, this.view.rows);
     this.entities = populateRun(this);//new Map();
     this.actions = [];
+    queue.create(this.entities);
   },
-  doTurn: function (req) {
+  doAction: function (req) {
     this.actions = [];
     // players turn
     const playerAction = req.playerAction;
@@ -43,14 +45,34 @@ const run = {
       if (e.hasTag("player")) {
         const done = actions[actionType](e, playerAction);
         if (!done) { // player turn has not been done
-          return done;
+          return false;
         }
-        run.turn++;
+        //run.turn++;
+        const cost = actions.getCost(playerAction.toUpperCase());
+        queue.update(cost, e.id);
         break;
       }
     }
-    return true;
-    // others turn
+    //return true;
+    let sec = 0;
+    while (sec < K.TRIES) {
+      const active = queue.list[0];
+      if (active.id >= 0) {
+        const e = this.entities.get(active.id);
+        if (e.hasTag("player")) { // player turn
+          //queue.show();
+          return true;
+        }
+        // active entities turn
+      }
+      if (active.id === -1) { // new turn
+        this.turn++;
+        queue.newTurn(active.wait);
+      }
+      sec++;
+    }
+    console.log('FAIL ?????');
+    return false;
   },
   prepareDataNew: function () {
     const r = {

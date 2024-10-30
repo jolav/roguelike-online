@@ -17,9 +17,16 @@ class Render {
   }
 }
 
+class Info {
+  constructor(type) {
+    this.type = type;
+  }
+}
+
 const components = {
   Position,
   Render,
+  Info,
 };
 
 export {

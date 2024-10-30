@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.4a-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.5-orange.svg)  
 
 ## PROLOGUE
 
@@ -11,8 +11,8 @@
 - [X] **Prologue.0.2 Setting Up Client-Core Comm**  
 - [X] **Prologue 0.3 Generate and Draw Basic Map**  
 - [X] **Prologue 0.4 Drawing and Moving around @**  
+- [X] **Prologue 0.5 Turn Time System**  
 - [ ] **Prologue Placing and Randomly Moving Enemies**  
-- [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Creating UI**  

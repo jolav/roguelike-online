@@ -15,12 +15,12 @@ const router = {
     //console.log(run.info);
     return run.prepareDataNew();
   },
-  turn: function (req) {
+  doAction: function (req) {
     const now = Date.now();
     if (now - run.lastTurn < K.TICK) {
       return undefined;
     }
-    const done = run.doTurn(req);
+    const done = run.doAction(req);
     if (!done) {
       return undefined;
     }

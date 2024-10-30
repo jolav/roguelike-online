@@ -27,8 +27,30 @@ const actions = {
         return undefined;
     }
   },
+  getCost: function (entityAction) {
+    return actionCost.get(entityAction);
+  }
 };
 
 export {
   actions
 };
+
+const actionCost = new Map([
+  ["UP", 100],
+  ["DOWN", 100],
+  ["LEFT", 100],
+  ["RIGHT", 100],
+  ["UPRIGHT", 140],
+  ["UPLEFT", 140],
+  ["DOWNRIGHT", 140],
+  ["DOWNLEFT", 140],
+  ["MOVE", 100],
+  ["MELEE", 100],
+  ["SKIP", 100],
+  ["LOOT", 200],
+  ["HEAL", 200],
+  ["EAT", 200],
+  ["FIRE", 100],
+
+]);

@@ -16,7 +16,7 @@ function listenKeyboard() {
     }*/
     if (!g.is_server_turn) {
       //console.log(playerAction);
-      ask.turn(playerAction);
+      ask.doAction(playerAction);
     }
   });
 }

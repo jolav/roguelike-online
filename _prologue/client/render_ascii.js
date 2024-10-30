@@ -82,7 +82,7 @@ const draw = {
   },
   animate: function (e, start, end, steps) {
     let step = 0;
-    const animateStep = () => {
+    const animateStep = function () {
       this.clearAll();
       this.grid();
       this.map();
@@ -95,10 +95,10 @@ const draw = {
       this.tile(currentX, currentY, char, color);
       step++;
       if (step <= steps) {
-        requestAnimationFrame(animateStep);
+        requestAnimationFrame(animateStep.bind(this));
       }
     };
-    animateStep();
+    animateStep.bind(this)(); // allow use this as draw inside animateStep
   },
   tile: function (x, y, char, color) {
     //console.log(x, y, char, color);

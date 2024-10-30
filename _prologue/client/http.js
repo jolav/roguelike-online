@@ -52,7 +52,7 @@ const ask = {
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
-  turn: async function (playerAction) {
+  doAction: async function (playerAction) {
     const start = performance.now();
     const params = {
       playerAction: playerAction
@@ -60,7 +60,7 @@ const ask = {
     g.is_server_turn = true;
     const signal = AbortSignal.timeout(c.API.TIMEOUT);
     await fetchData(c.API.PING, { signal });
-    const t = router.turn(params);
+    const t = router.doAction(params);
     g.is_server_turn = false;
     if (t === undefined) {
       return; // too early pressed key or invalid playerAction
@@ -68,7 +68,7 @@ const ask = {
     g.turn = t.turn;
     g.entities = t.entities;
     g.actions = t.actions;
-    console.log(g.actions);
+    //console.log(g.actions);
     c.LAG = Math.trunc(performance.now() - start);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + playerAction;

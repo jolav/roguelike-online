@@ -5,6 +5,7 @@ console.log('Loading..... core/entities.js');
 import { Entity } from "./ecs_entity.js";
 import { components } from "./ecs_components.js";
 import { point } from "./point.js";
+import { run } from "./run.js";
 
 function populateRun(r) {
   populate.dummie();
@@ -26,13 +27,22 @@ const populate = {
     const p = point.randomEmptyWalkable(this.population, map, rnd);
     e.addComponent(new components.Position(p));
     e.addComponent(new components.Render("@", "White"));
+    e.addComponent(new components.Info("player1"));
     e.addTag("player");
     e.addTag("movable");
+    e.addTag("queueable");
     //e.log();
     this.population.set(e.id, e);
   }
 };
 
+const entities = {
+  byId: function (id) {
+    return run.entities.get(id);
+  },
+};
+
 export {
-  populateRun
+  populateRun,
+  entities,
 };
