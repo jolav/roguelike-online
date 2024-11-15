@@ -64,6 +64,11 @@ const run = {
           return true;
         }
         // active entities turn
+        const action = actions.ai(e, this);
+        //const actionType = actions.getType(action);
+        //actions[actionType](e, action);
+        const cost = actions.getCost(action.toUpperCase());
+        queue.update(cost, e.id);
       }
       if (active.id === -1) { // new turn
         this.turn++;

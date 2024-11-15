@@ -4,10 +4,18 @@ console.log('Loading..... core/actions.js');
 
 import { skip } from "./action_skip.js";
 import { move } from "./action_move.js";
+import { myRandom } from "../aux/random.js";
+import { point } from "./point.js";
 
 const actions = {
-  skip,
-  move,
+  ai: function (e, run) {
+    const action = validActions[myRandom.int(0, 7)];
+    const done = actions.move(e, action);
+    if (!done) {
+      return "SKIP";
+    }
+    return action;
+  },
   getType: function (entityAction) {
     switch (entityAction) {
       case "UP":
@@ -29,12 +37,31 @@ const actions = {
   },
   getCost: function (entityAction) {
     return actionCost.get(entityAction);
-  }
+  },
+  skip,
+  move,
 };
 
 export {
   actions
 };
+
+const validActions = [
+  "UP",
+  "DOWN",
+  "LEFT",
+  "RIGHT",
+  "UPRIGHT",
+  "UPLEFT",
+  "DOWNRIGHT",
+  "DOWNLEFT",
+  "MELEE",
+  "SKIP",
+  "LOOT",
+  "HEAL",
+  "EAT",
+  "FIRE",
+];
 
 const actionCost = new Map([
   ["UP", 100],

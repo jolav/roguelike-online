@@ -127,7 +127,7 @@ section#playZone .container .map {
 }
 
 section#playZone .container .map canvas#myCanvas {
-  background-color: lightgreen;
+  /*background-color: lightgreen;*/
 }
 
 section#playZone .container .panel {

@@ -8,7 +8,7 @@ const config = {
   LAG: 0,
   API: {
     NICK: "https://m.d100.top/a/random/name",
-    NICK_TIMEOUT: 1000,
+    NICK_TIMEOUT: 5000,
     PING: "https://m.d100.top/a/ping?min=0&max=1",
     TIMEOUT: 250,
   },

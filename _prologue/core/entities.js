@@ -10,6 +10,7 @@ import { run } from "./run.js";
 function populateRun(r) {
   populate.dummie();
   populate.player(r.map, r.rnd);
+  populate.creatures(r.map, r.rnd);
   return populate.population;
 }
 
@@ -33,16 +34,25 @@ const populate = {
     e.addTag("queueable");
     //e.log();
     this.population.set(e.id, e);
-  }
-};
-
-const entities = {
-  byId: function (id) {
-    return run.entities.get(id);
   },
+  creatures: function (map, rnd) {
+    const qty = Math.floor((map.length * map[0].length) / 300);
+    //console.log('qty', qty);
+    for (let i = 0; i < qty; i++) {
+      const e = new Entity();
+      this.counter++;
+      const p = point.randomEmptyWalkable(this.population, map, rnd);
+      e.addComponent(new components.Position(p));
+      e.addComponent(new components.Render("r", "Mandy"));
+      e.addComponent(new components.Info("rat"));
+      e.addTag("movable");
+      e.addTag("queueable");
+      //e.log();
+      this.population.set(e.id, e);
+    }
+  }
 };
 
 export {
   populateRun,
-  entities,
 };

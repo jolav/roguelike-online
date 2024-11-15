@@ -1,8 +1,8 @@
 /* */
 
-import { entities } from "./entities.js";
-
 console.log('Loading..... core/queue.js');
+
+import { run } from "./run.js";
 
 class W {
   constructor(wait, id) {
@@ -61,7 +61,7 @@ const queue = {
     for (let w of this.list) {
       let type = "newTurn";
       if (w.id !== -1) {
-        const e = entities.byId(w.id);
+        const e = run.entities.get(w.id);
         type = e.components.Info.type;
       }
       console.log(w.wait, " --> ", type, w.id, "\n");

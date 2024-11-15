@@ -61,8 +61,8 @@ const ask = {
     const signal = AbortSignal.timeout(c.API.TIMEOUT);
     await fetchData(c.API.PING, { signal });
     const t = router.doAction(params);
-    g.is_server_turn = false;
     if (t === undefined) {
+      g.is_server_turn = false;
       return; // too early pressed key or invalid playerAction
     }
     g.turn = t.turn;
@@ -70,7 +70,8 @@ const ask = {
     g.actions = t.actions;
     //console.log(g.actions);
     c.LAG = Math.trunc(performance.now() - start);
-    render.ascii();
+    await render.ascii();
+    g.is_server_turn = false; // wait for animations
     document.getElementById("action").innerHTML = g.turn + " " + playerAction;
   }
 };

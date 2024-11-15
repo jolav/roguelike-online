@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/license-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.5-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.6-orange.svg)  
 
 ## PROLOGUE
 
@@ -9,10 +9,10 @@
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client**  
 - [X] **Prologue.0.2 Setting Up Client-Core Comm**  
-- [X] **Prologue 0.3 Generate and Draw Basic Map**  
-- [X] **Prologue 0.4 Drawing and Moving around @**  
-- [X] **Prologue 0.5 Turn Time System**  
-- [ ] **Prologue Placing and Randomly Moving Enemies**  
+- [X] **Prologue.0.3 Generate and Draw Basic Map**  
+- [X] **Prologue.0.4 Drawing and Moving around @**  
+- [X] **Prologue.0.5 Turn Time System**  
+- [X] **Prologue.0.6 Placing and Randomly Moving Enemies**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Creating UI**  
@@ -28,7 +28,7 @@
 - [ ] **Prologue.1.0 Leaving the Shelter. Minimal Full Playable version**  
 
 **CLIENT**  
-- [ ] **choose a colors palette**  
+- [X] **choose a colors palette**  
 - [ ] **history improved with loots**  
 - [ ] **Sound effects**  
 - [ ] **Turn counter into datetime**  
@@ -36,7 +36,7 @@
 - [ ] **help modal showing controls settings and config**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-corpses-items-foes-player**  
-- [ ] **only pass turn if action is really done, no effect actions**  
+- [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
 - [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
@@ -67,7 +67,7 @@
 - [ ] **resize map on windows resize**  
 
 **MAPS**  
-- [ ] **random pj start point instead center**  
+- [X] **random pj start point instead center**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  
@@ -96,6 +96,8 @@
 - [ ] **Experience and levels**  
 
 **BUGS**  
+- [ ] **not smooth animation on creatures multipleTurns**  
+- [ ] **put 1000 on Skip, creatures not taking actions more than 2??**  
 
 
 ## **Acknowledgment**
