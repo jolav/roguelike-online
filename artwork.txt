@@ -4,25 +4,25 @@
 
 ########## ICONS ##########
 
-File: _prologue/client-www/assets/icons/favicon32.png
-File: _prologue/client-www/assets/icons/favicon48.png
+File: __prologue_client/assets/icons/favicon32.png
+File: __prologue_client/assets/icons/favicon48.png
 Copyright: Delapouite
 License: CC BY 3.0
 Comment: Taken from https://game-icons.net/1x1/delapouite/fallout-shelter.html
 
-File: _prologue/client-www/assets/icons/github48x48.png
+File: __prologue_client/assets/icons/github48x48.png
 Copyright: INCWADRA
 License: CC BY 3.0
 Comment: Taken from https://www.softicons.com/social-media-icons/habrapack-social-icons-by-incwadra/github-icon
  
-File: _prologue/client-www/assets/icons/
+File: __prologue_client/assets/icons/
 Copyright: 
 License: 
 Comment:Taken from
 
 ########## FONTS ##########
 
-File: _prologue/client-www/assets/fonts/IBMPlexSans.ttf
+File: __prologue_client/assets/fonts/IBMPlexSans.ttf
 Copyright: Mike Abbinka and Bold Monday 
 License: SIL Open Font License (OFL) 
 Comment: Taken from https://fonts.google.com/specimen/IBM+Plex+Sans

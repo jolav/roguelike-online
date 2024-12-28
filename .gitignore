@@ -1,12 +1,11 @@
 #Ignore these directories
-_aux/
+__aux/
 _data/
 tmp/
 node_modules
 
 #Ignore these files
 .env
-.air.toml
 _private.js
 _private.json
 private.js
