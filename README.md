@@ -5,11 +5,10 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.0-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.1-orange.svg)  
 
 - [X] **Start**  
-- [ ] **Prologue Setting Up Client**  
-- [ ] **Prologue Setting Up Client-Server Comm**  
+- [X] **Prologue.0.1 Setting Up Client-Server**  
 - [ ] **Prologue Server runs/run loop**  
 - [ ] **Prologue Basic Authentication**  
 - [ ] **Prologue Generate and Draw Basic Map**  
