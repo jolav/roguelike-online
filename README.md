@@ -5,12 +5,11 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.1-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.2-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
-- [ ] **Prologue Server runs/run loop**  
-- [ ] **Prologue Basic Authentication**  
+- [X] **Prologue.0.2 Server runs/run loop + Basic Authentication**  
 - [ ] **Prologue Generate and Draw Basic Map**  
 - [ ] **Prologue Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
@@ -64,7 +63,7 @@
 - [ ] **Select tile and foe with mouse**  
 
 **CLIENT SETTINGS**  
-- [ ] **Choose/Random player name at start**  
+- [X] **Choose/Random player name at start**  
 - [ ] **Check client is not flooding core with commands.one each 400ms?**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  

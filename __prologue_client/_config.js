@@ -13,6 +13,8 @@ const config = {
       "https://m.d100.top/p"
     ],
     VERSION: "/version",
+    RUN: "/run",
+    TURN: "/turn",
     NICK: "https://api.codetabs.com/v1/random/name",//"https://m.d100.top/a/random/name",
     NICK_TIMEOUT: 5000,
     PING: "https://m.d100.top/a/ping?min=0&max=1",

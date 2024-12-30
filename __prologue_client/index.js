@@ -13,7 +13,7 @@ const index = {
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
       c.API.HOST = 0;
-      //c.MODE = "dev";
+      c.MODE = "dev";
     }
     this.landingPage();
   },
@@ -63,8 +63,8 @@ const index = {
     //console.log('PLAY');
     pinger.stop();
     listenKeyboard();
-    //this.showSection("playZone");
-    //await ask.run();
+    this.showSection("playZone");
+    await ask.run();
 
   },
 };

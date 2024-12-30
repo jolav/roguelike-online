@@ -1,11 +1,11 @@
 {
   "name": "prologue",
-  "version": "0.1",
+  "version": "0.2",
   "description": "server for prologue",
   "main": "prologue.js",
   "scripts": {
-    "start": "node prologue.js",
-    "dev": "nodemon prologue.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "live": "cd ./../__prologue_client && live-server --no-css-inject --host=localhost"
   },
   "repository": {

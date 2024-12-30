@@ -2,39 +2,43 @@
 
 console.log('Loading..... controls.js');
 
+import { ask } from "./http.js";
+import { g } from "./game.js";
+
 function listenKeyboard() {
   window.addEventListener('keydown', function (e) {
-    const playerAction = controls.actionKey(e);
-    if (playerAction === undefined) {
+    const action = controls.actionKey(e);
+    if (action === undefined) {
       return;
     }
     /*if (e.repeat) {
       return;
     }*/
-    /*if (!is_server_turn) {
-      doAction(playerAction);
-    }*/
+    if (!g.is_server_turn) {
+      console.log(action);
+      ask.turn(action);
+    }
   });
 }
 
 const controls = {
   actionKey: function (e) {
-    let playerAction = undefined;
+    let action = undefined;
     //console.log(e.key, e.code, e.location, e.metaKey);
     if (e.location === 3) { // numpad
-      playerAction = numPad.get(e.key);
+      action = numPad.get(e.key);
     }
     if (e.location === 0) { // standard
       if (e.ctrlKey === true) { // CTRL is pressed
         e.preventDefault();
-        playerAction = leftLoc.get(e.key);
+        action = leftLoc.get(e.key);
       } else {
-        playerAction = standard.get(e.key);
+        action = standard.get(e.key);
       }
     }
-    if (playerAction === "") playerAction = undefined;
-    //console.log('ACTION = ', playerAction);
-    return playerAction;
+    if (action === "") action = undefined;
+    //console.log('ACTION = ', action);
+    return action;
   },
 };
 
