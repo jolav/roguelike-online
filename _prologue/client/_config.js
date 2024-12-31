@@ -7,20 +7,12 @@ const config = {
   VERSION: "x",
   LAG: 0,
   API: {
-    HOST: 1,// 0 local dev API, 1 real API,
-    URL: [
-      "http://localhost:3000",
-      "https://m.d100.top/p"
-    ],
-    VERSION: "/version",
-    RUN: "/run",
-    TURN: "/turn",
-    NICK: "https://api.codetabs.com/v1/random/name",//"https://m.d100.top/a/random/name",
-    NICK_TIMEOUT: 2000,
+    NICK: "https://m.d100.top/a/random/name",
+    NICK_TIMEOUT: 5000,
     PING: "https://m.d100.top/a/ping?min=0&max=1",
     TIMEOUT: 250,
   },
-  PINGER_DELAY: 1000,
+  PINGER_DELAY: 500,
   CANVAS: {
     NAME: "myCanvas",
     FONTS: ["sans-serif", "arial", "IBM"],
@@ -31,8 +23,8 @@ const config = {
   },
   VIEW: {
     PANEL_WIDTH: 300,
-    PPP_X: 24,
-    PPP_Y: 32,
+    PPP_X: 16,
+    PPP_Y: 24,
     COLS: 0,
     ROWS: 0,
     DELTA_X: 0,

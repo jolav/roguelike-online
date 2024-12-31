@@ -12,7 +12,6 @@ const index = {
     const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
-      c.API.HOST = 0;
       c.MODE = "dev";
     }
     this.landingPage();
