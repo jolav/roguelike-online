@@ -3,12 +3,13 @@
 import { Runs } from "./runs.js";
 import { network } from "./lib/network.js";
 import { Random } from "./lib/random.js";
+import { generate } from "./mapGen.js";
 import { K } from "./_konfig.js";
 
 class Run {
   constructor(req) {
     let seed = 123456789;
-    if (K.mode !== "adev") {
+    if (K.mode !== "dev") {
       seed = performance.now();
     }
     this.info = {
@@ -26,6 +27,9 @@ class Run {
       rows: req.query.rows,
     };
     this.rnd = new Random(this.info.SEED);
+    this.map = generate("basicRoom", req.query.cols, req.query.rows, this.rnd);
+    //this.entities = populateRun(this.counter, this.map);//new Map();
+    //this.actions = [];
     this.add();
   }
 
@@ -45,7 +49,7 @@ class Run {
     const r = {};
     r.id = this.info.ID;
     r.seed = this.info.SEED;
-    // r.map = this.map;
+    r.map = this.map;
     return r;
   }
   prepareDataTurn() {

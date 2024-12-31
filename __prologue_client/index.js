@@ -32,7 +32,7 @@ const index = {
     window.addEventListener('keydown', function pressAnyKey(ev) {
       if (ev.key === "Escape" || ev.key === "Enter") {
         window.removeEventListener("keydown", pressAnyKey);
-        this.alert("COMING SOON");
+        //this.alert("COMING SOON");
         index.play();
       }
     });

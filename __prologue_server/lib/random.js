@@ -15,11 +15,11 @@ class Random {
     this.random = mulberry32(seed);
   }
   int(min, max) {
-    console.log('seed');
+    //console.log('seed');
     return Math.floor(this.random() * (max - min + 1) + min);
   }
   static int(min, max) {
-    console.log('std');
+    //console.log('std');
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
   static generateUUID() {

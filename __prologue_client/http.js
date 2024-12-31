@@ -4,6 +4,7 @@ console.log('Loading..... http.js');
 
 import { config as c } from "./_config.js";
 import { g } from "./game.js";
+import * as render from "./render_ascii.js";
 
 const ask = {
   nick: async function () {
@@ -35,7 +36,7 @@ const ask = {
     g.turn = 0;
     console.log('##### NEW GAME #####');
     console.log(g, run);
-    //render.ascii();
+    render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {

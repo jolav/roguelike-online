@@ -1,8 +1,8 @@
 {
   "name": "prologue",
-  "version": "0.2",
+  "version": "0.3",
   "description": "server for prologue",
-  "main": "prologue.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",

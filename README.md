@@ -5,12 +5,12 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.2-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.3-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
 - [X] **Prologue.0.2 Server runs/run loop + Basic Authentication**  
-- [ ] **Prologue Generate and Draw Basic Map**  
+- [X] **Prologue.0.3 Generate and Draw Basic Map**  
 - [ ] **Prologue Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Placing and Randomly Moving Enemies**  
