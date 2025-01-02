@@ -1,7 +1,7 @@
 <br>
 
 ![License](https://img.shields.io/badge/License-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.6a-orange.svg)  
+![Game](https://img.shields.io/badge/version-0.6b-orange.svg)  
 
 ## PROLOGUE MILESTONE  
 

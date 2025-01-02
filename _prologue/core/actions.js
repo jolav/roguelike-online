@@ -4,12 +4,12 @@ console.log('Loading..... core/actions.js');
 
 import { skip } from "./action_skip.js";
 import { move } from "./action_move.js";
-import { myRandom } from "../aux/random.js";
+import { Random } from "../aux/random.js";
 import { point } from "./point.js";
 
 const actions = {
   ai: function (e, run) {
-    const action = validActions[myRandom.int(0, 7)];
+    const action = validActions[Random.int(0, 7)];
     const done = actions.move(e, action);
     if (!done) {
       return "SKIP";

@@ -6,7 +6,7 @@ import { aux } from "../aux/aux.js";
 import { generate } from "./mapGen.js";
 import { populateRun } from "./entities.js";
 import { K } from "./_konfig.js";
-import { myRandom } from "../aux/random.js";
+import { Random } from "../aux/random.js";
 import { components } from "./ecs_components.js";
 import { actions } from "./actions.js";
 import { queue } from "./queue.js";
@@ -17,10 +17,10 @@ const run = {
     if (K.MODE !== "dev") {
       seed = performance.now();
     }
-    myRandom.init(seed);
+    Random.create(seed);
     this.info = {
       NICK: req.nick || "Anonymous",
-      ID: aux.GenerateUUID(),
+      ID: Random.generateUUID(),
       CREATED: Date.now(),
       SEED: seed,
     };

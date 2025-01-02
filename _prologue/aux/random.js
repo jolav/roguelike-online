@@ -2,19 +2,6 @@
 
 console.log('Loading..... aux/random.js');
 
-const myRandom = {
-  init: function (seed) {
-    this.random = mulberry32(seed);
-  },
-  int: function (min, max) {
-    return Math.floor(this.random() * (max - min + 1) + min);
-  }
-};
-
-export {
-  myRandom
-};
-
 function mulberry32(seed) {
   return function () {
     seed |= 0;
@@ -24,3 +11,36 @@ function mulberry32(seed) {
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   };
 }
+
+class Random {
+  constructor(seed) {
+    this.random = mulberry32(seed);
+  }
+  static create(seed) {
+    if (!Random.instance) {
+      Random.instance = new Random(seed);
+    }
+    return Random.instance;
+  }
+  static int(min, max) {
+    //console.log('seed');
+    return Math.floor(Random.instance.random() * (max - min + 1) + min);
+  }
+  static intStd(min, max) {
+    //console.log('std');
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  static generateUUID() {
+    const template = [1e7] + -1e3 + -4e3 + -8e3 + -1e11;
+    const uuid = template.replace(/[018]/g, function (c) {
+      const random = crypto.getRandomValues(new Uint8Array(1))[0];
+      const value = (c ^ random & 15 >> c / 4).toString(16);
+      return value;
+    });
+    return uuid;
+  }
+}
+
+export {
+  Random,
+};

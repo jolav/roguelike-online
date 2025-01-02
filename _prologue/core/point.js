@@ -2,7 +2,7 @@
 
 console.log('Loading..... core/point.js');
 
-import { myRandom } from "../aux/random.js";
+import { Random } from "../aux/random.js";
 import { K } from "./_konfig.js";
 import { components } from "./ecs_components.js";
 
@@ -48,8 +48,8 @@ const point = {
     let p = this.new(0, 0);
     let tries = 0;
     while (tries < K.TRIES) {
-      p.x = myRandom.int(1, map.length - 2);
-      p.y = myRandom.int(1, map[0].length - 2);
+      p.x = Random.int(1, map.length - 2);
+      p.y = Random.int(1, map[0].length - 2);
       if (this.isWalkable(p, map)) {
         if (this.isEmpty(p, es)) {
           return p;
