@@ -16,16 +16,12 @@ ctx.font = c.VIEW.PPP_Y + "px " + c.CANVAS.FONTS[c.CANVAS.FONT_SELECTED];
 ctx.textBaseline = "middle";//"middle"; //"top";
 ctx.textAlign = "center";
 
-async function ascii() {
+function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
-  draw.clearAll();
   draw.grid();
   draw.map();
-  draw.entities();
-  await draw.actions();
-  const perf = performance.now() - start;
-  console.log(`${g.info.NICK}, LAG__ ${c.LAG}   Render__ ${perf}`);
+  console.log("Time =>", performance.now() - start, "ms");
 }
 
 const draw = {
@@ -53,64 +49,9 @@ const draw = {
         //console.log(g.map[col][row].terrain);
         if (g.map[col][row].terrain === "wall") {
           this.tile(col, row, "#", "Heather");
-        } else { // this kills performance
-          //const char = String.fromCharCode(legend.get("floor"));
-          //this.tile(col, row, char, "Smokey Ash");
         }
       }
     }
-  },
-  entities: function (id) {
-    //console.log(g.entities.size + " Entities");
-    for (const [_, e] of g.entities) {
-      if (e.id === id) {
-        continue; //avoid drawing yourself while animating 
-      }
-      const x = e.components.Position.onMap.x;//current.x;
-      const y = e.components.Position.onMap.y;//current.y;
-      //const x = e.components.Position.current.x;
-      //const y = e.components.Position.current.y;
-      const char = e.components.Render.char;
-      const color = e.components.Render.color;
-      this.tile(x, y, char, color);
-    }
-  },
-  actions: async function () {
-    for (const a of g.actions) {
-      const e = g.entities.get(a.id);
-      const start = e.components.Position.onMap;
-      const end = e.components.Position.current;
-      //const char = e.components.Render.char;
-      //const color = e.components.Render.color;
-      //this.tile(x, y, char, color);
-      await this.animate(e, start, end, c.RENDER.STEPS);
-      e.components.Position.onMap = end;
-    }
-  },
-  animate: function (e, start, end, steps) {
-    return new Promise(function (resolve) {
-      let step = 0;
-      function animateStep() {
-        this.clearAll();
-        this.grid();
-        this.map();
-        this.entities(e.id);
-
-        const currentX = start.x + (end.x - start.x) * (step / steps);
-        const currentY = start.y + (end.y - start.y) * (step / steps);
-        const char = e.components.Render.char;
-        const color = e.components.Render.color;
-        this.tile(currentX, currentY, char, color);
-
-        step++;
-        if (step <= steps) {
-          requestAnimationFrame(animateStep.bind(this));
-        } else {
-          resolve();
-        }
-      }
-      animateStep.call(this);
-    }.bind(this));
   },
   tile: function (x, y, char, color) {
     //console.log(x, y, char, color);
@@ -119,26 +60,14 @@ const draw = {
       char,
       (x * c.VIEW.PPP_X) + (c.VIEW.PPP_X / 2),
       (y * c.VIEW.PPP_Y) + (c.VIEW.PPP_Y / 2),
-      c.VIEW.PPP_X); // Fourth Argument max width to render string.
-    //);
+      //c.VIEW.PPP_X); // Fourth Argument max width to render the string.
+    );
   },
 };
 
 export {
   ascii,
 };
-
-const legend = new Map([
-  ["floor", 183],   // middleDot 183 or normal point 46
-  ["wall", 35],     // #35
-  ["-", 0],
-  ["player", 64],   // @64
-  ["rat", 114],     // r 114
-  ["mole rat", 82], // R 82
-  ["corpse of", 37],    // %
-  ["item", 63],    // ?
-  ["exit", 60], // <
-]);
 
 const dawnBringer = new Map([
   ["Black", "#000000"],

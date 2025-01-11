@@ -1,17 +1,20 @@
 <br>
 
+![image](https://github.com/jolav/roguelike-online/blob/main/www/_public/images/web.webp?raw=true) 
+
 ![License](https://img.shields.io/badge/License-%20GNU%20AGPLv3%20-brightgreen)  
-![Game](https://img.shields.io/badge/version-0.6b-orange.svg)  
 
 ## PROLOGUE MILESTONE  
 
+![Game](https://img.shields.io/badge/Version-0.3-orange.svg)  
+
 - [X] **Start**  
-- [X] **Prologue.0.1 Setting Up Client**  
-- [X] **Prologue.0.2 Setting Up Client-Core Comm**  
+- [X] **Prologue.0.1 Setting Up Client-Server**  
+- [X] **Prologue.0.2 Server runs/run loop + Basic Authentication**  
 - [X] **Prologue.0.3 Generate and Draw Basic Map**  
-- [X] **Prologue.0.4 Drawing and Moving around @**  
-- [X] **Prologue.0.5 Turn Time System**  
-- [X] **Prologue.0.6 Placing and Randomly Moving Enemies**  
+- [ ] **Prologue Drawing and Moving around @**  
+- [ ] **Prologue Turn Time System**  
+- [ ] **Prologue Placing and Randomly Moving Enemies**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Creating UI**  
@@ -27,7 +30,7 @@
 - [ ] **Prologue.1.0 Leaving the Shelter. Minimal Full Playable version**  
 
 **CLIENT**  
-- [X] **choose a colors palette**  
+- [ ] **choose a colors palette**  
 - [ ] **history improved with loots**  
 - [ ] **Sound effects**  
 - [ ] **Turn counter into datetime**  
@@ -35,9 +38,9 @@
 - [ ] **help modal showing controls settings and config**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-corpses-items-foes-player**  
-- [X] **only pass turn if action is really done, no effect actions**  
+- [ ] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
-- [X] **on key pressed down ,movement at constant speed**  
+- [ ] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
 - [ ] **cumulative history, instead of x lines, (x) action**  
@@ -49,7 +52,7 @@
 - [ ] **two letter names on ascii ??**  
 
 **CLIENT ANIMATIONS**  
-- [X] **Movement**  
+- [ ] **Movement**  
 - [ ] **Melee**  
 - [ ] **Ranged**  
 - [ ] **Rumble**  
@@ -62,7 +65,7 @@
 
 **CLIENT SETTINGS**  
 - [X] **Choose/Random player name at start**  
-- [X] **Check client is not flooding core with commands.one each Xms?**  
+- [ ] **Check client is not flooding core with commands.one each 400ms?**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
@@ -76,10 +79,12 @@
 - [ ] **open/close doors**  
 - [ ] **lights, ilumination**  
 
-**CORE**  
-- [X] **Check client is not flooding server with commands.min each Xms?**  
-- [X] **seeds for reproducible runs**  
+**SERVER**  
+- [ ] **Check client is not flooding server with commands.min each Xms?**  
+- [ ] **seeds for reproducible runs**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
+- [ ] **manage runs, set a maximun**  
+- [ ] **save in files and delete runs from memory after some inactivity**  
 
 **OPTIONALS FEATURES**   
 - [ ] **bypassing columns increase movement cost**  
@@ -90,15 +95,14 @@
 - [ ] **minigames open lock, sudoku, hacking, brute force**  
 - [ ] **mini screen for shooting from far distance**  
 - [ ] **Grid centered on x,y instead of x+0.5,y+0.5 avoiding offsets**  
-- [ ] **two letter names on ascii**  
 - [ ] **Map Prefabs**  
 - [ ] **Autoexplore**  
 - [ ] **Stats**  
 - [ ] **Experience and levels**  
 
 **BUGS**  
-- [ ] **not smooth animation on creatures multipleTurns**  
-- [ ] **put 1000 on Skip, creatures not taking actions more than 2??**  
+- [ ] **bug**  
+
 
 ## **Acknowledgment**
 

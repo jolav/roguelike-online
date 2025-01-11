@@ -1,7 +1,5 @@
 /* */
 
-console.log('Loading..... aux/random.js');
-
 function mulberry32(seed) {
   return function () {
     seed |= 0;
@@ -16,17 +14,11 @@ class Random {
   constructor(seed) {
     this.random = mulberry32(seed);
   }
-  static create(seed) {
-    if (!Random.instance) {
-      Random.instance = new Random(seed);
-    }
-    return Random.instance;
+  int(min, max) {
+    //console.log('seed');
+    return Math.floor(this.random() * (max - min + 1) + min);
   }
   static int(min, max) {
-    //console.log('seed');
-    return Math.floor(Random.instance.random() * (max - min + 1) + min);
-  }
-  static intStd(min, max) {
     //console.log('std');
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -44,3 +36,21 @@ class Random {
 export {
   Random,
 };
+
+/*
+const r1 = new Random(1);
+const r2 = new Random(1);
+const r3 = new Random(2);
+let result1 = "";
+let result2 = "";
+let result3 = "";
+for (let i = 0; i < 50; i++) {
+  result1 += r1.int(1, 6) + "";
+  result2 += r2.int(1, 6) + "";
+  result3 += r3.int(1, 6) + "";
+}
+console.log(Random.int(1, 10));
+console.log(result1);
+console.log(result2);
+console.log(result3);
+*/
