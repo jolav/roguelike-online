@@ -12,8 +12,7 @@ const index = {
     const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
-      c.API.HOST = 0;
-      //c.MODE = "dev";
+      //c.API.HOST = 0;
     }
     this.landingPage();
   },
@@ -25,7 +24,7 @@ const index = {
     document.getElementById("nick").value = g.info.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
-    if (c.MODE === "dev") {
+    if (c.API.AUTOSTART) {
       this.play();
       return;
     }

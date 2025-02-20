@@ -7,9 +7,12 @@ node_modules
 #Ignore these files
 .env
 _private.js
+*_private.js
 _private.json
-private.js
-private.json
+*_private.json
+a_private.go
+*_private.go
 notas.txt
 
 # binary
+bin/prologue

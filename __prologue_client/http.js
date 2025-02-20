@@ -25,17 +25,18 @@ const ask = {
       + "&cols=" + c.VIEW.COLS
       + "&rows=" + c.VIEW.ROWS;
     g.is_server_turn = true;
-    const run = await fetchData(path, {});
+    const aux = await fetchData(path, {});
+    console.log('AUX=>', aux);
     g.is_server_turn = false;
-    if (run === undefined) {
+    if (aux === undefined) {
       return;
     }
-    g.info.ID = run.id;
-    g.info.SEED = run.seed;
-    g.map = run.map;
+    g.info.ID = aux.ID;
+    g.info.SEED = aux.SEED;
+    g.map = aux.map;
     g.turn = 0;
     console.log('##### NEW GAME #####');
-    console.log(g, run);
+    console.log(g);//, run);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
@@ -44,7 +45,7 @@ const ask = {
     const options = {
       method: "GET",
       headers: {
-        Authorization: g.info.ID,
+        "Authorization": g.info.ID,
       }
     };
     g.is_server_turn = true;

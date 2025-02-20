@@ -65,7 +65,7 @@
 
 **CLIENT SETTINGS**  
 - [X] **Choose/Random player name at start**  
-- [ ] **Check client is not flooding core with commands.one each 400ms?**  
+- [X] **Check client is not flooding core with commands.one each Xms?**  
 - [ ] **settings: resize window, custom controls, change scale...**  
 - [ ] **Player can modify ppp size 12/16/24...**  
 - [ ] **resize map on windows resize**  
@@ -80,11 +80,14 @@
 - [ ] **lights, ilumination**  
 
 **SERVER**  
-- [ ] **Check client is not flooding server with commands.min each Xms?**  
-- [ ] **seeds for reproducible runs**  
+- [X] **Dont trust any client data**  
+- [X] **Check client is not flooding server with commands.min each Xms?**  
+- [X] **seeds for reproducible runs**  
+- [ ] **discard api request by Methods POST...**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
 - [ ] **manage runs, set a maximun**  
 - [ ] **save in files and delete runs from memory after some inactivity**  
+- [ ] **Lock runs while are active solving a turn**  
 
 **OPTIONALS FEATURES**   
 - [ ] **bypassing columns increase movement cost**  

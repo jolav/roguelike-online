@@ -8,6 +8,7 @@ const config = {
   LAG: 0,
   API: {
     HOST: 1,// 0 local dev API, 1 real API,
+    AUTOSTART: false,
     URL: [
       "http://localhost:3000",
       "https://m.d100.top/p"
