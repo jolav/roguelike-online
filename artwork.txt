@@ -25,8 +25,12 @@ Comment:Taken from
 File: __prologue_client/assets/fonts/IBMPlexSans.ttf
 Copyright: Mike Abbinka and Bold Monday 
 License: SIL Open Font License (OFL) 
-Comment: Taken from https://fonts.google.com/specimen/IBM+Plex+Sans
+Comment: Taken from https://fonts.google.com/specimen/IBM+Plex+Sans  
 
+File:/ __prologue_client/assets/dejavu-sans-mono.book.ttf
+Copyright: Fonts are (c) Bitstream  
+License: Public Domain https://st.1001fonts.net/license/dejavu-sans-mono/LICENSE.txt
+Comment: Taken from https://www.1001fonts.com/dejavu-sans-mono-font.html
 
 #####################################################################
 #############################   WEB   ###############################

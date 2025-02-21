@@ -7,8 +7,8 @@ const config = {
   VERSION: "x",
   LAG: 0,
   API: {
-    HOST: 1,// 0 local dev API, 1 real API,
-    AUTOSTART: false,
+    HOST: 0,// 0 local dev API, 1 real API,
+    AUTOSTART: true,
     URL: [
       "http://localhost:3000",
       "https://m.d100.top/p"
@@ -23,16 +23,16 @@ const config = {
   PINGER_DELAY: 1000,
   CANVAS: {
     NAME: "myCanvas",
-    FONTS: ["sans-serif", "arial", "IBM"],
-    FONT_SELECTED: 2,
+    FONTS: ["sans-serif", "arial", "IBM", "DejaVu"],
+    FONT_SELECTED: 3,
   },
   RENDER: {
     STEPS: 10,
   },
   VIEW: {
     PANEL_WIDTH: 300,
-    PPP_X: 24,
-    PPP_Y: 32,
+    PPP_X: 16,
+    PPP_Y: 24,
     COLS: 0,
     ROWS: 0,
     DELTA_X: 0,

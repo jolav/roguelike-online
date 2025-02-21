@@ -19,7 +19,7 @@ ctx.textAlign = "center";
 function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
-  draw.grid();
+  //draw.grid();
   draw.map();
   console.log("Time =>", performance.now() - start, "ms");
 }
@@ -46,9 +46,13 @@ const draw = {
     //console.log(c.VIEW.COLS, c.VIEW.ROWS);
     for (let col = 0; col < g.map.length; col++) {
       for (let row = 0; row < g.map[0].length; row++) {
-        //console.log(g.map[col][row].terrain);
-        if (g.map[col][row].terrain === "wall") {
-          this.tile(col, row, "#", "Heather");
+        const terrain = g.map[col][row].terrain;
+        switch (terrain) {
+          case "wall":
+            this.tile(col, row, "#", "Heather");
+            break;
+          default:
+            this.tile(col, row, /*'\u03D9'*/".", "Atlantis");
         }
       }
     }

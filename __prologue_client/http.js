@@ -31,8 +31,8 @@ const ask = {
     if (aux === undefined) {
       return;
     }
-    g.info.ID = aux.ID;
-    g.info.SEED = aux.SEED;
+    g.info.ID = aux.id;
+    g.info.SEED = aux.seed;
     g.map = aux.map;
     g.turn = 0;
     console.log('##### NEW GAME #####');
@@ -45,7 +45,7 @@ const ask = {
     const options = {
       method: "GET",
       headers: {
-        "Authorization": g.info.ID,
+        "authorization": g.info.ID,
       }
     };
     g.is_server_turn = true;

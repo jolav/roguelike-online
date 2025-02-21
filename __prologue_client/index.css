@@ -15,7 +15,7 @@ body, html {
 /* */
 
 body {
-  font-family: 'IBM', arial, sans-serif;
+  font-family: sans-serif, 'IBM', arial;
   background-color: #293133;
   color: #ffffff;
   font-size: 1em;
@@ -26,6 +26,11 @@ body {
 @font-face {
   font-family: 'IBM';
   src: url(./assets/IBMPlexSans.ttf);
+}
+
+@font-face {
+  font-family: 'DejaVu';
+  src: url(./assets/dejavu-sans-mono.book.ttf);
 }
 
 

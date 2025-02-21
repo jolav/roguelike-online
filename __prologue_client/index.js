@@ -11,8 +11,9 @@ const index = {
   init: function () {
     const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
-    if (where === "localhost" || where === "127.0.0.1") {
-      //c.API.HOST = 0;
+    if (where !== "localhost" && where !== "127.0.0.1") {
+      c.API.AUTOSTART = false;
+      c.API.HOST = 1;
     }
     this.landingPage();
   },

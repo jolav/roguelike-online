@@ -1,0 +1,28 @@
+{
+  "name": "prologue",
+  "version": "0.3a",
+  "description": "server for prologue",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "live": "cd ./../__prologue_client && live-server --no-css-inject --host=localhost"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolav/roguelike-online.git"
+  },
+  "author": "Jolav",
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/jolav/roguelike-online/issues"
+  },
+  "homepage": "https://github.com/jolav/roguelike-online#readme",
+  "dependencies": {
+    "body-parser": "^2.0.0-beta.2",
+    "express": "^5.0.1",
+    "helmet": "^8.0.0"
+  },
+  "devDependencies": {},
+  "type": "module"
+}
