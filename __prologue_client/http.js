@@ -26,26 +26,27 @@ const ask = {
       + "&rows=" + c.VIEW.ROWS;
     g.is_server_turn = true;
     const aux = await fetchData(path, {});
-    console.log('AUX=>', aux);
+    //onsole.log('AUX=>', aux);
     g.is_server_turn = false;
     if (aux === undefined) {
       return;
     }
-    g.info.ID = aux.id;
-    g.info.SEED = aux.seed;
+    g.info.ID = aux.ID;
+    g.info.SEED = aux.SEED;
     g.map = aux.map;
     g.turn = 0;
     console.log('##### NEW GAME #####');
-    console.log(g);//, run);
+    //console.log(g);//, run);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {
     const path = c.API.URL[c.API.HOST] + c.API.TURN + "?action=" + action;
+    //console.log(g.info.ID);
     const options = {
       method: "GET",
       headers: {
-        "authorization": g.info.ID,
+        "Authorization": g.info.ID,
       }
     };
     g.is_server_turn = true;
@@ -67,6 +68,7 @@ export {
 async function fetchData(path, options) {
   try {
     const response = await fetch(path, options);
+    // console.log('=>', response);
     if (response.ok) {
       const data = await response.json();
       return data;

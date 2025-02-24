@@ -15,7 +15,7 @@ function listenKeyboard() {
       return;
     }*/
     if (!g.is_server_turn) {
-      console.log(action);
+      //console.log(action);
       ask.turn(action);
     }
   });

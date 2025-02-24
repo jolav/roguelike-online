@@ -1,13 +1,26 @@
 /* */
 
 const send = {
-  jsonResult: function (res, status, data, pretty) {
-    if (pretty) {
-      res.header('Content-Type', 'application/json');
-      res.status(status).send(JSON.stringify(data, null, 2));
-      return;
+  jsonResponse: function (res, statusCode, data, pretty) {
+    try {
+      if (pretty) {
+        res.header('Content-Type', 'application/json');
+        res.status(statusCode).send(JSON.stringify(data, null, 2));
+        return;
+      }
+      res.status(statusCode).json(data);
+    } catch (err) {
+      console.error("ERROR lib/network.js 1", err);
+      this.error(res, "Internal Server Error", 500);
     }
-    res.status(status).json(data);
+  },
+  error: function (res, statusCode, msg) {
+    switch (statusCode) {
+      case 400:
+        msg = "Bad Request! -> " + msg;
+        break;
+    }
+    this.jsonResponse(res, statusCode, { error: msg }, false);
   },
 };
 

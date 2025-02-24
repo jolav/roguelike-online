@@ -6,7 +6,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.3a-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.3b-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  

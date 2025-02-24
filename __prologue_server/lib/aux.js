@@ -17,6 +17,10 @@ const aux = {
     }
     return array;
   },
+  isAlphanumeric: function (input) {
+    const re = /^[a-zA-Z0-9]+$/;
+    return re.test(input);
+  },
 };
 
 export {

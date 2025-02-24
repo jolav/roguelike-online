@@ -1,6 +1,6 @@
 {
   "name": "prologue",
-  "version": "0.3a",
+  "version": "0.3b",
   "description": "server for prologue",
   "main": "index.js",
   "scripts": {

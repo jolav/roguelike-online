@@ -9,6 +9,7 @@ import { AppError } from "./lib/system.js";
 import { send } from "./lib/network.js";
 import { Run } from "./run.js";
 import { Runs } from "./runs.js";
+import { aux } from "./lib/aux.js";
 
 const app = express();
 app.use(helmet());
@@ -19,45 +20,65 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 app.get("/version", function (req, res) {
-  send.jsonResult(res, 200, { version: K.version }, true);
+  send.jsonResponse(res, 200, { version: K.version }, true);
 });
 
-app.get("/run", function (req, res) {
+app.get("/run", function (req, res, next) {
+  let nick = req.query.nick;
+  if (nick === "" || nick === undefined) {
+    next(new AppError(400, "Not valid nickname"));
+    return;
+  }
+  nick = nick.toUpperCase();
+  if (!aux.isAlphanumeric(nick)) {
+    next(new AppError(400, "Nick contains invalid characters"));
+    return;
+  }
+  const cols = parseInt(req.query.cols);
+  const rows = parseInt(req.query.rows);
+  if (cols < 3 || rows < 3 || cols > 300 || rows > 300 || isNaN(cols) || isNaN(rows)) {
+    next(new AppError(400, "Invalid parameters value cols, rows"));
+    return;
+  }
+
   const r = new Run(req);
-  send.jsonResult(res, 200, r.prepareDataNew(), false);
+  send.jsonResponse(res, 200, r.prepareDataNew(), false);
 });
 
-app.get("/turn", async function (req, res) {
-  const r = Runs.get(req.headers.authorization);
+app.get("/turn", async function (req, res, next) {
+  const token = req.headers.authorization;
+  const r = Runs.get(token);
   if (r === undefined) {
-    send.jsonResult(res, 401, { msg: "Unauthorizated" }, false);
+    next(new AppError(401, "Unauthorizated"));
     return;
   }
   const now = Date.now();
   if (now - r.lastTurn < K.tick) {
-    send.jsonResult(res, 425, { msg: "Too early" }, false);
+    next(new AppError(425, "Too Early"));
     return;
   }
   // do action
   r.lastTurn = now;
   r.turn++;
-  send.jsonResult(res, 200, r.prepareDataTurn(), false);
+  send.jsonResponse(res, 200, r.prepareDataTurn(), false);
 });
 
 app.use(function notFound(req, res, next) {
-  next(new AppError(404, "Route Not Found"));
+  //send.error(res, 404, "Route Not Found");
+  //next(new AppError(404, "Route Not Found"));
+  throw new AppError(404, "Route Not Found");
 });
 
 app.use(function errorHandler(err, req, res, next) {
   if (!err.isOperational) {
     console.error("Unexpected Error:", err.stack || err);
   }
-  const status = err.status || 500;
+  const statusCode = err.status || 500;
   let message = "Internal Server Error";
   if (err.isOperational) {
     message = err.message;
   }
-  send.jsonResult(res, status, { "msg": message }, false);
+  send.error(res, statusCode, message, false);
 });
 
 app.listen(K.port, function () {

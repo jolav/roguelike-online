@@ -47,8 +47,8 @@ class Run {
 
   prepareDataNew() {
     const r = {};
-    r.id = this.info.ID;
-    r.seed = this.info.SEED;
+    r.ID = this.info.ID;
+    r.SEED = this.info.SEED;
     r.map = this.map;
     return r;
   }
