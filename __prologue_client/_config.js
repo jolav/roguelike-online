@@ -31,8 +31,8 @@ const config = {
   },
   VIEW: {
     PANEL_WIDTH: 300,
-    PPP_X: 16,
-    PPP_Y: 24,
+    PPP_X: 8,
+    PPP_Y: 12,
     COLS: 0,
     ROWS: 0,
     DELTA_X: 0,

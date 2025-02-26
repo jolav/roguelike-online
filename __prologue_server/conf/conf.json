@@ -1,0 +1,11 @@
+{
+  "system": {
+    "mode": "dev",
+    "port": 3000,
+    "errorsLogFile": "/.mylogs/prologue/errors.log",
+    "infoLogFile": "/.mylogs/prologue/info.log"
+  },
+  "config": {
+    "tick": 300
+  }
+}
