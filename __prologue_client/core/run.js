@@ -27,7 +27,7 @@ class Run {
       rows: rows,
     };
     this.rnd = new Random(this.info.SEED);
-    this.map = generate("testRoom", this.view, this.rnd);
+    this.map = generate("shelter", this.view, this.rnd);
     //this.entities = populateRun(this.counter, this.map);//new Map();
     //this.actions = [];
   }

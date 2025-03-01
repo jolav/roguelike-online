@@ -10,7 +10,7 @@ function generate(typeOfMap, view, rnd) {
     case "testRoom":
       return testRoom.create(view.cols, view.rows, rnd);
     case "shelter":
-      return shelter.create();
+      return shelter.create(view.cols, view.rows, rnd);
   }
 }
 

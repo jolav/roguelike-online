@@ -96,3 +96,7 @@ const pinger = {
     });
   }
 };
+
+export {
+  index
+};

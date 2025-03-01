@@ -8,15 +8,15 @@
 
 [BROWSER VERSION](https://prologue.roguelike.online)
 
-![Game](https://img.shields.io/badge/Version-0.3-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.4-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client**  
 - [X] **Prologue.0.2 Setting Up Client-Core Comm**  
 - [X] **Prologue.0.3 Generate and Draw Basic Map**  
+- [X] **Prologue.0.4 Generating Shelter**  
 - [ ] **Prologue Drawing and Moving around @**  
 - [ ] **Prologue Turn Time System**  
-- [ ] **Prologue Generating Shelter**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Placing and Randomly Moving Enemies**  
 - [ ] **Prologue Field of View**  

@@ -25,12 +25,12 @@ body {
 
 @font-face {
   font-family: 'IBM';
-  src: url(./assets/IBMPlexSans.ttf);
+  src: url(./IBMPlexSans.ttf);
 }
 
 @font-face {
   font-family: 'DejaVu';
-  src: url(./assets/dejavu-sans-mono-book.ttf);
+  src: url(./dejavu-sans-mono-book.ttf);
 }
 
 
