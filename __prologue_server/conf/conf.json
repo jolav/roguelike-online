@@ -6,6 +6,7 @@
     "infoLogFile": "/.mylogs/prologue/info.log"
   },
   "config": {
+    "version": "x",
     "tick": 300
   }
 }

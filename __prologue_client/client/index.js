@@ -1,9 +1,9 @@
 /* */
 
-console.log('Loading..... index.js');
+console.log('Loading..... client/index.js');
 
 import { config as c } from "./_config.js";
-import { ask } from "./http.js";
+import { ask, httpServer } from "./http.js";
 import { g } from "./game.js";
 import { listenKeyboard } from "./controls.js";
 
@@ -20,8 +20,8 @@ const index = {
   landingPage: async function () {
     console.log('##### INIT #####');
     this.showSection("landingPage");
-    g.info.NICK = await ask.nick();
-    [c.VERSION, c.LAG] = await ask.version();
+    g.info.NICK = await httpServer.nick();
+    [c.VERSION, c.LAG] = await httpServer.version();
     document.getElementById("nick").value = g.info.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
@@ -32,7 +32,6 @@ const index = {
     window.addEventListener('keydown', function pressAnyKey(ev) {
       if (ev.key === "Escape" || ev.key === "Enter") {
         window.removeEventListener("keydown", pressAnyKey);
-        //this.alert("COMING SOON");
         index.play();
       }
     });
@@ -64,8 +63,11 @@ const index = {
     pinger.stop();
     listenKeyboard();
     this.showSection("playZone");
-    await ask.run();
-
+    if (c.AUTHORITATIVE_SERVER) {
+      await httpServer.run();
+    } else {
+      await ask.run();
+    }
   },
 };
 
@@ -77,9 +79,9 @@ const pinger = {
     this.working = true;
     try {
       while (this.working) {
-        const [, b] = await ask.version();
-        document.getElementById("lag").innerHTML = b;
-        await this.sleep(c.PINGER_DELAY);
+        const lag = await httpServer.ping();
+        document.getElementById("lag").innerHTML = lag;
+        await this.sleep(c.API.PINGER_DELAY);
       }
     } catch (error) {
       return;

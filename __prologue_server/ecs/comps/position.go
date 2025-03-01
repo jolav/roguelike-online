@@ -2,12 +2,14 @@
 
 package comps
 
+import "prologue/mapa"
+
 type Position struct {
-	Current Point
+	Current mapa.Point
 }
 
 func NewPosition(x, y int) Position {
 	return Position{
-		Current: NewPoint(x, y),
+		Current: mapa.NewPoint(x, y),
 	}
 }

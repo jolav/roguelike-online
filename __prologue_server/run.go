@@ -4,7 +4,8 @@ package main
 
 import (
 	"math/rand"
-	mymap "prologue/map"
+	"prologue/ecs"
+	"prologue/mapa"
 	"time"
 )
 
@@ -23,7 +24,8 @@ type Run struct {
 	}
 
 	Rnd   *rand.Rand
-	Level mymap.Level
+	Level mapa.Level
+	Ecs   ecs.ECS
 }
 
 func (r *Run) DoTurn(action string) {

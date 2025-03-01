@@ -1,5 +1,6 @@
 #Ignore these directories
 __aux/
+__aux2/
 _data/
 tmp/
 node_modules

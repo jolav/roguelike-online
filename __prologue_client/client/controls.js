@@ -1,9 +1,10 @@
 /* */
 
-console.log('Loading..... controls.js');
+console.log('Loading..... client/controls.js');
 
-import { ask } from "./http.js";
+import { ask, httpServer } from "./http.js";
 import { g } from "./game.js";
+import { config as c } from "./_config.js";
 
 function listenKeyboard() {
   window.addEventListener('keydown', function (e) {
@@ -16,7 +17,11 @@ function listenKeyboard() {
     }*/
     if (!g.is_server_turn) {
       //console.log(action);
-      ask.turn(action);
+      if (c.AUTHORITATIVE_SERVER) {
+        httpServer.turn(action);
+      } else {
+        ask.turn(action);
+      }
     }
   });
 }

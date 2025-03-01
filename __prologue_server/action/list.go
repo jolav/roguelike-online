@@ -1,12 +1,12 @@
 /* */
 
-package conf
+package action
 
 import (
 	"prologue/lib"
 )
 
-func CreateActionsList() *lib.Set {
+func CreateList() *lib.Set {
 	actions := lib.NewSet()
 	actions.Add("DOWNLEFT")
 	actions.Add("DOWN")

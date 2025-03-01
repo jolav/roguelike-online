@@ -1,6 +1,6 @@
 /* */
 
-package comps
+package mapa
 
 type Point struct {
 	X int

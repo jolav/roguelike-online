@@ -1,6 +1,6 @@
 /* */
 
-package mymap
+package mapa
 
 type Tile struct {
 	Terrain  string `json:"terrain"`

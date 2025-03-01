@@ -15,12 +15,11 @@ import (
 func (a *app) startHTTPServer() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /version", sendVersion)
+	mux.HandleFunc("GET /version", a.sendVersion)
+	mux.HandleFunc("GET /ping", ping)
 	mux.HandleFunc("GET /run", a.doRun)
 	mux.HandleFunc("GET /turn", a.doTurn)
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		lib.SendError(w, "Route not valid", http.StatusBadRequest)
-	})
+	mux.HandleFunc("/", route404)
 
 	server := http.Server{
 		Addr:           fmt.Sprintf("localhost:%d", a.Sys.Port),
@@ -42,13 +41,21 @@ func (a *app) startHTTPServer() {
 	log.Fatal(server.ListenAndServe())
 }
 
-func sendVersion(w http.ResponseWriter, r *http.Request) {
+func route404(w http.ResponseWriter, r *http.Request) {
+	lib.SendError(w, "Route not valid", http.StatusNotFound)
+}
+
+func (a app) sendVersion(w http.ResponseWriter, r *http.Request) {
 	response := struct {
 		Version string `json:"version"`
 	}{
-		Version: version,
+		Version: a.Cnf.Version,
 	}
 	lib.SendJSONResponse(w, response, http.StatusOK)
+}
+
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (a app) doRun(w http.ResponseWriter, r *http.Request) {

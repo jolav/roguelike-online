@@ -4,11 +4,11 @@ package main
 
 import (
 	"os"
-	"prologue/conf"
+	"prologue/action"
 	"prologue/lib"
 )
 
-var version = "0.4"
+var version = "0.4a"
 var when = "undefined"
 
 type system struct {
@@ -19,7 +19,8 @@ type system struct {
 }
 
 type config struct {
-	Tick    int `json:"tick"`
+	Tick    int    `json:"tick"`
+	Version string `json:"version"`
 	Actions *lib.Set
 }
 
@@ -35,15 +36,16 @@ func main() {
 	var a = new(app)
 
 	lib.LoadJSONFile("./conf/conf.json", a)
-	if a.Sys.Mode == "dev" {
-		//lib.PrettyPrintStructExported(a)
-	}
 	a = &app{
 		Sys:  fixSystemConfig(a.Sys),
 		Runs: NewRuns(),
 		Cnf:  a.Cnf,
 	}
-	a.Cnf.Actions = conf.CreateActionsList()
+	a.Cnf.Actions = action.CreateList()
+
+	if a.Sys.Mode == "dev" {
+		lib.PrettyPrintStructExported(a)
+	}
 
 	//Custom Error Log File
 	var mylog *os.File

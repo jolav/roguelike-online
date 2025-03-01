@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... render_ascii.js');
+console.log('Loading..... client/render_ascii.js');
 
 import { config as c } from "./_config.js";
 import { g } from "./game.js";
@@ -21,6 +21,7 @@ function ascii() {
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   //draw.grid();
   draw.map();
+  //draw.pj();
   console.log("Time =>", performance.now() - start, "ms");
 }
 
@@ -57,15 +58,26 @@ const draw = {
       }
     }
   },
+  pj: function () {
+    console.log(g.pj.X, g.pj.Y);
+    this.clearTile(g.pj.X, g.pj.Y);
+    this.tile(g.pj.X, g.pj.Y, "@", "Mandy");
+  },
   tile: function (x, y, char, color) {
-    //console.log(x, y, char, color);
     ctx.fillStyle = dawnBringer.get(color);
     ctx.fillText(
       char,
       (x * c.VIEW.PPP_X) + (c.VIEW.PPP_X / 2),
       (y * c.VIEW.PPP_Y) + (c.VIEW.PPP_Y / 2),
-      //c.VIEW.PPP_X); // Fourth Argument max width to render the string.
+      //c.VIEW.PPP_X // Fourth Argument max width to render the string.
     );
+  },
+  clearTile: function (x, y) {
+    ctx.clearRect(
+      x * c.VIEW.PPP_X, y * c.VIEW.PPP_Y,
+      c.VIEW.PPP_X, c.VIEW.PPP_Y
+    );
+    ctx.beginPath();
   },
 };
 
