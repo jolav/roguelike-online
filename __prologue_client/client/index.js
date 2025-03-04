@@ -63,11 +63,7 @@ const index = {
     pinger.stop();
     listenKeyboard();
     this.showSection("playZone");
-    if (c.AUTHORITATIVE_SERVER) {
-      await httpServer.run();
-    } else {
-      await ask.run();
-    }
+    await ask.run();
   },
 };
 
@@ -80,6 +76,7 @@ const pinger = {
     try {
       while (this.working) {
         const lag = await httpServer.ping();
+        console.log('aaa');
         document.getElementById("lag").innerHTML = lag;
         await this.sleep(c.API.PINGER_DELAY);
       }

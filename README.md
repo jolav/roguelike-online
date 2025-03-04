@@ -110,10 +110,6 @@
 - [ ] **not smooth animation on creatures multipleTurns**  
 - [ ] **put 1000 on Skip, creatures not taking actions more than 2??**  
 
-## PROLOGUE MILESTONE
-
-[CLIENT-SERVER ONLINE VERSION](https://github.com/jolav/roguelike-online/tree/main/__prologue_server/README.md) using Authoritative server<span style="font-size: 30px;">😉</span> SOON&#8482; <span style="font-size: 30px;">😉</span> 
-
 
 ## **Acknowledgment**
 

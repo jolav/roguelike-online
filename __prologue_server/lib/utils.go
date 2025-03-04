@@ -8,10 +8,9 @@ import (
 	"io"
 	"log"
 	"os"
-	"regexp"
 )
 
-func LoadJSONFile(filePath string, data interface{}) {
+func LoadJSONFile(filePath string, data any) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatalln("Cannot open config file", err)
@@ -27,21 +26,7 @@ func LoadJSONFile(filePath string, data interface{}) {
 	}
 }
 
-func PrettyPrintStructExported(s interface{}) {
+func PrettyPrintStructExported(s any) {
 	result, _ := json.MarshalIndent(s, "", "    ") //"\t")
 	fmt.Print(string(result), "\n")
-}
-
-func SliceContainsString(str string, slice []string) bool {
-	for _, v := range slice {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
-
-func IsAlphanumeric(input string) bool {
-	re := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	return re.MatchString(input)
 }

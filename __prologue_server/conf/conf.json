@@ -3,10 +3,15 @@
     "mode": "dev",
     "port": 3000,
     "errorsLogFile": "/.mylogs/prologue/errors.log",
-    "infoLogFile": "/.mylogs/prologue/info.log"
+    "infoLogFile": "/.mylogs/prologue/info.log",
+    "token": "secret-token",
+    "ips": [
+      "127.0.0.1",
+      "172.16.0.0",
+      "10.0.0.0"
+    ]
   },
   "config": {
-    "version": "x",
     "tick": 300
   }
 }

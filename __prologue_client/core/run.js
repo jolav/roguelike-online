@@ -5,6 +5,8 @@ console.log('Loading..... core/run.js');
 import { Random } from "./lib/random.js";
 import { generate } from "./mapa/level.js";
 import { K } from "./_konfig.js";
+import { populate } from "./populate.js";
+import { ECS } from "./ecs/manager.js";
 
 class Run {
   constructor(nick, cols, rows) {
@@ -19,7 +21,6 @@ class Run {
       //IP: network.ip(req),
       SEED: seed,
     };
-    this.counter = 0;
     this.turn = 0;
     this.lastTurn = Date.now();
     this.view = {
@@ -27,9 +28,11 @@ class Run {
       rows: rows,
     };
     this.rnd = new Random(this.info.SEED);
-    this.map = generate("shelter", this.view, this.rnd);
-    //this.entities = populateRun(this.counter, this.map);//new Map();
-    //this.actions = [];
+    this.map = generate("testRoom", this.view, this.rnd);
+    //this.map = generate("shelter", this.view, this.rnd);
+    this.ecs = new ECS();
+    //populate.shelter(this);
+    this.actions = [];
   }
 
   prepareDataNew() {
@@ -37,12 +40,20 @@ class Run {
     r.ID = this.info.ID;
     r.SEED = this.info.SEED;
     r.map = this.map;
+    //r.entities = this.ecs.getEntitiesWithComp("position");
+    //console.log("CUANTAS =>", r.entities.length);
+    //console.log(r.entities[0]);
+    //console.log(r.entities);
     return r;
   }
   prepareDataTurn() {
     const r = {};
     r.turn = this.turn;
+    r.map = this.map;
     return r;
+  }
+  doAction(command) {
+    console.log('Command =>', command);
   }
 }
 

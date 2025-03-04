@@ -6,7 +6,6 @@ const config = {
   MODE: "prod",
   VERSION: "x",
   LAG: 0,
-  AUTHORITATIVE_SERVER: false,
   API: {
     AUTOSTART: true,
     HOST: 1,// 0 local dev API, 1 real API

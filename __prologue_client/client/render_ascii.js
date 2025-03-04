@@ -21,6 +21,7 @@ function ascii() {
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   //draw.grid();
   draw.map();
+  //draw.entities();
   //draw.pj();
   console.log("Time =>", performance.now() - start, "ms");
 }
@@ -58,10 +59,15 @@ const draw = {
       }
     }
   },
-  pj: function () {
-    console.log(g.pj.X, g.pj.Y);
-    this.clearTile(g.pj.X, g.pj.Y);
-    this.tile(g.pj.X, g.pj.Y, "@", "Mandy");
+  entities: function () {
+    for (const v of g.entities) {
+      //console.log(v);
+      this.entitiy(v.current.x, v.current.y);
+    }
+  },
+  entitiy: function (x, y) {
+    this.clearTile(x, y);
+    this.tile(x, y, "@", "Mandy");
   },
   tile: function (x, y, char, color) {
     ctx.fillStyle = dawnBringer.get(color);

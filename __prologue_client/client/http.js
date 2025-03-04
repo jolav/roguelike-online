@@ -16,13 +16,8 @@ const ask = {
     if (aux === undefined) {
       return;
     }
-    g.info.ID = aux.ID;
-    g.info.SEED = aux.SEED;
-    g.map = aux.map;
-    //g.pj = aux.PJ.Current;
-    g.turn = 0;
+    g.create(aux);
     console.log('##### NEW GAME #####');
-    console.log(g);//, run);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
@@ -33,8 +28,9 @@ const ask = {
     if (turn === undefined) {
       return;
     }
-    g.turn = turn.turn;
-    console.log(g);
+    g.update(turn);
+    //console.log(g);
+    render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + action;
   }
 };
@@ -58,48 +54,6 @@ const httpServer = {
     const lag = Math.trunc(performance.now() - start);
     return [data.version, lag];
   },
-  run: async function () {
-    let path = c.API.URL[c.API.HOST] + c.API.RUN;
-    path = path
-      + "?nick=" + g.info.NICK
-      + "&cols=" + c.VIEW.COLS
-      + "&rows=" + c.VIEW.ROWS;
-    g.is_server_turn = true;
-    const aux = await fetchData(path, {});
-    //console.log('AUX=>', aux.PJ.Current);
-    g.is_server_turn = false;
-    if (aux === undefined) {
-      return;
-    }
-    g.info.ID = aux.ID;
-    g.info.SEED = aux.SEED;
-    g.map = aux.map;
-    g.pj = aux.PJ.Current;
-    g.turn = 0;
-    console.log('##### NEW GAME #####');
-    //console.log(g);//, run);
-    render.ascii();
-    document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
-  },
-  turn: async function (action) {
-    const path = c.API.URL[c.API.HOST] + c.API.TURN + "?action=" + action;
-    //console.log(g.info.ID);
-    const options = {
-      method: "GET",
-      headers: {
-        "Authorization": g.info.ID,
-      }
-    };
-    g.is_server_turn = true;
-    const turn = await fetchData(path, options);
-    g.is_server_turn = false;
-    if (turn === undefined) {
-      return;
-    }
-    g.turn = turn.turn;
-    console.log(g);
-    document.getElementById("action").innerHTML = g.turn + " " + action;
-  }
 };
 
 export {

@@ -4,33 +4,34 @@ console.log('Loading..... core/router.js');
 
 import { Run } from "./run.js";
 import { K } from "./_konfig.js";
+import { action } from "./action/action.js";
+
+let run = {};
 
 const router = {
   run: function (nick, cols, rows) {
-    const r = new Run(nick, cols, rows);
-    return r.prepareDataNew();
-    //console.log(r);
-    //send.jsonResult(res, 200, r.prepareDataNew(), false);
+    run = new Run(nick, cols, rows);
+    return run.prepareDataNew();
   },
-  turn: function () {
-    const r = {};//Runs.get(req.headers.authorization);
-    if (r === undefined) {
-      //send.jsonResult(res, 401, { msg: "Unauthorizated" }, false);
+  turn: function (command) {
+    if (!action.isValid(command)) {
       return;
     }
     const now = Date.now();
-    if (now - r.lastTurn < K.tick) {
-      //send.jsonResult(res, 425, { msg: "Too early" }, false);
+    if (now - run.lastTurn < K.TICK) { // Too Early
+      console.log('TOO EARLY');
       return;
     }
     // do action
-    r.lastTurn = now;
-    r.turn++;
-    //send.jsonResult(res, 200, r.prepareDataTurn(), false);
+    run.doAction(command);
+    run.lastTurn = now;
+    run.turn++;
+    return run.prepareDataTurn();
   }
 
 };
 
 export {
-  router
+  router,
+  run,
 };

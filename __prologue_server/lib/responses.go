@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func SendJSONResponse(w http.ResponseWriter, d interface{}, s int) {
+func SendJSONResponse(w http.ResponseWriter, d any, s int) {
 	dataJSON, err := json.MarshalIndent(d, "", " ")
 	if err != nil {
 		log.Printf("ERROR LIB-RESPONSES 1 %v\n", err)
