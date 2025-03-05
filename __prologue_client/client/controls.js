@@ -2,8 +2,9 @@
 
 console.log('Loading..... client/controls.js');
 
-import { ask } from "./http.js";
+import { httpServer } from "./http.js";
 import { g } from "./game.js";
+import { config as c } from "./_config.js";
 
 function listenKeyboard() {
   window.addEventListener('keydown', function (e) {
@@ -15,8 +16,13 @@ function listenKeyboard() {
       return;
     }*/
     if (!g.is_server_turn) {
+      const now = Date.now();
+      if (now - g.lastTurn < c.API.TIMEOUT) {
+        return;
+      }
       //console.log(action);
-      ask.turn(action);
+      httpServer.turn(action);
+      g.lastTurn = now;
     }
   });
 }

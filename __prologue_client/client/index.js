@@ -3,7 +3,7 @@
 console.log('Loading..... client/index.js');
 
 import { config as c } from "./_config.js";
-import { ask, httpServer } from "./http.js";
+import { httpServer } from "./http.js";
 import { g } from "./game.js";
 import { listenKeyboard } from "./controls.js";
 
@@ -63,7 +63,7 @@ const index = {
     pinger.stop();
     listenKeyboard();
     this.showSection("playZone");
-    await ask.run();
+    await httpServer.run();
   },
 };
 

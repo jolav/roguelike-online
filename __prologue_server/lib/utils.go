@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"regexp"
 )
 
 func LoadJSONFile(filePath string, data any) {
@@ -29,4 +30,9 @@ func LoadJSONFile(filePath string, data any) {
 func PrettyPrintStructExported(s any) {
 	result, _ := json.MarshalIndent(s, "", "    ") //"\t")
 	fmt.Print(string(result), "\n")
+}
+
+func IsAlphanumeric(input string) bool {
+	re := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	return re.MatchString(input)
 }

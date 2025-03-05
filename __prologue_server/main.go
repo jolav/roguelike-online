@@ -4,10 +4,11 @@ package main
 
 import (
 	"os"
+	"prologue/action"
 	"prologue/lib"
 )
 
-var version = "0.1"
+var version = "0.5"
 var when = "undefined"
 
 type system struct {
@@ -15,17 +16,18 @@ type system struct {
 	Port          int      `json:"port"`
 	ErrorsLogFile string   `json:"errorsLogFile"`
 	InfoLogFile   string   `json:"infoLogFile"`
-	Token         string   `json:"token"`
 	IPs           []string `json:"ips"`
 }
 
 type config struct {
-	Version string `json:"version"`
+	Tick    int `json:"tick"`
+	Actions *lib.Set
 }
 
 type app struct {
-	Sys system `json:"system"`
-	Cnf config `json:"config"`
+	Sys  system `json:"system"`
+	Cnf  config `json:"config"`
+	Runs *Runs
 }
 
 func main() {
@@ -34,14 +36,15 @@ func main() {
 	var a = new(app)
 
 	lib.LoadJSONFile("./conf/conf.json", a)
-	lib.LoadJSONFile("./conf/version.json", &a.Cnf)
 	a = &app{
-		Sys: fixSystemConfig(a.Sys),
-		Cnf: a.Cnf,
+		Sys:  fixSystemConfig(a.Sys),
+		Runs: NewRuns(),
+		Cnf:  a.Cnf,
 	}
+	a.Cnf.Actions = action.CreateList()
 
 	if a.Sys.Mode == "dev" {
-		lib.PrettyPrintStructExported(a)
+		//lib.PrettyPrintStructExported(a)
 	}
 
 	//Custom Error Log File

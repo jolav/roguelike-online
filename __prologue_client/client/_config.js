@@ -5,10 +5,11 @@ console.log('Loading..... client/_config.js');
 const config = {
   MODE: "prod",
   VERSION: "x",
+  AUX_VERSION: "0.5",
   LAG: 0,
   API: {
     AUTOSTART: true,
-    HOST: 1,// 0 local dev API, 1 real API
+    HOST: 0,// 0 local dev API, 1 real API
     URL: [
       "http://localhost:3000",
       "https://m.d100.top/p"
@@ -17,7 +18,7 @@ const config = {
     PING: "/ping",
     RUN: "/run",
     TURN: "/turn",
-    TIMEOUT: 250,
+    TIMEOUT: 300,
     PINGER_DELAY: 1000,
     NICK: "https://api.codetabs.com/v1/random/name",
     NICK_TIMEOUT: 2000,
@@ -28,12 +29,13 @@ const config = {
     FONT_SELECTED: 3,
   },
   RENDER: {
+    TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
     STEPS: 10,
   },
   VIEW: {
     PANEL_WIDTH: 300,
-    PPP_X: 8,//16,
-    PPP_Y: 12,//24,
+    PPP_X: 16,//16,
+    PPP_Y: 24,//24,
     COLS: 0,
     ROWS: 0,
     DELTA_X: 0,

@@ -20,8 +20,9 @@ function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   //draw.grid();
+  draw.clearAll();
   draw.map();
-  //draw.entities();
+  draw.entities();
   //draw.pj();
   console.log("Time =>", performance.now() - start, "ms");
 }
@@ -49,25 +50,28 @@ const draw = {
     for (let col = 0; col < g.map.length; col++) {
       for (let row = 0; row < g.map[0].length; row++) {
         const terrain = g.map[col][row].terrain;
+        //const color = aux.colorOfEntity("visible");
         switch (terrain) {
           case "wall":
-            this.tile(col, row, "#", "Heather");
+            this.tile(col, row, aux.mapSymbol("wall"), /*color*/ "Heather");
             break;
           default:
-            this.tile(col, row, /*'\u03D9'*/".", "Atlantis");
+            this.tile(col, row, aux.mapSymbol("floor"), /*color*/"Atlantis");
         }
       }
     }
   },
   entities: function () {
     for (const v of g.entities) {
-      //console.log(v);
-      this.entitiy(v.current.x, v.current.y);
+      console.log(v.info.Type);
+      const type = v.info.Type;
+      const color = aux.colorOfEntity(type);
+      this.entitiy(v.pos.Current.X, v.pos.Current.Y, type, color);
     }
   },
-  entitiy: function (x, y) {
+  entitiy: function (x, y, type, color) {
     this.clearTile(x, y);
-    this.tile(x, y, "@", "Mandy");
+    this.tile(x, y, aux.mapSymbol(type), color);
   },
   tile: function (x, y, char, color) {
     ctx.fillStyle = dawnBringer.get(color);
@@ -90,6 +94,72 @@ const draw = {
 export {
   ascii,
 };
+
+const aux = {
+  mapSymbol: function (symbol) {
+    switch (c.RENDER.TYPE) {
+      case 0:
+        return String.fromCharCode(legend.get(symbol));
+      case 1:
+        return unicode.get(symbol);
+      case 2:
+        return unicodeGlyphs.get(symbol);
+    }
+  },
+  colorOfEntity: function (entity) {
+    return colors.get(entity);
+  },
+};
+
+// https://en.wikipedia.org/wiki/Code_page_437  
+// https://en.wikipedia.org/wiki/List_of_Unicode_characters
+// https://russellcottrell.com/greek/utilities/SurrogatePairCalculator.htm
+
+const unicode = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", 'r6'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "r1"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
+
+const unicodeGlyphs = new Map([
+  ["floor", "\u00b7"],   // middleDot 
+  ["wall", "\u25a0"],     // \u25a0 
+  ["player", "\u0040"],   // @ \u0040
+  ["mole rat", '\ud83d\udc00'],     // ra \u1f400 o \ud83d\ude00
+  ["rat", "\ud83d\udc01"], // Mr
+  ["corpse of", "\u0025"],    // %
+  ["item", "\u003f"],    // ?
+  ["exit", "\u2302"], // <
+]);
+
+const legend = new Map([
+  ["floor", 46],   // middleDot 183 or normal point 46
+  ["wall", 35],     // #35
+  ["-", 0],
+  ["player", 64],   // @64
+  ["rat", 114],     // r 114
+  ["mole rat", 82], // R 82
+  ["corpse of", 37],    // %
+  ["item", 63],    // ?
+  ["exit", 60], // <
+]);
+
+const colors = new Map([
+  ["player", "Tahiti Gold"],
+  ["visible", "Light Steel Blue"],
+  ["explored", "Smokey Ash"],
+  ["rat", "Brown"],
+  ["mole rat", "Brown"],
+  ["item", "Pancho"],
+  ["exit", "Golden Fizz"],
+  ["grid", "grid"],
+  ["tileSelected", "Tahiti Gold"],
+]);
 
 const dawnBringer = new Map([
   ["Black", "#000000"],
