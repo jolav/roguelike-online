@@ -32,14 +32,26 @@ type Run struct {
 
 func (r *Run) DoTurn(task string) {
 	//fmt.Println(r.Control.Turn, " Action=>", task)
-	positions := r.Ecs.Positions.Components //(&r.Ecs, "position")
-	esPoints := []mapa.Point{}
-	for _, v := range positions {
-		esPoints = append(esPoints, v.Current)
+	eID := r.Ecs.GetEntitiesWithTag("player")[0]
+	taskType := action.GetType(task)
+	switch taskType {
+	case "MOVE":
+		r.DoMove(task, eID)
+		return
+	case "SKIP":
+		r.Control.Turn++
+		return
 	}
-	target := action.DoMove(task, 2, r.Level, positions)
+}
+
+func (r *Run) DoMove(task string, eID int) {
+	positions := r.Ecs.Positions.Components //(&r.Ecs, "position")
+	target, moved := action.TryMove(task, eID, r.Level, positions)
+	if !moved {
+		return
+	}
 	newPos := comps.Position{Current: target}
-	r.Ecs.Positions.RemoveComponent(2)
-	r.Ecs.Positions.AddComponent(2, newPos)
+	r.Ecs.Positions.RemoveComponent(eID)
+	r.Ecs.Positions.AddComponent(eID, newPos)
 	r.Control.Turn++
 }

@@ -5,20 +5,15 @@ package action
 import (
 	"prologue/ecs/comps"
 	"prologue/mapa"
-	"slices"
 )
 
-// type move struct{}
-var diagonalMovements = []string{
-	"UPRIGHT",
-	"UPLEFT",
-	"DOWNRIGHT",
-	"DOWNLEFT",
-}
-
-func DoMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) mapa.Point {
-	//fmt.Println(task)
-	//fmt.Println("Player pos", es[eID].Current)
+func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (mapa.Point, bool) {
+	points := []mapa.Point{}
+	for k, v := range es {
+		if k != eID {
+			points = append(points, v.Current)
+		}
+	}
 	pos := mapa.NewPoint(es[eID].Current.X, es[eID].Current.Y)
 	target := pos
 
@@ -44,18 +39,20 @@ func DoMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) map
 		target.X--
 		target.Y--
 	}
-	//fmt.Println(pos, task, target)
 	if !lvl.IsWalkable(target.X, target.Y) {
-		return pos
+		return pos, false
 	}
-	isDiagonal := slices.Contains(diagonalMovements, task)
+	if !lvl.IsEmpty(target.X, target.Y, points) {
+		return pos, false
+	}
+	isDiagonal := IsDiagonalMovement(task)
 	if lvl.IsWalkable(target.X, target.Y) && !isDiagonal {
-		return target
+		return target, true
 	}
 	if isDiagonal && canMoveDiagonal(task, lvl, pos) && lvl.IsWalkable(target.X, target.Y) {
-		return target
+		return target, true
 	}
-	return pos
+	return pos, false
 }
 
 func canMoveDiagonal(task string, lvl mapa.Level, current mapa.Point) bool {

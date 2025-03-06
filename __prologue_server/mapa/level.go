@@ -9,8 +9,13 @@ import (
 
 type Level [][]Tile
 
-func NewLevel(lvlType string, x *rand.Rand, cols, rows int) Level {
-	switch lvlType {
+func NewLevel(x *rand.Rand, cols, rows int) Level {
+	lvlType := 0
+	lvlTypes := map[int]string{
+		0: "testRoom",
+		1: "shelter",
+	}
+	switch lvlTypes[lvlType] {
 	case "testRoom":
 		return testRoom(x, cols, rows)
 	case "shelter":
@@ -19,28 +24,28 @@ func NewLevel(lvlType string, x *rand.Rand, cols, rows int) Level {
 	return nil
 }
 
-func (lvl Level) GetWalkableTile(es []Point, x *rand.Rand) Point {
+func (lvl Level) RandomWalkableUnoccupiedTile(es []Point, x *rand.Rand) Point {
 	cols := len(lvl)
 	rows := len(lvl[0])
 	tries := 0
 	for tries < 5000 {
 		pX := lib.RandomInt(1, cols-1, x)
 		pY := lib.RandomInt(1, rows-1, x)
-		if lvl.IsWalkable(pX, pY) {
-			empty := true
-			for _, point := range es {
-				if point.X == pX || point.Y == pY {
-					empty = false
-					break
-				}
-			}
-			if empty {
-				return Point{pX, pY}
-			}
+		if lvl.IsWalkable(pX, pY) && lvl.IsEmpty(pX, pY, es) {
+			return Point{pX, pY}
 		}
 		tries++
 	}
 	return Point{0, 0}
+}
+
+func (lvl Level) IsEmpty(x, y int, es []Point) bool {
+	for _, point := range es {
+		if point.X == x && point.Y == y {
+			return false
+		}
+	}
+	return true
 }
 
 func (lvl Level) IsWalkable(x, y int) bool {

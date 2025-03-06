@@ -60,11 +60,11 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Control.LastTurn = time.Now()
 
 	r.Rnd = rand.New(rand.NewSource(seed))
-	r.Level = mapa.NewLevel("testRoom", r.Rnd, cols, rows)
-	//r.Level = mapa.NewLevel("shelter", r.Rnd, cols, rows)
+	r.Level = mapa.NewLevel(r.Rnd, cols, rows)
 
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)
+	//lib.PrettyPrintStructExported(r.Info)
 	a.Runs.add(*r)
 	return r, "", http.StatusOK
 }
@@ -78,26 +78,22 @@ func populate(r Run) ecs.ECS {
 
 	// player
 	player := r.Ecs.NewEntity()
-	current := r.Level.GetWalkableTile(esPoints, r.Rnd)
+	current := r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
 	r.Ecs.Infos.AddComponent(player, comps.Info{Name: r.Info.Nick, Type: "player"})
 	r.Ecs.Positions.AddComponent(player, comps.Position{Current: current})
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
 	r.Ecs.Healths.AddComponent(player, comps.Health{MaxHp: 50, CurrentHP: 45})
 	r.Ecs.AddTag(player, "player")
 	r.Ecs.AddTag(player, "visible")
+
 	// rat
 	rat := r.Ecs.NewEntity()
-	current = r.Level.GetWalkableTile(esPoints, r.Rnd)
+	current = r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
 	r.Ecs.Positions.AddComponent(rat, comps.Position{Current: current})
 	r.Ecs.Infos.AddComponent(rat, comps.Info{Name: "rat" + fmt.Sprint(rat), Type: "rat"})
 	r.Ecs.Healths.AddComponent(rat, comps.Health{MaxHp: 20, CurrentHP: 20})
 	r.Ecs.AddTag(rat, "creature")
 	r.Ecs.AddTag(rat, "visible")
-	/*fmt.Println("#################")
-	fmt.Println("Before:", r.Ecs.Infos.Index)
-	r.Ecs.Infos.RemoveComponent(2)
-	fmt.Println("After:", r.Ecs.Infos.Index)
-	fmt.Println("#####################")*/
 	return r.Ecs
 }

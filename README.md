@@ -6,7 +6,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.5-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.5a-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -31,7 +31,7 @@
 - [ ] **Prologue.1.0 Leaving the Shelter. Minimal Full Playable version**  
 
 **CLIENT**  
-- [ ] **choose a colors palette**  
+- [X] **choose a colors palette**  
 - [ ] **history improved with loots**  
 - [ ] **Sound effects**  
 - [ ] **Turn counter into datetime**  
@@ -39,9 +39,9 @@
 - [ ] **help modal showing controls settings and config**  
 - [ ] **Center camera if is greater than map**  
 - [ ] **render order, tiles-corpses-items-foes-player**  
-- [ ] **only pass turn if action is really done, no effect actions**  
+- [X] **only pass turn if action is really done, no effect actions**  
 - [ ] **damage tooltips**  
-- [ ] **on key pressed down ,movement at constant speed**  
+- [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
 - [ ] **test non-square fonts**  
 - [ ] **cumulative history, instead of x lines, (x) action**  
@@ -84,7 +84,7 @@
 - [X] **Dont trust any client data**  
 - [X] **Check client is not flooding server with commands.min each Xms?**  
 - [X] **seeds for reproducible runs**  
-- [ ] **discard api request by Methods POST...**  
+- [X] **discard api request by Methods POST...**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
 - [ ] **manage runs, set a maximun**  
 - [ ] **save in files and delete runs from memory after some inactivity**  

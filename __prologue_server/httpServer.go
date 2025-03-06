@@ -87,7 +87,7 @@ func (a app) doTurn(w http.ResponseWriter, r *http.Request) {
 	run, ok := (*a.Runs)[token]
 	if !ok {
 		lib.SendError(w, "Unauthorizated", http.StatusUnauthorized)
-		log.Print(token, ok, "Unauthorizated")
+		log.Printf("%s %t \"Unauthorized\"", token, ok)
 		return
 	}
 	r.ParseForm()

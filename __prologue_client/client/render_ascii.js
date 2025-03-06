@@ -63,7 +63,7 @@ const draw = {
   },
   entities: function () {
     for (const v of g.entities) {
-      console.log(v.info.Type);
+      //console.log(v.info.Type);
       const type = v.info.Type;
       const color = aux.colorOfEntity(type);
       this.entitiy(v.pos.Current.X, v.pos.Current.Y, type, color);

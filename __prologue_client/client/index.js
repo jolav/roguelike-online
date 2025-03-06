@@ -20,9 +20,9 @@ const index = {
   landingPage: async function () {
     console.log('##### INIT #####');
     this.showSection("landingPage");
-    g.info.NICK = await httpServer.nick();
+    g.info.nick = await httpServer.nick();
     [c.VERSION, c.LAG] = await httpServer.version();
-    document.getElementById("nick").value = g.info.NICK;
+    document.getElementById("nick").value = g.info.nick;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
     document.getElementById("lag").innerHTML = c.LAG;
     if (c.API.AUTOSTART) {
@@ -76,7 +76,6 @@ const pinger = {
     try {
       while (this.working) {
         const lag = await httpServer.ping();
-        console.log('aaa');
         document.getElementById("lag").innerHTML = lag;
         await this.sleep(c.API.PINGER_DELAY);
       }

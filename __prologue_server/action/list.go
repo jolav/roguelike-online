@@ -4,6 +4,7 @@ package action
 
 import (
 	"prologue/lib"
+	"slices"
 )
 
 func CreateList() *lib.Set {
@@ -24,4 +25,35 @@ func CreateList() *lib.Set {
 	tasks.Add("FIRE")
 	tasks.Add("SELECT")
 	return tasks
+}
+
+func GetType(task string) string {
+	if isAMovement(task) {
+		return "MOVE"
+	}
+	return task
+}
+
+func IsDiagonalMovement(task string) bool {
+	var diagonalMovements = []string{
+		"UPRIGHT",
+		"UPLEFT",
+		"DOWNRIGHT",
+		"DOWNLEFT",
+	}
+	return slices.Contains(diagonalMovements, task)
+}
+
+func isAMovement(task string) bool {
+	var movements = []string{
+		"UP",
+		"DOWN",
+		"LEFT",
+		"RIGHT",
+		"UPRIGHT",
+		"UPLEFT",
+		"DOWNRIGHT",
+		"DOWNLEFT",
+	}
+	return slices.Contains(movements, task)
 }

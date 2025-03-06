@@ -8,9 +8,9 @@ import (
 )
 
 type newRunData struct {
-	ID       string
-	NICK     string
-	SEED     int64
+	ID       string     `json:"id"`
+	Nick     string     `json:"nick"`
+	Seed     int64      `json:"seed"`
 	Map      mapa.Level `json:"map"`
 	Visibles `json:"entities"`
 }
@@ -33,8 +33,8 @@ func prepareDataNew(r Run) newRunData {
 	}
 	n := newRunData{
 		ID:       r.Info.Token,
-		NICK:     r.Info.Nick,
-		SEED:     r.Info.Seed,
+		Nick:     r.Info.Nick,
+		Seed:     r.Info.Seed,
 		Map:      r.Level,
 		Visibles: ves,
 	}

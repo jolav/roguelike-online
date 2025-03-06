@@ -2,7 +2,7 @@
 APP := prologueNEW
 
 # Output directory for compiled binaries
-BIN_DIR := $(HOME)/Documentos/bin
+BIN_DIR := $(HOME)/Documentos/prologue/bin
 # Directory to copy configuration files from
 CONF_DIR := ./conf
 
@@ -23,8 +23,14 @@ $(APP):
 #   go build $(LDFLAGS) -o $(BIN_DIR)/$@ cmd/*.go
 
 # Rule to copy configuration files
+#copy-config:
+#	@cp -r $(CONF_DIR) $(BIN_DIR)/
+# Rule to copy configuration files
 copy-config:
-	@cp -r $(CONF_DIR) $(BIN_DIR)/
+	@mkdir -p $(BIN_DIR)/$(CONF_DIR)
+	@cp -r $(CONF_DIR)/* $(BIN_DIR)/$(CONF_DIR)/
+	@mv $(BIN_DIR)/$(CONF_DIR)/conf_private.json $(BIN_DIR)/$(CONF_DIR)/conf.json
+
 
 # Rule to clean compiled files
 clean:

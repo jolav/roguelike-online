@@ -5,10 +5,9 @@ console.log('Loading..... client/_config.js');
 const config = {
   MODE: "prod",
   VERSION: "x",
-  AUX_VERSION: "0.5",
   LAG: 0,
   API: {
-    AUTOSTART: true,
+    AUTOSTART: false,//true,
     HOST: 0,// 0 local dev API, 1 real API
     URL: [
       "http://localhost:3000",
@@ -18,7 +17,7 @@ const config = {
     PING: "/ping",
     RUN: "/run",
     TURN: "/turn",
-    TIMEOUT: 300,
+    TIMEOUT: 150,
     PINGER_DELAY: 1000,
     NICK: "https://api.codetabs.com/v1/random/name",
     NICK_TIMEOUT: 2000,
