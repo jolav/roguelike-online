@@ -34,12 +34,15 @@ const httpServer = {
     g.is_server_turn = true;
     const aux = await fetchData(path, {});
     //console.log('AUX=>', aux.PJ.Current);
+    //console.log('AUX.ENTITIES=>', aux.entities);
     g.is_server_turn = false;
     if (aux === undefined) {
       return;
     }
     game.create(aux);
     console.log('##### NEW GAME #####');
+    //console.log(g.actions);
+    //console.log(g.entities);
     render.ascii();
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
@@ -61,8 +64,10 @@ const httpServer = {
     }
     game.update(turn);
     const lag = Math.trunc(performance.now() - start);
+    c.LAG = lag;
+    //console.log(g.actions[0]);
+    //console.log(g.entities.get("2"));
     render.ascii();
-    //console.log(g);
     document.getElementById("action").innerHTML = g.turn + " " + action + " ping: " + lag;
 
   }

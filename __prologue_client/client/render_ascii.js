@@ -16,15 +16,17 @@ ctx.font = c.VIEW.PPP_Y + "px " + c.CANVAS.FONTS[c.CANVAS.FONT_SELECTED];
 ctx.textBaseline = "middle";//"middle"; //"top";
 ctx.textAlign = "center";
 
-function ascii() {
+async function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
-  //draw.grid();
   draw.clearAll();
+  draw.grid();
   draw.map();
   draw.entities();
+  await draw.actions();
   //draw.pj();
-  console.log("Time =>", performance.now() - start, "ms");
+  const perf = performance.now() - start;
+  console.log(`Time=>  LAG ${c.LAG}  Render ${perf} ms`);
 }
 
 const draw = {
@@ -61,15 +63,22 @@ const draw = {
       }
     }
   },
-  entities: function () {
-    for (const v of g.entities) {
-      //console.log(v.info.Type);
+  entities: function (id) {
+    //console.log('HOLA', g.entities.size);
+    for (const [k, v] of g.entities) {
+      if (k === id) {
+        continue; //avoid drawing yourself while animating 
+      }
       const type = v.info.Type;
       const color = aux.colorOfEntity(type);
-      this.entitiy(v.pos.Current.X, v.pos.Current.Y, type, color);
+      const x = v.pos.OnMap.X; //Current.X;
+      const y = v.pos.OnMap.Y; //Current.Y;
+      //this.tile(x, y, aux.mapSymbol(type), color);
+      this.entity(x, y, type, color);
     }
   },
-  entitiy: function (x, y, type, color) {
+  entity: function (x, y, type, color) {
+    //console.log(x, y);
     this.clearTile(x, y);
     this.tile(x, y, aux.mapSymbol(type), color);
   },
@@ -88,6 +97,41 @@ const draw = {
       c.VIEW.PPP_X, c.VIEW.PPP_Y
     );
     ctx.beginPath();
+  },
+  actions: async function () {
+    for (const a of g.actions) {
+      const e = g.entities.get(String(a.ID));
+      const start = e.pos.OnMap;
+      const end = e.pos.Current;
+      await this.animate(e, start, end, c.RENDER.STEPS);
+      e.pos.OnMap = end;
+    }
+  },
+  animate: function (e, start, end, steps) {
+    //console.log('animate-', e, start, end, steps);
+    return new Promise(function (resolve) {
+      let step = 0;
+      function animateStep() {
+        this.clearAll();
+        this.grid();
+        this.map();
+        this.entities(String(e.eID));
+
+        const currentX = start.X + (end.X - start.X) * (step / steps);
+        const currentY = start.Y + (end.Y - start.Y) * (step / steps);
+        //const char = aux.mapSymbol(e.info.Type);
+        const color = aux.colorOfEntity(e.info.Type);
+        this.entity(currentX, currentY, e.info.Type, color);
+
+        step++;
+        if (step <= steps) {
+          requestAnimationFrame(animateStep.bind(this));
+        } else {
+          resolve();
+        }
+      }
+      animateStep.call(this);
+    }.bind(this));
   },
 };
 

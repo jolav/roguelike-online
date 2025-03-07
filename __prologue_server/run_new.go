@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"prologue/action"
 	"prologue/ecs"
 	"prologue/ecs/comps"
 	"prologue/lib"
@@ -61,6 +62,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 
 	r.Rnd = rand.New(rand.NewSource(seed))
 	r.Level = mapa.NewLevel(r.Rnd, cols, rows)
+	r.Actions = action.NewActions()
 
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)
@@ -80,7 +82,7 @@ func populate(r Run) ecs.ECS {
 	player := r.Ecs.NewEntity()
 	current := r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
 	r.Ecs.Infos.AddComponent(player, comps.Info{Name: r.Info.Nick, Type: "player"})
-	r.Ecs.Positions.AddComponent(player, comps.Position{Current: current})
+	r.Ecs.Positions.AddComponent(player, comps.Position{Current: current, OnMap: current})
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
 	r.Ecs.Healths.AddComponent(player, comps.Health{MaxHp: 50, CurrentHP: 45})
 	r.Ecs.AddTag(player, "player")
@@ -90,7 +92,7 @@ func populate(r Run) ecs.ECS {
 	rat := r.Ecs.NewEntity()
 	current = r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
-	r.Ecs.Positions.AddComponent(rat, comps.Position{Current: current})
+	r.Ecs.Positions.AddComponent(rat, comps.Position{Current: current, OnMap: current})
 	r.Ecs.Infos.AddComponent(rat, comps.Info{Name: "rat" + fmt.Sprint(rat), Type: "rat"})
 	r.Ecs.Healths.AddComponent(rat, comps.Health{MaxHp: 20, CurrentHP: 20})
 	r.Ecs.AddTag(rat, "creature")

@@ -12,7 +12,8 @@ const g = {
   lastTurn: Date.now(),
   is_server_turn: false,
   map: [],
-  entities: [],
+  entities: new Map(),
+  actions: [],
 };
 
 const game = {
@@ -20,13 +21,14 @@ const game = {
     g.info.id = aux.id;
     g.info.seed = aux.seed;
     g.map = aux.map;
-    g.entities = aux.entities;
+    g.entities = new Map(Object.entries(aux.entities));
     g.turn = 0;
   },
   update: function (turn) {
     g.turn = turn.turn;
     g.map = turn.map;
-    g.entities = turn.entities;
+    g.entities = new Map(Object.entries(turn.entities));
+    g.actions = turn.actions;
   },
 };
 

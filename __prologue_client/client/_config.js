@@ -7,7 +7,7 @@ const config = {
   VERSION: "x",
   LAG: 0,
   API: {
-    AUTOSTART: false,//true,
+    AUTOSTART: true,
     HOST: 0,// 0 local dev API, 1 real API
     URL: [
       "http://localhost:3000",
@@ -29,7 +29,7 @@ const config = {
   },
   RENDER: {
     TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
-    STEPS: 10,
+    STEPS: 6,
   },
   VIEW: {
     PANEL_WIDTH: 300,

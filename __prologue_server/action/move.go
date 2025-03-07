@@ -7,14 +7,16 @@ import (
 	"prologue/mapa"
 )
 
-func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (mapa.Point, bool) {
+func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (mapa.Point, mapa.Point, bool) {
 	points := []mapa.Point{}
 	for k, v := range es {
 		if k != eID {
 			points = append(points, v.Current)
 		}
 	}
+
 	pos := mapa.NewPoint(es[eID].Current.X, es[eID].Current.Y)
+	onMap := pos
 	target := pos
 
 	switch task {
@@ -40,19 +42,19 @@ func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (m
 		target.Y--
 	}
 	if !lvl.IsWalkable(target.X, target.Y) {
-		return pos, false
+		return pos, onMap, false
 	}
 	if !lvl.IsEmpty(target.X, target.Y, points) {
-		return pos, false
+		return pos, onMap, false
 	}
 	isDiagonal := IsDiagonalMovement(task)
 	if lvl.IsWalkable(target.X, target.Y) && !isDiagonal {
-		return target, true
+		return target, onMap, true
 	}
 	if isDiagonal && canMoveDiagonal(task, lvl, pos) && lvl.IsWalkable(target.X, target.Y) {
-		return target, true
+		return target, onMap, true
 	}
-	return pos, false
+	return pos, onMap, false
 }
 
 func canMoveDiagonal(task string, lvl mapa.Level, current mapa.Point) bool {

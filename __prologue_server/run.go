@@ -25,13 +25,15 @@ type Run struct {
 		Counter  int64
 	}
 
-	Rnd   *rand.Rand
-	Level mapa.Level
-	Ecs   ecs.ECS
+	Rnd     *rand.Rand
+	Level   mapa.Level
+	Ecs     ecs.ECS
+	Actions action.Actions
 }
 
 func (r *Run) DoTurn(task string) {
 	//fmt.Println(r.Control.Turn, " Action=>", task)
+	r.Actions.Clean()
 	eID := r.Ecs.GetEntitiesWithTag("player")[0]
 	taskType := action.GetType(task)
 	switch taskType {
@@ -45,13 +47,19 @@ func (r *Run) DoTurn(task string) {
 }
 
 func (r *Run) DoMove(task string, eID int) {
-	positions := r.Ecs.Positions.Components //(&r.Ecs, "position")
-	target, moved := action.TryMove(task, eID, r.Level, positions)
+	positions := r.Ecs.Positions.Components
+	current, onmap, moved := action.TryMove(task, eID, r.Level, positions)
+	newPos := comps.Position{Current: current, OnMap: onmap}
+	r.Ecs.Positions.RemoveComponent(eID)
+	r.Ecs.Positions.AddComponent(eID, newPos)
 	if !moved {
 		return
 	}
-	newPos := comps.Position{Current: target}
-	r.Ecs.Positions.RemoveComponent(eID)
-	r.Ecs.Positions.AddComponent(eID, newPos)
+	actionDone := action.Action{
+		Type:   "move",
+		ID:     eID,
+		Target: current,
+	}
+	r.Actions.Add(actionDone)
 	r.Control.Turn++
 }

@@ -6,7 +6,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.5a-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.6-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -14,13 +14,13 @@
 - [X] **Prologue.0.3 Generate and Draw Basic Map**  
 - [X] **Prologue.0.4 Generate Shelter Level**  
 - [X] **Prologue.0.5 Drawing and Moving around @**  
+- [X] **Prologue.0.6 Array of actions + movement animations**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Placing and Randomly Moving Enemies**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Melee**  
-- [ ] **Prologue Animations**  
 - [ ] **Prologue Data Files**  
 - [ ] **Prologue Save/Load run**  
 - [ ] **Prologue Inventory and items**  

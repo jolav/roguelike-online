@@ -65,7 +65,7 @@ func mw(next http.Handler, a app) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip := lib.GetIP(r)
 		if !slices.Contains(a.Sys.IPs, ip) {
-			log.Printf("IP=%s %s %s", ip, r.Method, r.URL.Path)
+			log.Printf("%s %s %s", ip, r.Method, r.URL.Path)
 		}
 		next.ServeHTTP(w, r)
 	})
