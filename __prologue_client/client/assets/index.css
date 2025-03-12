@@ -26,11 +26,13 @@ body {
 @font-face {
   font-family: 'IBM';
   src: url(./IBMPlexSans.ttf);
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'DejaVu';
   src: url(./dejavu-sans-mono-book.ttf);
+  font-display: swap;
 }
 
 

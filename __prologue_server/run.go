@@ -3,6 +3,7 @@
 package main
 
 import (
+	"log"
 	"math/rand"
 	"prologue/action"
 	"prologue/ecs"
@@ -28,32 +29,67 @@ type Run struct {
 	Rnd     *rand.Rand
 	Level   mapa.Level
 	Ecs     ecs.ECS
+	Queue   action.Queue
 	Actions action.Actions
 }
 
-func (r *Run) DoTurn(task string) {
+func (r *Run) TurnLoop(task string) {
 	//fmt.Println(r.Control.Turn, " Action=>", task)
 	r.Actions.Clean()
-	eID := r.Ecs.GetEntitiesWithTag("player")[0]
-	taskType := action.GetType(task)
-	switch taskType {
-	case "MOVE":
-		r.DoMove(task, eID)
+	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
+	done := r.doTask(playerID, task)
+	if !done {
 		return
-	case "SKIP":
-		r.Control.Turn++
-		return
+	}
+	tries := 0
+	for tries < 100 {
+		eID := r.Queue.Next()
+		switch eID {
+		case playerID:
+			return
+		case -1:
+			r.UpdateTurn()
+		default:
+			_ = r.doTask(eID, "skip")
+		}
+		tries++
 	}
 }
 
-func (r *Run) DoMove(task string, eID int) {
+func (r *Run) doTask(eID int, task string) bool {
+	taskType := action.GetType(task)
+	//fmt.Println("Action=>", eID, task, taskType)
+	switch taskType {
+	case "MOVE":
+		done := r.DoMove(task, eID)
+		if done {
+			r.Queue = r.Queue.UpdateEntity(eID, 50)
+			return true
+		}
+		return false
+	case "SKIP":
+		r.doSkip(eID)
+		r.Queue = r.Queue.UpdateEntity(eID, 100)
+		return true
+	default:
+		log.Printf("Unknown Task: %s\n", taskType)
+		return false
+	}
+}
+
+func (r *Run) UpdateTurn() {
+	r.Control.Turn++
+	r.Queue = r.Queue.UpdateTurn(100)
+}
+
+func (r *Run) DoMove(task string, eID int) bool {
 	positions := r.Ecs.Positions.Components
 	current, onmap, moved := action.TryMove(task, eID, r.Level, positions)
 	newPos := comps.Position{Current: current, OnMap: onmap}
 	r.Ecs.Positions.RemoveComponent(eID)
 	r.Ecs.Positions.AddComponent(eID, newPos)
 	if !moved {
-		return
+		return false
 	}
 	actionDone := action.Action{
 		Type:   "move",
@@ -61,5 +97,13 @@ func (r *Run) DoMove(task string, eID int) {
 		Target: current,
 	}
 	r.Actions.Add(actionDone)
-	r.Control.Turn++
+	return true
+}
+
+func (r *Run) doSkip(eID int) {
+	actionDone := action.Action{
+		Type: "skip",
+		ID:   eID,
+	}
+	r.Actions.Add(actionDone)
 }

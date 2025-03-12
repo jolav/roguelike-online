@@ -16,6 +16,8 @@ ctx.font = c.VIEW.PPP_Y + "px " + c.CANVAS.FONTS[c.CANVAS.FONT_SELECTED];
 ctx.textBaseline = "middle";//"middle"; //"top";
 ctx.textAlign = "center";
 
+ctx.fillText(' ', 0, 0); // force font loaded
+
 async function ascii() {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
@@ -101,8 +103,11 @@ const draw = {
   actions: async function () {
     for (const a of g.actions) {
       const e = g.entities.get(String(a.ID));
-      const start = e.pos.OnMap;
+      let start = e.pos.OnMap;
       const end = e.pos.Current;
+      if (a.Type === "skip") {
+        start = end;
+      }
       await this.animate(e, start, end, c.RENDER.STEPS);
       e.pos.OnMap = end;
     }

@@ -59,14 +59,16 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Control.Counter = 0
 	r.Control.Turn = 0
 	r.Control.LastTurn = time.Now()
-
+	// Core
 	r.Rnd = rand.New(rand.NewSource(seed))
 	r.Level = mapa.NewLevel(r.Rnd, cols, rows)
 	r.Actions = action.NewActions()
-
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)
-	//lib.PrettyPrintStructExported(r.Info)
+	player := r.Ecs.GetEntitiesWithTag("player")[0]
+	es := r.Ecs.GetEntitiesWithTag("on")
+	r.Queue = action.NewQueue(es, player, r.Rnd)
+
 	a.Runs.add(*r)
 	return r, "", http.StatusOK
 }
@@ -87,6 +89,7 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.Healths.AddComponent(player, comps.Health{MaxHp: 50, CurrentHP: 45})
 	r.Ecs.AddTag(player, "player")
 	r.Ecs.AddTag(player, "visible")
+	r.Ecs.AddTag(player, "on")
 
 	// rat
 	rat := r.Ecs.NewEntity()
@@ -97,5 +100,7 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.Healths.AddComponent(rat, comps.Health{MaxHp: 20, CurrentHP: 20})
 	r.Ecs.AddTag(rat, "creature")
 	r.Ecs.AddTag(rat, "visible")
+	r.Ecs.AddTag(rat, "on")
+
 	return r.Ecs
 }

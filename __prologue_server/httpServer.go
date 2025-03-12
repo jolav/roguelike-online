@@ -18,8 +18,8 @@ func (a *app) startHTTPServer() {
 
 	mux.HandleFunc("GET /version", a.sendVersion)
 	mux.HandleFunc("GET /ping", ping)
-	mux.HandleFunc("GET /run", a.doRun)
-	mux.HandleFunc("GET /turn", a.doTurn)
+	mux.HandleFunc("GET /run", a.createRun)
+	mux.HandleFunc("GET /turn", a.playerAction)
 	mux.HandleFunc("/", route404)
 
 	middleware := mw
@@ -71,7 +71,7 @@ func mw(next http.Handler, a app) http.Handler {
 	})
 }
 
-func (a app) doRun(w http.ResponseWriter, r *http.Request) {
+func (a app) createRun(w http.ResponseWriter, r *http.Request) {
 	newRun, msg, statusCode := a.NewRun(r)
 	if statusCode != http.StatusOK {
 		lib.SendError(w, msg, statusCode)
@@ -82,7 +82,7 @@ func (a app) doRun(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (a app) doTurn(w http.ResponseWriter, r *http.Request) {
+func (a app) playerAction(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
 	run, ok := (*a.Runs)[token]
 	if !ok {
@@ -104,7 +104,7 @@ func (a app) doTurn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	run.Control.LastTurn = time.Now()
-	run.DoTurn(task)
+	run.TurnLoop(task)
 
 	response := prepareDataTurn(*run)
 	lib.SendJSONResponse(w, response, http.StatusOK)

@@ -5,6 +5,7 @@ package action
 import (
 	"prologue/lib"
 	"slices"
+	"strings"
 )
 
 func CreateList() *lib.Set {
@@ -31,7 +32,7 @@ func GetType(task string) string {
 	if isAMovement(task) {
 		return "MOVE"
 	}
-	return task
+	return strings.ToUpper(task)
 }
 
 func IsDiagonalMovement(task string) bool {

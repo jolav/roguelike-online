@@ -6,7 +6,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.6-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.7-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -15,7 +15,7 @@
 - [X] **Prologue.0.4 Generate Shelter Level**  
 - [X] **Prologue.0.5 Drawing and Moving around @**  
 - [X] **Prologue.0.6 Array of actions + movement animations**  
-- [ ] **Prologue Turn Time System**  
+- [X] **Prologue.0.7 Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
 - [ ] **Prologue Placing and Randomly Moving Enemies**  
@@ -43,7 +43,6 @@
 - [ ] **damage tooltips**  
 - [X] **on key pressed down ,movement at constant speed**  
 - [ ] **unselect targets dead or not in LOS**  
-- [ ] **test non-square fonts**  
 - [ ] **cumulative history, instead of x lines, (x) action**  
 - [ ] **simulate nuclear shelter collapse**  
 - [ ] **markers where noise is heard**  
@@ -53,10 +52,11 @@
 - [ ] **two letter names on ascii ??**  
 
 **CLIENT ANIMATIONS**  
-- [ ] **Movement**  
+- [X] **Movement**  
 - [ ] **Melee**  
 - [ ] **Ranged**  
 - [ ] **Rumble**  
+- [ ] **Animations only in a limited map zone, better performance**  
 
 **CLIENT MOUSE**  
 - [ ] **move support**  
@@ -72,7 +72,7 @@
 - [ ] **resize map on windows resize**  
 
 **MAPS**  
-- [ ] **random pj start point instead center**  
+- [X] **random pj start point instead center**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  
@@ -89,8 +89,10 @@
 - [ ] **manage runs, set a maximun**  
 - [ ] **save in files and delete runs from memory after some inactivity**  
 - [ ] **Lock runs while are active solving a turn**  
+- [ ] **remove hardcoded data**  
 
 **OPTIONALS FEATURES**   
+- [ ] **test non-square fonts**  
 - [ ] **bypassing columns increase movement cost**  
 - [ ] **mark visited items like visited ??**   
 - [ ] **Show PJ position coords maybe as a skill**  
