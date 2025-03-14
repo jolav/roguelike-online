@@ -4,9 +4,12 @@
 
 ![License](https://img.shields.io/badge/License-%20GNU%20AGPLv3%20-brightgreen)  
 
+
+[TEST PROLOGUE ONLINE](https://prologue.roguelike.online/)
+
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.7-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.7a-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -18,7 +21,7 @@
 - [X] **Prologue.0.7 Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
-- [ ] **Prologue Placing and Randomly Moving Enemies**  
+- [ ] **Prologue Placing and Moving Enemies**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Data Files**  

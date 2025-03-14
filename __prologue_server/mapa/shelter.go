@@ -3,7 +3,6 @@
 package mapa
 
 import (
-	"fmt"
 	"math/rand"
 	"prologue/lib"
 )
@@ -38,8 +37,8 @@ const (
 )
 
 func newShelterMap(x *rand.Rand, cols, rows int) Level {
-	fmt.Println("creating", cols, "x", rows)
-	lvl := createShelter(cols, rows)
+	lvl := createMapAndfillWith(cols, rows, "wall")
+	//lvl := createShelter(cols, rows)
 	lvl = createSingleRoomInCenter(lvl, cols, rows, x)
 	success := 0
 	for tries := 1; tries < ROOM_TRIES; tries++ {
@@ -200,18 +199,5 @@ func fillRectRoom(lvl Level, r *Room) Level {
 
 func fillWall(lvl Level, w *Wall) Level {
 	lvl[w.X][w.Y] = Tile{}.create("floor")
-	return lvl
-}
-
-func createShelter(cols, rows int) Level {
-	lvl := make([][]Tile, cols)
-	for i := range lvl {
-		lvl[i] = make([]Tile, rows)
-	}
-	for x := range cols {
-		for y := range rows {
-			lvl[x][y] = Tile{}.create("wall")
-		}
-	}
 	return lvl
 }

@@ -41,7 +41,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	rowsString := re.Form.Get("rows")
 	cols, err := strconv.Atoi(colsString)
 	rows, err := strconv.Atoi(rowsString)
-	if rows < 3 || rows > 150 || cols < 3 || cols > 300 {
+	if cols < 3 || cols > 156 || rows < 3 || rows > 90 {
 		err = errors.New("ERROR")
 	}
 	if err != nil {
@@ -61,7 +61,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Control.LastTurn = time.Now()
 	// Core
 	r.Rnd = rand.New(rand.NewSource(seed))
-	r.Level = mapa.NewLevel(r.Rnd, cols, rows)
+	r.Level = mapa.NewLevel(r.Rnd, cols, rows, 1)
 	r.Actions = action.NewActions()
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)

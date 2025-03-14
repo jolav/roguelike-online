@@ -39,6 +39,8 @@ const config = {
     ROWS: 0,
     DELTA_X: 0,
     DELTA_Y: 0,
+    MAX_COLS: 52, // 52
+    MAX_ROWS: 30  // 30
   }
 };
 
@@ -48,6 +50,12 @@ const config = {
   const h = window.innerHeight;
   c.COLS = Math.floor(w / c.PPP_X) - 1;
   c.ROWS = Math.floor(h / c.PPP_Y) - 1;
+  if (c.COLS > c.MAX_COLS) {
+    c.COLS = c.MAX_COLS;
+  }
+  if (c.ROWS > c.MAX_ROWS) {
+    c.ROWS = c.MAX_ROWS;
+  }
   c.DELTA_X = Math.floor((w - (c.COLS * c.PPP_X)) / 2);
   c.DELTA_Y = Math.floor((h - (c.ROWS * c.PPP_Y)) / 2);
   //console.log(c.COLS, c.ROWS, c.DELTA_X, c.DELTA_Y);

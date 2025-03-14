@@ -102,7 +102,7 @@ const draw = {
   },
   actions: async function () {
     for (const a of g.actions) {
-      const e = g.entities.get(String(a.ID));
+      const e = g.entities.get(/*String*/(a.ID));
       let start = e.pos.OnMap;
       const end = e.pos.Current;
       if (a.Type === "skip") {
@@ -120,7 +120,7 @@ const draw = {
         this.clearAll();
         this.grid();
         this.map();
-        this.entities(String(e.eID));
+        this.entities(/*String*/(e.eID));
 
         const currentX = start.X + (end.X - start.X) * (step / steps);
         const currentY = start.Y + (end.Y - start.Y) * (step / steps);

@@ -9,18 +9,21 @@ import (
 
 type Level [][]Tile
 
-func NewLevel(x *rand.Rand, cols, rows int) Level {
-	lvlType := 0
+func NewLevel(x *rand.Rand, cols, rows, lvlType int) Level {
 	lvlTypes := map[int]string{
-		0: "testRoom",
-		1: "shelter",
+		0: "emptyView",
+		1: "testRoom",
+		2: "shelter",
 	}
 	switch lvlTypes[lvlType] {
+	case "emptyView":
+		return createMapAndfillWith(cols, rows, "unknown")
 	case "testRoom":
 		return testRoom(x, cols, rows)
 	case "shelter":
-		return newShelterMap(x, cols, rows)
+		return newShelterMap(x, 104, 60)
 	}
+
 	return nil
 }
 
