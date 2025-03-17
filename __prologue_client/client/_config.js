@@ -29,7 +29,7 @@ const config = {
   },
   RENDER: {
     TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
-    STEPS: 6,
+    STEPS: 1,
   },
   VIEW: {
     PANEL_WIDTH: 300,

@@ -31,11 +31,12 @@ type Run struct {
 	Ecs     ecs.ECS
 	Queue   action.Queue
 	Actions action.Actions
+	Camera  camera
 }
 
 func (r *Run) TurnLoop(task string) {
 	//fmt.Println(r.Control.Turn, " Action=>", task)
-	r.Actions.Clean()
+	r.Actions = r.Actions.Clean()
 	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
 	done := r.doTask(playerID, task)
 	if !done {
@@ -96,7 +97,9 @@ func (r *Run) DoMove(task string, eID int) bool {
 		ID:     eID,
 		Target: current,
 	}
-	r.Actions.Add(actionDone)
+
+	// add actions only in LOS
+	r.Actions = r.Actions.Add(actionDone)
 	return true
 }
 
@@ -105,5 +108,7 @@ func (r *Run) doSkip(eID int) {
 		Type: "skip",
 		ID:   eID,
 	}
-	r.Actions.Add(actionDone)
+	// add actions only in LO
+
+	r.Actions = r.Actions.Add(actionDone)
 }

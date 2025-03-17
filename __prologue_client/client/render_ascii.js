@@ -85,6 +85,15 @@ const draw = {
     this.tile(x, y, aux.mapSymbol(type), color);
   },
   tile: function (x, y, char, color) {
+    /*
+    ctx.fillStyle = dawnBringer.get(backgroundColor);
+    ctx.fillRect(
+      x * c.VIEW.PPP_X,
+      y * c.VIEW.PPP_Y,
+      c.VIEW.PPP_X,
+      c.VIEW.PPP_Y
+    );
+    */
     ctx.fillStyle = dawnBringer.get(color);
     ctx.fillText(
       char,

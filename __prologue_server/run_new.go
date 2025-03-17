@@ -61,13 +61,14 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Control.LastTurn = time.Now()
 	// Core
 	r.Rnd = rand.New(rand.NewSource(seed))
-	r.Level = mapa.NewLevel(r.Rnd, cols, rows, 1)
+	r.Level = mapa.NewLevel(r.Rnd, cols, rows, 2)
 	r.Actions = action.NewActions()
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)
 	player := r.Ecs.GetEntitiesWithTag("player")[0]
 	es := r.Ecs.GetEntitiesWithTag("on")
 	r.Queue = action.NewQueue(es, player, r.Rnd)
+	r.Camera = newCamera(cols, rows)
 
 	a.Runs.add(*r)
 	return r, "", http.StatusOK
@@ -83,6 +84,7 @@ func populate(r Run) ecs.ECS {
 	// player
 	player := r.Ecs.NewEntity()
 	current := r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
+	//current = mapa.Point{X: len(r.Level) / 2, Y: len(r.Level[0]) / 2}
 	r.Ecs.Infos.AddComponent(player, comps.Info{Name: r.Info.Nick, Type: "player"})
 	r.Ecs.Positions.AddComponent(player, comps.Position{Current: current, OnMap: current})
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
@@ -91,16 +93,22 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.AddTag(player, "visible")
 	r.Ecs.AddTag(player, "on")
 
-	// rat
-	rat := r.Ecs.NewEntity()
-	current = r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
-	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
-	r.Ecs.Positions.AddComponent(rat, comps.Position{Current: current, OnMap: current})
-	r.Ecs.Infos.AddComponent(rat, comps.Info{Name: "rat" + fmt.Sprint(rat), Type: "rat"})
-	r.Ecs.Healths.AddComponent(rat, comps.Health{MaxHp: 20, CurrentHP: 20})
-	r.Ecs.AddTag(rat, "creature")
-	r.Ecs.AddTag(rat, "visible")
-	r.Ecs.AddTag(rat, "on")
+	for range 5 {
+		r, esPoints = addCreature("rat", r, esPoints)
+	}
 
 	return r.Ecs
+}
+
+func addCreature(name string, r Run, esPoints []mapa.Point) (Run, []mapa.Point) {
+	creature := r.Ecs.NewEntity()
+	current := r.Level.RandomWalkableUnoccupiedTile(esPoints, r.Rnd)
+	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
+	r.Ecs.Positions.AddComponent(creature, comps.Position{Current: current, OnMap: current})
+	r.Ecs.Infos.AddComponent(creature, comps.Info{Name: name + fmt.Sprint(creature), Type: name})
+	r.Ecs.Healths.AddComponent(creature, comps.Health{MaxHp: 20, CurrentHP: 20})
+	r.Ecs.AddTag(creature, "creature")
+	r.Ecs.AddTag(creature, "visible")
+	r.Ecs.AddTag(creature, "on")
+	return r, esPoints
 }
