@@ -8,7 +8,7 @@ import (
 	"prologue/lib"
 )
 
-var version = "0.8"
+var version = "0.8a"
 var when = "undefined"
 
 type system struct {

@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.8-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.8a-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -53,9 +53,10 @@
 - [ ] **dummy items**  
 - [ ] **Tilesets as well as ascii**  
 - [ ] **two letter names on ascii ??**  
+- [ ] **multiple turn same entity, manage it**
 
 **CLIENT ANIMATIONS**  
-- [X] **Movement**  
+- [X] **Movement ??**  
 - [ ] **Melee**  
 - [ ] **Ranged**  
 - [ ] **Rumble**  
@@ -110,9 +111,7 @@
 - [ ] **Experience and levels**  
 
 **BUGS**  
-- [ ] **animations very long render time**  
-- [ ] **to avoid undefined, must send to client all actions and entities**  
-- [ ] **multiple turn same entity, manage it**
+- [X] **to avoid undefined, must send to client all actions and entities**  
 
 ## **Acknowledgment**
 

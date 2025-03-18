@@ -47,11 +47,10 @@ func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (m
 	if !lvl.IsEmpty(target.X, target.Y, points) {
 		return pos, onMap, false
 	}
-	isDiagonal := IsDiagonalMovement(task)
-	if lvl.IsWalkable(target.X, target.Y) && !isDiagonal {
+	if !IsDiagonalMovement(task) {
 		return target, onMap, true
 	}
-	if isDiagonal && canMoveDiagonal(task, lvl, pos) && lvl.IsWalkable(target.X, target.Y) {
+	if canMoveDiagonal(task, lvl, pos) {
 		return target, onMap, true
 	}
 	return pos, onMap, false

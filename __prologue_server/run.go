@@ -103,12 +103,4 @@ func (r *Run) DoMove(task string, eID int) bool {
 	return true
 }
 
-func (r *Run) doSkip(eID int) {
-	actionDone := action.Action{
-		Type: "skip",
-		ID:   eID,
-	}
-	// add actions only in LO
-
-	r.Actions = r.Actions.Add(actionDone)
-}
+func (r *Run) doSkip(eID int) {}

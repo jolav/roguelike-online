@@ -41,8 +41,8 @@ const httpServer = {
     console.log('##### NEW GAME #####');
     //console.log(g.actions);
     //console.log(g.entities);
-    //console.log(`Entities=${g.actions.length}, Actions=${g.actions.length}`);
-    render.ascii();
+    const d = `Entities=${g.actions.length}, Actions=${g.actions.length}`;
+    render.ascii(d);
     document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {
@@ -66,8 +66,8 @@ const httpServer = {
     c.LAG = lag;
     //console.log(g.actions);
     //console.log(g.entities);
-    //console.log(`Entities=${g.actions.length}, Actions=${g.actions.length}`);
-    render.ascii();
+    const d = `Entities=${g.actions.length}, Actions=${g.actions.length}`;
+    render.ascii(d);
     document.getElementById("action").innerHTML = g.turn + " " + action + " ping: " + lag;
 
   }

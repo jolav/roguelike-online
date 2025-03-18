@@ -18,7 +18,7 @@ ctx.textAlign = "center";
 
 ctx.fillText(' ', 0, 0); // force font loaded
 
-async function ascii() {
+async function ascii(d) {
   const start = performance.now();
   document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   draw.clearAll();
@@ -28,7 +28,7 @@ async function ascii() {
   await draw.actions();
   //draw.pj();
   const perf = performance.now() - start;
-  console.log(`Time=>  LAG ${c.LAG}  Render ${perf} ms`);
+  console.log(`Time=>  LAG ${c.LAG}  Render ${perf} ms ---- ${d}`);
 }
 
 const draw = {
@@ -68,13 +68,13 @@ const draw = {
   entities: function (id) {
     //console.log('HOLA', g.entities.size);
     for (const [k, v] of g.entities) {
-      if (k === id) {
+      if (k === id && c.RENDER.ANIMATION) {
         continue; //avoid drawing yourself while animating 
       }
       const type = v.info.Type;
       const color = aux.colorOfEntity(type);
-      const x = v.pos.OnMap.X; //Current.X;
-      const y = v.pos.OnMap.Y; //Current.Y;
+      const x = v.pos.Current.X;//OnMap.X; //Current.X;
+      const y = v.pos.Current.Y;//OnMap.Y; //Current.Y;
       //this.tile(x, y, aux.mapSymbol(type), color);
       this.entity(x, y, type, color);
     }
@@ -114,10 +114,16 @@ const draw = {
       const e = g.entities.get(/*String*/(a.ID));
       let start = e.pos.OnMap;
       const end = e.pos.Current;
-      if (a.Type === "skip") {
-        start = end;
+      if (c.RENDER.ANIMATION) {
+        await this.animate(e, start, end, c.RENDER.STEPS);
+      } else {
+        this.clearTile(start.X, start.Y);
+        const terrain = g.map[start.X][start.Y].terrain;
+        const char = aux.mapSymbol(terrain);
+        const color = "Atlantis";
+        this.tile(start.X, start.Y, char, color);
+        this.entity(end.X, end.Y, e.info.Type, aux.colorOfEntity(e.info.Type));
       }
-      await this.animate(e, start, end, c.RENDER.STEPS);
       e.pos.OnMap = end;
     }
   },
