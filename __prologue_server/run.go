@@ -32,6 +32,7 @@ type Run struct {
 	Queue   action.Queue
 	Actions action.Actions
 	Camera  camera
+	Fov     fieldOfVision
 }
 
 func (r *Run) TurnLoop(task string) {

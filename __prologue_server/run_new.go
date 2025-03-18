@@ -61,7 +61,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Control.LastTurn = time.Now()
 	// Core
 	r.Rnd = rand.New(rand.NewSource(seed))
-	r.Level = mapa.NewLevel(r.Rnd, cols, rows, 2)
+	r.Level = mapa.NewLevel(r.Rnd, cols, rows, 1)
 	r.Actions = action.NewActions()
 	r.Ecs = *ecs.NewECS()
 	r.Ecs = populate(*r)
@@ -69,6 +69,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	es := r.Ecs.GetEntitiesWithTag("on")
 	r.Queue = action.NewQueue(es, player, r.Rnd)
 	r.Camera = newCamera(cols, rows)
+	r.Fov = fieldOfVision{}.initFOV()
 
 	a.Runs.add(*r)
 	return r, "", http.StatusOK

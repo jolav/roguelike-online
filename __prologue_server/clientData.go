@@ -33,11 +33,14 @@ type Entity struct {
 }
 
 func prepareDataNew(r Run) newRunData {
+	r.Fov.rayCast(r, 12)
 	es := make(Entities)
 	r.Camera = r.Camera.updateCam(r)
 	positions := r.Ecs.Positions.Components
 	for k, v := range positions {
-		if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
+		if r.Level[v.Current.X][v.Current.Y].Visible ||
+			r.Level[v.OnMap.X][v.OnMap.Y].Visible {
+			// if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
 			info, _ := r.Ecs.Infos.GetComponent(k)
 			e := Entity{
 				ID:   k,
@@ -58,13 +61,17 @@ func prepareDataNew(r Run) newRunData {
 	//fmt.Println(n.Entities[2])
 	return n
 }
-func prepareDataTurnOLD(r Run) newTurnData {
+
+func prepareDataTurn(r Run) newTurnData {
+	r.Fov.rayCast(r, 12)
 	es := make(Entities)
 	actions := r.Actions
 	r.Camera = r.Camera.updateCam(r)
 	positions := r.Ecs.Positions.Components
 	for k, v := range positions {
-		if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
+		if r.Level[v.Current.X][v.Current.Y].Visible ||
+			r.Level[v.OnMap.X][v.OnMap.Y].Visible {
+			// if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
 			info, _ := r.Ecs.Infos.GetComponent(k)
 			e := Entity{
 				ID:   k,
@@ -72,35 +79,8 @@ func prepareDataTurnOLD(r Run) newTurnData {
 				Info: info,
 			}
 			es[k] = e
-		} else {
-			actions = r.Actions.Remove(k)
 		}
 	}
-	n := newTurnData{
-		Turn:     r.Control.Turn,
-		Map:      fromMapToView(r),
-		Entities: es,
-		Actions:  actions,
-	}
-	return n
-}
-
-func prepareDataTurn(r Run) newTurnData {
-	es := make(Entities)
-	actions := r.Actions
-	r.Camera = r.Camera.updateCam(r)
-	positions := r.Ecs.Positions.Components
-	for k, v := range positions {
-		info, _ := r.Ecs.Infos.GetComponent(k)
-		e := Entity{
-			ID:   k,
-			Pos:  updateEntitiesPos(r, v),
-			Info: info,
-		}
-		es[k] = e
-	}
-
-	// adhoc
 	n := newTurnData{
 		Turn:     r.Control.Turn,
 		Map:      fromMapToView(r),
@@ -137,7 +117,17 @@ func fromMapToView(r Run) mapa.Level {
 
 	for x := range cols {
 		for y := range rows {
-			res[x][y] = r.Level[x+r.Camera.Pos.X][y+r.Camera.Pos.Y]
+			if r.Level[x+r.Camera.Pos.X][y+r.Camera.Pos.Y].Explored {
+				res[x][y] = r.Level[x+r.Camera.Pos.X][y+r.Camera.Pos.Y]
+			} else {
+				res[x][y] = mapa.Tile{
+					Terrain:  "unknown",
+					Walkable: false,
+					BlockLOS: true,
+					Explored: false,
+					Visible:  false,
+				}
+			}
 		}
 	}
 	//fmt.Println("VIEW = ", cols, rows, len(res), len(res[0]))

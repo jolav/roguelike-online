@@ -53,14 +53,16 @@ const draw = {
     //console.log(c.VIEW.COLS, c.VIEW.ROWS);
     for (let col = 0; col < g.map.length; col++) {
       for (let row = 0; row < g.map[0].length; row++) {
-        const terrain = g.map[col][row].terrain;
-        //const color = aux.colorOfEntity("visible");
-        switch (terrain) {
-          case "wall":
-            this.tile(col, row, aux.mapSymbol("wall"), /*color*/ "Heather");
-            break;
-          default:
-            this.tile(col, row, aux.mapSymbol("floor"), /*color*/"Atlantis");
+        const tile = g.map[col][row];
+        const char = aux.mapSymbol(tile.terrain);
+        let color;
+        if (tile.visible) {
+          color = aux.colorOfEntity("visible");
+        } else if (tile.explored) {
+          color = aux.colorOfEntity("explored");
+        }
+        if (color) {
+          this.tile(col, row, char, color);
         }
       }
     }

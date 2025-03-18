@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.8a-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.9-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -20,8 +20,9 @@
 - [X] **Prologue.0.6 Array of actions + movement animations**  
 - [X] **Prologue.0.7 Turn Time System**  
 - [X] **Prologue.0.8 Camera**  
-- [ ] **Prologue Field of View**  
-- [ ] **Prologue Placing and Moving Enemies**  
+- [X] **Prologue.0.9 Field of View**  
+- [ ] **Prologue Placing and Randomly Moving Enemies**  
+- [ ] **Prologue Enemies AI**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Data Files**  
@@ -109,6 +110,7 @@
 - [ ] **Autoexplore**  
 - [ ] **Stats**  
 - [ ] **Experience and levels**  
+- [ ] **Facing last direction, LOS radius behind at 1/2**  
 
 **BUGS**  
 - [X] **to avoid undefined, must send to client all actions and entities**  

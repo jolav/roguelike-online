@@ -29,8 +29,8 @@ const config = {
   },
   RENDER: {
     TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
-    ANIMATION: false,
-    STEPS: 1,
+    ANIMATION: true,
+    STEPS: 6,
   },
   VIEW: {
     PANEL_WIDTH: 300,

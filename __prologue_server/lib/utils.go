@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"os"
 	"regexp"
 )
@@ -35,4 +36,8 @@ func PrettyPrintStructExported(s any) {
 func IsAlphanumeric(input string) bool {
 	re := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 	return re.MatchString(input)
+}
+
+func RoundFloat(f float64) float64 {
+	return math.Floor(f + .5)
 }
