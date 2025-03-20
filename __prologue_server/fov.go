@@ -5,6 +5,7 @@ package main
 import (
 	"math"
 	"prologue/lib"
+	"prologue/mapa"
 )
 
 type fieldOfVision struct {
@@ -59,6 +60,40 @@ func (f fieldOfVision) rayCast(r Run, losRadius int) {
 			if r.Level.IsBlockingLOS(roundedX, roundedY) {
 				break
 			}
+		}
+	}
+}
+
+func (f fieldOfVision) p1CanSeep2(lvl mapa.Level, p1, p2 mapa.Point) bool {
+	dx := int(math.Abs(float64(p2.X - p1.X)))
+	dy := int(math.Abs(float64(p2.Y - p1.Y)))
+	sx := -1
+	if p1.X < p2.X {
+		sx = 1
+	}
+	sy := -1
+	if p1.Y < p2.Y {
+		sy = 1
+	}
+	err := dx - dy
+
+	x0, y0 := p1.X, p1.Y
+	for {
+		if x0 == p2.X && y0 == p2.Y {
+			return true
+		}
+		if lvl.IsBlockingLOS(x0, y0) {
+			return false
+		}
+
+		e2 := 2 * err
+		if e2 > -dy {
+			err -= dy
+			x0 += sx
+		}
+		if e2 < dx {
+			err += dx
+			y0 += sy
 		}
 	}
 }

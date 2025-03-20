@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.9-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.10-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -21,7 +21,7 @@
 - [X] **Prologue.0.7 Turn Time System**  
 - [X] **Prologue.0.8 Camera**  
 - [X] **Prologue.0.9 Field of View**  
-- [ ] **Prologue Placing and Randomly Moving Enemies**  
+- [X] **Prologue.0.10 Move Creatures Randomly**  
 - [ ] **Prologue Enemies AI**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Melee**  
@@ -54,7 +54,9 @@
 - [ ] **dummy items**  
 - [ ] **Tilesets as well as ascii**  
 - [ ] **two letter names on ascii ??**  
-- [ ] **multiple turn same entity, manage it**
+- [ ] **multiple turn same entity, manage it**  
+- [ ] **change order, first player animation then draw centering camera**  
+
 
 **CLIENT ANIMATIONS**  
 - [X] **Movement ??**  
@@ -95,6 +97,7 @@
 - [ ] **save in files and delete runs from memory after some inactivity**  
 - [ ] **Lock runs while are active solving a turn**  
 - [ ] **remove hardcoded data**  
+- [ ] **calculate server response time**  
 
 **OPTIONALS FEATURES**   
 - [ ] **test non-square fonts**  
@@ -111,9 +114,12 @@
 - [ ] **Stats**  
 - [ ] **Experience and levels**  
 - [ ] **Facing last direction, LOS radius behind at 1/2**  
+- [ ] **Hall of Fame**  
 
 **BUGS**  
 - [X] **to avoid undefined, must send to client all actions and entities**  
+- [ ] **multiple turn animations, only last renders ok**  
+- [ ] **Sometimes, if player pumps a creature, turn continues instead of returning to the client, creature keep performing actions. Other times, player tries to enter an empty space but cannot enter.**
 
 ## **Acknowledgment**
 

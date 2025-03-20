@@ -8,6 +8,7 @@ import (
 	"prologue/action"
 	"prologue/ecs"
 	"prologue/ecs/comps"
+	"prologue/lib"
 	"prologue/mapa"
 	"time"
 )
@@ -52,10 +53,24 @@ func (r *Run) TurnLoop(task string) {
 		case -1:
 			r.UpdateTurn()
 		default:
-			_ = r.doTask(eID, "skip")
+			task := r.entityChooseTask(eID)
+			_ = r.doTask(eID, task)
 		}
 		tries++
 	}
+}
+
+func (r *Run) entityChooseTask(id int) string {
+	pos, _ := r.Ecs.Positions.GetComponent(id)
+	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
+	posPJ, _ := r.Ecs.Positions.GetComponent(playerID)
+	if mapa.EuclideanDistance(pos.Current, posPJ.Current) < float64(8) &&
+		r.Fov.p1CanSeep2(r.Level, pos.Current, posPJ.Current) {
+		task := action.GetRandomMovement(lib.RandomInt(0, 7, r.Rnd))
+		//fmt.Printf(`%d -> %s`, id, task)
+		return task
+	}
+	return "skip"
 }
 
 func (r *Run) doTask(eID int, task string) bool {
@@ -104,4 +119,12 @@ func (r *Run) DoMove(task string, eID int) bool {
 	return true
 }
 
-func (r *Run) doSkip(eID int) {}
+func (r *Run) doSkip(eID int) bool {
+	pos, _ := r.Ecs.Positions.GetComponent(eID)
+	current := pos.Current
+	onmap := pos.Current
+	newPos := comps.Position{Current: current, OnMap: onmap}
+	r.Ecs.Positions.RemoveComponent(eID)
+	r.Ecs.Positions.AddComponent(eID, newPos)
+	return true
+}

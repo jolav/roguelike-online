@@ -75,8 +75,8 @@ const draw = {
       }
       const type = v.info.Type;
       const color = aux.colorOfEntity(type);
-      const x = v.pos.Current.X;//OnMap.X; //Current.X;
-      const y = v.pos.Current.Y;//OnMap.Y; //Current.Y;
+      const x = v.pos.OnMap.X; //Current.X;
+      const y = v.pos.OnMap.Y; //Current.Y;
       //this.tile(x, y, aux.mapSymbol(type), color);
       this.entity(x, y, type, color);
     }

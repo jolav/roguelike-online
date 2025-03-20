@@ -8,6 +8,24 @@ import (
 	"strings"
 )
 
+var diagonalMovements = []string{
+	"UPRIGHT",
+	"UPLEFT",
+	"DOWNRIGHT",
+	"DOWNLEFT",
+}
+
+var movements = []string{
+	"UP",
+	"DOWN",
+	"LEFT",
+	"RIGHT",
+	"UPRIGHT",
+	"UPLEFT",
+	"DOWNRIGHT",
+	"DOWNLEFT",
+}
+
 func CreateList() *lib.Set {
 	tasks := lib.NewSet()
 	tasks.Add("DOWNLEFT")
@@ -36,25 +54,13 @@ func GetType(task string) string {
 }
 
 func IsDiagonalMovement(task string) bool {
-	var diagonalMovements = []string{
-		"UPRIGHT",
-		"UPLEFT",
-		"DOWNRIGHT",
-		"DOWNLEFT",
-	}
 	return slices.Contains(diagonalMovements, task)
 }
 
 func isAMovement(task string) bool {
-	var movements = []string{
-		"UP",
-		"DOWN",
-		"LEFT",
-		"RIGHT",
-		"UPRIGHT",
-		"UPLEFT",
-		"DOWNRIGHT",
-		"DOWNLEFT",
-	}
 	return slices.Contains(movements, task)
+}
+
+func GetRandomMovement(who int) string {
+	return movements[who]
 }
