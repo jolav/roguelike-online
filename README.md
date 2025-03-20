@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.10-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.10a-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -118,8 +118,7 @@
 
 **BUGS**  
 - [X] **to avoid undefined, must send to client all actions and entities**  
-- [ ] **multiple turn animations, only last renders ok**  
-- [ ] **Sometimes, if player pumps a creature, turn continues instead of returning to the client, creature keep performing actions. Other times, player tries to enter an empty space but cannot enter.**
+- [X] **Player pumps dont return loop to client and enter empty tiles can fail**
 
 ## **Acknowledgment**
 

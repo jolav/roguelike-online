@@ -79,6 +79,10 @@ func prepareDataTurn(r Run) newTurnData {
 				Info: info,
 			}
 			es[k] = e
+			// update onMap once data is sent to client
+			v.OnMap = v.Current
+			r.Ecs.Positions.RemoveComponent(k)
+			r.Ecs.Positions.AddComponent(k, v)
 		}
 	}
 	n := newTurnData{
