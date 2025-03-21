@@ -20,6 +20,15 @@ func (ac Actions) Add(a Action) Actions {
 	return append(ac, a)
 }
 
+func (ac Actions) Exists(id int) bool {
+	for _, v := range ac {
+		if v.ID == id {
+			return true
+		}
+	}
+	return false
+}
+
 func (ac Actions) Clean() Actions {
 	return make([]Action, 0)
 }

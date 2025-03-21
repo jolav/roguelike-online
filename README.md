@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.10a-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.10b-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -98,6 +98,7 @@
 - [ ] **Lock runs while are active solving a turn**  
 - [ ] **remove hardcoded data**  
 - [ ] **calculate server response time**  
+- [ ] **add fov component, losDistance**  
 
 **OPTIONALS FEATURES**   
 - [ ] **test non-square fonts**  

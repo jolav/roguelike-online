@@ -57,7 +57,7 @@ func (f fieldOfVision) rayCast(r Run, losRadius int) {
 			}
 			r.Level[roundedX][roundedY].Explored = true
 			r.Level[roundedX][roundedY].Visible = true
-			if r.Level.IsBlockingLOS(roundedX, roundedY) {
+			if r.Level.IsBlockingLOS(mapa.Point{X: roundedX, Y: roundedY}) {
 				break
 			}
 		}
@@ -82,10 +82,9 @@ func (f fieldOfVision) p1CanSeep2(lvl mapa.Level, p1, p2 mapa.Point) bool {
 		if x0 == p2.X && y0 == p2.Y {
 			return true
 		}
-		if lvl.IsBlockingLOS(x0, y0) {
+		if lvl.IsBlockingLOS(mapa.Point{X: x0, Y: y0}) {
 			return false
 		}
-
 		e2 := 2 * err
 		if e2 > -dy {
 			err -= dy

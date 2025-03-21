@@ -8,7 +8,6 @@ import (
 	"prologue/action"
 	"prologue/ecs"
 	"prologue/ecs/comps"
-	"prologue/lib"
 	"prologue/mapa"
 	"time"
 )
@@ -53,20 +52,19 @@ func (r *Run) TurnLoop(task string) {
 		case -1:
 			r.UpdateTurn()
 		default:
-			task := r.entityChooseTask(eID)
+			task := r.entityAI(eID)
 			_ = r.doTask(eID, task)
 		}
 		tries++
 	}
 }
 
-func (r *Run) entityChooseTask(id int) string {
+func (r *Run) entityAI(id int) string {
 	pos, _ := r.Ecs.Positions.GetComponent(id)
 	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
 	posPJ, _ := r.Ecs.Positions.GetComponent(playerID)
-	if mapa.EuclideanDistance(pos.Current, posPJ.Current) < float64(8) &&
-		r.Fov.p1CanSeep2(r.Level, pos.Current, posPJ.Current) {
-		task := action.GetRandomMovement(lib.RandomInt(0, 7, r.Rnd))
+	if mapa.EuclideanDistance(pos.Current, posPJ.Current) < float64(8) {
+		task := action.GetRandomMovement(r.Rnd)
 		//fmt.Printf(`%d -> %s`, id, task)
 		return task
 	}
@@ -102,12 +100,12 @@ func (r *Run) UpdateTurn() {
 func (r *Run) DoMove(task string, eID int) bool {
 	positions := r.Ecs.Positions.Components
 	current, onmap, moved := action.TryMove(task, eID, r.Level, positions)
-	newPos := comps.Position{Current: current, OnMap: onmap}
-	r.Ecs.Positions.RemoveComponent(eID)
-	r.Ecs.Positions.AddComponent(eID, newPos)
 	if !moved {
 		return false
 	}
+	newPos := comps.Position{Current: current, OnMap: onmap}
+	r.Ecs.Positions.RemoveComponent(eID)
+	r.Ecs.Positions.AddComponent(eID, newPos)
 	actionDone := action.Action{
 		Type:   "move",
 		ID:     eID,
@@ -119,12 +117,11 @@ func (r *Run) DoMove(task string, eID int) bool {
 	return true
 }
 
-func (r *Run) doSkip(eID int) bool {
-	pos, _ := r.Ecs.Positions.GetComponent(eID)
+func (r *Run) doSkip(eID int) {
+	/*pos, _ := r.Ecs.Positions.GetComponent(eID)
 	current := pos.Current
 	onmap := pos.Current
 	newPos := comps.Position{Current: current, OnMap: onmap}
 	r.Ecs.Positions.RemoveComponent(eID)
-	r.Ecs.Positions.AddComponent(eID, newPos)
-	return true
+	r.Ecs.Positions.AddComponent(eID, newPos)*/
 }

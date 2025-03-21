@@ -3,6 +3,7 @@
 package action
 
 import (
+	"math/rand"
 	"prologue/lib"
 	"slices"
 	"strings"
@@ -61,6 +62,6 @@ func isAMovement(task string) bool {
 	return slices.Contains(movements, task)
 }
 
-func GetRandomMovement(who int) string {
-	return movements[who]
+func GetRandomMovement(x *rand.Rand) string {
+	return movements[lib.RandomInt(0, 7, x)]
 }

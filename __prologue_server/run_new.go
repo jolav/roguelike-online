@@ -94,7 +94,7 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.AddTag(player, "visible")
 	r.Ecs.AddTag(player, "on")
 
-	for range 5 {
+	for range 45 {
 		r, esPoints = addCreature("rat", r, esPoints)
 	}
 

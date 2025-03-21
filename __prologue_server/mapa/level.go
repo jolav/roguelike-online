@@ -27,6 +27,14 @@ func NewLevel(x *rand.Rand, cols, rows, lvlType int) Level {
 	return nil
 }
 
+func (lvl Level) Get(p Point) Tile {
+	return lvl[p.X][p.Y]
+}
+
+func (lvl Level) Set(p Point, t Tile) {
+	lvl[p.X][p.Y] = t
+}
+
 func (lvl Level) RandomWalkableUnoccupiedTile(es []Point, x *rand.Rand) Point {
 	cols := len(lvl)
 	rows := len(lvl[0])
@@ -34,7 +42,7 @@ func (lvl Level) RandomWalkableUnoccupiedTile(es []Point, x *rand.Rand) Point {
 	for tries < 5000 {
 		pX := lib.RandomInt(1, cols-1, x)
 		pY := lib.RandomInt(1, rows-1, x)
-		if lvl.IsWalkable(pX, pY) && lvl.IsEmpty(pX, pY, es) {
+		if lvl.IsWalkable(Point{pX, pY}) && lvl.IsEmpty(Point{pX, pY}, es) {
 			return Point{pX, pY}
 		}
 		tries++
@@ -42,27 +50,27 @@ func (lvl Level) RandomWalkableUnoccupiedTile(es []Point, x *rand.Rand) Point {
 	return Point{0, 0}
 }
 
-func (lvl Level) IsEmpty(x, y int, es []Point) bool {
+func (lvl Level) IsEmpty(p Point, es []Point) bool {
 	for _, point := range es {
-		if point.X == x && point.Y == y {
+		if point.X == p.X && point.Y == p.Y {
 			return false
 		}
 	}
 	return true
 }
 
-func (lvl Level) IsWalkable(x, y int) bool {
-	return lvl[x][y].Walkable
+func (lvl Level) IsWalkable(p Point) bool {
+	return lvl[p.X][p.Y].Walkable
 }
 
-func (lvl Level) IsBlockingLOS(x, y int) bool {
-	return lvl[x][y].BlockLOS
+func (lvl Level) IsBlockingLOS(p Point) bool {
+	return lvl[p.X][p.Y].BlockLOS
 }
 
-func (lvl Level) IsExplored(x, y int) bool {
-	return lvl[x][y].Explored
+func (lvl Level) IsExplored(p Point) bool {
+	return lvl[p.X][p.Y].Explored
 }
 
-func (lvl Level) IsVisible(x, y int) bool {
-	return lvl[x][y].Visible
+func (lvl Level) IsVisible(p Point) bool {
+	return lvl[p.X][p.Y].Visible
 }

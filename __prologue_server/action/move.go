@@ -18,7 +18,6 @@ func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (m
 	pos := mapa.NewPoint(es[eID].Current.X, es[eID].Current.Y)
 	onMap := pos
 	target := pos
-
 	switch task {
 	case "UP":
 		target.Y--
@@ -41,10 +40,10 @@ func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (m
 		target.X--
 		target.Y--
 	}
-	if !lvl.IsWalkable(target.X, target.Y) {
+	if !lvl.IsWalkable(target) {
 		return pos, onMap, false
 	}
-	if !lvl.IsEmpty(target.X, target.Y, points) {
+	if !lvl.IsEmpty(target, points) {
 		return pos, onMap, false
 	}
 	if !IsDiagonalMovement(task) {
@@ -59,31 +58,31 @@ func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (m
 func canMoveDiagonal(task string, lvl mapa.Level, current mapa.Point) bool {
 	switch task {
 	case "UPRIGHT":
-		if !lvl.IsWalkable(current.X, current.Y-1) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X, Y: current.Y - 1}) {
 			return false
 		}
-		if !lvl.IsWalkable(current.X+1, current.Y) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X + 1, Y: current.Y}) {
 			return false
 		}
 	case "DOWNRIGHT":
-		if !lvl.IsWalkable(current.X, current.Y+1) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X, Y: current.Y + 1}) {
 			return false
 		}
-		if !lvl.IsWalkable(current.X+1, current.Y) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X + 1, Y: current.Y}) {
 			return false
 		}
 	case "DOWNLEFT":
-		if !lvl.IsWalkable(current.X, current.Y+1) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X, Y: current.Y + 1}) {
 			return false
 		}
-		if !lvl.IsWalkable(current.X-1, current.Y) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X - 1, Y: current.Y}) {
 			return false
 		}
 	case "UPLEFT":
-		if !lvl.IsWalkable(current.X, current.Y-1) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X, Y: current.Y - 1}) {
 			return false
 		}
-		if !lvl.IsWalkable(current.X-1, current.Y) {
+		if !lvl.IsWalkable(mapa.Point{X: current.X - 1, Y: current.Y}) {
 			return false
 		}
 	}

@@ -10,7 +10,7 @@ type Tile struct {
 	Visible  bool   `json:"visible"`
 }
 
-func (t Tile) create(terrain string) Tile {
+func (t Tile) Create(terrain string) Tile {
 	switch terrain {
 	case "floor":
 		return Tile{terrain, true, false, false, false}

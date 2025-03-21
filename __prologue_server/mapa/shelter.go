@@ -56,7 +56,7 @@ func newShelterMap(x *rand.Rand, cols, rows int) Level {
 				return lvl
 			}
 		} else {
-			lvl[w.X][w.Y] = Tile{}.create("wall") // clean randomWall
+			lvl[w.X][w.Y] = Tile{}.Create("wall") // clean randomWall
 		}
 	}
 	return lvl
@@ -191,13 +191,13 @@ func fillRectRoom(lvl Level, r *Room) Level {
 	originY := r.Y
 	for x := range r.Width {
 		for y := range r.Height {
-			lvl[originX+x][originY+y] = Tile{}.create("floor")
+			lvl[originX+x][originY+y] = Tile{}.Create("floor")
 		}
 	}
 	return lvl
 }
 
 func fillWall(lvl Level, w *Wall) Level {
-	lvl[w.X][w.Y] = Tile{}.create("floor")
+	lvl[w.X][w.Y] = Tile{}.Create("floor")
 	return lvl
 }

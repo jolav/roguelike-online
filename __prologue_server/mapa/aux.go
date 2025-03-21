@@ -11,7 +11,7 @@ func createMapAndfillWith(cols, rows int, fill string) Level {
 	}
 	for x := range cols {
 		for y := range rows {
-			lvl[x][y] = Tile{}.create(fill)
+			lvl[x][y] = Tile{}.Create(fill)
 		}
 	}
 	return lvl

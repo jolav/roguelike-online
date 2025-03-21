@@ -38,9 +38,7 @@ func prepareDataNew(r Run) newRunData {
 	r.Camera = r.Camera.updateCam(r)
 	positions := r.Ecs.Positions.Components
 	for k, v := range positions {
-		if r.Level[v.Current.X][v.Current.Y].Visible ||
-			r.Level[v.OnMap.X][v.OnMap.Y].Visible {
-			// if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
+		if r.Level.IsVisible(v.Current) || r.Level.IsVisible(v.OnMap) {
 			info, _ := r.Ecs.Infos.GetComponent(k)
 			e := Entity{
 				ID:   k,
@@ -65,13 +63,10 @@ func prepareDataNew(r Run) newRunData {
 func prepareDataTurn(r Run) newTurnData {
 	r.Fov.rayCast(r, 12)
 	es := make(Entities)
-	actions := r.Actions
 	r.Camera = r.Camera.updateCam(r)
 	positions := r.Ecs.Positions.Components
 	for k, v := range positions {
-		if r.Level[v.Current.X][v.Current.Y].Visible ||
-			r.Level[v.OnMap.X][v.OnMap.Y].Visible {
-			// if r.Camera.containsPoint(v.Current) || r.Camera.containsPoint(v.OnMap) {
+		if r.Level.IsVisible(v.Current) || r.Level.IsVisible(v.OnMap) {
 			info, _ := r.Ecs.Infos.GetComponent(k)
 			e := Entity{
 				ID:   k,
@@ -83,6 +78,14 @@ func prepareDataTurn(r Run) newTurnData {
 			v.OnMap = v.Current
 			r.Ecs.Positions.RemoveComponent(k)
 			r.Ecs.Positions.AddComponent(k, v)
+		}
+	}
+	// clean actions not in LOS.
+	actions := action.NewActions()
+	for _, a := range r.Actions {
+		_, ok := es[a.ID]
+		if ok {
+			actions = append(actions, a)
 		}
 	}
 	n := newTurnData{
@@ -121,16 +124,11 @@ func fromMapToView(r Run) mapa.Level {
 
 	for x := range cols {
 		for y := range rows {
-			if r.Level[x+r.Camera.Pos.X][y+r.Camera.Pos.Y].Explored {
-				res[x][y] = r.Level[x+r.Camera.Pos.X][y+r.Camera.Pos.Y]
+			p := mapa.Point{X: x + r.Camera.Pos.X, Y: y + r.Camera.Pos.Y}
+			if r.Level.IsExplored(p) {
+				res[x][y] = r.Level[p.X][p.Y]
 			} else {
-				res[x][y] = mapa.Tile{
-					Terrain:  "unknown",
-					Walkable: false,
-					BlockLOS: true,
-					Explored: false,
-					Visible:  false,
-				}
+				res[x][y] = mapa.Tile{}.Create("unknown")
 			}
 		}
 	}
