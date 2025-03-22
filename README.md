@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.10b-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.11-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -22,7 +22,7 @@
 - [X] **Prologue.0.8 Camera**  
 - [X] **Prologue.0.9 Field of View**  
 - [X] **Prologue.0.10 Move Creatures Randomly**  
-- [ ] **Prologue Enemies AI**  
+- [X] **Prologue.0.11 Enemies AI**  
 - [ ] **Prologue Creating UI**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Data Files**  
@@ -80,6 +80,7 @@
 
 **MAPS**  
 - [X] **random pj start point instead center**  
+- [ ] **non-rectangular rooms**  
 - [ ] **check all map is connected**  
 - [ ] **wide corridors**  
 - [ ] **Put pillars in large rooms**  

@@ -3,9 +3,48 @@
 package action
 
 import (
+	"math/rand"
 	"prologue/ecs/comps"
+	"prologue/lib"
 	"prologue/mapa"
+	"sort"
 )
+
+func GetRandomMovement(x *rand.Rand) string {
+	return movements[lib.RandomInt(0, 7, x)]
+}
+
+type Options []Option
+
+type Option struct {
+	Action   string
+	distance float64
+}
+
+func AssaultMove(pos, posPJ mapa.Point) Options {
+	ops := Options{
+		{"LEFT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X - 1, Y: pos.Y})},
+		{"RIGHT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X + 1, Y: pos.Y})},
+		{"UP",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X, Y: pos.Y - 1})},
+		{"DOWN",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X, Y: pos.Y + 1})},
+		{"DOWNLEFT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X - 1, Y: pos.Y + 1})},
+		{"DOWNRIGHT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X + 1, Y: pos.Y + 1})},
+		{"UPLEFT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X - 1, Y: pos.Y - 1})},
+		{"UPRIGHT",
+			mapa.EuclideanDistance(posPJ, mapa.Point{X: pos.X + 1, Y: pos.Y - 1})},
+	}
+	sort.Slice(ops, func(i, j int) bool {
+		return ops[i].distance < ops[j].distance
+	})
+	return ops
+}
 
 func TryMove(task string, eID int, lvl mapa.Level, es map[int]comps.Position) (mapa.Point, mapa.Point, bool) {
 	points := []mapa.Point{}

@@ -52,23 +52,41 @@ func (r *Run) TurnLoop(task string) {
 		case -1:
 			r.UpdateTurn()
 		default:
-			task := r.entityAI(eID)
-			_ = r.doTask(eID, task)
+			tasks := r.entityAI(eID)
+			for _, task := range tasks {
+				done = r.doTask(eID, task)
+				if done {
+					break
+				}
+			}
 		}
 		tries++
 	}
 }
 
-func (r *Run) entityAI(id int) string {
+func (r *Run) entityAI(id int) []string {
 	pos, _ := r.Ecs.Positions.GetComponent(id)
 	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
 	posPJ, _ := r.Ecs.Positions.GetComponent(playerID)
-	if mapa.EuclideanDistance(pos.Current, posPJ.Current) < float64(8) {
-		task := action.GetRandomMovement(r.Rnd)
-		//fmt.Printf(`%d -> %s`, id, task)
-		return task
+	distanceToPlayer := mapa.EuclideanDistance(pos.Current, posPJ.Current)
+	if distanceToPlayer < float64(1.5) {
+		// MELEE , only if can move too into target
+		return []string{"skip"}
 	}
-	return "skip"
+	if distanceToPlayer > float64(8) {
+		return []string{"skip"}
+	}
+	if !r.Level.IsVisible(pos.Current) {
+		// will depend of entity awareness about pj
+		return []string{action.GetRandomMovement(r.Rnd)}
+	}
+	options := action.AssaultMove(pos.Current, posPJ.Current)
+	tasks := []string{}
+	for _, v := range options {
+		tasks = append(tasks, v.Action)
+	}
+	tasks = append(tasks, "skip")
+	return tasks
 }
 
 func (r *Run) doTask(eID int, task string) bool {
