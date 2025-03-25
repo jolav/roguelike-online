@@ -26,6 +26,7 @@ const httpServer = {
     return [data.version, lag];
   },
   run: async function () {
+    const start = performance.now();
     let path = c.API.URL[c.API.HOST] + c.API.RUN;
     path = path
       + "?nick=" + g.info.nick
@@ -42,8 +43,9 @@ const httpServer = {
     //console.log(g.actions);
     //console.log(g.entities);
     const d = `Entities=${g.actions.length}, Actions=${g.actions.length}`;
+    g.info.lag = Math.trunc(performance.now() - start);
+    //console.log(g.entities);
     render.ascii(d);
-    document.getElementById("action").innerHTML = g.turn + " " + "BEGIN";
   },
   turn: async function (action) {
     const start = performance.now();
@@ -62,14 +64,11 @@ const httpServer = {
       return;
     }
     game.update(turn);
-    const lag = Math.trunc(performance.now() - start);
-    c.LAG = lag;
     //console.log(g.actions);
     //console.log(g.entities);
     const d = `Entities=${g.actions.length}, Actions=${g.actions.length}`;
+    g.info.lag = Math.trunc(performance.now() - start);
     render.ascii(d);
-    document.getElementById("action").innerHTML = g.turn + " " + action + " ping: " + lag;
-
   }
 };
 

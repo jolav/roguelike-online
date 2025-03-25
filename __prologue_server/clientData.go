@@ -10,6 +10,7 @@ import (
 
 type newRunData struct {
 	ID       string         `json:"id"`
+	TPT      int            `json:"tpt"`
 	Nick     string         `json:"nick"`
 	Seed     int64          `json:"seed"`
 	Map      mapa.Level     `json:"map"`
@@ -19,6 +20,7 @@ type newRunData struct {
 
 type newTurnData struct {
 	Turn     int64          `json:"turn"`
+	TPT      int            `json:"tpt"`
 	Map      mapa.Level     `json:"map"`
 	Entities Entities       `json:"entities"`
 	Actions  action.Actions `json:"actions"`
@@ -27,9 +29,10 @@ type newTurnData struct {
 type Entities map[int]Entity
 
 type Entity struct {
-	ID   int            `json:"eID"`
-	Pos  comps.Position `json:"pos"`
-	Info comps.Info     `json:"info"`
+	ID     int            `json:"eID"`
+	Pos    comps.Position `json:"pos"`
+	Info   comps.Info     `json:"info"`
+	Health comps.Health   `json:"health"`
 }
 
 func prepareDataNew(r Run) newRunData {
@@ -48,6 +51,14 @@ func prepareDataNew(r Run) newRunData {
 			es[k] = e
 		}
 	}
+	// add healths (depends on skills ?)
+	for k, e := range es {
+		if e.Info.Type == "player" {
+			e.Health, _ = r.Ecs.Healths.GetComponent(e.ID)
+			es[k] = e
+		}
+	}
+	//fmt.Println(es.)
 	n := newRunData{
 		ID:       r.Info.Token,
 		Nick:     r.Info.Nick,
@@ -86,6 +97,13 @@ func prepareDataTurn(r Run) newTurnData {
 		_, ok := es[a.ID]
 		if ok {
 			actions = append(actions, a)
+		}
+	}
+	// add healths (depends on skills ?)
+	for k, e := range es {
+		if e.Info.Type == "player" {
+			e.Health, _ = r.Ecs.Healths.GetComponent(e.ID)
+			es[k] = e
 		}
 	}
 	n := newTurnData{

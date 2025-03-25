@@ -3,13 +3,13 @@
 package comps
 
 type Health struct {
-	MaxHp     int
-	CurrentHP int
+	Max int
+	HP  int
 }
 
 func NewHealth(max, current int) Health {
 	return Health{
-		MaxHp:     max,
-		CurrentHP: current,
+		Max: max,
+		HP:  current,
 	}
 }

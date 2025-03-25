@@ -79,7 +79,7 @@ func populate(r Run) ecs.ECS {
 	esPoints := []mapa.Point{}
 	// dummy
 	dummy := r.Ecs.NewEntity()
-	r.Ecs.Healths.AddComponent(dummy, comps.Health{MaxHp: 2, CurrentHP: 2})
+	r.Ecs.Healths.AddComponent(dummy, comps.Health{Max: 2, HP: 2})
 	r.Ecs.Infos.AddComponent(dummy, comps.Info{Name: "ddd", Type: "dummy"})
 
 	// player
@@ -89,7 +89,7 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.Infos.AddComponent(player, comps.Info{Name: r.Info.Nick, Type: "player"})
 	r.Ecs.Positions.AddComponent(player, comps.Position{Current: current, OnMap: current})
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
-	r.Ecs.Healths.AddComponent(player, comps.Health{MaxHp: 50, CurrentHP: 45})
+	r.Ecs.Healths.AddComponent(player, comps.Health{Max: 20, HP: 18})
 	r.Ecs.AddTag(player, "player")
 	r.Ecs.AddTag(player, "visible")
 	r.Ecs.AddTag(player, "on")
@@ -107,7 +107,7 @@ func addCreature(name string, r Run, esPoints []mapa.Point) (Run, []mapa.Point) 
 	esPoints = append(esPoints, mapa.Point{X: current.X, Y: current.Y})
 	r.Ecs.Positions.AddComponent(creature, comps.Position{Current: current, OnMap: current})
 	r.Ecs.Infos.AddComponent(creature, comps.Info{Name: name + fmt.Sprint(creature), Type: name})
-	r.Ecs.Healths.AddComponent(creature, comps.Health{MaxHp: 20, CurrentHP: 20})
+	r.Ecs.Healths.AddComponent(creature, comps.Health{Max: 5, HP: 5})
 	r.Ecs.AddTag(creature, "creature")
 	r.Ecs.AddTag(creature, "visible")
 	r.Ecs.AddTag(creature, "on")

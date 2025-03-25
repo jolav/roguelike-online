@@ -138,3 +138,70 @@ section#playZone .container .panel {
   padding: 5px;
 
 }
+
+/* PANEL ZONE */
+
+section#playZone .panel {
+  /*font-size: 0.90em;*/
+  width: 100px;
+  /* changed from js */
+  /*background-color: lightcoral;*/
+  text-align: center;
+  padding: 5px;
+}
+
+/*section#playZone .panel .player, .loot, .selected {
+  text-align: left;
+  margin-left: 5px;
+}
+
+section#playZone .panel .loot {
+  margin-top: 10px;
+  border: 1px solid rebeccapurple;
+}*/
+
+/*section#playZone .panel .history {
+  text-align: left;
+  font-size: 0.90em;
+  position: fixed;
+  padding: 5px;
+  bottom: 0.5em;
+  width: 100%;
+}*/
+
+section#playZone .panel .duo {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#playZone .panel .stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#playZone .panel .stats>.stat {
+  flex: 1;
+  margin: 0 0px;
+}
+
+section#playZone .panel .stats>.stat:first-child {
+  margin-left: 0;
+  text-align: left
+}
+
+section#playZone .panel .stats>.stat:nth-child(2),
+.stats>.stat:nth-child(3),
+.stats>.stat:nth-child(4) {
+  text-align: center;
+}
+
+section#playZone .panel .stats>.stat:last-child {
+  text-align: right;
+  margin-right: 0;
+}
+
+/*section#playZone #panel #i-food, #i-medical, #i-head, #i-body, #i-supply {
+  display: inline-block;
+  text-align: center;
+  width: 3em;
+}*/

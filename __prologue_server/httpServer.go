@@ -72,17 +72,20 @@ func mw(next http.Handler, a app) http.Handler {
 }
 
 func (a app) createRun(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
 	newRun, msg, statusCode := a.NewRun(r)
 	if statusCode != http.StatusOK {
 		lib.SendError(w, msg, statusCode)
 		return
 	}
 	response := prepareDataNew(*newRun)
+	response.TPT = int(time.Since(start).Milliseconds())
 	lib.SendJSONResponse(w, response, http.StatusOK)
 
 }
 
 func (a app) playerAction(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
 	token := r.Header.Get("Authorization")
 	run, ok := (*a.Runs)[token]
 	if !ok {
@@ -107,5 +110,6 @@ func (a app) playerAction(w http.ResponseWriter, r *http.Request) {
 	run.TurnLoop(task)
 
 	response := prepareDataTurn(*run)
+	response.TPT = int(time.Since(start).Milliseconds())
 	lib.SendJSONResponse(w, response, http.StatusOK)
 }

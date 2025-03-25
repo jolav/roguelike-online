@@ -9,7 +9,7 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.11-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.12-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Server**  
@@ -23,7 +23,8 @@
 - [X] **Prologue.0.9 Field of View**  
 - [X] **Prologue.0.10 Move Creatures Randomly**  
 - [X] **Prologue.0.11 Enemies AI**  
-- [ ] **Prologue Creating UI**  
+- [X] **Prologue.0.12 Creating UI**  
+- [ ] **Prologue History**  
 - [ ] **Prologue Melee**  
 - [ ] **Prologue Data Files**  
 - [ ] **Prologue Save/Load run**  

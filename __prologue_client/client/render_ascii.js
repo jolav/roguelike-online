@@ -4,6 +4,7 @@ console.log('Loading..... client/render_ascii.js');
 
 import { config as c } from "./_config.js";
 import { g } from "./game.js";
+import * as panel from "./panel.js";
 
 const canvas = document.getElementById(c.CANVAS.NAME);
 canvas.width = c.VIEW.COLS * c.VIEW.PPP_X;
@@ -20,15 +21,15 @@ ctx.fillText(' ', 0, 0); // force font loaded
 
 async function ascii(d) {
   const start = performance.now();
-  document.getElementById("panelVersion").innerHTML = "v" + c.VERSION;
   draw.clearAll();
   draw.grid();
   draw.map();
   draw.entities();
   await draw.actions();
-  //draw.pj();
-  const perf = performance.now() - start;
-  console.log(`Time=>  LAG ${c.LAG}  Render ${perf} ms ---- ${d}`);
+  panel.update();
+  c.RENDER.TIME = performance.now() - start;
+  console.log(`LAG ${g.info.lag}  Render ${c.RENDER.TIME} ms --- ${d}`);
+  panel.lags();
 }
 
 const draw = {
@@ -159,6 +160,7 @@ const draw = {
 
 export {
   ascii,
+  dawnBringer,
 };
 
 const aux = {

@@ -6,6 +6,7 @@ const config = {
   MODE: "prod",
   VERSION: "x",
   LAG: 0,
+  TPT: 0,
   API: {
     AUTOSTART: true,
     HOST: 0,// 0 local dev API, 1 real API
@@ -28,6 +29,7 @@ const config = {
     FONT_SELECTED: 3,
   },
   RENDER: {
+    TIME: 0,
     TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
     ANIMATION: false,
     STEPS: 1,
@@ -42,6 +44,12 @@ const config = {
     DELTA_Y: 0,
     MAX_COLS: 52, // 52
     MAX_ROWS: 30  // 30
+  },
+  PANEL: {
+    HISTORY_CHARS: 43,
+    HISTORY_LINES: 18, //max 20
+    INIT_DATE: new Date("2097-08-29 02:14:00"),
+    MS_PER_TURN: 1000 * 20,
   }
 };
 
