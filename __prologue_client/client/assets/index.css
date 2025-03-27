@@ -150,24 +150,24 @@ section#playZone .panel {
   padding: 5px;
 }
 
-/*section#playZone .panel .player, .loot, .selected {
+section#playZone .panel .player, .loot, .selected {
   text-align: left;
   margin-left: 5px;
 }
 
-section#playZone .panel .loot {
+/*section#playZone .panel .loot {
   margin-top: 10px;
   border: 1px solid rebeccapurple;
 }*/
 
-/*section#playZone .panel .history {
+section#playZone .panel .history {
   text-align: left;
   font-size: 0.90em;
   position: fixed;
   padding: 5px;
   bottom: 0.5em;
   width: 100%;
-}*/
+}
 
 section#playZone .panel .duo {
   display: flex;

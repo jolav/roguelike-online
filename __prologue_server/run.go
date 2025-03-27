@@ -33,10 +33,12 @@ type Run struct {
 	Actions action.Actions
 	Camera  camera
 	Fov     fieldOfVision
+	History history
 }
 
 func (r *Run) TurnLoop(task string) {
 	//fmt.Println(r.Control.Turn, " Action=>", task)
+	r.History = r.History.Clean()
 	r.Actions = r.Actions.Clean()
 	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
 	done := r.doTask(playerID, task)
@@ -90,6 +92,7 @@ func (r *Run) entityAI(id int) []string {
 }
 
 func (r *Run) doTask(eID int, task string) bool {
+	playerID := r.Ecs.GetEntitiesWithTag("player")[0]
 	taskType := action.GetType(task)
 	//fmt.Println("Action=>", eID, task, taskType)
 	switch taskType {
@@ -99,10 +102,16 @@ func (r *Run) doTask(eID int, task string) bool {
 			r.Queue = r.Queue.UpdateEntity(eID, 50)
 			return true
 		}
+		if eID == playerID {
+			r.History = r.History.Add(eID, "player can't move there")
+		}
 		return false
 	case "SKIP":
 		r.doSkip(eID)
 		r.Queue = r.Queue.UpdateEntity(eID, 100)
+		if eID == playerID {
+			r.History = r.History.Add(eID, "player skips turn")
+		}
 		return true
 	default:
 		log.Printf("Unknown Task: %s\n", taskType)

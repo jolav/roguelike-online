@@ -70,6 +70,7 @@ func (a app) NewRun(re *http.Request) (*Run, string, int) {
 	r.Queue = action.NewQueue(es, player, r.Rnd)
 	r.Camera = newCamera(cols, rows)
 	r.Fov = fieldOfVision{}.initFOV()
+	r.History = NewHistory()
 
 	a.Runs.add(*r)
 	return r, "", http.StatusOK
@@ -94,7 +95,7 @@ func populate(r Run) ecs.ECS {
 	r.Ecs.AddTag(player, "visible")
 	r.Ecs.AddTag(player, "on")
 
-	for range 45 {
+	for range 5 {
 		r, esPoints = addCreature("rat", r, esPoints)
 	}
 

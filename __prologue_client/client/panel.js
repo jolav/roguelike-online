@@ -9,7 +9,7 @@ import { dawnBringer as col } from "./render_ascii.js";
 function update() {
   panel.currentTime();
   panel.pjStats();
-  //panel.history();
+  panel.history();
 }
 
 function lags() {
@@ -91,14 +91,16 @@ const panel = {
         default:
           text.style.color = col.get("Light Steel Blue");
       }
-      const solution = g.history[line].replace("player", c.NICK);
-      const candidate = insertNewLine(solution, c.PANEL.HISTORY_CHARS);
-      if (total + candidate.split("\n").length - 1 > c.PANEL.HISTORY_LINES) {
+      let entry = g.history[line].replace("player", g.info.nick);
+
+      const candidate = insertNewLine(entry, c.PANEL.HISTORY_CHARS);
+      const candidateLength = candidate.split("\n").length - 1;
+      if (total + candidateLength > c.PANEL.HISTORY_LINES) {
         break;
       }
       index++;
       text.innerText = candidate;
-      total += text.innerText.split("\n").length - 1;
+      total += candidateLength;
     }
   },
 };

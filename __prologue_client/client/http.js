@@ -44,7 +44,6 @@ const httpServer = {
     //console.log(g.entities);
     const d = `Entities=${g.actions.length}, Actions=${g.actions.length}`;
     g.info.lag = Math.trunc(performance.now() - start);
-    //console.log(g.entities);
     render.ascii(d);
   },
   turn: async function (action) {

@@ -16,6 +16,7 @@ type newRunData struct {
 	Map      mapa.Level     `json:"map"`
 	Entities Entities       `json:"entities"`
 	Actions  action.Actions `json:"actions"`
+	History  []string       `json:"history"`
 }
 
 type newTurnData struct {
@@ -24,6 +25,7 @@ type newTurnData struct {
 	Map      mapa.Level     `json:"map"`
 	Entities Entities       `json:"entities"`
 	Actions  action.Actions `json:"actions"`
+	History  []string       `json:"history"`
 }
 
 type Entities map[int]Entity
@@ -66,6 +68,7 @@ func prepareDataNew(r Run) newRunData {
 		Map:      fromMapToView(r),
 		Entities: es,
 		Actions:  r.Actions,
+		History:  r.History.ForClient(),
 	}
 	//fmt.Println(n.Entities[2])
 	return n
@@ -111,6 +114,7 @@ func prepareDataTurn(r Run) newTurnData {
 		Map:      fromMapToView(r),
 		Entities: es,
 		Actions:  actions,
+		History:  r.History.ForClient(),
 	}
 	return n
 }

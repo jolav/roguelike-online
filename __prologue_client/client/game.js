@@ -34,6 +34,7 @@ const game = {
     );
     //console.log(g.entities.get(2));
     g.turn = 0;
+    g.history = aux.history;
   },
   update: function (turn) {
     g.info.tpt = turn.tpt;
@@ -48,7 +49,26 @@ const game = {
     );
     //console.log(g.entities.get(2));
     g.actions = turn.actions;
+    const data = this.compactHistory(turn.history);
+    g.history = g.history.concat(data);
   },
+  compactHistory: function (history) {
+    const lastIndex = g.history.length - 1;
+    const last = g.history[lastIndex];
+    const newEntry = history[0];
+    if (last.startsWith(newEntry)) {
+      const regex = /_\(x(\d+)\)/;
+      let multiplier = 1;
+      const match = last.match(regex);
+      if (match) {
+        multiplier = match[1];
+      }
+      g.history[lastIndex] = last.split("_(x")[0] + `_(x${++multiplier})`;
+      history.shift();
+      return history;
+    }
+    return history;
+  }
 };
 
 export {
