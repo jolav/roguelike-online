@@ -115,7 +115,7 @@ const draw = {
   actions: async function () {
     for (const a of g.actions) {
       const e = g.entities.get(/*String*/(a.ID));
-      let start = e.pos.OnMap;
+      const start = e.pos.OnMap;
       const end = e.pos.Current;
       if (c.RENDER.ANIMATION) {
         await this.animate(e, start, end, c.RENDER.STEPS);
@@ -123,9 +123,10 @@ const draw = {
         this.clearTile(start.X, start.Y);
         const terrain = g.map[start.X][start.Y].terrain;
         const char = aux.mapSymbol(terrain);
-        const color = "Atlantis";
+        // color for last position before action
+        const color = aux.colorOfEntity(e.info.Type);
         this.tile(start.X, start.Y, char, color);
-        this.entity(end.X, end.Y, e.info.Type, aux.colorOfEntity(e.info.Type));
+        this.entity(end.X, end.Y, e.info.Type, color);
       }
       e.pos.OnMap = end;
     }
