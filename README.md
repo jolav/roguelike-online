@@ -5,15 +5,15 @@
 ![License](https://img.shields.io/badge/License-%20GNU%20AGPLv3%20-brightgreen)  
 
 
-[TEST PROLOGUE ONLINE](https://prologue.roguelike.online/)
+[PLAY PROLOGUE ONLINE](https://prologue.roguelike.online/)
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.0-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.1-orange.svg)  
 
 - [X] **Start**  
-- [ ] **Prologue Setting Up Client-Core**  
-- [ ] **Prologue Core create run loop + Basic Authentication**  
+- [X] **Prologue.0.1 Setting Up Client-Core**  
+- [ ] **Prologue Create new Run**  
 - [ ] **Prologue Generate and Draw Basic Map**  
 - [ ] **Prologue Generate Shelter Level**  
 - [ ] **Prologue Drawing and Moving around @**  

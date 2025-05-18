@@ -4,30 +4,30 @@
 
 ########## ICONS ##########
 
-File: __prologue_client/assets/icons/favicon32.png
-File: __prologue_client/assets/icons/favicon48.png
+File: __prologue/assets/icons/favicon32.png
+File: __prologue/assets/icons/favicon48.png
 Copyright: Delapouite
 License: CC BY 3.0
 Comment: Taken from https://game-icons.net/1x1/delapouite/fallout-shelter.html
 
-File: __prologue_client/assets/icons/github48x48.png
+File: __prologue/assets/icons/github48x48.png
 Copyright: INCWADRA
 License: CC BY 3.0
 Comment: Taken from https://www.softicons.com/social-media-icons/habrapack-social-icons-by-incwadra/github-icon
  
-File: __prologue_client/assets/icons/
+File: __prologue/assets/icons/
 Copyright: 
 License: 
 Comment:Taken from
 
 ########## FONTS ##########
 
-File: __prologue_client/assets/fonts/IBMPlexSans.ttf
+File: __prologue/assets/fonts/IBMPlexSans.ttf
 Copyright: Mike Abbinka and Bold Monday 
 License: SIL Open Font License (OFL) 
 Comment: Taken from https://fonts.google.com/specimen/IBM+Plex+Sans  
 
-File:/ __prologue_client/assets/dejavu-sans-mono.book.ttf
+File:/ __prologue/assets/dejavu-sans-mono.book.ttf
 Copyright: Fonts are (c) Bitstream  
 License: Public Domain https://st.1001fonts.net/license/dejavu-sans-mono/LICENSE.txt
 Comment: Taken from https://www.1001fonts.com/dejavu-sans-mono-font.html

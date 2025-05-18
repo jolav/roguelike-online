@@ -1,0 +1,18 @@
+/* */
+
+console.log('Loading..... ./client/game.js');
+
+const g = {
+  info: {
+    NICK: "",
+    ID: "",
+    SEED: 0,
+  },
+  turn: 0,
+  is_server_turn: false,
+  map: []
+};
+
+export {
+  g
+};
