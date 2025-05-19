@@ -9,11 +9,11 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.1-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.2-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Core**  
-- [ ] **Prologue Create new Run**  
+- [X] **Prologue.0.2 Create new Run**  
 - [ ] **Prologue Generate and Draw Basic Map**  
 - [ ] **Prologue Generate Shelter Level**  
 - [ ] **Prologue Drawing and Moving around @**  

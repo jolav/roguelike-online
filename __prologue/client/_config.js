@@ -3,8 +3,7 @@
 console.log('Loading..... ./client/_config.js');
 
 const config = {
-  VERSION: "0.1",
-  LAG: 0,
+  VERSION: "x",
   BACKEND: false,
   API: {
     AUTOSTART: false,
@@ -13,11 +12,7 @@ const config = {
       "http://localhost:3000",
       "https://m.d100.top/p"
     ],
-    PING: "/ping",
-    RUN: "/run",
-    TURN: "/turn",
     TIMEOUT: 150,
-    PINGER_DELAY: 1000,
     NICK: "https://api.codetabs.com/v1/random/name",
     NICK_TIMEOUT: 2000,
   },

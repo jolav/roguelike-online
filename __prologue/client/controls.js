@@ -2,7 +2,7 @@
 
 console.log('Loading..... ./client/controls.js');
 
-import { ask } from "./http.js";
+import { ask } from "./ask.js";
 import { g } from "./game.js";
 import { config as c } from "./_config.js";
 
@@ -20,7 +20,7 @@ function listenKeyboard() {
       if (now - g.lastTurn < c.API.TIMEOUT) {
         return;
       }
-      //console.log(action);
+      console.log(action);
       ask.turn(action);
       g.lastTurn = now;
     }

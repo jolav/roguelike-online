@@ -3,7 +3,7 @@
 console.log('Loading..... ./client/index.js');
 
 import { config as c } from "./_config.js";
-import { ask } from "./http.js";
+import { ask } from "./ask.js";
 import { g } from "./game.js";
 import { listenKeyboard } from "./controls.js";
 
@@ -12,7 +12,7 @@ const index = {
     const where = window.location.hostname;
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
-      //c.API.AUTOSTART = true;
+      c.API.AUTOSTART = true;
       c.API.HOST = 1;
     }
     this.landingPage();
@@ -21,10 +21,9 @@ const index = {
     console.log('##### INIT #####');
     this.showSection("landingPage");
     g.info.NICK = await ask.nick();
-    //c.LAG = await ask.ping();
+    c.VERSION = ask.version();
     document.getElementById("nick").value = g.info.NICK;
     document.getElementById("version").innerHTML = "version_" + c.VERSION;
-    document.getElementById("lag").innerHTML = c.LAG;
     if (c.API.AUTOSTART) {
       this.play();
       return;
@@ -35,7 +34,6 @@ const index = {
         index.play();
       }
     });
-    pinger.init();
   },
   showSection: function (section) {
     const section1 = document.getElementById("landingPage");
@@ -57,36 +55,11 @@ const index = {
         break;*/
     }
   },
-  play: async function () {
-    pinger.stop();
+  play: function () {
     listenKeyboard();
     this.showSection("playZone");
-    await ask.run();
+    ask.run();
   },
-};
-
-const pinger = {
-  working: false,
-  init: async function () {
-    this.working = true;
-    try {
-      while (this.working) {
-        const lag = await ask.ping();
-        document.getElementById("lag").innerHTML = lag;
-        await this.sleep(c.API.PINGER_DELAY);
-      }
-    } catch (error) {
-      return;
-    }
-  },
-  stop: function () {
-    this.working = false;
-  },
-  sleep: function (sleepTime) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, sleepTime);
-    });
-  }
 };
 
 export {
