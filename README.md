@@ -9,14 +9,14 @@
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.2-orange.svg)  
+![Game](https://img.shields.io/badge/Version-0.3-orange.svg)  
 
 - [X] **Start**  
 - [X] **Prologue.0.1 Setting Up Client-Core**  
 - [X] **Prologue.0.2 Create new Run**  
-- [ ] **Prologue Generate and Draw Basic Map**  
-- [ ] **Prologue Generate Shelter Level**  
+- [X] **Prologue.0.3 Generate and Draw Basic Map**  
 - [ ] **Prologue Drawing and Moving around @**  
+- [ ] **Prologue Generate Shelter Level**  
 - [ ] **Prologue Array of actions + movement animations**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
@@ -73,10 +73,11 @@
 - [ ] **Select tile and foe with mouse**  
 
 **CLIENT SETTINGS**  
+- [ ] **Auto-adjust ppp size to fit ??x30**  
 - [ ] **Choose/Random player name at start**  
 - [ ] **Check client is not flooding core with commands.one each Xms?**  
 - [ ] **settings: resize window, custom controls, change scale...**  
-- [ ] **Player can modify ppp size 12/16/24...**  
+- [ ] **Player can modify ppp size 8x12, 12x18, 16x24...**  
 - [ ] **resize map on windows resize**  
 
 **MAPS**  

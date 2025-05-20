@@ -5,6 +5,7 @@ console.log('Loading..... ./core/run.js');
 import { aux } from "./lib/aux.js";
 import { K } from "./_konfig.js";
 import { Random } from "./lib/random.js";
+import * as map from "./mapGen.js";
 
 class Run {
   constructor(params) {
@@ -25,7 +26,7 @@ class Run {
       rows: params.rows,
     };
     this.rnd = new Random(this.info.SEED);
-    this.map = [];
+    this.map = map.generate("basicRoom", this.view.cols, this.view.rows, this.rnd);
     this.entities = [];
     this.actions = [];
   }

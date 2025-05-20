@@ -11,7 +11,7 @@ const api = {
   },
   run: function (params) {
     const r = new Run(params);
-    return r;
+    return r.prepareDataNew();
   },
   turn: function (params) {
     return undefined;

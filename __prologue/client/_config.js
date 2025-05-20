@@ -22,7 +22,6 @@ const config = {
     FONT_SELECTED: 3,
   },
   RENDER: {
-    TIME: 0,
     TYPE: 0, // 0 = ASCII  1 = UNICODE 2 = UNICODE_GLYPHS
     ANIMATION: false,
     STEPS: 1,

@@ -8,6 +8,8 @@ const g = {
     ID: "",
     SEED: 0,
   },
+  cpuTime: 0,
+  renderTime: 0,
   turn: 0,
   is_server_turn: false,
   map: []

@@ -6,7 +6,7 @@ import { config as c } from "./_config.js";
 import { g, game } from "./game.js";
 import { api } from "../core/api.js";
 import { aux } from "./aux.js";
-//import * as render from "./render_ascii.js";
+import * as render from "./render_ascii.js";
 
 const ask = {
   nick: async function () {
@@ -27,8 +27,8 @@ const ask = {
     const start = performance.now();
     const params = {
       nick: g.info.NICK,
-      cols: c.VIEW_COLS,
-      rows: c.VIEW_ROWS,
+      cols: c.VIEW.COLS,
+      rows: c.VIEW.ROWS,
     };
     const data = api.run(params);
     if (data === undefined) {
@@ -36,20 +36,20 @@ const ask = {
       return;
     }
     game.create(data);
-    const cpuTime = Math.trunc(performance.now() - start);
-    console.log(`##### NEW GAME created in ${cpuTime} ms #####`);
+    g.cpuTime = Math.trunc(performance.now() - start);
+    console.log(`##### NEW GAME created in ${g.cpuTime} ms #####`);
     g.is_server_turn = false;
     //console.log(g.actions);
     //console.log(g.entities);
-    //render.ascii(d);
+    render.ascii();
   },
   turn: function (action) {
     g.is_server_turn = true;
     const start = performance.now();
     const params = {
       action: action,
-      cols: c.VIEW_COLS,
-      rows: c.VIEW_ROWS,
+      cols: c.VIEW.COLS,
+      rows: c.VIEW.ROWS,
     };
     const cpuStart = performance.now();
     const data = api.turn(params);
@@ -57,8 +57,8 @@ const ask = {
       g.is_server_turn = false;
       return;
     }
-    const cpuTime = Math.trunc(performance.now() - cpuStart);
-    console.log(`Turn done in ${cpuTime} ms`);
+    g.cpuTime = Math.trunc(performance.now() - cpuStart);
+    console.log(`Turn done in ${g.cpuTime} ms`);
     const timeElapsed = Math.trunc(performance.now() - start);
     if (timeElapsed < c.API.TIMEOUT) {
       aux.sleep(c.API.TIMEOUT - timeElapsed);
