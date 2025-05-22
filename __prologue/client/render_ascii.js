@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... client/render_ascii.js');
+console.log('Loading..... /client/render_ascii.js');
 
 import { config as c } from "./_config.js";
 import { g } from "./game.js";

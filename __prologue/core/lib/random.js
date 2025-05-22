@@ -1,5 +1,7 @@
 /* */
 
+console.log('Loading..... /core/lib/random.js');
+
 function mulberry32(seed) {
   return function () {
     seed |= 0;

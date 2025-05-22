@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./index.js');
+console.log('Loading..... /index.js');
 
 import { index } from "./client/index.js";
 

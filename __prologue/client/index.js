@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./client/index.js');
+console.log('Loading..... /client/index.js');
 
 import { config as c } from "./_config.js";
 import { ask } from "./ask.js";

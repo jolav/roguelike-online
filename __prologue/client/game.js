@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./client/game.js');
+console.log('Loading..... /client/game.js');
 
 const g = {
   info: {

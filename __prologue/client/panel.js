@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... panel.js');
+console.log('Loading..... /client/panel.js');
 
 import { config as c } from "./_config.js";
 import { g } from "./game.js";

@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./core/api.js');
+console.log('Loading..... /core/api.js');
 
 import { K } from "./_konfig.js";
 import { Run } from "./run.js";

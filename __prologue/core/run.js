@@ -1,11 +1,12 @@
 /* */
 
-console.log('Loading..... ./core/run.js');
+console.log('Loading..... /core/run.js');
 
 import { aux } from "./lib/aux.js";
 import { K } from "./_konfig.js";
 import { Random } from "./lib/random.js";
-import * as map from "./mapGen.js";
+import { basicRoom } from "./map/gen/basicRoom.js";
+import { shelter } from "./map/gen/shelter.js";
 
 class Run {
   constructor(params) {
@@ -26,7 +27,7 @@ class Run {
       rows: params.rows,
     };
     this.rnd = new Random(this.info.SEED);
-    this.map = map.generate("basicRoom", this.view.cols, this.view.rows, this.rnd);
+    this.map = mapGen("basicRoom", this.view.cols, this.view.rows, this.rnd);
     this.entities = [];
     this.actions = [];
   }
@@ -49,3 +50,12 @@ class Run {
 export {
   Run
 };
+
+function mapGen(typeOfMap, cols, rows, rnd) {
+  switch (typeOfMap) { // outdoors,indoors
+    case "basicRoom":
+      return basicRoom.create(cols, rows, rnd);
+    case "shelter":
+      return shelter.create();
+  }
+}

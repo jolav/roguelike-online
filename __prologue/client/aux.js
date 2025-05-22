@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./client/aux.js');
+console.log('Loading..... /client/aux.js');
 
 import { config as c } from "./_config.js";
 

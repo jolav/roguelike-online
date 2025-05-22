@@ -1,5 +1,7 @@
 /* */
 
+console.log('Loading..... /core/lib/aux.js');
+
 const aux = {
   Sleep: function (min, max) {
     const delay = this.RandomInt(min, max);

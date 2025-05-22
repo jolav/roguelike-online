@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... ./client/_config.js');
+console.log('Loading..... /client/_config.js');
 
 const config = {
   VERSION: "x",
