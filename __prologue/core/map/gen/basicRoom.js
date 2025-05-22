@@ -28,7 +28,7 @@ const basicRoom = {
   },
   putColumns: function (cols, rows, columns, rnd) {
     let tries = 0;
-    while (columns > 0 && tries < K.tries) {
+    while (columns > 0 && tries < K.TRIES) {
       const x = rnd.int(1, cols - 2);
       const y = rnd.int(1, rows - 2);
       if (this.map[x][y].terrain === "floor") {

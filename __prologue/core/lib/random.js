@@ -19,24 +19,25 @@ class Random {
   int(min, max) {
     return Math.floor(this.random() * (max - min + 1) + min);
   }
-}
-/*
-const r1 = new Random(1);
-const r2 = new Random(1);
-const r3 = new Random(2);
-let result1 = "";
-let result2 = "";
-let result3 = "";
-for (let i = 0; i < 50; i++) {
-  result1 += r1.int(1, 6) + "";
-  result2 += r2.int(1, 6) + "";
-  result3 += r3.int(1, 6) + "";
+  static stdInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  static generateUUID() {
+    const template = [1e7] + -1e3 + -4e3 + -8e3 + -1e11;
+    const uuid = template.replace(/[018]/g, function (c) {
+      const myrandom = crypto.getRandomValues(new Uint8Array(1))[0];
+      const value = (c ^ myrandom & 15 >> c / 4).toString(16);
+      return value;
+    });
+    return uuid;
+  }
+  static generateSeed() {
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return array[0];
+  }
 }
 
-console.log(result1);
-console.log(result2);
-console.log(result3);
-*/
 export {
   Random
 };

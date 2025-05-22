@@ -5,8 +5,8 @@ console.log('Loading..... /map/gen/shelter.js');
 import { basicRoom } from "./basicRoom.js";
 
 const shelter = {
-  create: function name(cols, rows) {
-    return basicRoom.create(cols, rows);
+  create: function name(view, rnd) {
+    return basicRoom.create(view.cols, view.rows, rnd);
   }
 };
 
