@@ -6,6 +6,7 @@ tmp/
 node_modules
 
 #Ignore these files
+build.conf
 .env
 _private.js
 *_private.js

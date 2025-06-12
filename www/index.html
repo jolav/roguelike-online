@@ -2,16 +2,15 @@
 <html lang="en">
 
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 	<title>Roguelike Online</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description"
-		content="Classic Roguelike online browser. Authoritative Game Server. Post Apocalyptic Open World 2D Turn Based Game.  Browser game. Open Source. In the end, the nuclear weapons were launched.....">
+		content="Classic Roguelike online browser. Post Apocalyptic Open World 2D Turn Based Game. Browser game. Open Source. In the end, the nuclear weapons were launched.....">
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/x-icon" href="https://roguelike.online/assets/favicon32.png">
+	<link rel="icon" type="image/x-icon" href="./assets/favicon32.png">
 
 	<!--CSS-->
 	<style>
@@ -539,7 +538,7 @@
 		<div class="background-image" style="background-image: url(assets/background.webp);"></div>
 		<h1>Roguelike Online</h1>
 		<div class="game">Post Apocalyptic 2D Turn Based Game</div>
-		<a href="https://prologue.roguelike.online/" class="btn">Play PROLOGUE</a>
+		<a href="https://prologue.roguelike.online" class="btn">Play PROLOGUE</a>
 	</section>
 
 	<section class="lore">
@@ -561,15 +560,15 @@
 	</section>
 
 	<section class="features">
-		<div class="title">2D Classic Roguelike</div>
-		<span>Permanent Death, Turn Based System, Grid Based Movement and
+		<!--<div class="title">2D Classic Roguelike</div>
+		<span>Permanent Death, Turn Based System and Grid Based Movement.</span>
+	-->
+		<!--<p>
 			<strong>
 				<a class="real" href="https://github.com/jolav/roguelike-online">
 					OPEN SOURCE</a>
 			</strong>
-			<br></br>
-		</span>
-
+		</p>-->
 		<ul class="grid">
 			<li>
 				<div class="random"></div>
@@ -585,12 +584,18 @@
 			</li>
 			<li>
 				<div class="server"></div>
+				<div class="featuresTitle">Classic Roguelike</div>
+				<p>Permanent Death, Turn Based System and Grid Based Movement.
+				</p>
+			</li>
+			<!--<li>
+				<div class="server"></div>
 				<div class="featuresTitle">Authoritative Server</div>
 				<p>All actions taken by players are simulated and validated by the server. Server’s version of the state of the
 					game
 					is the absolute source of truth
 				</p>
-			</li>
+			</li>-->
 		</ul>
 	</section>
 
@@ -604,7 +609,9 @@
 	<section class="contact">
 		<div class="title">Ask us anything</div>
 		<p>You can submit your questions, feedbacks or feature requests by
-			<strong><a class="real m" href="mailto:info@roguelike.online">email</a></strong>
+			<strong><a class="real m"
+					href="#">630a0d050c23110c0416060f0a08064d0c0d0f0a0d06O87f2e9cbeeeae8e9cae2e3eee8cbeeeae8e9deeae6f4
+				</a></strong>
 			or opening an issue on
 			<strong><a class="real" href="https://github.com/jolav/roguelike-online/issues">github
 				</a></strong>
@@ -647,7 +654,7 @@
 		</div>
 		<div class="bottom">
 			<div class="end">
-				<strong>ROGUELIKE.ONLINE ©2021-<span id="year">2025</span></strong>
+				<strong>ROGUELIKE.ONLINE &copy;2021-<span id="year"></span></strong>
 			</div>
 		</div>
 	</footer>
@@ -674,14 +681,14 @@
 
 			for (let i = 0; i < ms.length; i++) {
 				const el = ms[i]
-				const oldValue = el.innerHTML;
+				const oldValue = el.textContent;
 				const aux = oldValue.split("O")[0]
 				const value = getValue(aux);
 				if (i === 0) {
 					el.textContent = "email"
 				}
 				/*if (i === 1) {
-					el.innerHTML = '<div class="ask-us"></div>';
+					el.textContent = '<div class="ask-us"></div>';
 				}*/
 				if (i === 1/*2*/) {
 					el.textContent = value;
@@ -698,9 +705,6 @@
 
 		}
 	</script>
-
-
-
 
 </body>
 

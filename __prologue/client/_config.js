@@ -1,8 +1,9 @@
 /* */
 
-console.log('Loading..... _config.js');
+console.log('Loading..... client/_config.js');
 
 const config = {
+  VERSION: "x",
   API: {
     AUTOSTART: false,
     HOST: 1,// 0 local dev API, 1 real API
@@ -13,11 +14,6 @@ const config = {
     TIMEOUT: 150,
     NICK: "https://api.codetabs.com/v1/random/name",
     NICK_TIMEOUT: 2000,
-    PINGER_DELAY: 500,
-    VERSION: "/version",
-    PING: "/ping",
-    RUN: "/run",
-    TURN: "/turn",
   },
   CANVAS: {
     NAME: "myCanvas",

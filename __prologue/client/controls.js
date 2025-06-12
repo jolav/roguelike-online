@@ -1,6 +1,6 @@
 /* */
 
-console.log('Loading..... controls.js');
+console.log('Loading..... client/controls.js');
 
 import { http } from "./http.js";
 import { g } from "./game.js";

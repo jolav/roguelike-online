@@ -2,23 +2,22 @@
 
 ![image](https://github.com/jolav/roguelike-online/blob/main/www/_public/images/web.webp?raw=true) 
 
-![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)  
+![License](https://img.shields.io/badge/License-%20GNU%20AGPLv3%20-brightgreen)  
 
 
 [PLAY PROLOGUE ONLINE](https://prologue.roguelike.online/)
 
 ## PROLOGUE MILESTONE  
 
-![Game](https://img.shields.io/badge/Version-0.1-orange.svg)  
-
+![Game](https://img.shields.io/badge/Version-0.3c-orange.svg)  
 
 - [X] **Start**  
-- [X] **Prologue.0.1 Setting Up Client-Server**  
-- [ ] **Prologue Server runs/run loop + Basic Authentication**  
-- [ ] **Prologue Generate and Draw Basic Map**  
+- [X] **Prologue.0.1 Setting Up Client-Core**  
+- [X] **Prologue.0.2 Create new Run**  
+- [X] **Prologue.0.3 Generate and Draw Basic Map**  
 - [ ] **Prologue Drawing and Moving around @**  
-- [ ] **Prologue Array of actions + movement animations**  
 - [ ] **Prologue Generate Shelter Level**  
+- [ ] **Prologue Array of actions + movement animations**  
 - [ ] **Prologue Turn Time System**  
 - [ ] **Prologue Camera**  
 - [ ] **Prologue Field of View**  
@@ -31,7 +30,7 @@
 - [ ] **Prologue Save/Load run**  
 - [ ] **Prologue Inventory and items**  
 - [ ] **Prologue Ranged Combat**  
-- [ ] **Prologue Generating Shelter**  
+- [ ] **Prologue Generating Shelter and fill it with furniture**  
 - [ ] **Prologue Ilumination**  
 - [ ] **Prologue Multiple Shelter Levels**  
 - [ ] **Prologue.1.0 Leaving the Shelter. Minimal Full Playable version**  
@@ -58,6 +57,7 @@
 - [ ] **two letter names on ascii ??**  
 - [ ] **multiple turn same entity, manage it**  
 - [ ] **change order, first player animation then draw centering camera**  
+
 
 **CLIENT ANIMATIONS**  
 - [ ] **Movement**  
@@ -90,18 +90,14 @@
 - [ ] **open/close doors**  
 - [ ] **lights, ilumination**  
 
-**SERVER**  
+**CORE**  
 - [ ] **Dont trust any client data**  
 - [ ] **Check client is not flooding server with commands.min each Xms?**  
 - [ ] **seeds for reproducible runs**  
-- [ ] **discard api request by Methods POST...**  
 - [ ] **One turn equals 10,15,30 or 60 seg**  
-- [ ] **manage runs, set a maximun**  
-- [ ] **save in files and delete runs from memory after some inactivity**  
-- [ ] **Lock runs while are active solving a turn**  
-- [ ] **remove hardcoded data**  
-- [ ] **calculate server response time**  
-- [ ] **add fov component, losDistance**  
+- [ ] **remove hardcoded data ??**  
+- [ ] **calculate core response time**  
+- [ ] **add fov component, losDistance ??**  
 
 **OPTIONALS FEATURES**   
 - [ ] **test non-square fonts**  
