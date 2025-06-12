@@ -13,7 +13,6 @@ const index = {
     // use localhost, with 127.0.0.1 cant see cookies value
     if (where === "localhost" || where === "127.0.0.1") {
       c.API.AUTOSTART = true;
-      c.API.HOST = 1;
     }
     this.landingPage();
   },
@@ -21,9 +20,9 @@ const index = {
     console.log('##### INIT #####');
     this.showSection("landingPage");
     g.info.NICK = await http.nick();
-    c.VERSION = http.version();
+    g.info.VERSION = http.version();
     document.getElementById("nick").value = g.info.NICK;
-    document.getElementById("version").textContent = "version_" + c.VERSION;
+    document.getElementById("version").textContent = "version_" + g.info.VERSION;
     if (c.API.AUTOSTART) {
       this.play();
       return;

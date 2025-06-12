@@ -4,7 +4,7 @@ console.log('Loading..... core/_konfig.js');
 
 const K = {
   MODE: "prod",
-  VERSION: "0.3c",
+  VERSION: "0.3d",
   TRIES: 100,
   // Options
   TYPE_OF_MAP: 0, // 0 => BASICROOM , 1 => SHELTER

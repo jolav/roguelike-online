@@ -65,6 +65,8 @@ const http = {
     }
     game.update(data);
     g.is_server_turn = false;
+    //console.log(g.actions);
+    //console.log(g.entities);
     //render.ascii();
     return data;
   }
@@ -79,9 +81,6 @@ async function fetchData(path, options) {
     const response = await fetch(path, options);
     // console.log('=>', response);
     if (response.ok) {
-      if (response.status === 204) { // for /ping endpoint
-        return undefined;
-      }
       const data = await response.json();
       return data;
     } else {

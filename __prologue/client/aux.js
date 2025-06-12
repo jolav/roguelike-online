@@ -18,9 +18,6 @@ const aux = {
     }
     return nick;
   },
-  randomInt: function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  },
   currentDate: function (turn) {
     return new Date(c.PANEL.INIT_DATE.getTime() + c.PANEL.MS_PER_TURN * turn);
   },

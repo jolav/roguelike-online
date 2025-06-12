@@ -12,6 +12,7 @@ class Run {
       NICK: params.nick || "Anonymous",
       ID: Random.generateUUID(),
       SEED: Random.generateSeed(),
+      VERSION: K.VERSION,
     };
     if (K.MODE === "dev") {
       this.info.SEED = 1234567890;
@@ -23,7 +24,6 @@ class Run {
       cols: params.cols,
       rows: params.rows,
     };
-    console.log(this.info);
     this.rnd = new Random(this.info.SEED);
     this.map = mapGen("basicRoom", this.view, this.rnd);
     this.entities = [];
@@ -31,17 +31,17 @@ class Run {
   }
 
   prepareDataNew() {
-    const r = {};
-    r.id = this.info.ID;
-    r.seed = this.info.SEED;
-    r.map = this.map;
-    return r;
+    const data = {};
+    data.id = this.info.ID;
+    data.seed = this.info.SEED;
+    data.map = this.map;
+    return data;
   }
 
   prepareDataTurn() {
-    const r = {};
-    r.turn = this.turn;
-    return r;
+    const data = {};
+    data.turn = this.turn;
+    return data;
   }
 }
 

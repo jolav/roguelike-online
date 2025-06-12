@@ -7,6 +7,7 @@ const g = {
     NICK: "",
     ID: "",
     SEED: 0,
+    VERSION: "x",
   },
   lag: {
     network: 0,
@@ -25,6 +26,7 @@ const game = {
     g.map = run.map;
     g.turn = 0;
     g.history = run.history;
+    console.log(g.info);
   },
   update: function (turn) {
     g.info.tpt = turn.tpt;

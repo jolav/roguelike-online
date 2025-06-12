@@ -19,7 +19,7 @@ function lags() {
 
 const panel = {
   version: function () {
-    document.getElementById("versionPanel").textContent = c.VERSION;
+    document.getElementById("versionPanel").textContent = g.info.VERSION;
     document.getElementById("versionPanel").style.color = col.get("Tahiti Gold");
     document.getElementById("cpuTime").textContent = g.lag.cpu;
     document.getElementById("cpuTime").style.color = col.get("Tahiti Gold");

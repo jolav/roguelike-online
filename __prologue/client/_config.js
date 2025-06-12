@@ -3,14 +3,8 @@
 console.log('Loading..... client/_config.js');
 
 const config = {
-  VERSION: "x",
   API: {
     AUTOSTART: false,
-    HOST: 1,// 0 local dev API, 1 real API
-    URL: [
-      "http://localhost:3000",
-      "https://m.d100.top/p"
-    ],
     TIMEOUT: 150,
     NICK: "https://api.codetabs.com/v1/random/name",
     NICK_TIMEOUT: 2000,
